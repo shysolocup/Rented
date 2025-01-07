@@ -30,6 +30,7 @@ public partial class Player : CharacterBody3D
 
 	public bool jumping = false;
 	public bool sprinting = false;
+	public bool crouching = false;
 	public bool mouse_captured = false;
 
 	public float gravity = (float)ProjectSettings.GetSetting("physics/3d/default_gravity");
@@ -47,6 +48,11 @@ public partial class Player : CharacterBody3D
 	public Tween tiltLeft;
 	public Tween tiltRight;
 	public Tween tiltBack;
+
+	public float base_fov;
+	
+	public Tween crouchIn;
+	public Tween crouchOut; 
 
 	public float tiltRot = 2;
 
@@ -73,16 +79,37 @@ public partial class Player : CharacterBody3D
 		return t;
 	}
 
+	public Tween CrouchEffect(string name, float zoom = 0, float speed = 0, )
+	{
+		Tween t = (Tween)Get(name);
+
+		if (t != null) {
+			t.Kill();
+			Set(name, nullvar);
+		};
+
+		t = CreateTween();
+		Set(name, t);
+
+		t.TweenProperty(this, new NodePath("walk_speed"), speed, 1);
+		t.TweenProperty(camera, "fov", zoom);
+
+		t.Finished += () => CrouchEffect(name, speed, zoom);
+
+		return t;
+	}
+
 	public override void _Ready()
 	{
 		camera = GetParent().GetNode(new NodePath("Camera")) as Camera3D;
+		base_fov = camera.GetFov();
 		capture_mouse();
 
 		FuckSpeed("speedIn", sprint_speed);
 		FuckSpeed("speedOut", base_walk_speed);
 
-		GD.Print(speedIn);
-		GD.Print(speedOut);
+		CrouchEffect("crouchIn", base_fov+10);
+		CrouchEffect("crouchIn", base_fov);
 	}
 
 	public override void _Process(double delta)
@@ -134,7 +161,7 @@ public partial class Player : CharacterBody3D
 			Tilt("tiltRight", -tiltRot, 0.2f).Play();
 		}
 		
-		if (!sprinting && Input.IsActionPressed("Sprint") && Input.IsActionPressed("MoveForward")) {
+		if (!sprinting && !crouching && Input.IsActionPressed("Sprint") && Input.IsActionPressed("MoveForward")) {
 			sprinting = true;
 			if (speedOut.IsRunning()) speedOut.Stop();
 			if (!speedIn.IsRunning()) speedIn.Play();
@@ -143,6 +170,17 @@ public partial class Player : CharacterBody3D
 			sprinting = false;
 			if (speedIn.IsRunning()) speedIn.Stop();
 			if (!speedOut.IsRunning()) speedOut.Play();
+		}
+
+		if (!sprinting && !crouching && Input.IsActionPressed("Crouch")) {
+			crouching = true;
+			if (crouchOut.IsRunning()) crouchOut.Stop();
+			if (!crouchIn.IsRunning()) crouchIn.Play();
+		}
+		else if (crouching && (Input.IsActionJustReleased("Crouch"))) {
+			crouching = false;
+			if (crouchIn.IsRunning()) crouchIn.Stop();
+			if (!crouchOut.IsRunning()) crouchOut.Play();
 		}
 
 		if (Input.IsActionPressed("Jump")) jumping = true;

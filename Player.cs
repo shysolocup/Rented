@@ -52,7 +52,7 @@ public partial class Player : CharacterBody3D
 
 	public Camera3D camera;
 
-	Variant nullvar = new Variant();
+	public Variant nullvar = new Variant();
 
 
 	public Tween FuckSpeed(string name, float speed = 0)

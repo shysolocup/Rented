@@ -1,0 +1,187 @@
+[gd_scene load_steps=18 format=3 uid="uid://s0ftqrddh5up"]
+
+[ext_resource type="Script" path="res://Player.cs" id="1_4lk8n"]
+[ext_resource type="Script" path="res://Script.cs" id="1_io7hk"]
+[ext_resource type="Script" path="res://CameraScript.cs" id="1_xddda"]
+[ext_resource type="Script" path="res://Script2.cs" id="2_xkty6"]
+[ext_resource type="Texture2D" uid="uid://dcthcg547baj0" path="res://david bazookie.png" id="5_attqr"]
+[ext_resource type="Script" path="res://CameraSwitchScript.cs" id="5_olp1u"]
+[ext_resource type="AudioStream" uid="uid://nvube6beo7t" path="res://its happening david bazookie.mp3" id="7_k2c4j"]
+
+[sub_resource type="Environment" id="Environment_3vp5v"]
+ambient_light_source = 2
+ambient_light_color = Color(0.728822, 0.728822, 0.728822, 1)
+ambient_light_energy = 2.8
+
+[sub_resource type="TextMesh" id="TextMesh_5ab7h"]
+text = "guh
+"
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8xcek"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_y0axr"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_j1e05"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_xknod"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qqeip"]
+albedo_texture = ExtResource("5_attqr")
+heightmap_scale = 16.0
+heightmap_deep_parallax = true
+heightmap_min_layers = 8
+heightmap_max_layers = 32
+uv1_scale = Vector3(2, 2, 2)
+uv1_triplanar = true
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rwo6p"]
+sky_horizon_color = Color(0.710753, 0.636773, 0.616803, 1)
+ground_bottom_color = Color(0.203549, 0.213715, 0.225317, 1)
+
+[sub_resource type="Sky" id="Sky_u48bl"]
+sky_material = SubResource("ProceduralSkyMaterial_rwo6p")
+
+[sub_resource type="Environment" id="Environment_0qt1g"]
+background_mode = 2
+sky = SubResource("Sky_u48bl")
+ambient_light_source = 3
+glow_enabled = true
+adjustment_enabled = true
+adjustment_saturation = 1.34
+
+[node name="Node" type="Node"]
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="ViewportModel" type="CanvasLayer" parent="Node3D"]
+
+[node name="Control" type="Control" parent="Node3D/ViewportModel"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="SVContainer" type="SubViewportContainer" parent="Node3D/ViewportModel/Control"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = -1.0
+offset_right = 1152.0
+offset_bottom = 646.0
+grow_horizontal = 0
+grow_vertical = 0
+focus_mode = 0
+mouse_filter = 2
+stretch = true
+
+[node name="Viewport" type="SubViewport" parent="Node3D/ViewportModel/Control/SVContainer"]
+own_world_3d = true
+transparent_bg = true
+use_occlusion_culling = true
+gui_disable_input = true
+size = Vector2i(1151, 647)
+
+[node name="World" type="WorldEnvironment" parent="Node3D/ViewportModel/Control/SVContainer/Viewport"]
+environment = SubResource("Environment_3vp5v")
+
+[node name="Model" type="StaticBody3D" parent="Node3D/ViewportModel/Control/SVContainer/Viewport"]
+
+[node name="Camera" type="Camera3D" parent="Node3D/ViewportModel/Control/SVContainer/Viewport/Model"]
+transform = Transform3D(1, -1.07646e-06, 3.61759e-05, 0, 0.999558, 0.029743, -3.61919e-05, -0.029743, 0.999558, -0.278266, 1.03421, 2.41078)
+
+[node name="Mesh" type="MeshInstance3D" parent="Node3D/ViewportModel/Control/SVContainer/Viewport/Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.051226, 0.775261, 1.92116)
+mesh = SubResource("TextMesh_5ab7h")
+skeleton = NodePath("../..")
+
+[node name="Camera" type="Camera3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.5)
+current = true
+fov = 90.0
+
+[node name="Player" type="CharacterBody3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("1_4lk8n")
+
+[node name="Collision" type="CollisionShape3D" parent="Node3D/Player"]
+shape = SubResource("CapsuleShape3D_8xcek")
+
+[node name="Mesh" type="MeshInstance3D" parent="Node3D/Player"]
+mesh = SubResource("CapsuleMesh_y0axr")
+skeleton = NodePath("")
+
+[node name="Pivot" type="Node3D" parent="Node3D/Player"]
+
+[node name="Script" type="Node" parent="Node3D/Player"]
+script = ExtResource("1_io7hk")
+metadata/Enabled = false
+
+[node name="Script2" type="Node" parent="Node3D/Player"]
+script = ExtResource("2_xkty6")
+metadata/Enabled = false
+
+[node name="CameraScript" type="Node" parent="Node3D/Player"]
+script = ExtResource("1_xddda")
+metadata/Enabled = false
+
+[node name="Camera2" type="Camera3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 8.4624)
+
+[node name="Floor" type="StaticBody3D" parent="Node3D"]
+transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 0, -7.51245, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/Floor"]
+shape = SubResource("BoxShape3D_j1e05")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D/Floor"]
+mesh = SubResource("BoxMesh_xknod")
+surface_material_override/0 = SubResource("StandardMaterial3D_qqeip")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, -0.284852, 0.958572, 0, -0.958572, -0.284852, 0, 21.4164, -5.50887)
+light_energy = 1.465
+shadow_enabled = true
+spot_range = 4096.0
+spot_attenuation = -0.1
+
+[node name="CameraSwitchScript" type="Node" parent="Node3D"]
+script = ExtResource("5_olp1u")
+
+[node name="Audios" type="Node3D" parent="Node3D"]
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Node3D/Audios"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.60103, 0, 4.32475)
+stream = ExtResource("7_k2c4j")
+attenuation_model = 2
+autoplay = true
+max_distance = 4.0
+parameters/looping = true
+
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Node3D/Audios"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.24936, 0, 4.32475)
+stream = ExtResource("7_k2c4j")
+attenuation_model = 2
+autoplay = true
+max_distance = 4.0
+parameters/looping = true
+
+[node name="AudioStreamPlayer3D3" type="AudioStreamPlayer3D" parent="Node3D/Audios"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.24936, 0, -2.81763)
+stream = ExtResource("7_k2c4j")
+attenuation_model = 2
+autoplay = true
+max_distance = 4.0
+parameters/looping = true
+
+[node name="AudioStreamPlayer3D4" type="AudioStreamPlayer3D" parent="Node3D/Audios"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.57504, 0, -2.81763)
+stream = ExtResource("7_k2c4j")
+attenuation_model = 2
+autoplay = true
+max_distance = 4.0
+parameters/looping = true
+
+[node name="World" type="WorldEnvironment" parent="Node3D"]
+environment = SubResource("Environment_0qt1g")

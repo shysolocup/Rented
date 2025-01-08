@@ -79,7 +79,7 @@ public partial class Player : CharacterBody3D
 		return t;
 	}
 
-	public Tween CrouchEffect(string name, float zoom = 0, float speed = 0, )
+	public Tween CrouchEffect(string name, float zoom = 0, float speed = 0)
 	{
 		Tween t = (Tween)Get(name);
 
@@ -92,7 +92,7 @@ public partial class Player : CharacterBody3D
 		Set(name, t);
 
 		t.TweenProperty(this, new NodePath("walk_speed"), speed, 1);
-		t.TweenProperty(camera, "fov", zoom);
+		t.TweenProperty(camera, "fov", zoom, 1);
 
 		t.Finished += () => CrouchEffect(name, speed, zoom);
 

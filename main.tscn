@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://s0ftqrddh5up"]
+[gd_scene load_steps=16 format=3 uid="uid://s0ftqrddh5up"]
 
 [ext_resource type="Script" path="res://Player.cs" id="1_4lk8n"]
 [ext_resource type="Script" path="res://Script.cs" id="1_io7hk"]
@@ -7,15 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://dcthcg547baj0" path="res://david bazookie.png" id="5_attqr"]
 [ext_resource type="Script" path="res://CameraSwitchScript.cs" id="5_olp1u"]
 [ext_resource type="AudioStream" uid="uid://nvube6beo7t" path="res://its happening david bazookie.mp3" id="7_k2c4j"]
-
-[sub_resource type="Environment" id="Environment_3vp5v"]
-ambient_light_source = 2
-ambient_light_color = Color(0.728822, 0.728822, 0.728822, 1)
-ambient_light_energy = 2.8
-
-[sub_resource type="TextMesh" id="TextMesh_5ab7h"]
-text = "guh
-"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8xcek"]
 
@@ -52,51 +43,6 @@ adjustment_saturation = 1.34
 [node name="Node" type="Node"]
 
 [node name="Node3D" type="Node3D" parent="."]
-
-[node name="ViewportModel" type="CanvasLayer" parent="Node3D"]
-
-[node name="Control" type="Control" parent="Node3D/ViewportModel"]
-layout_mode = 3
-anchors_preset = 0
-
-[node name="SVContainer" type="SubViewportContainer" parent="Node3D/ViewportModel/Control"]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 1.0
-offset_top = -1.0
-offset_right = 1152.0
-offset_bottom = 646.0
-grow_horizontal = 0
-grow_vertical = 0
-focus_mode = 0
-mouse_filter = 2
-stretch = true
-
-[node name="Viewport" type="SubViewport" parent="Node3D/ViewportModel/Control/SVContainer"]
-own_world_3d = true
-transparent_bg = true
-handle_input_locally = false
-use_occlusion_culling = true
-gui_disable_input = true
-size = Vector2i(1151, 647)
-render_target_update_mode = 4
-
-[node name="World" type="WorldEnvironment" parent="Node3D/ViewportModel/Control/SVContainer/Viewport"]
-environment = SubResource("Environment_3vp5v")
-
-[node name="Model" type="Node3D" parent="Node3D/ViewportModel/Control/SVContainer/Viewport"]
-
-[node name="Camera" type="Camera3D" parent="Node3D/ViewportModel/Control/SVContainer/Viewport/Model"]
-transform = Transform3D(1, -1.07646e-06, 3.61759e-05, 0, 0.999558, 0.029743, -3.61919e-05, -0.029743, 0.999558, -0.278266, 1.03421, 2.41078)
-
-[node name="Mesh" type="MeshInstance3D" parent="Node3D/ViewportModel/Control/SVContainer/Viewport/Model"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.051226, 0.775261, 1.92116)
-mesh = SubResource("TextMesh_5ab7h")
-skeleton = NodePath("../..")
 
 [node name="Camera" type="Camera3D" parent="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.5)

@@ -1,6 +1,8 @@
 using Godot;
+using Godot.Collections;
 using System;
-using System.Linq;
+using System.Collections.Generic;
+
 
 public partial class Player : CharacterBody3D
 {
@@ -16,23 +18,45 @@ public partial class Player : CharacterBody3D
 	public float walk_speed = 3; // m/s
 	
 	[Export(PropertyHint.Range, "1,35,1")]
-	public float sprint_speed = 10; // m/s
+	public float sprint_speed = 5; // m/s
 
 	[Export(PropertyHint.Range, "10,400,1")]
 	public float acceleration = 100; // m/s^2
 
 	[Export(PropertyHint.Range, "0.1,3.0,0.1")]
-	public float jump_height = 1; // m
+	public float jump_height = 0.5f; // m
 
 	[Export(PropertyHint.Range, "0.1,3.0,0.1,or_greater")]
 	public float camera_sens = 1;
 
+	[Export]
+	public bool tabbed_in = true;
 
-	public bool jumping = false;
-	public bool sprinting = false;
-	public bool crouching = false;
+	public bool _jumping = false;
+	public bool _sprinting = false;
+	public bool _crouching = false;
+
+	[Export]
+	public bool jumping {
+		get { return _jumping; }
+		set { _jumping = value; changed("jumping", value); }
+	}
+
+	[Export]
+	public bool sprinting {
+		get { return _sprinting; }
+		set { _sprinting = value; changed("sprinting", value); }
+	}
+
+	[Export]
+	public bool crouching {
+		get { return _crouching; }
+		set { _crouching = value; changed("crouching", value); }
+	}
+	
 	public bool mouse_captured = false;
 
+	[Export]
 	public float gravity = (float)ProjectSettings.GetSetting("physics/3d/default_gravity");
 
 	public Vector2 move_dir; // Input direction for movement
@@ -49,67 +73,95 @@ public partial class Player : CharacterBody3D
 	public Tween tiltRight;
 	public Tween tiltBack;
 
+	[Export]
 	public float base_fov;
+	[Export]
+	public float crouch_speed = 1;
 	
 	public Tween crouchIn;
-	public Tween crouchOut; 
+	public Tween crouchOut;
 
+	[Export]
 	public float tiltRot = 2;
 
 	public Camera3D camera;
 
 	public Variant nullvar = new Variant();
 
+	public bool ActionCooldown = false;
 
-	public Tween FuckSpeed(string name, float speed = 0)
-	{
-		Tween t = (Tween)Get(name);
+	[Export]
+	public float sprintFovMod = 15;
 
-		if (t != null) {
-			t.Kill();
-			Set(name, nullvar);
-		};
-
-		t = CreateTween();
-		Set(name, t);
-
-		t.TweenProperty(this, new NodePath("walk_speed"), speed, 1);
-		t.Finished += () => FuckSpeed(name, speed);
-
-		return t;
-	}
-
-	public Tween CrouchEffect(string name, float zoom = 0, float speed = 0)
-	{
-		Tween t = (Tween)Get(name);
-
-		if (t != null) {
-			t.Kill();
-			Set(name, nullvar);
-		};
-
-		t = CreateTween();
-		Set(name, t);
-
-		t.TweenProperty(this, new NodePath("walk_speed"), speed, 1);
-		t.TweenProperty(camera, "fov", zoom, 1);
-
-		t.Finished += () => CrouchEffect(name, speed, zoom);
-
-		return t;
-	}
+	[Export]
+	public float crouchFovMod = -20;
+	
 
 	public override void _Ready()
-	{
+	{	
 		camera = GetParent().GetNode(new NodePath("Camera")) as Camera3D;
 		base_fov = camera.GetFov();
 		capture_mouse();
 
-		FuckSpeed("speedIn", sprint_speed);
-		FuckSpeed("speedOut", base_walk_speed);
+		FuckSpeed("speedIn", sprintFovMod, sprint_speed, 1.5f);
+		FuckSpeed("speedOut", 0, base_walk_speed, 0.5f);
 
-		CrouchEffect("crouchIn", base_fov+10);
-		CrouchEffect("crouchIn", base_fov);
+		CrouchEffect("crouchIn", crouchFovMod, crouch_speed, 0.5f);
+		CrouchEffect("crouchOut", 0, base_walk_speed, 1);
+	}
+
+
+	// values handler for crouching and sprinting so when the value is changed it automatically updates
+	private void changed(string property, Variant value)
+	{
+		// crouching
+		if (property == "crouching" && (bool)value == true) {
+			if (speedIn.IsRunning()) speedIn.Stop();
+			if (speedOut.IsRunning()) speedOut.Stop();
+			if (crouchOut.IsRunning()) crouchOut.Stop();
+
+			if (!crouchIn.IsRunning()) crouchIn.Play();
+		}
+		else if (property == "crouching" && (bool)value == false) {
+			if (crouchIn.IsRunning()) crouchIn.Stop();
+			if (!crouchOut.IsRunning()) crouchOut.Play();
+		}
+
+		// sprinting
+		else if (property == "sprinting" && (bool)value == true) {
+			if (crouchIn.IsRunning()) crouchIn.Stop();
+			if (crouchOut.IsRunning()) crouchOut.Stop();
+
+			if (speedOut.IsRunning()) speedOut.Stop();
+			if (!speedIn.IsRunning()) speedIn.Play();
+		}
+		else if (property == "sprinting" && (bool)value == false) {
+			if (speedIn.IsRunning()) speedIn.Stop();
+			if (!speedOut.IsRunning()) speedOut.Play();
+		}
+	}
+
+	public override void _Notification(int what)
+	{
+		if (what == NotificationWMWindowFocusIn) {
+			tabbed_in = true;
+		}
+		else if (what == NotificationWMWindowFocusOut) {
+			tabbed_in = false;
+
+			crouching = false;
+			sprinting = false;
+
+			if (crouchIn.IsRunning()) crouchIn.Stop();
+			if (crouchOut.IsRunning()) crouchOut.Stop();
+			
+			if (speedIn.IsRunning()) speedIn.Stop();
+			if (speedOut.IsRunning()) speedOut.Stop();
+
+			if (tiltRight.IsRunning()) tiltRight.Stop();
+			if (tiltBack.IsRunning()) tiltBack.Stop();
+			if (tiltLeft.IsRunning()) tiltLeft.Stop();
+		}
 	}
 
 	public override void _Process(double delta)
@@ -123,21 +175,6 @@ public partial class Player : CharacterBody3D
 		if (mouse_captured) _handle_joypad_camera_rotation(d);
 		Velocity = _move(d) + _gravity(d) + _jump(d);
 		MoveAndSlide();
-	}
-
-	public Tween Tilt(string name, float degrees = 0, float time = 0.2f)
-	{
-		if (tiltRight != null) { tiltRight.Kill(); tiltRight = null; }
-		if (tiltBack != null) { tiltBack.Kill(); tiltBack = null; }
-		if (tiltLeft != null) { tiltLeft.Kill(); tiltLeft = null; }
-
-		Tween t = CreateTween();
-		Set(name, t);
-		t.SetTrans(Tween.TransitionType.Quad);
-		t.TweenProperty(camera, "rotation_degrees:z", degrees, time);
-		t.Finished += () => t.Kill(); Set(name, nullvar);
-
-		return t;
 	}
 
 	public override void _UnhandledInput(InputEvent @event)
@@ -161,29 +198,31 @@ public partial class Player : CharacterBody3D
 			Tilt("tiltRight", -tiltRot, 0.2f).Play();
 		}
 		
-		if (!sprinting && !crouching && Input.IsActionPressed("Sprint") && Input.IsActionPressed("MoveForward")) {
+		if (!ActionCooldown && !sprinting && !crouching && Input.IsActionPressed("Sprint") && Input.IsActionPressed("MoveForward")) {
 			sprinting = true;
-			if (speedOut.IsRunning()) speedOut.Stop();
-			if (!speedIn.IsRunning()) speedIn.Play();
 		}
 		else if (sprinting && (Input.IsActionJustReleased("Sprint") || Input.IsActionJustReleased("MoveForward"))) {
 			sprinting = false;
-			if (speedIn.IsRunning()) speedIn.Stop();
-			if (!speedOut.IsRunning()) speedOut.Play();
+
+			ActionCooldown = true;
+			SceneTreeTimer timer = GetTree().CreateTimer(0.25f);
+			timer.Timeout += () => ActionCooldown = false;
 		}
 
-		if (!sprinting && !crouching && Input.IsActionPressed("Crouch")) {
+		if (!ActionCooldown && !sprinting && !crouching && IsOnFloor() && Input.IsActionPressed("Crouch")) {
 			crouching = true;
-			if (crouchOut.IsRunning()) crouchOut.Stop();
-			if (!crouchIn.IsRunning()) crouchIn.Play();
 		}
-		else if (crouching && (Input.IsActionJustReleased("Crouch"))) {
+		else if (crouching && Input.IsActionJustReleased("Crouch")) {
 			crouching = false;
-			if (crouchIn.IsRunning()) crouchIn.Stop();
-			if (!crouchOut.IsRunning()) crouchOut.Play();
+
+			ActionCooldown = true;
+			SceneTreeTimer timer = GetTree().CreateTimer(0.25f);
+			timer.Timeout += () => ActionCooldown = false;
 		}
 
-		if (Input.IsActionPressed("Jump")) jumping = true;
+		if (Input.IsActionPressed("Jump") && !crouching) {
+			jumping = true;
+		}
 		// if (Input.IsActionJustPressed("Exit")) GetTree().Quit();
 	}
 
@@ -250,5 +289,70 @@ public partial class Player : CharacterBody3D
 
 		jump_vel = IsOnFloor() ? Vector3.Zero : jump_vel.MoveToward(Vector3.Zero, gravity * delta);
 		return jump_vel;
+	}
+
+	public Tween FuckSpeed(string name, float zoommod = 0, float speed = 0, float time = 0)
+	{
+		Tween t = (Tween)Get(name);
+
+		if (t != null) {
+			t.Kill();
+			Set(name, nullvar);
+		};
+
+		t = CreateTween();
+		Set(name, t);
+
+		t.Parallel().TweenProperty(this, new NodePath("walk_speed"), speed, time);
+		t.Parallel().TweenProperty(camera, "fov", base_fov+zoommod, time);
+		t.Finished += () => FuckSpeed(name, zoommod, speed, time);
+
+		t.Stop();
+
+		return t;
+	}
+
+	public Tween CrouchEffect(string name, float zoommod = 0, float speed = 0, float scale = 0)
+	{
+		Tween t = (Tween)Get(name);
+
+		if (t != null) {
+			t.Kill();
+			Set(name, nullvar);
+		};
+
+		t = CreateTween();
+		Set(name, t);
+
+		t.SetTrans(Tween.TransitionType.Cubic);
+
+		t.Parallel().TweenProperty(this, new NodePath("walk_speed"), speed, 0.5f);
+		t.Parallel().TweenProperty(camera, "fov", base_fov+zoommod, 0.5f);
+		t.Parallel().TweenProperty(this, "scale:y", scale, 0.7f);
+
+		t.Finished += () => CrouchEffect(name, zoommod, speed, scale);
+
+		t.Stop();
+
+		return t;
+	}
+
+	public Tween Tilt(string name, float degrees = 0, float time = 0.2f)
+	{
+		if (tiltRight != null) { tiltRight.Kill(); tiltRight = null; }
+		if (tiltBack != null) { tiltBack.Kill(); tiltBack = null; }
+		if (tiltLeft != null) { tiltLeft.Kill(); tiltLeft = null; }
+
+		Tween t = CreateTween();
+		Set(name, t);
+
+		t.SetTrans(Tween.TransitionType.Quad);
+		t.TweenProperty(camera, "rotation_degrees:z", degrees, time);
+
+		t.Finished += () => t.Kill(); Set(name, nullvar);
+
+		t.Stop();
+
+		return t;
 	}
 }

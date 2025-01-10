@@ -3,7 +3,7 @@ import os
 
 basedir = sys.argv[1];
 
-logrefdir = basedir + "logref.md";
+logrefdir = basedir + ".logref.md";
 
 username = sys.argv[2];
 useremail = sys.argv[3];
@@ -17,7 +17,7 @@ print(username, useremail, commitmsg, repolink);
 commands = [
     'echo os is running',  
     'git add {0}'.format(logrefdir),
-    'git commit -m "{0} & Refreshed logref.md" {1}'.format(commitmsg, logrefdir),
+    'git commit -m "{0} & Refreshed .logref.md" {1}'.format(commitmsg, logrefdir),
     'git push',
     'git status'
 ];

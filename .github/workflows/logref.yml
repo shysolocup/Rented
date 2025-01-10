@@ -5,7 +5,7 @@ name: update logref
 on:
   push:
     paths:
-      - logs/**
+      - .logs/**
       - .github/workflows/**
 
 

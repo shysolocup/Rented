@@ -39,7 +39,7 @@ let blob = `${repo}/blob/${branch}/logs`;
 
 let sep = (__dirname.includes("/")) ? "/" : "\\";
 
-let repodir = __dirname.replace( ([ ".github", "workflows", "logs", "scripts"].join(sep)), "");
+let repodir = __dirname.replace( ([ ".github", "workflows", "scripts"].join(sep)), "");
 let dir = `${repodir}logs`;
 let logrefdir = `${repodir}logref.md`;
 

@@ -16,22 +16,22 @@ public partial class RbxScript : Node
 		set { 
 			var old = _enabled;
 			_enabled = value; 
-			EmitSignal(SignalName.EnabledChanged, old, value); 
+			if (old != value) EmitSignal(SignalName.EnabledChanged, old, value); 
 		}
 	}
 
-	public CSharpScript _source { get; set;}
+	public CSharpScript _source { get; set; }
 
 	[Export] public CSharpScript Source {
 		get { return _source; }
 		set {
 			var old = _source;
 			_source = value;
-			EmitSignal(SignalName.SourceChanged, old, value); 
+			if (old != value) EmitSignal(SignalName.SourceChanged, old, value); 
 		}
 	}
 
-	[Export] public Node Loaded;
+	private Node Loaded;
 	private Variant nullvar = new Variant();
 
 
@@ -40,10 +40,8 @@ public partial class RbxScript : Node
 		var oldinstance = GetNodeOrNull(loadedName);
 		if (oldinstance != null) RemoveChild(oldinstance);
 
-		GD.Print(loadedName.ToString());
-
-		Loaded = (Node)Source.New();
-		Loaded.Name = "LoadedScript";
+		Loaded = (Node)source.New();
+		Loaded.Name = loadedName.ToString();
 		
 		AddChild(Loaded);
 
@@ -53,8 +51,6 @@ public partial class RbxScript : Node
 
 	private void HandleEnabledChange(bool oldVal, bool newVal)
 	{
-		if (oldVal == newVal) return;
-
 		if (newVal == true) {
 			AttachScript(Source);
 		}
@@ -68,6 +64,8 @@ public partial class RbxScript : Node
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{	
+		EnabledChanged += HandleEnabledChange;
+
 		Set("Loaded", nullvar);
 
 		if (Source != null && Enabled) {

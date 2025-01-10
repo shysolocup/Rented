@@ -1,7 +1,6 @@
 using Godot;
 using System;
 
-[GlobalClass]
 public partial class rbxscriptest : RbxScript
 {
 
@@ -13,6 +12,6 @@ public partial class rbxscriptest : RbxScript
 
 	public override void _Process(double delta)
 	{
-		GD.Print("b");
+		// GD.Print("b");
 	}
 }

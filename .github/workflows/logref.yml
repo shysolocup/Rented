@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v4  
 
       - name: Remove lock file because github SUCKS
-        run: rm -f.git/index.lock
+        run: rm -f ./.git/index.lock
 
   refresh-logref:
     needs: prep

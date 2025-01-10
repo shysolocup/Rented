@@ -6,9 +6,7 @@ on:
   push:
     paths:
       - logs/**
-      - .github/workflows/logs/**
-      - .github/workflows/logref.yml
-      - .github/workflows/scripts/logref.js
+      - .github/workflows/**
 
 jobs:
   refresh-logref:

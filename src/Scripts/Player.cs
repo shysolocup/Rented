@@ -78,6 +78,8 @@ public partial class Player : CharacterBody3D
 	[Export] public float sprintFovMod = 15;
 
 	[Export] public float crouchFovMod = -20;
+
+	[Export] public Panel console;
 	
 
 	public override void _Ready()
@@ -91,6 +93,8 @@ public partial class Player : CharacterBody3D
 
 		CrouchEffect("crouchIn", crouchFovMod, crouch_speed, 0.5f);
 		CrouchEffect("crouchOut", 0, base_walk_speed, 1);
+
+		// console = GetTree().
 	}
 
 
@@ -150,6 +154,8 @@ public partial class Player : CharacterBody3D
 	public override void _Process(double delta)
 	{
 		if (camera != null) camera.Position = Position;
+
+
 	}
 
 	public override void _PhysicsProcess(double delta)

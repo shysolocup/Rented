@@ -439,6 +439,8 @@ static func hide_console(showStats:bool=false, showMiniLog:bool=false):
 	await console.get_tree().create_timer(0.01).timeout
 	console.miniLog.scroll_vertical = console.miniLogScrollBar.max_value
 	
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED;
+	
 	if console.pauseOnOpen: console.get_tree().paused = false
 
 static func show_console():
@@ -446,6 +448,8 @@ static func show_console():
 	console.consolePanel.visible = true
 	console.stats.visible = true
 	console.miniLog.visible = false
+	
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE;
 	
 	if console.pauseOnOpen: console.get_tree().paused = true
 

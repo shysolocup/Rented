@@ -1,6 +1,6 @@
 [gd_resource type="Environment" load_steps=4 format=3 uid="uid://buyjdi7cmy3ta"]
 
-[ext_resource type="Texture2D" uid="uid://dvo6mkgo6yiv7" path="res://Images/stars.png" id="1_0rncx"]
+[ext_resource type="Texture2D" uid="uid://dvo6mkgo6yiv7" path="res://src/Images/stars.png" id="1_0rncx"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rwo6p"]
 sky_top_color = Color(0.0119814, 0.000941551, 0.0476313, 1)

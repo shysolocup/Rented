@@ -11,17 +11,14 @@ config_version=5
 [application]
 
 config/name="guh"
-run/main_scene="res://main.tscn"
+run/main_scene="res://src/Scenes/main.tscn"
 config/features=PackedStringArray("4.3", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
 debug_console="*res://addons/copper_dc/debug_console.tscn"
-RbxScript="*res://Modules/RbxScript.cs"
-FreeuseTween="*res://Modules/FreeuseTween.cs"
 RuntimeDebugTools="*res://addons/runtime_debug_tools/scenes/remote_inspector.tscn"
-Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 
 [dialogic]
 
@@ -34,7 +31,7 @@ project/assembly_name="guh"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/copper_dc/plugin.cfg", "res://addons/dialogic/plugin.cfg", "res://addons/runtime_debug_tools/plugin.cfg")
+enabled=PackedStringArray("res://addons/copper_dc/plugin.cfg", "res://addons/runtime_debug_tools/plugin.cfg")
 
 [input]
 

@@ -8,8 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://dcthcg547baj0" path="res://src/Images/david bazookie.png" id="6_yaysw"]
 [ext_resource type="Script" path="res://src/Scripts/CameraSwitchScript.cs" id="7_gf62h"]
 [ext_resource type="AudioStream" uid="uid://nvube6beo7t" path="res://src/Sfx/its happening david bazookie.mp3" id="8_msmgq"]
-[ext_resource type="FontFile" path="res://Fonts/wingding.ttf" id="9_3hxnu"]
-[ext_resource type="Environment" path="res://Skies/Day.tres" id="9_hrp8o"]
+[ext_resource type="FontFile" uid="uid://udj7yj8i0yar" path="res://src/Fonts/wingding.ttf" id="9_3hxnu"]
+[ext_resource type="Environment" uid="uid://d4kl3puo0e8dw" path="res://src/Skies/Day.tres" id="9_hrp8o"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8xcek"]
 

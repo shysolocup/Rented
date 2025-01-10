@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dil1eoqfptddt"
-path="res://.godot/imported/Script.png-f517c8a49461541f87e6a18a3f7f3cef.ctex"
+uid="uid://bp8kvonn0shg4"
+path="res://.godot/imported/Logo_of_Geometry_Dash.svg.png-7190453b5b69f1ce655dd883b0dc3049.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Images/Script.png"
-dest_files=["res://.godot/imported/Script.png-f517c8a49461541f87e6a18a3f7f3cef.ctex"]
+source_file="res://src/Images/Logo_of_Geometry_Dash.svg.png"
+dest_files=["res://.godot/imported/Logo_of_Geometry_Dash.svg.png-7190453b5b69f1ce655dd883b0dc3049.ctex"]
 
 [params]
 

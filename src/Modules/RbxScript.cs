@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-[GlobalClass, Icon("res://Images/Script.png")]
+[GlobalClass, Icon("res://src/Images/Script.png")]
 public partial class RbxScript : Node
 {
 

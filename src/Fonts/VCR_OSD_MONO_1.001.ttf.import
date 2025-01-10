@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://ct4wmtajcu3lp"
-path="res://.godot/imported/webdings.ttf-aa9a746941ac091a3761a1ea72c33528.fontdata"
+uid="uid://b0akc6m4kwewi"
+path="res://.godot/imported/VCR_OSD_MONO_1.001.ttf-d214b64a516efa0198c07baa82af514d.fontdata"
 
 [deps]
 
-source_file="res://Fonts/webdings.ttf"
-dest_files=["res://.godot/imported/webdings.ttf-aa9a746941ac091a3761a1ea72c33528.fontdata"]
+source_file="res://src/Fonts/VCR_OSD_MONO_1.001.ttf"
+dest_files=["res://.godot/imported/VCR_OSD_MONO_1.001.ttf-d214b64a516efa0198c07baa82af514d.fontdata"]
 
 [params]
 

@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://udj7yj8i0yar"
-path="res://.godot/imported/wingding.ttf-d181097818d014a4e075b3a552e4c956.fontdata"
+path="res://.godot/imported/wingding.ttf-b2ad6d4bc1342727e62552ccc2ff55cb.fontdata"
 
 [deps]
 
-source_file="res://Fonts/wingding.ttf"
-dest_files=["res://.godot/imported/wingding.ttf-d181097818d014a4e075b3a552e4c956.fontdata"]
+source_file="res://src/Fonts/wingding.ttf"
+dest_files=["res://.godot/imported/wingding.ttf-b2ad6d4bc1342727e62552ccc2ff55cb.fontdata"]
 
 [params]
 

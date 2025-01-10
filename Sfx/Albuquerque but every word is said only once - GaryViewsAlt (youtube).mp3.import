@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://6llqp60fu6gf"
+path="res://.godot/imported/Albuquerque but every word is said only once - GaryViewsAlt (youtube).mp3-5d50a1b39f02e7e2b9fd89019850e8b8.mp3str"
+
+[deps]
+
+source_file="res://Sfx/Albuquerque but every word is said only once - GaryViewsAlt (youtube).mp3"
+dest_files=["res://.godot/imported/Albuquerque but every word is said only once - GaryViewsAlt (youtube).mp3-5d50a1b39f02e7e2b9fd89019850e8b8.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

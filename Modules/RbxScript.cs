@@ -1,10 +1,9 @@
 using Godot;
 using System;
 
-[GlobalClass, Icon("res://Script.png")]
+[GlobalClass, Icon("res://Images/Script.png")]
 public partial class RbxScript : Node
 {
-	private NodePath loadedName = new NodePath("LoadedScript");
 
 	[Signal] public delegate void EnabledChangedEventHandler(bool oldValue, bool newValue);
 	[Signal] public delegate void SourceChangedEventHandler(bool oldValue, bool newValue);
@@ -31,21 +30,25 @@ public partial class RbxScript : Node
 		}
 	}
 
-	private Node Loaded;
+	[Export] private Node SpawnedNode;
 	private Variant nullvar = new Variant();
+
+	[Export] public NodePath SpawnedNodeNode;
 
 
 	public Node AttachScript(CSharpScript source)
 	{
-		var oldinstance = GetNodeOrNull(loadedName);
-		if (oldinstance != null) RemoveChild(oldinstance);
+		if (SpawnedNode != null) {
+			GetParent().RemoveChild(SpawnedNode);
+			SpawnedNode = null;
+		}
 
-		Loaded = (Node)source.New();
-		Loaded.Name = loadedName.ToString();
+		SpawnedNode = (Node)source.New();
+		SpawnedNode.Name = SpawnedNodeNode.ToString();
 		
-		AddChild(Loaded);
+		GetParent().CallDeferred("add_child", SpawnedNode);
 
-		return Loaded;
+		return SpawnedNode;
 	}
 
 
@@ -55,8 +58,10 @@ public partial class RbxScript : Node
 			AttachScript(Source);
 		}
 		else {
-			var instance = GetNodeOrNull(loadedName);
-			if (instance != null) RemoveChild(instance);
+			if (SpawnedNode != null) {
+				GetParent().RemoveChild(SpawnedNode);
+				SpawnedNode = null;
+			}
 		}
 	}
 	
@@ -65,8 +70,9 @@ public partial class RbxScript : Node
 	public override void _Ready()
 	{	
 		EnabledChanged += HandleEnabledChange;
+		SpawnedNodeNode = new NodePath($"{Name}Source");
 
-		Set("Loaded", nullvar);
+		Set("SpawnedNode", nullvar);
 
 		if (Source != null && Enabled) {
 			AttachScript(Source);

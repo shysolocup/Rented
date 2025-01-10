@@ -11,8 +11,6 @@ public partial class Script : Node
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		if (!(bool)GetMeta("Enabled")) return;
-
 		var guh = GetParent() as CharacterBody3D;
 		var mesh = GetNodeChild(guh, "Mesh") as MeshInstance3D;
 

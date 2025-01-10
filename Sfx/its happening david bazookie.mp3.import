@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://nvube6beo7t"
+path="res://.godot/imported/its happening david bazookie.mp3-a4b10a0324ed16dab11bd3f2ce2000a6.mp3str"
+
+[deps]
+
+source_file="res://Sfx/its happening david bazookie.mp3"
+dest_files=["res://.godot/imported/its happening david bazookie.mp3-a4b10a0324ed16dab11bd3f2ce2000a6.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

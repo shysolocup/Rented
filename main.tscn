@@ -1,14 +1,15 @@
-[gd_scene load_steps=18 format=3 uid="uid://s0ftqrddh5up"]
+[gd_scene load_steps=16 format=3 uid="uid://s0ftqrddh5up"]
 
-[ext_resource type="Script" path="res://Player.cs" id="1_4lk8n"]
-[ext_resource type="Script" path="res://Script.cs" id="1_io7hk"]
-[ext_resource type="Script" path="res://CameraScript.cs" id="1_xddda"]
-[ext_resource type="Script" path="res://RbxScript.cs" id="2_nvd8e"]
-[ext_resource type="Script" path="res://Script2.cs" id="2_xkty6"]
-[ext_resource type="Script" path="res://rbxscriptest.cs" id="3_0h58q"]
-[ext_resource type="Texture2D" uid="uid://dcthcg547baj0" path="res://david bazookie.png" id="5_attqr"]
-[ext_resource type="Script" path="res://CameraSwitchScript.cs" id="5_olp1u"]
-[ext_resource type="AudioStream" uid="uid://nvube6beo7t" path="res://its happening david bazookie.mp3" id="7_k2c4j"]
+[ext_resource type="Script" path="res://Scripts/Player.cs" id="1_n6jw6"]
+[ext_resource type="Script" path="res://Modules/RbxScript.cs" id="2_7hbm3"]
+[ext_resource type="Script" path="res://Scripts/Script.cs" id="3_m353x"]
+[ext_resource type="Script" path="res://Scripts/Script2.cs" id="4_6vrn2"]
+[ext_resource type="Script" path="res://Scripts/CameraSwitchScript.cs" id="4_g08ma"]
+[ext_resource type="Script" path="res://Scripts/CameraScript.cs" id="5_4lthe"]
+[ext_resource type="Texture2D" uid="uid://dcthcg547baj0" path="res://Images/david bazookie.png" id="6_h1ynq"]
+[ext_resource type="AudioStream" uid="uid://nvube6beo7t" path="res://Sfx/its happening david bazookie.mp3" id="8_cp5xy"]
+[ext_resource type="FontFile" uid="uid://udj7yj8i0yar" path="res://Fonts/wingding.ttf" id="9_3hxnu"]
+[ext_resource type="Environment" uid="uid://d4kl3puo0e8dw" path="res://Skies/Day.tres" id="9_hrp8o"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8xcek"]
 
@@ -19,28 +20,13 @@
 [sub_resource type="BoxMesh" id="BoxMesh_xknod"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qqeip"]
-albedo_texture = ExtResource("5_attqr")
+albedo_texture = ExtResource("6_h1ynq")
 heightmap_scale = 16.0
 heightmap_deep_parallax = true
 heightmap_min_layers = 8
 heightmap_max_layers = 32
 uv1_scale = Vector3(2, 2, 2)
 uv1_triplanar = true
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rwo6p"]
-sky_horizon_color = Color(0.710753, 0.636773, 0.616803, 1)
-ground_bottom_color = Color(0.203549, 0.213715, 0.225317, 1)
-
-[sub_resource type="Sky" id="Sky_u48bl"]
-sky_material = SubResource("ProceduralSkyMaterial_rwo6p")
-
-[sub_resource type="Environment" id="Environment_0qt1g"]
-background_mode = 2
-sky = SubResource("Sky_u48bl")
-ambient_light_source = 3
-glow_enabled = true
-adjustment_enabled = true
-adjustment_saturation = 1.34
 
 [node name="Node" type="Node"]
 
@@ -53,7 +39,7 @@ fov = 90.0
 
 [node name="Player" type="CharacterBody3D" parent="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-script = ExtResource("1_4lk8n")
+script = ExtResource("1_n6jw6")
 
 [node name="Collision" type="CollisionShape3D" parent="Node3D/Player"]
 shape = SubResource("CapsuleShape3D_8xcek")
@@ -64,32 +50,31 @@ skeleton = NodePath("")
 
 [node name="Pivot" type="Node3D" parent="Node3D/Player"]
 
-[node name="Script3" type="Node" parent="Node3D/Player"]
-script = ExtResource("2_nvd8e")
-Source = ExtResource("3_0h58q")
-
 [node name="Script" type="Node" parent="Node3D/Player"]
-script = ExtResource("1_io7hk")
-metadata/Enabled = false
+script = ExtResource("2_7hbm3")
+Enabled = false
+Source = ExtResource("3_m353x")
 
 [node name="Script2" type="Node" parent="Node3D/Player"]
-script = ExtResource("2_xkty6")
-metadata/Enabled = false
+script = ExtResource("2_7hbm3")
+Enabled = false
+Source = ExtResource("4_6vrn2")
 
 [node name="CameraScript" type="Node" parent="Node3D/Player"]
-script = ExtResource("1_xddda")
-metadata/Enabled = false
+script = ExtResource("2_7hbm3")
+Enabled = false
+Source = ExtResource("5_4lthe")
 
 [node name="Camera2" type="Camera3D" parent="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 8.4624)
 
-[node name="Floor" type="StaticBody3D" parent="Node3D"]
+[node name="Baseplate" type="StaticBody3D" parent="Node3D"]
 transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 0, -7.51245, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/Floor"]
+[node name="Collision" type="CollisionShape3D" parent="Node3D/Baseplate"]
 shape = SubResource("BoxShape3D_j1e05")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D/Floor"]
+[node name="Mesh" type="MeshInstance3D" parent="Node3D/Baseplate"]
 mesh = SubResource("BoxMesh_xknod")
 surface_material_override/0 = SubResource("StandardMaterial3D_qqeip")
 
@@ -101,13 +86,15 @@ spot_range = 4096.0
 spot_attenuation = -0.1
 
 [node name="CameraSwitchScript" type="Node" parent="Node3D"]
-script = ExtResource("5_olp1u")
+script = ExtResource("2_7hbm3")
+Source = ExtResource("4_g08ma")
+SpawnedNodeNode = NodePath("")
 
 [node name="Audios" type="Node3D" parent="Node3D"]
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Node3D/Audios"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.60103, 0, 4.32475)
-stream = ExtResource("7_k2c4j")
+stream = ExtResource("8_cp5xy")
 attenuation_model = 2
 autoplay = true
 max_distance = 4.0
@@ -115,7 +102,7 @@ parameters/looping = true
 
 [node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Node3D/Audios"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.24936, 0, 4.32475)
-stream = ExtResource("7_k2c4j")
+stream = ExtResource("8_cp5xy")
 attenuation_model = 2
 autoplay = true
 max_distance = 4.0
@@ -123,7 +110,7 @@ parameters/looping = true
 
 [node name="AudioStreamPlayer3D3" type="AudioStreamPlayer3D" parent="Node3D/Audios"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.24936, 0, -2.81763)
-stream = ExtResource("7_k2c4j")
+stream = ExtResource("8_cp5xy")
 attenuation_model = 2
 autoplay = true
 max_distance = 4.0
@@ -131,11 +118,43 @@ parameters/looping = true
 
 [node name="AudioStreamPlayer3D4" type="AudioStreamPlayer3D" parent="Node3D/Audios"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.57504, 0, -2.81763)
-stream = ExtResource("7_k2c4j")
+stream = ExtResource("8_cp5xy")
 attenuation_model = 2
 autoplay = true
 max_distance = 4.0
 parameters/looping = true
 
 [node name="World" type="WorldEnvironment" parent="Node3D"]
-environment = SubResource("Environment_0qt1g")
+environment = ExtResource("9_hrp8o")
+
+[node name="Control" type="Control" parent="Node3D"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Node3D/Control"]
+top_level = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -28.0
+offset_right = 28.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.843184, 0.843184, 0.843184, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/normal_font = ExtResource("9_3hxnu")
+theme_override_font_sizes/normal_font_size = 45
+text = "ab"
+fit_content = true
+scroll_active = false

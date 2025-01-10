@@ -164,7 +164,7 @@ console.log(fs.readFileSync(logrefdir, 'utf8'));
 const commands = [
     'echo os is running',
     `git add ${logrefdir}`,
-    'rm -f *index.lock'
+    'rm -f *index.lock',
     `git commit -m "${commitmsg} & Refreshed logref.md" ${logrefdir}`,
     'git push',
     'git status'

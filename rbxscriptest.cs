@@ -10,4 +10,9 @@ public partial class rbxscriptest : RbxScript
 	{
 		GD.Print("a");
 	}
+
+	public override void _Process(double delta)
+	{
+		GD.Print("b");
+	}
 }

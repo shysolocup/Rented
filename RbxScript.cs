@@ -32,6 +32,7 @@ public partial class RbxScript : Node
 	[Export] public Node Loaded;
 	private Variant nullvar = new Variant();
 
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{	

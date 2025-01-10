@@ -20,6 +20,7 @@ jobs:
       - name: Remove lock file because github SUCKS
         run: rm -f *index.lock
 
+        
   refresh-logref:
     needs: prep
     runs-on: ubuntu-latest

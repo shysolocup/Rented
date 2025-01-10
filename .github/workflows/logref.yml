@@ -8,6 +8,7 @@ on:
       - logs/**
       - .github/workflows/logs/**
       - .github/workflows/logref.yml
+      - .github/workflows/scripts/logref.js
 
 jobs:
   refresh-logref:

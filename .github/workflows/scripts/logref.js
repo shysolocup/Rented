@@ -1,6 +1,9 @@
 const fs = require('fs');
 const exec = require('node:util').promisify(require('node:child_process').exec);
 
+const spawn = require('node:child_process').spawn;
+const os = require('os');
+
 const getArgs = () =>
   process.argv.reduce((args, arg) => {
     // long arg
@@ -161,10 +164,11 @@ fs.writeFileSync(logrefdir, content);
 
 console.log(fs.readFileSync(logrefdir, 'utf8'));
 
-const commands = [
+/*const commands = [
     'echo os is running',
     `git add ${logrefdir}`,
     'rm -f *index.lock',
+    'rm --force *index.lock',
     `git commit -m "${commitmsg} & Refreshed logref.md" ${logrefdir}`,
     'git push',
     'git status'
@@ -181,4 +185,21 @@ commands.forEach( async cmd => {
     const { stdout, stderr } = await exec(cmd);
     console.log('stdout:', stdout);
     console.error('stderr:', stderr);
+});
+*/
+
+
+const platform = os.platform();
+const pytext = (platform.includes("win")) ? "py" : "python";
+
+const pythonProcess = spawn(pytext, [ `${__dirname}/logref.py`, basedir, username, useremail, commitmsg, repo ]);
+
+pythonProcess.stdout.on('data', (data) => {
+  console.log(data.toString());
+});
+
+pythonProcess.stderr.on('data', (data) => {
+  let err = data.toString();
+  
+  console.log(`ERR!: ${err}`);
 });

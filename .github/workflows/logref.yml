@@ -9,20 +9,8 @@ on:
       - .github/workflows/**
 
 
-jobs:
-  prep:
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: Check out the repository to the runner
-        uses: actions/checkout@v4  
-
-      - name: Remove lock file because github SUCKS
-        run: rm -f *index.lock
-
-        
+jobs:   
   refresh-logref:
-    needs: prep
     runs-on: ubuntu-latest
     
     defaults:

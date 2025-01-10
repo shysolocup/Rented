@@ -8,63 +8,51 @@ public partial class Player : CharacterBody3D
 {
 
 	[ExportCategory("Player")]
-	[Export(PropertyHint.Range, "1,35,1")]
-	public float speed = 10; // m/s
+	[Export(PropertyHint.Range, "1,35,1")] public float speed = 10; // m/s
 
-	[Export(PropertyHint.Range, "1,35,1")]
-	public float base_walk_speed = 3; // m/s
+	[Export(PropertyHint.Range, "1,35,1")] public float base_walk_speed = 3; // m/s
 	
-	[Export(PropertyHint.Range, "1,35,1")]
-	public float walk_speed = 3; // m/s
+	[Export(PropertyHint.Range, "1,35,1")] public float walk_speed = 3; // m/s
 	
-	[Export(PropertyHint.Range, "1,35,1")]
-	public float sprint_speed = 5; // m/s
+	[Export(PropertyHint.Range, "1,35,1")] public float sprint_speed = 5; // m/s
 
-	[Export(PropertyHint.Range, "10,400,1")]
-	public float acceleration = 100; // m/s^2
+	[Export(PropertyHint.Range, "10,400,1")] public float acceleration = 100; // m/s^2
 
-	[Export(PropertyHint.Range, "0.1,3.0,0.1")]
-	public float jump_height = 0.5f; // m
+	[Export(PropertyHint.Range, "0.1,3.0,0.1")] public float jump_height = 0.5f; // m
 
-	[Export(PropertyHint.Range, "0.1,3.0,0.1,or_greater")]
-	public float camera_sens = 1;
+	[Export(PropertyHint.Range, "0.1,3.0,0.1,or_greater")] public float camera_sens = 1;
 
-	[Export]
-	public bool tabbed_in = true;
+	[Export] public bool tabbed_in = true;
 
 	public bool _jumping = false;
 	public bool _sprinting = false;
 	public bool _crouching = false;
 
-	[Export]
-	public bool jumping {
+	[Export] public bool jumping {
 		get { return _jumping; }
 		set { _jumping = value; changed("jumping", value); }
 	}
 
-	[Export]
-	public bool sprinting {
+	[Export] public bool sprinting {
 		get { return _sprinting; }
 		set { _sprinting = value; changed("sprinting", value); }
 	}
 
-	[Export]
-	public bool crouching {
+	[Export] public bool crouching {
 		get { return _crouching; }
 		set { _crouching = value; changed("crouching", value); }
 	}
 	
-	public bool mouse_captured = false;
+	[Export] public bool mouse_captured = false;
 
-	[Export]
-	public float gravity = (float)ProjectSettings.GetSetting("physics/3d/default_gravity");
+	[Export] public float gravity = (float)ProjectSettings.GetSetting("physics/3d/default_gravity");
 
-	public Vector2 move_dir; // Input direction for movement
-	public Vector2 look_dir; // Input direction for look/aim
+	private Vector2 move_dir; // Input direction for movement
+	private Vector2 look_dir; // Input direction for look/aim
 
-	public Vector3 walk_vel; // Walking velocity 
-	public Vector3 grav_vel; // Gravity velocity 
-	public Vector3 jump_vel; // Jumping velocity
+	private Vector3 walk_vel; // Walking velocity 
+	private Vector3 grav_vel; // Gravity velocity 
+	private Vector3 jump_vel; // Jumping velocity
 
 	public Tween speedIn;
 	public Tween speedOut;
@@ -73,28 +61,23 @@ public partial class Player : CharacterBody3D
 	public Tween tiltRight;
 	public Tween tiltBack;
 
-	[Export]
-	public float base_fov;
-	[Export]
-	public float crouch_speed = 1;
+	[Export] public float base_fov;
+	[Export] public float crouch_speed = 1;
 	
 	public Tween crouchIn;
 	public Tween crouchOut;
 
-	[Export]
-	public float tiltRot = 2;
+	[Export] public float tiltRot = 2;
 
-	public Camera3D camera;
+	private Camera3D camera;
 
-	public Variant nullvar = new Variant();
+	private Variant nullvar = new Variant();
 
-	public bool ActionCooldown = false;
+	[Export] public bool ActionCooldown = false;
 
-	[Export]
-	public float sprintFovMod = 15;
+	[Export] public float sprintFovMod = 15;
 
-	[Export]
-	public float crouchFovMod = -20;
+	[Export] public float crouchFovMod = -20;
 	
 
 	public override void _Ready()
@@ -226,19 +209,19 @@ public partial class Player : CharacterBody3D
 		// if (Input.IsActionJustPressed("Exit")) GetTree().Quit();
 	}
 
-	public void capture_mouse()
+	private void capture_mouse()
 	{
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 		mouse_captured = true;
 	}
 
-	public void release_mouse()
+	private void release_mouse()
 	{
 		Input.MouseMode = Input.MouseModeEnum.Visible;
 		mouse_captured = false;
 	}
 
-	public void _rotate_camera(float sens_mod = 1.0f)
+	private void _rotate_camera(float sens_mod = 1.0f)
 	{
 		camera.RotateY( -(look_dir.X * camera_sens * sens_mod) );
 

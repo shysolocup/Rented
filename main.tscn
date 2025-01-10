@@ -1,9 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://s0ftqrddh5up"]
+[gd_scene load_steps=18 format=3 uid="uid://s0ftqrddh5up"]
 
 [ext_resource type="Script" path="res://Player.cs" id="1_4lk8n"]
 [ext_resource type="Script" path="res://Script.cs" id="1_io7hk"]
 [ext_resource type="Script" path="res://CameraScript.cs" id="1_xddda"]
+[ext_resource type="Script" path="res://RbxScript.cs" id="2_nvd8e"]
 [ext_resource type="Script" path="res://Script2.cs" id="2_xkty6"]
+[ext_resource type="Script" path="res://rbxscriptest.cs" id="3_0h58q"]
 [ext_resource type="Texture2D" uid="uid://dcthcg547baj0" path="res://david bazookie.png" id="5_attqr"]
 [ext_resource type="Script" path="res://CameraSwitchScript.cs" id="5_olp1u"]
 [ext_resource type="AudioStream" uid="uid://nvube6beo7t" path="res://its happening david bazookie.mp3" id="7_k2c4j"]
@@ -61,6 +63,10 @@ mesh = SubResource("CapsuleMesh_y0axr")
 skeleton = NodePath("")
 
 [node name="Pivot" type="Node3D" parent="Node3D/Player"]
+
+[node name="Script3" type="Node" parent="Node3D/Player"]
+script = ExtResource("2_nvd8e")
+Source = ExtResource("3_0h58q")
 
 [node name="Script" type="Node" parent="Node3D/Player"]
 script = ExtResource("1_io7hk")

@@ -157,14 +157,12 @@ public partial class GameInstance : Node
 	/// <summary>
 	/// Fires if the game is currently saving
 	/// </summary>
-	[Signal]
-	public delegate void SavingEventHandler();
+	[Signal] public delegate void SavingEventHandler();
 
 	/// <summary>
 	/// Fires when the game finishes saving
 	/// </summary>
-	[Signal]
-	public delegate void SavedEventHandler();
+	[Signal] public delegate void SavedEventHandler();
 
 	private Variant nullvar = new Variant();
 

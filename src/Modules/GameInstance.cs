@@ -110,6 +110,14 @@ namespace CoolGame
 			return Data;
 		}
 
+		/// <summary>
+		/// Dictionary of events with string keys and StringName values
+		/// </summary>
+		public static Godot.Collections.Dictionary<string, StringName> Events { get; set; } = new Godot.Collections.Dictionary<string, StringName> {
+			{"Saving", new StringName("Saving")},
+			{"Saved", new StringName("Saved")},
+		};
+
 
 		/// <summary>
 		/// Saves Game.SaveData to Game.SavePath
@@ -118,6 +126,8 @@ namespace CoolGame
 		public static Godot.Collections.Dictionary<string, Variant> Save()
 		{
 			using var writer = FileAccess.Open(SavePath, FileAccess.ModeFlags.Write);
+			Saving = true;
+			Instance.EmitSignal(Events["Saving"]);
 
 			var data = ReadJson(SavePath);
 			
@@ -126,6 +136,8 @@ namespace CoolGame
 			}
 
 			writer.StoreString(Json.Stringify(data, "\t"));
+			Saving = false;
+			Instance.EmitSignal(Events["Saved"]);
 
 			return data;
 		}
@@ -135,6 +147,19 @@ namespace CoolGame
 
 public partial class GameInstance : Node
 {
+
+	/// <summary>
+	/// Fires if the game is currently saving
+	/// </summary>
+	[Signal]
+	public delegate void SavingEventHandler();
+
+	/// <summary>
+	/// Fires when the game finishes saving
+	/// </summary>
+	[Signal]
+	public delegate void SavedEventHandler();
+
 	private Variant nullvar = new Variant();
 
 	public override void _Notification(int what)

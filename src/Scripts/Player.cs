@@ -2,6 +2,7 @@ using Godot;
 using Godot.Collections;
 using System;
 using System.Collections.Generic;
+using CoolGame;
 
 
 public partial class Player : CharacterBody3D
@@ -44,8 +45,6 @@ public partial class Player : CharacterBody3D
 	}
 	
 	[Export] public bool mouse_captured = false;
-
-	[Export] public float gravity = (float)ProjectSettings.GetSetting("physics/3d/default_gravity");
 
 	private Vector2 move_dir; // Input direction for movement
 	private Vector2 look_dir; // Input direction for look/aim
@@ -139,15 +138,15 @@ public partial class Player : CharacterBody3D
 			crouching = false;
 			sprinting = false;
 
-			if (crouchIn.IsRunning()) crouchIn.Stop();
-			if (crouchOut.IsRunning()) crouchOut.Stop();
+			if (crouchIn != null && crouchIn.IsRunning()) crouchIn.Stop();
+			if (crouchOut != null && crouchOut.IsRunning()) crouchOut.Stop();
 			
-			if (speedIn.IsRunning()) speedIn.Stop();
-			if (speedOut.IsRunning()) speedOut.Stop();
+			if (speedIn != null && speedIn.IsRunning()) speedIn.Stop();
+			if (speedOut != null && speedOut.IsRunning()) speedOut.Stop();
 
-			if (tiltRight.IsRunning()) tiltRight.Stop();
-			if (tiltBack.IsRunning()) tiltBack.Stop();
-			if (tiltLeft.IsRunning()) tiltLeft.Stop();
+			if (tiltRight != null && tiltRight.IsRunning()) tiltRight.Stop();
+			if (tiltBack != null && tiltBack.IsRunning()) tiltBack.Stop();
+			if (tiltLeft != null && tiltLeft.IsRunning()) tiltLeft.Stop();
 		}
 	}
 
@@ -261,7 +260,7 @@ public partial class Player : CharacterBody3D
 
 	public Vector3 _gravity(float delta)
 	{
-		grav_vel = IsOnFloor() ? Vector3.Zero : grav_vel.MoveToward(new Vector3(0, Velocity.Y - gravity, 0), gravity * delta);
+		grav_vel = IsOnFloor() ? Vector3.Zero : grav_vel.MoveToward(new Vector3(0, Velocity.Y - Game.Gravity, 0), Game.Gravity * delta);
 		return grav_vel;
 	}
 
@@ -269,14 +268,14 @@ public partial class Player : CharacterBody3D
 	{
 		if (jumping) {
 			if (jumping) {
-				jump_vel = IsOnFloor() ? new Vector3(0, Mathf.Sqrt(4 * jump_height * gravity), 0) : jump_vel;
+				jump_vel = IsOnFloor() ? new Vector3(0, Mathf.Sqrt(4 * jump_height * Game.Gravity), 0) : jump_vel;
 				jumping = false;
 
 				return jump_vel;
 			}
 		}
 
-		jump_vel = IsOnFloor() ? Vector3.Zero : jump_vel.MoveToward(Vector3.Zero, gravity * delta);
+		jump_vel = IsOnFloor() ? Vector3.Zero : jump_vel.MoveToward(Vector3.Zero, Game.Gravity * delta);
 		return jump_vel;
 	}
 

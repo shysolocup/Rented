@@ -53,6 +53,9 @@ func _ready():
 	add_monitor("objects", "Objects", false)
 	add_monitor("nodes", "Nodes", false)
 	
+	setup_cfg();
+	set_pause_on_open(true);
+
 	# Register built-in commands
 	await get_tree().create_timer(0.05).timeout
 	_BuiltInCommands.new().init()

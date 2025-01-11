@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using CoolGame;
 
 public partial class CameraSwitchScript : Node
 {

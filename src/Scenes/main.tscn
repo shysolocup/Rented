@@ -1,7 +1,10 @@
-[gd_scene load_steps=16 format=3 uid="uid://s0ftqrddh5up"]
+[gd_scene load_steps=19 format=3 uid="uid://s0ftqrddh5up"]
 
+[ext_resource type="Script" path="res://src/Modules/GameInstance.cs" id="1_s7vnl"]
 [ext_resource type="Script" path="res://src/Scripts/Player.cs" id="1_wpbw3"]
+[ext_resource type="Texture2D" uid="uid://c1lb8c2gbiygd" path="res://icon.svg" id="2_gxkpu"]
 [ext_resource type="Script" path="res://src/Modules/RbxScript.cs" id="2_i3adb"]
+[ext_resource type="Script" path="res://src/Scripts/SaveIconSpinner.cs" id="3_35lay"]
 [ext_resource type="Script" path="res://src/Scripts/Script.cs" id="3_ba455"]
 [ext_resource type="Script" path="res://src/Scripts/Script2.cs" id="4_e6duc"]
 [ext_resource type="Script" path="res://src/Scripts/CameraScript.cs" id="5_d4k74"]
@@ -28,7 +31,57 @@ heightmap_max_layers = 32
 uv1_scale = Vector3(2, 2, 2)
 uv1_triplanar = true
 
-[node name="Node" type="Node"]
+[node name="Game" type="Node"]
+script = ExtResource("1_s7vnl")
+
+[node name="Save" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="SaveIcon" type="Sprite2D" parent="Save"]
+position = Vector2(-48, -48)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_gxkpu")
+script = ExtResource("3_35lay")
+
+[node name="Crosshair" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Crosshair"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -28.0
+offset_right = 28.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.843184, 0.843184, 0.843184, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/normal_font = ExtResource("9_3hxnu")
+theme_override_font_sizes/normal_font_size = 45
+text = "ab"
+fit_content = true
+scroll_active = false
 
 [node name="Node3D" type="Node3D" parent="."]
 
@@ -126,34 +179,4 @@ parameters/looping = true
 [node name="World" type="WorldEnvironment" parent="Node3D"]
 environment = ExtResource("9_hrp8o")
 
-[node name="Control" type="Control" parent="Node3D"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Node3D/Control"]
-top_level = true
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -24.0
-offset_top = -28.0
-offset_right = 28.0
-offset_bottom = 30.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme_override_colors/default_color = Color(0.843184, 0.843184, 0.843184, 1)
-theme_override_constants/outline_size = 2
-theme_override_fonts/normal_font = ExtResource("9_3hxnu")
-theme_override_font_sizes/normal_font_size = 45
-text = "ab"
-fit_content = true
-scroll_active = false
+[node name="SaveTest" type="Node" parent="Node3D" groups=["SaveData"]]

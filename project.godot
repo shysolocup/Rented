@@ -31,7 +31,11 @@ project/assembly_name="guh"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/copper_dc/plugin.cfg", "res://addons/runtime_debug_tools/plugin.cfg")
+enabled=PackedStringArray("res://addons/copper_dc/plugin.cfg", "res://addons/gdterm/plugin.cfg", "res://addons/runtime_debug_tools/plugin.cfg")
+
+[global_group]
+
+SaveData="save data"
 
 [input]
 

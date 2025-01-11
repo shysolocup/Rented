@@ -50,6 +50,12 @@ namespace CoolGame
 
 
 		/// <summary>
+		/// Contains copper dc commands
+		/// </summary>
+		public static Godot.Collections.Dictionary<string, Variant> Commands { get; set; } = new Godot.Collections.Dictionary<string, Variant>();
+
+
+		/// <summary>
 		/// Contains player save data
 		/// </summary>
 		public static Godot.Collections.Dictionary<string, Variant> Saves { get; set; } = new Godot.Collections.Dictionary<string, Variant>();

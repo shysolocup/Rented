@@ -1,9 +1,9 @@
 [gd_scene load_steps=19 format=3 uid="uid://s0ftqrddh5up"]
 
-[ext_resource type="Script" path="res://src/Modules/GameInstance.cs" id="1_s7vnl"]
+[ext_resource type="Script" path="res://src/Classes/GameInstance.cs" id="1_s7vnl"]
 [ext_resource type="Script" path="res://src/Scripts/Player.cs" id="1_wpbw3"]
 [ext_resource type="Texture2D" uid="uid://c1lb8c2gbiygd" path="res://icon.svg" id="2_gxkpu"]
-[ext_resource type="Script" path="res://src/Modules/RbxScript.cs" id="2_i3adb"]
+[ext_resource type="Script" path="res://src/Classes/RbxScript.cs" id="2_i3adb"]
 [ext_resource type="Script" path="res://src/Scripts/SaveIconSpinner.cs" id="3_35lay"]
 [ext_resource type="Script" path="res://src/Scripts/Script.cs" id="3_ba455"]
 [ext_resource type="Script" path="res://src/Scripts/Script2.cs" id="4_e6duc"]

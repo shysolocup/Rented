@@ -7,6 +7,17 @@ using System.Threading.Tasks;
 
 namespace CoolGame
 {
+
+	/// <summary>
+	/// Global class for holding enumerations
+	/// </summary>
+	public static class Enums
+	{
+		public enum ParameterType {
+			Int, Float, String, Bool, Options
+		}
+	}
+
 	/// <summary>
 	/// Global class for holding game data and nodes
 	/// </summary>
@@ -47,13 +58,7 @@ namespace CoolGame
 		/// Contains game data
 		/// </summary>
 		public static Godot.Collections.Dictionary<string, Variant> Data { get; set; } = new Godot.Collections.Dictionary<string, Variant>();
-
-
-		/// <summary>
-		/// Contains copper dc commands
-		/// </summary>
-		public static Godot.Collections.Dictionary<string, Variant> Commands { get; set; } = new Godot.Collections.Dictionary<string, Variant>();
-
+		
 
 		/// <summary>
 		/// Contains player save data

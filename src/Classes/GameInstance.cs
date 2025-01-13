@@ -179,7 +179,7 @@ public partial class GameInstance : Node
 		}
 	}
 
-	public Godot.Collections.Dictionary<string, Variant> UseTemplate()
+	public Godot.Collections.Dictionary<string, Variant> UseTemplate(bool exists = false)
 	{
 		string source = Json.Stringify(Game.SaveTemplate, "\t");
 		using var writer = FileAccess.Open(Game.SavePath, FileAccess.ModeFlags.Write);
@@ -191,10 +191,19 @@ public partial class GameInstance : Node
 		var basefile = (Godot.Collections.Dictionary<string, Variant>)data["file_base"];
 
 		for (int i = 0; i < 3; i++) {
-			data[$"file_{i}"] = basefile;
+			string file = $"file_{i}";
+			if (exists && (bool)basefile["append"] && !(bool)basefile["overwrite"] && (object)data[file] != null) {
+				foreach ((string key, Variant value) in data[file]) {
+					
+				}
+			}
+
+			data[file] = basefile;
 		}
 
 		data.Remove("file_base");
+		data.Remove("overwrite");
+		data.Remove("append");
 
 		writer.StoreString(Json.Stringify(data, "\t"));
 	
@@ -240,7 +249,7 @@ public partial class GameInstance : Node
 		var data = (Godot.Collections.Dictionary<string, Variant>)json.Data;
 
 		if ((string)data["version"] != (string)Game.SaveTemplate["version"]) {
-			UseTemplate();
+			UseTemplate(true);
 			return;
 		}
 

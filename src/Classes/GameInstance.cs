@@ -169,13 +169,39 @@ public partial class GameInstance : Node
 	/// </summary>
 	[Signal] public delegate void SavedEventHandler();
 
-	private Variant nullvar = new Variant();
+	public Variant nullvar = new Variant();
 
 	public override void _Notification(int what)
 	{
 		if (what == NotificationWMCloseRequest) {
 			Game.Save();
 			GetTree().Quit();
+		}
+	}
+
+	/*
+		
+	*/
+
+	public void IterOverwrite(Variant thing, Variant filedata, Variant basedata) 
+	{
+	}
+
+	private void Iter(Variant thing, Variant filedata, Variant basedata)
+	{
+		if (thing.GetType() == typeof(Godot.Collections.Array)) {
+			Godot.Collections.Array<Variant> data = (Godot.Collections.Array<Variant>)thing;
+			for (int i = 0; i < data.Count; i++) {
+				Iter(data[i], data, ((object)basedata != null && basedata.GetType() == data.GetType()) ? ((Godot.Collections.Array)basedata)[i] : nullvar);
+			}
+		}
+		else if (thing.GetType() == typeof(Godot.Collections.Dictionary)) {
+			foreach ( (string key, Variant value) in (Godot.Collections.Dictionary<string, Variant>)thing) {
+				
+			}
+		}
+		else {
+
 		}
 	}
 
@@ -192,9 +218,16 @@ public partial class GameInstance : Node
 
 		for (int i = 0; i < 3; i++) {
 			string file = $"file_{i}";
-			if (exists && (bool)basefile["append"] && !(bool)basefile["overwrite"] && (object)data[file] != null) {
-				foreach ((string key, Variant value) in data[file]) {
-					
+			if (exists && !(bool)basefile["overwrite"] && (object)data[file] != null) {
+				Godot.Collections.Dictionary<string, Variant> filedata = (Godot.Collections.Dictionary<string, Variant>)data[file];
+				
+				foreach ( (string key, Variant value) in basefile) {
+					Iter(value, filedata, basefile);
+				}
+			}
+			else if (exists && (bool)basefile["overwrite"]) {
+				foreach ( (string key, Variant value) in basefile) {
+
 				}
 			}
 
@@ -203,7 +236,6 @@ public partial class GameInstance : Node
 
 		data.Remove("file_base");
 		data.Remove("overwrite");
-		data.Remove("append");
 
 		writer.StoreString(Json.Stringify(data, "\t"));
 	

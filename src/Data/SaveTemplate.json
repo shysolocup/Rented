@@ -1,7 +1,6 @@
 {
     "version": "1.0.1",
     "overwrite": false,
-    "append": true,
     "file_base": {
         "save_state": 1,
         "items": [],

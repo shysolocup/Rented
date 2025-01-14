@@ -31,7 +31,7 @@ uv1_triplanar = true
 [node name="Game" type="Node"]
 script = ExtResource("1_doi2n")
 
-[node name="Save" type="Control" parent="."]
+[node name="SaveGui" type="Control" parent="."]
 unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 3
@@ -42,13 +42,13 @@ anchor_bottom = 1.0
 grow_horizontal = 0
 grow_vertical = 0
 
-[node name="SaveIcon" type="Sprite2D" parent="Save"]
+[node name="SaveIcon" type="Sprite2D" parent="SaveGui"]
 position = Vector2(-42, -42)
 scale = Vector2(0.64, 0.64)
 texture = ExtResource("2_up28s")
 script = ExtResource("3_35lay")
 
-[node name="Crosshair" type="Control" parent="."]
+[node name="CrosshairGui" type="Control" parent="."]
 unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 8
@@ -60,7 +60,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Sprite2D" type="Sprite2D" parent="Crosshair"]
+[node name="Crosshair" type="Sprite2D" parent="CrosshairGui"]
 texture = ExtResource("4_ebj1a")
 
 [node name="Node3D" type="Node3D" parent="."]

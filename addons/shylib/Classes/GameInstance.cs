@@ -9,16 +9,6 @@ namespace CoolGame
 {
 
 	/// <summary>
-	/// Global class for holding enumerations
-	/// </summary>
-	public static class Enums
-	{
-		public enum ParameterType {
-			Int, Float, String, Bool, Options
-		}
-	}
-
-	/// <summary>
 	/// Global class for holding game data and nodes
 	/// </summary>
 	public static class Game

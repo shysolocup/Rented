@@ -20,7 +20,7 @@ public static class Extensions
 	public static async Task<T> GetNodeAsync<T>(this Node self, string nodeName) where T : class
 	{
 		var waitTask = Task.Run(async () => {
-			while (!self.IsNodeReady(nodeName)) await Task.Delay(25);
+			while (!self.GetNode(nodeName).IsNodeReady()) await Task.Delay(25);
 		});
 
 		if (waitTask != await Task.WhenAny(waitTask, Task.Delay(5000))) {

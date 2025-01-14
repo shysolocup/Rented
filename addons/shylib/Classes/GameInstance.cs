@@ -73,6 +73,12 @@ namespace CoolGame
 
 
 		/// <summary>
+		/// Different states the player can be in
+		/// </summary>
+		public static Godot.Collections.Array SaveStates { get; set; }
+
+
+		/// <summary>
 		/// Waits until Game.Instance exists
 		/// </summary>
 		/// <returns>Node</returns>

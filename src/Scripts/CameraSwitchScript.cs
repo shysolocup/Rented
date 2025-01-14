@@ -4,8 +4,6 @@ using CoolGame;
 
 public partial class CameraSwitchScript : RbxScriptSource
 {
-	// Called when the node enters the scene tree for the first time.
-
 	public CameraSwitchScript(RbxScript parent) : base(parent) {}
 
 	public Camera3D camera1;

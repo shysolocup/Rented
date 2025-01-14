@@ -3,8 +3,9 @@ using System;
 using System.Runtime.CompilerServices;
 
 
-public partial class CameraScript : Node
+public partial class CameraScript : RbxScriptSource
 {
+	public CameraScript(RbxScript parent) : base(parent) {}
 
 	public CharacterBody3D player;
 	public Camera3D camera;

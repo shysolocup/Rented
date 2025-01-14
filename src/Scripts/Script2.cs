@@ -1,8 +1,9 @@
 using Godot;
 using System;
 
-public partial class Script2 : Node
+public partial class Script2 : RbxScriptSource
 {
+	public Script2(RbxScript parent) : base(parent) {}
 
 	public Node GetNodeChild( Node node, string name ) 
 	{

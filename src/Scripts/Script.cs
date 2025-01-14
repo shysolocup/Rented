@@ -1,8 +1,10 @@
 using Godot;
 using System;
 
-public partial class Script : Node
+public partial class Script : RbxScriptSource
 {
+	public Script(RbxScript parent) : base(parent) {}
+
 	public Node GetNodeChild( Node node, string name ) 
 	{
 		return node.GetNode(new NodePath(name));

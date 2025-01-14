@@ -19,6 +19,8 @@ public partial class SaveIconSpinner : Sprite2D
 	{
 		await Game.Init();
 
+		Visible = false;
+
 		Game.Instance.Saved += () => {
 			// rotation.Stop();
 		};

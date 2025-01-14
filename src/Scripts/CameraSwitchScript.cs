@@ -2,21 +2,34 @@ using Godot;
 using System;
 using CoolGame;
 
-public partial class CameraSwitchScript : Node
+public partial class CameraSwitchScript : RbxScriptSource
 {
 	// Called when the node enters the scene tree for the first time.
+
+	public CameraSwitchScript(RbxScript parent) : base(parent) {}
 
 	public Camera3D camera1;
 	public Camera3D camera2;
 
-	public override void _Ready()
+	public override async void _Ready()
 	{
-		Node3D parent = GetParent() as Node3D;
+		GD.Print('a');
 
-		camera1 = parent.GetNode(new NodePath("Camera")) as Camera3D;
-		camera2 = parent.GetNode(new NodePath("Camera2")) as Camera3D;
+		GD.Print(ParentScript);
+
+		// GD.Print(ParentScript);
+		
+		/*
+		var test = await this.GetNodeAsync<Node>("test");
+		test = GetNode(new NodePath("test"));
+		
+		GD.Print(test);
+		
+		camera1 = await this.GetNodeAsync<Camera3D>("%PlayerCamera");
+		camera2 = await this.GetNodeAsync("%Cameras/Camera2") as Camera3D;
 
 		camera1.MakeCurrent();
+		*/
 	}
 
 

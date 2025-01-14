@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dil1eoqfptddt"
-path="res://.godot/imported/Script.png-a01afc06d4139b84dd7ed624ccb1d50d.ctex"
+uid="uid://boo8iw5pvoaa8"
+path="res://.godot/imported/Game.png-eea56752fbba11ec2997d9db938c24b2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/Images/Script.png"
-dest_files=["res://.godot/imported/Script.png-a01afc06d4139b84dd7ed624ccb1d50d.ctex"]
+source_file="res://addons/shylib/Images/Game.png"
+dest_files=["res://.godot/imported/Game.png-eea56752fbba11ec2997d9db938c24b2.ctex"]
 
 [params]
 

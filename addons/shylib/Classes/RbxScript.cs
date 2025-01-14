@@ -1,7 +1,16 @@
 using Godot;
 using System;
 
-[GlobalClass, Icon("res://src/Images/Script.png")]
+[GlobalClass]
+public partial class RbxScriptSource : Node {
+	[Export] public RbxScript ParentScript;
+
+	public RbxScriptSource(RbxScript parent) : base() { 
+		ParentScript = parent;
+	}
+}
+
+[GlobalClass, Icon("res://addons/shylib/Images/Script.png")]
 public partial class RbxScript : Node
 {
 
@@ -33,7 +42,7 @@ public partial class RbxScript : Node
 	[Export] private Node SpawnedNode;
 	private Variant nullvar = new Variant();
 
-	[Export] public NodePath SpawnedNodeNode;
+	[Export] public NodePath SpawnedNodePath;
 
 
 	public Node AttachScript(CSharpScript source)
@@ -43,8 +52,10 @@ public partial class RbxScript : Node
 			SpawnedNode = null;
 		}
 
-		SpawnedNode = (Node)source.New();
-		SpawnedNode.Name = SpawnedNodeNode.ToString();
+		SpawnedNode = (RbxScriptSource)source.New(this);
+
+		SpawnedNodePath = new NodePath($"{Name}Source");
+		SpawnedNode.Name = SpawnedNodePath.ToString();
 		
 		GetParent().CallDeferred("add_child", SpawnedNode);
 
@@ -70,7 +81,7 @@ public partial class RbxScript : Node
 	public override void _Ready()
 	{	
 		EnabledChanged += HandleEnabledChange;
-		SpawnedNodeNode = new NodePath($"{Name}Source");
+		SpawnedNodePath = new NodePath($"{Name}Source");
 
 		Set("SpawnedNode", nullvar);
 

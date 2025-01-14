@@ -83,7 +83,7 @@ public partial class Player : CharacterBody3D
 
 	public override void _Ready()
 	{	
-		camera = GetParent().GetNode(new NodePath("Camera")) as Camera3D;
+		camera = GetNode("%PlayerCamera") as Camera3D;
 		base_fov = camera.GetFov();
 		capture_mouse();
 

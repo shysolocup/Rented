@@ -1,17 +1,17 @@
 [gd_scene load_steps=19 format=3 uid="uid://s0ftqrddh5up"]
 
-[ext_resource type="Script" path="res://src/Classes/GameInstance.cs" id="1_s7vnl"]
+[ext_resource type="Script" path="res://addons/shylib/Classes/GameInstance.cs" id="1_doi2n"]
 [ext_resource type="Script" path="res://src/Scripts/Player.cs" id="1_wpbw3"]
-[ext_resource type="Texture2D" uid="uid://c1lb8c2gbiygd" path="res://icon.svg" id="2_gxkpu"]
-[ext_resource type="Script" path="res://src/Classes/RbxScript.cs" id="2_i3adb"]
+[ext_resource type="Script" path="res://addons/shylib/Classes/RbxScript.cs" id="2_i3adb"]
+[ext_resource type="Texture2D" uid="uid://buml50bofllu4" path="res://src/Ui/alarm clock.png" id="2_up28s"]
 [ext_resource type="Script" path="res://src/Scripts/SaveIconSpinner.cs" id="3_35lay"]
 [ext_resource type="Script" path="res://src/Scripts/Script.cs" id="3_ba455"]
 [ext_resource type="Script" path="res://src/Scripts/Script2.cs" id="4_e6duc"]
+[ext_resource type="Texture2D" uid="uid://dy7kadcgxn8hg" path="res://src/Ui/cursor.png" id="4_ebj1a"]
 [ext_resource type="Script" path="res://src/Scripts/CameraScript.cs" id="5_d4k74"]
 [ext_resource type="Texture2D" uid="uid://dcthcg547baj0" path="res://src/Images/david bazookie.png" id="6_yaysw"]
 [ext_resource type="Script" path="res://src/Scripts/CameraSwitchScript.cs" id="7_gf62h"]
 [ext_resource type="AudioStream" uid="uid://nvube6beo7t" path="res://src/Sfx/its happening david bazookie.mp3" id="8_msmgq"]
-[ext_resource type="FontFile" uid="uid://udj7yj8i0yar" path="res://src/Fonts/wingding.ttf" id="9_3hxnu"]
 [ext_resource type="Environment" uid="uid://d4kl3puo0e8dw" path="res://src/Skies/Day.tres" id="9_hrp8o"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8xcek"]
@@ -32,9 +32,10 @@ uv1_scale = Vector3(2, 2, 2)
 uv1_triplanar = true
 
 [node name="Game" type="Node"]
-script = ExtResource("1_s7vnl")
+script = ExtResource("1_doi2n")
 
 [node name="Save" type="Control" parent="."]
+unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 3
 anchor_left = 1.0
@@ -45,12 +46,13 @@ grow_horizontal = 0
 grow_vertical = 0
 
 [node name="SaveIcon" type="Sprite2D" parent="Save"]
-position = Vector2(-48, -48)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_gxkpu")
+position = Vector2(-42, -42)
+scale = Vector2(0.64, 0.64)
+texture = ExtResource("2_up28s")
 script = ExtResource("3_35lay")
 
 [node name="Crosshair" type="Control" parent="."]
+unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -61,37 +63,14 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Crosshair"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -24.0
-offset_top = -28.0
-offset_right = 28.0
-offset_bottom = 30.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme_override_colors/default_color = Color(0.843184, 0.843184, 0.843184, 1)
-theme_override_constants/outline_size = 2
-theme_override_fonts/normal_font = ExtResource("9_3hxnu")
-theme_override_font_sizes/normal_font_size = 45
-text = "ab"
-fit_content = true
-scroll_active = false
+[node name="Sprite2D" type="Sprite2D" parent="Crosshair"]
+texture = ExtResource("4_ebj1a")
 
 [node name="Node3D" type="Node3D" parent="."]
 
-[node name="Camera" type="Camera3D" parent="Node3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.5)
-current = true
-fov = 90.0
-
 [node name="Player" type="CharacterBody3D" parent="Node3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.984565, 0)
 script = ExtResource("1_wpbw3")
 
 [node name="Collision" type="CollisionShape3D" parent="Node3D/Player"]
@@ -118,11 +97,8 @@ script = ExtResource("2_i3adb")
 Enabled = false
 Source = ExtResource("5_d4k74")
 
-[node name="Camera2" type="Camera3D" parent="Node3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 8.4624)
-
 [node name="Baseplate" type="StaticBody3D" parent="Node3D"]
-transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 0, -7.51245, 0)
+transform = Transform3D(15, 0, 0, 0, 3.19346, 0, 0, 0, 15, 0, -1.61217, 0)
 
 [node name="Collision" type="CollisionShape3D" parent="Node3D/Baseplate"]
 shape = SubResource("BoxShape3D_j1e05")
@@ -131,6 +107,8 @@ shape = SubResource("BoxShape3D_j1e05")
 mesh = SubResource("BoxMesh_xknod")
 surface_material_override/0 = SubResource("StandardMaterial3D_qqeip")
 
+[node name="Node" type="Node" parent="Node3D/Baseplate"]
+
 [node name="SpotLight3D" type="SpotLight3D" parent="Node3D"]
 transform = Transform3D(1, 0, 0, 0, -0.284852, 0.958572, 0, -0.958572, -0.284852, 0, 21.4164, -5.50887)
 light_energy = 1.465
@@ -138,11 +116,8 @@ shadow_enabled = true
 spot_range = 4096.0
 spot_attenuation = -0.1
 
-[node name="CameraSwitchScript" type="Node" parent="Node3D"]
-script = ExtResource("2_i3adb")
-Source = ExtResource("7_gf62h")
-
 [node name="Audios" type="Node3D" parent="Node3D"]
+unique_name_in_owner = true
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Node3D/Audios"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.60103, 0, 4.32475)
@@ -177,6 +152,25 @@ max_distance = 4.0
 parameters/looping = true
 
 [node name="World" type="WorldEnvironment" parent="Node3D"]
+unique_name_in_owner = true
 environment = ExtResource("9_hrp8o")
 
-[node name="SaveTest" type="Node" parent="Node3D" groups=["SaveData"]]
+[node name="Cameras" type="Node3D" parent="Node3D"]
+unique_name_in_owner = true
+
+[node name="PlayerCamera" type="Camera3D" parent="Node3D/Cameras"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.5)
+current = true
+fov = 90.0
+
+[node name="Camera2" type="Camera3D" parent="Node3D/Cameras"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 8.4624)
+
+[node name="ScriptDump" type="Node" parent="Node3D"]
+
+[node name="CameraSwitchScript" type="Node" parent="Node3D/ScriptDump"]
+script = ExtResource("2_i3adb")
+Source = ExtResource("7_gf62h")
+
+[node name="test" type="Node" parent="Node3D/ScriptDump"]

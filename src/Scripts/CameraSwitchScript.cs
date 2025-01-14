@@ -11,23 +11,10 @@ public partial class CameraSwitchScript : RbxScriptSource
 
 	public override async void _Ready()
 	{
-		GD.Print('a');
-
-		GD.Print(ParentScript);
-
-		// GD.Print(ParentScript);
-		
-		/*
-		var test = await this.GetNodeAsync<Node>("test");
-		test = GetNode(new NodePath("test"));
-		
-		GD.Print(test);
-		
-		camera1 = await this.GetNodeAsync<Camera3D>("%PlayerCamera");
-		camera2 = await this.GetNodeAsync("%Cameras/Camera2") as Camera3D;
+		camera1 = await this.GetNodeAsync<Camera3D>("PlayerCamera");
+		camera2 = await this.GetNodeAsync<Camera3D>("Cameras/Camera2");
 
 		camera1.MakeCurrent();
-		*/
 	}
 
 

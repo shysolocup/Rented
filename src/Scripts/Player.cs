@@ -81,9 +81,9 @@ public partial class Player : CharacterBody3D
 	[Export] public Panel console;
 	
 
-	public override void _Ready()
+	public override async void _Ready()
 	{	
-		camera = await this.GetNodeAsync<Camera3D>("%PlayerCamera");
+		camera = await this.GetNodeAsync<Camera3D>("PlayerCamera");
 		base_fov = camera.GetFov();
 		capture_mouse();
 

@@ -5,10 +5,7 @@
 [ext_resource type="Script" path="res://addons/shylib/Classes/RbxScript.cs" id="2_i3adb"]
 [ext_resource type="Texture2D" uid="uid://buml50bofllu4" path="res://src/Ui/alarm clock.png" id="2_up28s"]
 [ext_resource type="Script" path="res://src/Scripts/SaveIconSpinner.cs" id="3_35lay"]
-[ext_resource type="Script" path="res://src/Scripts/Script.cs" id="3_ba455"]
-[ext_resource type="Script" path="res://src/Scripts/Script2.cs" id="4_e6duc"]
 [ext_resource type="Texture2D" uid="uid://dy7kadcgxn8hg" path="res://src/Ui/cursor.png" id="4_ebj1a"]
-[ext_resource type="Script" path="res://src/Scripts/CameraScript.cs" id="5_d4k74"]
 [ext_resource type="Texture2D" uid="uid://dcthcg547baj0" path="res://src/Images/david bazookie.png" id="6_yaysw"]
 [ext_resource type="Script" path="res://src/Scripts/CameraSwitchScript.cs" id="7_gf62h"]
 [ext_resource type="AudioStream" uid="uid://nvube6beo7t" path="res://src/Sfx/its happening david bazookie.mp3" id="8_msmgq"]
@@ -81,21 +78,6 @@ mesh = SubResource("CapsuleMesh_y0axr")
 skeleton = NodePath("")
 
 [node name="Pivot" type="Node3D" parent="Node3D/Player"]
-
-[node name="Script" type="Node" parent="Node3D/Player"]
-script = ExtResource("2_i3adb")
-Enabled = false
-Source = ExtResource("3_ba455")
-
-[node name="Script2" type="Node" parent="Node3D/Player"]
-script = ExtResource("2_i3adb")
-Enabled = false
-Source = ExtResource("4_e6duc")
-
-[node name="CameraScript" type="Node" parent="Node3D/Player"]
-script = ExtResource("2_i3adb")
-Enabled = false
-Source = ExtResource("5_d4k74")
 
 [node name="Baseplate" type="StaticBody3D" parent="Node3D"]
 transform = Transform3D(15, 0, 0, 0, 3.19346, 0, 0, 0, 15, 0, -1.61217, 0)

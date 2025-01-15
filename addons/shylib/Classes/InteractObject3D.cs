@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-[GlobalClass, /*Icon("res://addons/shylib/Images/InteractObject.png")*/]
+[GlobalClass, Icon("res://addons/shylib/Images/InteractObject3D.png")]
 public partial class InteractObject3D : CollisionShape3D
 {
 
@@ -19,7 +19,7 @@ public partial class InteractObject3D : CollisionShape3D
 
 	public override async void _Ready()
 	{
-		Crosshair = await this.GetNodeAsync<Crosshair3D>("%Crosshair");
+		Crosshair = this.GetNode<Crosshair3D>("%Crosshair");
 	}
 
 
@@ -44,8 +44,11 @@ public partial class InteractObject3D : CollisionShape3D
 			if (Enabled) _hovering = value;
 			_Hover();
 
-			if (_hovering) {
+			if (_hovering && Enabled) {
 				Crosshair.Icon.SetSurfaceOverrideMaterial(0, HoverIcon);
+			}
+			else if (_hovering && !Enabled) {
+				Crosshair.Icon.SetSurfaceOverrideMaterial(0, Crosshair.LockIcon);
 			}
 			else {
 				Crosshair.Icon.SetSurfaceOverrideMaterial(0, Crosshair.DefaultIcon);

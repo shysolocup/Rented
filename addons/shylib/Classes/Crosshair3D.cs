@@ -6,12 +6,14 @@ using CoolGame;
 public partial class Crosshair3D : StaticBody3D
 {
 	[Export] public StandardMaterial3D DefaultIcon;
+	[Export] public StandardMaterial3D LockIcon;
 	[Export] public float Distance = 1;
 	[Export] public Camera3D Camera;
 	[Export] public string Delay;
 	
 	public MeshInstance3D Icon;
 	public Camera3D ViewportCamera;
+    public RayCast3D RayCast;
 	
 	private SubViewportContainer CrosshairContainer;
 

@@ -85,6 +85,7 @@ public partial class Player : CharacterBody3D
 	public override void _Ready()
 	{	
 		camera = GetNode<Camera3D>("%PlayerCamera");
+
 		base_fov = camera.GetFov();
 		capture_mouse();
 
@@ -160,6 +161,8 @@ public partial class Player : CharacterBody3D
 
 	public override void _PhysicsProcess(double delta)
 	{
+
+
 		if (!controllable) return;
 		float d = (float)delta;
 		if (mouse_captured) _handle_joypad_camera_rotation(d);

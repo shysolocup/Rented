@@ -91,10 +91,8 @@ public partial class Crosshair3D : StaticBody3D
 
 			if (result.GetType() == typeof(InteractObject3D)) {
 				InteractObject3D collider = (InteractObject3D)result;
-				if (collider.Enabled) {
-					inter = collider;
-					collider.Pressed = true;
-				}
+				inter = collider;
+				collider.Hovering = true;
 			}
 		}
 	}

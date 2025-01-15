@@ -13,6 +13,29 @@ namespace CoolGame
 	/// </summary>
 	public static class Game
 	{
+
+		public static string Version = "0.0.0";
+		public static string VersionDenot = "Transition";
+		/// <summary>
+		/// current noise level
+		/// </summary>
+		public static float Noise = 0;
+		/// <summary>
+		/// the highest level of noise the player has made
+		/// </summary>
+		public static float HighestNoise = 0;
+		/// <summary>
+		/// Game gravity what more do you want me to say
+		/// </summary>
+		public static float Gravity { 
+			get {
+				return (float)ProjectSettings.GetSetting("physics/3d/default_gravity");
+			} 
+			set {
+				ProjectSettings.SetSetting("physics/3d/default_gravity", value);
+			} 
+		}
+
 		/// <summary>
 		/// Node responsible for holding the game data
 		/// </summary>
@@ -29,25 +52,6 @@ namespace CoolGame
 		/// Path to save player data to
 		/// </summary>
 		public static string SavePath { get; set; }  = "user://savedata.json";
-
-
-		/// <summary>
-		/// Game gravity what more do you want me to say
-		/// </summary>
-		public static float Gravity { 
-			get {
-				return (float)ProjectSettings.GetSetting("physics/3d/default_gravity");
-			} 
-			set {
-				ProjectSettings.SetSetting("physics/3d/default_gravity", value);
-			} 
-		}
-
-		
-		/// <summary>
-		/// Contains game data
-		/// </summary>
-		public static Godot.Collections.Dictionary<string, Variant> Data { get; set; } = new Godot.Collections.Dictionary<string, Variant>();
 		
 
 		/// <summary>
@@ -75,7 +79,7 @@ namespace CoolGame
 		public static async Task<Node> Init()
 		{
 			var waitTask = Task.Run(async () => {
-				while (Instance == null || Data == null || Saves == null) await Task.Delay(25);
+				while (Instance == null || Saves == null) await Task.Delay(25);
 			});
 
 			if (waitTask != await Task.WhenAny(waitTask, Task.Delay(120000))) {
@@ -100,21 +104,6 @@ namespace CoolGame
 			var dict = (Godot.Collections.Dictionary<string, Variant>)json.Data;
 
 			return dict;
-		}
-
-
-		/// <summary>
-		/// Refreshes game data Json files and adds it to Game.Data
-		/// <param name="fileDir">Directory for the file you want to open and refresh</param>
-		/// </summary>
-		/// <returns>Godot.Collections.Dictionary</returns>
-		public static Godot.Collections.Dictionary<string, Variant> RefreshJsonData(string fileDir = "res://src/Data/GameData.json")
-		{
-			foreach (var (key, value) in ReadJson(fileDir)) {
-				Data.Add(key, value);
-			}
-
-			return Data;
 		}
 
 		/// <summary>
@@ -246,7 +235,6 @@ public partial class GameInstance : Node
 	public override void _Ready()
 	{
 		Game.Instance = this;
-		Game.RefreshJsonData();
 
 		Game.SaveTemplate = Game.ReadJson("res://src/Data/SaveTemplate.json");
 

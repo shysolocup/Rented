@@ -1,15 +1,23 @@
-[gd_scene load_steps=19 format=3 uid="uid://s0ftqrddh5up"]
+[gd_scene load_steps=20 format=3 uid="uid://s0ftqrddh5up"]
 
 [ext_resource type="Script" path="res://addons/shylib/Classes/GameInstance.cs" id="1_doi2n"]
 [ext_resource type="Script" path="res://src/Scripts/Player.cs" id="1_wpbw3"]
 [ext_resource type="Script" path="res://addons/shylib/Classes/RbxScript.cs" id="2_i3adb"]
 [ext_resource type="Texture2D" uid="uid://buml50bofllu4" path="res://src/Ui/alarm clock.png" id="2_up28s"]
 [ext_resource type="Script" path="res://src/Scripts/SaveIconSpinner.cs" id="3_35lay"]
-[ext_resource type="Texture2D" uid="uid://dy7kadcgxn8hg" path="res://src/Ui/cursor.png" id="4_ebj1a"]
+[ext_resource type="Script" path="res://addons/shylib/Classes/Crosshair3D.cs" id="5_0wov3"]
+[ext_resource type="Material" uid="uid://bx2ii7tmg2v88" path="res://addons/shylib/Images/DefaultCrosshair.tres" id="5_f73lu"]
 [ext_resource type="Texture2D" uid="uid://dcthcg547baj0" path="res://src/Images/david bazookie.png" id="6_yaysw"]
 [ext_resource type="Script" path="res://src/Scripts/CameraSwitchScript.cs" id="7_gf62h"]
 [ext_resource type="AudioStream" uid="uid://nvube6beo7t" path="res://src/Sfx/its happening david bazookie.mp3" id="8_msmgq"]
 [ext_resource type="Environment" uid="uid://d4kl3puo0e8dw" path="res://src/Skies/Day.tres" id="9_hrp8o"]
+
+[sub_resource type="Environment" id="Environment_1fj5k"]
+
+[sub_resource type="World3D" id="World3D_wvpw1"]
+environment = SubResource("Environment_1fj5k")
+
+[sub_resource type="BoxMesh" id="BoxMesh_1dmmm"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8xcek"]
 
@@ -32,7 +40,6 @@ uv1_triplanar = true
 script = ExtResource("1_doi2n")
 
 [node name="SaveGui" type="Control" parent="."]
-unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 3
 anchor_left = 1.0
@@ -41,6 +48,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 0
 grow_vertical = 0
+mouse_filter = 2
 
 [node name="SaveIcon" type="Sprite2D" parent="SaveGui"]
 position = Vector2(-42, -42)
@@ -49,19 +57,58 @@ texture = ExtResource("2_up28s")
 script = ExtResource("3_35lay")
 
 [node name="CrosshairGui" type="Control" parent="."]
-unique_name_in_owner = true
+top_level = true
 layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Crosshair" type="Sprite2D" parent="CrosshairGui"]
-texture = ExtResource("4_ebj1a")
+[node name="CrosshairContainer" type="SubViewportContainer" parent="CrosshairGui"]
+modulate = Color(1, 1, 1, 0.156863)
+top_level = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+mouse_filter = 2
+stretch = true
+
+[node name="CrosshairViewport" type="SubViewport" parent="CrosshairGui/CrosshairContainer"]
+own_world_3d = true
+world_3d = SubResource("World3D_wvpw1")
+transparent_bg = true
+handle_input_locally = false
+gui_disable_input = true
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="ViewportCamera" type="Camera3D" parent="CrosshairGui/CrosshairContainer/CrosshairViewport"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5, 0.781966, -3.22837)
+
+[node name="Crosshair" type="StaticBody3D" parent="CrosshairGui/CrosshairContainer/CrosshairViewport"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.781966, -3.22837)
+input_ray_pickable = false
+script = ExtResource("5_0wov3")
+DefaultIcon = ExtResource("5_f73lu")
+Distance = 15.0
+Delay = "1/1.15"
+
+[node name="Icon" type="MeshInstance3D" parent="CrosshairGui/CrosshairContainer/CrosshairViewport/Crosshair"]
+transform = Transform3D(0.047, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.781966, -3.22837)
+top_level = true
+cast_shadow = 0
+mesh = SubResource("BoxMesh_1dmmm")
+skeleton = NodePath("../../../../../Node3D")
+surface_material_override/0 = ExtResource("5_f73lu")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="CrosshairGui/CrosshairContainer/CrosshairViewport/Crosshair"]
 
 [node name="Node3D" type="Node3D" parent="."]
 
@@ -149,10 +196,8 @@ fov = 90.0
 [node name="Camera2" type="Camera3D" parent="Node3D/Cameras"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 8.4624)
 
-[node name="ScriptDump" type="Node" parent="Node3D"]
+[node name="ScriptDump" type="Node3D" parent="Node3D"]
 
 [node name="CameraSwitchScript" type="Node" parent="Node3D/ScriptDump"]
 script = ExtResource("2_i3adb")
 Source = ExtResource("7_gf62h")
-
-[node name="test" type="Node" parent="Node3D/ScriptDump"]

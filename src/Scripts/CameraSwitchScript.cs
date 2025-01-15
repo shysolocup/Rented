@@ -9,15 +9,15 @@ public partial class CameraSwitchScript : RbxScriptSource
 	public Camera3D camera1;
 	public Camera3D camera2;
 
-	public override async void _Ready()
+	public override void _Ready()
 	{
-		camera1 = await this.GetNodeAsync<Camera3D>("PlayerCamera");
-		camera2 = await this.GetNodeAsync<Camera3D>("Cameras/Camera2");
+		camera1 = GetParent().GetNode<Camera3D>("%PlayerCamera");
+		camera2 = GetParent().GetNode<Camera3D>("%Cameras/Camera2");
 
 		camera1.MakeCurrent();
 	}
 
-
+	
 	public override void _Input(InputEvent @event)
 	{
 		if (@event.IsActionPressed("SwitchCamera") && camera1 != null && camera2 != null) {

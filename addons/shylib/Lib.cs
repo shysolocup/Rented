@@ -19,12 +19,16 @@ public static class Extensions
 	
 	public static async Task<T> GetNodeAsync<T>(this Node self, string nodeName) where T : class
 	{
-		var waitTask = Task.Run(async () => {
-			while (!self.GetNode(nodeName).IsNodeReady()) await Task.Delay(25);
-		});
-
-		if (waitTask != await Task.WhenAny(waitTask, Task.Delay(5000))) {
-			throw new TimeoutException();
+		int elapsed = 0;
+		Node node = self.GetNode(nodeName);
+		
+		while (!node.IsNodeReady()) {
+			await Task.Delay(25);
+			elapsed += 25;
+			
+			if (elapsed >= 5000) {
+				throw new TimeoutException();
+			}
 		}
 
 		return self.GetNode<T>(nodeName);
@@ -32,6 +36,35 @@ public static class Extensions
 
 	public static async Task<Node> GetNodeAsync(this Node self, string nodeName) {
 		return await self.GetNodeAsync<Node>(nodeName);
+	}
+
+	public static async Task WaitUntilNodeReady(this Node self, string nodeName)
+	{
+		int elapsed = 0;
+		Node node = self.GetNode(nodeName);
+		
+		while (!node.IsNodeReady()) {
+			await Task.Delay(25);
+			elapsed += 25;
+			
+			if (elapsed >= 5000) {
+				throw new TimeoutException();
+			}
+		}
+	}
+
+	public async static Task WaitUntilPropertyReady(this Node self, string propertyName)
+	{
+		int elapsed = 0;
+		
+		while ((object)self.Get(propertyName) == null) {
+			await Task.Delay(25);
+			elapsed += 25;
+			
+			if (elapsed >= 5000) {
+				throw new TimeoutException();
+			}
+		}
 	}
 }
 

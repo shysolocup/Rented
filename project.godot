@@ -31,7 +31,7 @@ project/assembly_name="guh"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/copper_dc/plugin.cfg", "res://addons/gdterm/plugin.cfg", "res://addons/runtime_debug_tools/plugin.cfg", "res://addons/shylib/plugin.cfg")
+enabled=PackedStringArray("res://addons/copper_dc/plugin.cfg", "res://addons/extra_snaps/plugin.cfg", "res://addons/gdterm/plugin.cfg", "res://addons/runtime_debug_tools/plugin.cfg", "res://addons/shylib/plugin.cfg")
 
 [global_group]
 

@@ -24,6 +24,7 @@ public partial class Player : CharacterBody3D
 	[Export(PropertyHint.Range, "0.1,3.0,0.1,or_greater")] public float camera_sens = 1;
 
 	[Export] public bool tabbed_in = true;
+	[Export] public bool controllable = true;
 
 	public bool _jumping = false;
 	public bool _sprinting = false;
@@ -81,11 +82,13 @@ public partial class Player : CharacterBody3D
 	[Export] public Panel console;
 	
 
-	public override async void _Ready()
+	public override void _Ready()
 	{	
-		camera = await this.GetNodeAsync<Camera3D>("PlayerCamera");
+		camera = GetNode<Camera3D>("%PlayerCamera");
 		base_fov = camera.GetFov();
 		capture_mouse();
+
+		GD.Print(this.Get("camera"));
 
 		FuckSpeed("speedIn", sprintFovMod, sprint_speed, 1.5f);
 		FuckSpeed("speedOut", 0, base_walk_speed, 0.5f);
@@ -153,12 +156,11 @@ public partial class Player : CharacterBody3D
 	public override void _Process(double delta)
 	{
 		if (camera != null) camera.Position = Position;
-
-
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
+		if (!controllable) return;
 		float d = (float)delta;
 		if (mouse_captured) _handle_joypad_camera_rotation(d);
 		Velocity = _move(d) + _gravity(d) + _jump(d);
@@ -173,6 +175,8 @@ public partial class Player : CharacterBody3D
 
 			if (mouse_captured) _rotate_camera();
 		}
+
+		if (!controllable) return;
 
 		if (Input.IsActionJustPressed("MoveLeft")) {
 			Tilt("tiltLeft", tiltRot, 0.2f).Play();
@@ -326,7 +330,7 @@ public partial class Player : CharacterBody3D
 	}
 
 	public Tween Tilt(string name, float degrees = 0, float time = 0.2f)
-	{
+	{	
 		if (tiltRight != null) { tiltRight.Kill(); tiltRight = null; }
 		if (tiltBack != null) { tiltBack.Kill(); tiltBack = null; }
 		if (tiltLeft != null) { tiltLeft.Kill(); tiltLeft = null; }

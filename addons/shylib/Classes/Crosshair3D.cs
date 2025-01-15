@@ -10,12 +10,15 @@ public partial class Crosshair3D : StaticBody3D
 	[Export] public float Distance = 1;
 	[Export] public Camera3D Camera;
 	[Export] public string Delay;
-	
+	[Export] public float RayDistance = 10;
+
 	public MeshInstance3D Icon;
 	public Camera3D ViewportCamera;
-	public RayCast3D RayCast;
-	
+	public RayCast3D Raycast;
+
 	private SubViewportContainer CrosshairContainer;
+
+	public InteractObject3D inter;
 
 	private float _delay = 0;
 
@@ -30,6 +33,7 @@ public partial class Crosshair3D : StaticBody3D
 		Icon = GetNode<MeshInstance3D>("./Icon");
 		ViewportCamera = GetNodeOrNull<Camera3D>("../ViewportCamera");
 		CrosshairContainer = GetParent().GetParent<SubViewportContainer>();
+		Raycast = GetNode<RayCast3D>("%InteractRay");
 	}
 
 	public override void _Process(double delta)
@@ -52,11 +56,11 @@ public partial class Crosshair3D : StaticBody3D
 
 		// A = A + (B - A) * t
 
-		float alpha = 1.25f - (float)Mathf.Clamp(A + (noiseMod - A) * 1/1.5f, 0, 1); // 10 noise is 0.1 alpha
+		float alpha = 1.25f - (float)Mathf.Clamp(A + (noiseMod - A) * 1 / 1.5f, 0, 1); // 10 noise is 0.1 alpha
 
-		float rgb = A + (noiseMod - A) * 1/1.5f; // 10 noise is 0.9 red
+		float rgb = A + (noiseMod - A) * 1 / 1.5f; // 10 noise is 0.9 red
 
-		Distance += (20-(Game.Noise * 0.1f + 5) - Distance) * 1/1.5f; // 10 noise is 6 meters distance
+		Distance += (20 - (Game.Noise * 0.1f + 5) - Distance) * 1 / 1.5f; // 10 noise is 6 meters distance
 
 		/*
 			should always be 255 for red
@@ -70,9 +74,28 @@ public partial class Crosshair3D : StaticBody3D
 		Origin += UpVector * randY;
 
 		Transform3D IconTransform = new Transform3D(LeftVector, UpVector, ForwardVector, Origin);
-	
+
 		Icon.GlobalTransform = Icon.GlobalTransform.InterpolateWith(IconTransform, _delay);
 
 		if (ViewportCamera != null) ViewportCamera.GlobalTransform = Global;
+
+		Raycast.TargetPosition = IconTransform.Origin + IconTransform.Basis.Z * RayDistance;
+		
+		if (Raycast.IsColliding()) {
+			GodotObject result = Raycast.GetCollider();
+
+			if (result != inter) {
+				inter.Hovering = false;
+				inter = null;
+			}
+
+			if (result.GetType() == typeof(InteractObject3D)) {
+				InteractObject3D collider = (InteractObject3D)result;
+				if (collider.Enabled) {
+					inter = collider;
+					collider.Pressed = true;
+				}
+			}
+		}
 	}
 }

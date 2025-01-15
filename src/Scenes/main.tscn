@@ -111,10 +111,10 @@ surface_material_override/0 = ExtResource("5_f73lu")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="CrosshairGui/CrosshairContainer/CrosshairViewport/Crosshair"]
 
-[node name="CameraRaycasts" type="Node3D" parent="CrosshairGui/CrosshairContainer/CrosshairViewport/Crosshair"]
+[node name="Raycasts" type="Node3D" parent="CrosshairGui/CrosshairContainer/CrosshairViewport/ViewportCamera"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.718034, 2.72837)
 
-[node name="InteractRay" type="RayCast3D" parent="CrosshairGui/CrosshairContainer/CrosshairViewport/Crosshair/CameraRaycasts"]
+[node name="InteractRay" type="RayCast3D" parent="CrosshairGui/CrosshairContainer/CrosshairViewport/Crosshair/ViewportCamera"]
 unique_name_in_owner = true
 target_position = Vector3(0, 0, -1.5)
 

@@ -17,7 +17,7 @@ public partial class InteractObject3D : CollisionShape3D
 	
 	private Crosshair3D Crosshair; 
 
-	public override async void _Ready()
+	public override void _Ready()
 	{
 		Crosshair = this.GetNode<Crosshair3D>("%Crosshair");
 	}

@@ -13,7 +13,7 @@ public partial class Crosshair3D : StaticBody3D
 	
 	public MeshInstance3D Icon;
 	public Camera3D ViewportCamera;
-    public RayCast3D RayCast;
+	public RayCast3D RayCast;
 	
 	private SubViewportContainer CrosshairContainer;
 

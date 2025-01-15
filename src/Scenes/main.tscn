@@ -111,6 +111,13 @@ surface_material_override/0 = ExtResource("5_f73lu")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="CrosshairGui/CrosshairContainer/CrosshairViewport/Crosshair"]
 
+[node name="CameraRaycasts" type="Node3D" parent="CrosshairGui/CrosshairContainer/CrosshairViewport/Crosshair"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.718034, 2.72837)
+
+[node name="InteractRay" type="RayCast3D" parent="CrosshairGui/CrosshairContainer/CrosshairViewport/Crosshair/CameraRaycasts"]
+unique_name_in_owner = true
+target_position = Vector3(0, 0, -1.5)
+
 [node name="Node3D" type="Node3D" parent="."]
 
 [node name="Player" type="CharacterBody3D" parent="Node3D"]
@@ -207,12 +214,6 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.5)
 current = true
 fov = 90.0
-
-[node name="CameraRaycasts" type="Node3D" parent="Node3D/Cameras/PlayerCamera"]
-
-[node name="InteractRay" type="RayCast3D" parent="Node3D/Cameras/PlayerCamera/CameraRaycasts"]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.718034, -2.72837)
 
 [node name="Camera2" type="Camera3D" parent="Node3D/Cameras"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 8.4624)

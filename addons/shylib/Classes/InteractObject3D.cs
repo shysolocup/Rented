@@ -19,7 +19,14 @@ public partial class InteractObject3D : CollisionShape3D
 
 	public override void _Ready()
 	{
-		Crosshair = this.GetNode<Crosshair3D>("%Crosshair");
+		Crosshair = GetNode<Crosshair3D>("%Crosshair");
+	}
+
+
+	public override void _Input(InputEvent @event) 
+	{
+		if (Input.IsMouseButtonPressed(MouseButton.Left) && Hovering) Pressed = true;
+		else Pressed = false;
 	}
 
 

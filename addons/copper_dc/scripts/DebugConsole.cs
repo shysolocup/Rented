@@ -390,6 +390,20 @@ public partial class DebugConsole : CanvasLayer
 		return text;
 	}
 
+	public void LogTypeError(DebugParameter parameter)
+	{
+		LogError($"TypeError: Parameter {parameter.Name} should be an {parameter.Type.GetType().Name}, but an incorrect value was passed.");
+	}
+
+	public Godot.Collections.Dictionary<bool, Godot.Collections.Array> Options = new Godot.Collections.Dictionary<bool, Godot.Collections.Array>{
+		{true, new Godot.Collections.Array{
+			true, "on", "1", 
+		}},
+		{false, new Godot.Collections.Array{
+			false, "off", "0", 
+		}}
+	};
+
 	public void ProcessCommand(string command)
 	{
 
@@ -415,121 +429,110 @@ public partial class DebugConsole : CanvasLayer
 
 
 		// Checks that function is not lambda
-		if(commandData.Function.GetMethod() == "<anonymous lambda>")
-		{
-			DebugConsole.LogError("Command function must be named.");
-			DebugConsole.Log(commandData.Function.GetMethod());
-			return ;
+		if (commandData.Function.Method == "<anonymous lambda>") {
+			LogError("Command function must be named.");
+			Log(commandData.Function.Method);
+			return;
 		}
-		var commandFunction = commandData.Function.GetMethod() + "(";
+		var commandFunction = commandData.Function.Method + "(";
 		var currentString = "";
 
+		var required = commandData.Parameters.Where( p => p.Required );
+
+		if (commandData.Parameters.Count() > currentParameter) {
+			LogError($"ParamError: Command \"{commandData.Id}\" requires {commandData.Parameters.Count} parameters, but too many were given.");
+			return ;
+		}
+
 		// Iterates through split list
-		foreach(int i in GD.Range(commandSplit.Size()))
-		{
-			if(i == 0)
-			{continue;
+		foreach (int i in GD.Range(commandSplit.Length)) {
+			if(i == 0) {
+				continue;
 			}
-			else if(commandSplit[i] == "")
-			{continue;
+			
+			else if (commandSplit[i] == "") {
+				continue;
 			}
-			if(commandData.Parameters.Size() <= currentParameter)
-			{
-				DebugConsole.LogError("Command \"" + commandData.Id + "\" requires " + Str(commandData.Parameters.Size()) + " parameters, but too many were given.");
-				return ;
-			}
+
 			var currentParameterObj = commandData.Parameters[currentParameter];
 
-
 			// Int parameter
-			if(currentParameterObj.Type == DebugCommand.ParameterType.Int)
-			{
-				if(!commandSplit[i].IsValidInt())
-				{
-					DebugConsole.LogError("Parameter " + currentParameterObj.Name + " should be an integer, but an incorrect value was passed.");
-					return ;
+			if (currentParameterObj.Type == DebugParameterType.Int) {
+				if (!commandSplit[i].IsValidInt()) {
+					LogTypeError(currentParameterObj);
+					return;
 				}
 				commandFunction += commandSplit[i] + ",";
 				currentParameter += 1;
 			}
 
 			// Float parameter
-			else if(currentParameterObj.Type == DebugCommand.ParameterType.Float)
-			{
-				if(!commandSplit[i].IsValidFloat())
-				{
-					DebugConsole.LogError("Parameter " + currentParameterObj.Name + " should be a float, but an incorrect value was passed.");
-					return ;
+			else if (currentParameterObj.Type == DebugParameterType.Float) {
+				if (!commandSplit[i].IsValidFloat()) {
+					LogTypeError(currentParameterObj);
+					return;
 				}
 				commandFunction += commandSplit[i] + ",";
 				currentParameter += 1;
 			}
 
 			// String parameter
-			else if(currentParameterObj.Type == DebugCommand.ParameterType.String)
-			{
+			else if (currentParameterObj.Type == DebugParameterType.String) {
 				var word = commandSplit[i];
-				if(word.BeginsWith("\""))
-				{
-					if(word.EndsWith("\""))
-					{
-						if(word == "\"")
-						{
-							if(currentString == "")
-							{
-								currentString += "\" ";
-							}
-							else
-							{
+
+				if(word.StartsWith("\"")) {
+
+					if(word.EndsWith("\"")) {
+
+						if(word == "\"") {
+							if(currentString == "") currentString += "\" ";
+
+							else {
 								commandFunction += currentString + "\",";
 								currentParameter += 1;
 							}
 						}
-						else
-						{
+
+						else {
 							commandFunction += word + ",";
 							currentParameter += 1;
 						}
 					}
-					else if(currentString != "")
-					{
-						DebugConsole.LogError("Cannot create a string within a string.");
-						return ;
+
+					else if (currentString != "") {
+						LogError("FuckinError: Cannot create a string within a string.");
+						return;
 					}
-					else
-					{
+
+					else {
 						currentString += word + " ";
 					}
 				}
-				else if(currentString != "")
-				{
-					if(word.EndsWith("\""))
-					{
+
+				else if (currentString != "") {
+
+					if(word.EndsWith("\"")) {
 						currentString += word;
 						commandFunction += currentString + ",";
 						currentString = "";
 						currentParameter += 1;
 					}
-					else
-					{
-						currentString += word + " ";
-					}
+
+					else currentString += word + " ";
 				}
-				else
-				{
+				
+				else {
 					commandFunction += "\"" + word + "\",";
 					currentParameter += 1;
 				}
 			}
 
 			// Bool parameter
-			else if(currentParameterObj.Type == DebugCommand.ParameterType.Bool)
-			{
+			else if (currentParameterObj.Type == DebugParameterType.Bool) {
 				var value = commandSplit[i].ToLower();
-				var options = new Dictionary{{true, new Array{true, "on", "1", }},{false, new Array{false, "off", "0", }},};
-				if(!options[true] && !options[false].Contains(value).Contains(value))
-				{
-					DebugConsole.LogError("Parameter " + currentParameterObj.Name + " should be a bool, but an incorrect value was passed.");
+				
+				if(!Options[true] && !Options[false].Contains(value).Contains(value)) {
+					LogTypeError(currentParameterObj);
 					return ;
 				}
 				value = ( options[true].Contains(value) ? true : false );

@@ -21,6 +21,7 @@ public partial class DebugCommand : GodotObject
 public partial class DebugParameter : GodotObject
 {
 	public string Name;
+	public bool Required = true;
 	public DebugParameterType Type;
 	public Godot.Collections.Array Options = new Godot.Collections.Array();
 }

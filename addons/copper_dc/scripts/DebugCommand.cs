@@ -6,36 +6,24 @@ using Godot;
 public partial class DebugCommand : GodotObject
 {
 	public string Id;
-	public Godot.Collections.Array Parameters;
-	public Callable Function;
+	public Godot.Collections.Array<DebugParameter> Parameters = new Godot.Collections.Array<DebugParameter>();
 	public string HelpText;
-	public Variant GetFunction;
-	public Variant nullvar = new Variant();
 
-	public DebugCommand(String id, Callable function, Godot.Collections.Array parameters = null, String helpText = "")
-	{
-		Id = id;
-		Parameters = (parameters != null) ? parameters : new Godot.Collections.Array();
-		Function = function;
-		HelpText = helpText;
+	public Callable Function;
+	public Callable GetFunction;
+
+	public DebugCommand(DebugConsole console) {
+		console.Commands.Add(Id, this);
 	}
-
-	public partial class Parameter : GodotObject
-	{
-
-		public string Name;
-		public ParameterType Type;
-		public Godot.Collections.Array Options;
-
-		public Parameter(String name, ParameterType type, Godot.Collections.Array options = null)
-		{
-			this.Name = name;
-			this.Type = type;
-			this.Options = (options != null) ? options : new Godot.Collections.Array();
-		}
-	}
-
-	public enum ParameterType {Int, Float, String, Bool, Options}
-
-
 }
+
+
+public partial class DebugParameter : GodotObject
+{
+	public string Name;
+	public DebugParameterType Type;
+	public Godot.Collections.Array Options = new Godot.Collections.Array();
+}
+
+
+public enum DebugParameterType {Int, Float, String, Bool, Options}

@@ -45,20 +45,20 @@ public partial class Crosshair3D : StaticBody3D
 		Vector3 LeftVector = Global.Basis.X;
 		Vector3 UpVector = Global.Basis.Y;
 
-		double noise = Mathf.Clamp(Game.Noise / 400, 0, 1);
+		double Noise = Mathf.Clamp(Game.Noise / 400, 0, 1);
 
-		float randY = (float)GD.RandRange(-noise, noise);
-		float randX = (float)GD.RandRange(-noise, noise);
+		float ShakeY = (float)GD.RandRange(-Noise, Noise);
+		float ShakeX = (float)GD.RandRange(-Noise, Noise);
 
-		float noiseMod = 1 - (float)Mathf.Clamp(Game.Noise / 100, 0, 1);
+		float NoiseMod = 1 - (float)Mathf.Clamp(Game.Noise / 100, 0, 1);
 
 		float A = CrosshairContainer.Modulate.R;
 
 		// A = A + (B - A) * t
 
-		float alpha = 1.25f - (float)Mathf.Clamp(A + (noiseMod - A) * 1 / 1.5f, 0, 1); // 10 noise is 0.1 alpha
+		float Alpha = 1.25f - (float)Mathf.Clamp(A + (NoiseMod - A) * 1 / 1.5f, 0, 1); // 10 noise is 0.1 alpha
 
-		float rgb = A + (noiseMod - A) * 1 / 1.5f; // 10 noise is 0.9 red
+		float GB = A + (NoiseMod - A) * 1 / 1.5f; // 10 noise is 0.9 green and blue
 
 		Distance += (20 - (Game.Noise * 0.1f + 5) - Distance) * 1 / 1.5f; // 10 noise is 6 meters distance
 
@@ -67,11 +67,11 @@ public partial class Crosshair3D : StaticBody3D
 			as noise rises to 100 it'll turn the crosshair red and make it shake rapdily
 			as noise rises it'll also make the crosshair more visible increasing it's size and alpha
 		*/
-		CrosshairContainer.Modulate = new Color(1, rgb, rgb, alpha);
+		CrosshairContainer.Modulate = new Color(1, GB, GB, Alpha);
 
 		Origin += ForwardVector * -Distance;
-		Origin += LeftVector * randX;
-		Origin += UpVector * randY;
+		Origin += LeftVector * ShakeX;
+		Origin += UpVector * ShakeY;
 
 		Transform3D IconTransform = new Transform3D(LeftVector, UpVector, ForwardVector, Origin);
 

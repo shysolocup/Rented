@@ -310,7 +310,7 @@ public partial class DebugConsole : CanvasLayer
 		}
 
 		else {
-			var sortedCommands = new Godot.Collections.Array(Commands.Keys);
+			var sortedCommands = new Godot.Collections.Array<string>(Commands.Keys);
 			sortedCommands.Sort();
 
 			foreach(string command in sortedCommands)
@@ -373,43 +373,40 @@ public partial class DebugConsole : CanvasLayer
 
 			if (isHeader && parameter.Name == command.Parameters[currentParameter].Name) {
 				string typename = parameter.Name;
-				text += " [b]<" + parameter.Name + ": " + Enum.GetNames(typeof(DebugParameterType)).Index[parameter.Type] + ">[/b]";
+				text += " [b]<" + parameter.Name + ": " + parameter.Type.ToString() + ">[/b]";
 			}
 			
-			else
-			{
-				text += " <" + parameter.Name + ": " + DebugCommand.ParameterType.Keys()[parameter.Type] + ">";
+			else {
+				text += " <" + parameter.Name + ": " + parameter.Type.ToString() + ">";
 			}
-			if(command.GetFunction != null)
+			if ((object)command.GetFunction != null)
 			{
-				var value = command.GetFunction.Call();
-				if(value != null)
-				{
-					text += " === " + Str(value);
+				var value = (string)command.GetFunction.Call();
+				if(value != null) {
+					text += " === " + value;
 				}
 			}
 		}
 		return text;
 	}
 
-	public void ProcessCommand(Godot.Variant command)
+	public void ProcessCommand(string command)
 	{
 
 		// Avoid duplicating history entries
-		if(History.IsEmpty() || command != History[ - 1])
+		if(History.Count == 0 || command != (string)History.Last())
 		{
 			History.Append(command);
-			CurrentHistory = History.Size();
+			CurrentHistory = History.Count;
 		}
 
 		// Splits command
 		var commandSplit = command.Split(" ");
 
 		// Checks if command is valid
-		if(!Commands.Keys().Contains(commandSplit[0]))
-		{
+		if(!Commands.Keys.Contains(commandSplit[0])) {
 			LogError("Command not found: " + commandSplit[0]);
-			return ;
+			return;
 		}
 
 		// Keeps track of current parameter being read

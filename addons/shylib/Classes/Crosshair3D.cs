@@ -68,7 +68,6 @@ public partial class Crosshair3D : StaticBody3D
 			as noise rises it'll also make the crosshair more visible increasing it's size and alpha
 		*/
 		CrosshairContainer.Modulate = new Color(1, rgb, rgb, alpha);
-		
 
 		Origin += ForwardVector * -Distance;
 		Origin += LeftVector * randX;

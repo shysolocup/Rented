@@ -1,6 +1,15 @@
 class_name _BuiltInCommands
 
 func init():
+	# Set noise
+	DebugConsole.add_command_setvar(
+		"set_noise",
+		_set_noise,
+		self,
+		DebugCommand.ParameterType.Float,
+		"Sets the player's \"Noise\" value"
+	)
+
 	# Clear
 	DebugConsole.add_command(
 		"clear", 
@@ -59,7 +68,7 @@ func init():
 	var monitors = DebugConsole.get_console().monitors.keys()
 	# Show/hide monitor
 	DebugConsole.add_command(
-		"set_monitor_visible",
+		"monitor",
 		DebugConsole.set_monitor_visible,
 		DebugConsole,
 		[
@@ -97,6 +106,10 @@ func list_files_in_directory(path):
 		
 		return files
 	return []
+
+func _set_noise(value):
+	var game = dc_entry.gamenode;
+	game.Noise = value;
 
 func _show_stats(value):
 	var console = DebugConsole.get_console()

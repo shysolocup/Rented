@@ -267,7 +267,7 @@ public partial class Player : CharacterBody3D
 
 	public Vector3 _gravity(float delta)
 	{
-		grav_vel = IsOnFloor() ? Vector3.Zero : grav_vel.MoveToward(new Vector3(0, Velocity.Y - Game.Gravity, 0), Game.Gravity * delta);
+		grav_vel = IsOnFloor() ? Vector3.Zero : grav_vel.MoveToward(new Vector3(0, Velocity.Y - Game.Instance.Gravity, 0), Game.Instance.Gravity * delta);
 		return grav_vel;
 	}
 
@@ -275,14 +275,14 @@ public partial class Player : CharacterBody3D
 	{
 		if (jumping) {
 			if (jumping) {
-				jump_vel = IsOnFloor() ? new Vector3(0, Mathf.Sqrt(4 * jump_height * Game.Gravity), 0) : jump_vel;
+				jump_vel = IsOnFloor() ? new Vector3(0, Mathf.Sqrt(4 * jump_height * Game.Instance.Gravity), 0) : jump_vel;
 				jumping = false;
 
 				return jump_vel;
 			}
 		}
 
-		jump_vel = IsOnFloor() ? Vector3.Zero : jump_vel.MoveToward(Vector3.Zero, Game.Gravity * delta);
+		jump_vel = IsOnFloor() ? Vector3.Zero : jump_vel.MoveToward(Vector3.Zero, Game.Instance.Gravity * delta);
 		return jump_vel;
 	}
 

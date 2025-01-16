@@ -22,6 +22,7 @@ var current_history = -1
 var pauseOnOpen = false
 var showStats = false
 var showMiniLog = false
+var showNoise = false
 
 @onready var commandField = %"Command Field"
 @onready var consolePanel = %"ConsolePanel"
@@ -52,6 +53,7 @@ func _ready():
 	add_monitor("static_memory_max", "Static Memory Max", false)
 	add_monitor("objects", "Objects", false)
 	add_monitor("nodes", "Nodes", false)
+	add_monitor("noise", "Noise", false);
 	
 	setup_cfg();
 	set_pause_on_open(true);
@@ -81,6 +83,8 @@ func _process(delta):
 			update_monitor("objects", Performance.get_monitor(Performance.OBJECT_COUNT))
 		if is_monitor_visible("nodes"):
 			update_monitor("nodes", Performance.get_monitor(Performance.OBJECT_NODE_COUNT))
+		if is_monitor_visible("noise"):
+			update_monitor("noise", dc_entry.gamenode.Noise);
 		
 		stats.text = ""
 		for monitor in monitors.values():

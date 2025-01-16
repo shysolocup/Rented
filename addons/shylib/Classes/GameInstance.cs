@@ -14,28 +14,6 @@ namespace CoolGame
 	public static class Game
 	{
 
-		public static string Version = "0.0.0";
-		public static string VersionDenot = "Transition";
-		/// <summary>
-		/// current noise level
-		/// </summary>
-		public static float Noise = 0;
-		/// <summary>
-		/// the highest level of noise the player has made
-		/// </summary>
-		public static float HighestNoise = 0;
-		/// <summary>
-		/// Game gravity what more do you want me to say
-		/// </summary>
-		public static float Gravity { 
-			get {
-				return (float)ProjectSettings.GetSetting("physics/3d/default_gravity");
-			} 
-			set {
-				ProjectSettings.SetSetting("physics/3d/default_gravity", value);
-			} 
-		}
-
 		/// <summary>
 		/// Node responsible for holding the game data
 		/// </summary>
@@ -143,6 +121,28 @@ namespace CoolGame
 [GlobalClass, Icon("res://addons/shylib/Images/Game.png")]
 public partial class GameInstance : Node
 {
+
+	[Export] public string Version = "0.0.0";
+	[Export] public string VersionDenot = "Transition";
+	/// <summary>
+	/// current noise level
+	/// </summary>
+	[Export] public float Noise = 0;
+	/// <summary>
+	/// the highest level of noise the player has made
+	/// </summary>
+	[Export] public float HighestNoise = 100;
+	/// <summary>
+	/// Game gravity what more do you want me to say
+	/// </summary>
+	[Export] public float Gravity { 
+			get {
+				return (float)ProjectSettings.GetSetting("physics/3d/default_gravity");
+			} 
+			set {
+				ProjectSettings.SetSetting("physics/3d/default_gravity", value);
+			} 
+		}
 
 	/// <summary>
 	/// Fires if the game is currently saving

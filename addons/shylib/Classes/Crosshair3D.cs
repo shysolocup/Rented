@@ -45,12 +45,12 @@ public partial class Crosshair3D : StaticBody3D
 		Vector3 LeftVector = Global.Basis.X;
 		Vector3 UpVector = Global.Basis.Y;
 
-		double Noise = Mathf.Clamp(Game.Noise / 400, 0, 1);
+		double Noise = Mathf.Clamp(Game.Instance.Noise / 400, 0, 1);
 
 		float ShakeY = (float)GD.RandRange(-Noise, Noise);
 		float ShakeX = (float)GD.RandRange(-Noise, Noise);
 
-		float NoiseMod = 1 - (float)Mathf.Clamp(Game.Noise / 100, 0, 1);
+		float NoiseMod = 1 - (float)Mathf.Clamp(Game.Instance.Noise / 100, 0, 1);
 
 		float A = CrosshairContainer.Modulate.R;
 
@@ -60,7 +60,7 @@ public partial class Crosshair3D : StaticBody3D
 
 		float GB = A + (NoiseMod - A) * 1 / 1.5f; // 10 noise is 0.9 green and blue
 
-		Distance += (20 - (Game.Noise * 0.1f + 5) - Distance) * 1 / 1.5f; // 10 noise is 6 meters distance
+		Distance += (20 - (Game.Instance.Noise * 0.1f + 5) - Distance) * 1 / 1.5f; // 10 noise is 6 meters distance
 
 		/*
 			should always be 255 for red

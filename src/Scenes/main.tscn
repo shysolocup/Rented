@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://s0ftqrddh5up"]
+[gd_scene load_steps=25 format=3 uid="uid://s0ftqrddh5up"]
 
 [ext_resource type="Script" path="res://addons/shylib/Classes/GameInstance.cs" id="1_doi2n"]
 [ext_resource type="Script" path="res://src/Scripts/Player.cs" id="1_wpbw3"]
@@ -6,13 +6,15 @@
 [ext_resource type="Texture2D" uid="uid://buml50bofllu4" path="res://src/Ui/alarm clock.png" id="2_up28s"]
 [ext_resource type="Script" path="res://src/Scripts/SaveIconSpinner.cs" id="3_35lay"]
 [ext_resource type="Script" path="res://addons/shylib/Classes/Crosshair3D.cs" id="5_0wov3"]
-[ext_resource type="Material" uid="uid://bx2ii7tmg2v88" path="res://addons/shylib/Images/DefaultCrosshair.tres" id="5_f73lu"]
-[ext_resource type="Material" uid="uid://dswrosd4bo5gn" path="res://addons/shylib/Images/LockedCrosshair.tres" id="6_07j4i"]
+[ext_resource type="Material" uid="uid://ce0vtdxnqp031" path="res://src/Materials/DefaultIcon.tres" id="5_fwxn0"]
+[ext_resource type="Material" uid="uid://djkfa7xtdg63i" path="res://src/Materials/DefaultHoverIcon.tres" id="6_k4ggk"]
 [ext_resource type="Texture2D" uid="uid://dcthcg547baj0" path="res://src/Images/david bazookie.png" id="6_yaysw"]
 [ext_resource type="Script" path="res://src/Scripts/CameraSwitchScript.cs" id="7_gf62h"]
+[ext_resource type="Material" uid="uid://bq8wyiwgdl28m" path="res://src/Materials/LockedIcon.tres" id="7_ij6rp"]
 [ext_resource type="AudioStream" uid="uid://nvube6beo7t" path="res://src/Sfx/its happening david bazookie.mp3" id="8_msmgq"]
 [ext_resource type="Script" path="res://addons/shylib/Classes/InteractObject3D.cs" id="8_uf7b3"]
 [ext_resource type="Environment" uid="uid://d4kl3puo0e8dw" path="res://src/Skies/Day.tres" id="9_hrp8o"]
+[ext_resource type="Script" path="res://src/Scripts/InteractTest.cs" id="11_htgqa"]
 
 [sub_resource type="Environment" id="Environment_1fj5k"]
 
@@ -37,6 +39,14 @@ heightmap_min_layers = 8
 heightmap_max_layers = 32
 uv1_scale = Vector3(2, 2, 2)
 uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mnhfo"]
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+albedo_texture = ExtResource("6_yaysw")
+albedo_texture_force_srgb = true
+uv1_scale = Vector3(3, 2, 3)
 
 [node name="Game" type="Node"]
 script = ExtResource("1_doi2n")
@@ -99,8 +109,9 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.781966, -3.22837)
 input_ray_pickable = false
 script = ExtResource("5_0wov3")
-DefaultIcon = ExtResource("5_f73lu")
-LockIcon = ExtResource("6_07j4i")
+DefaultIcon = ExtResource("5_fwxn0")
+DefaultHoverIcon = ExtResource("6_k4ggk")
+LockedIcon = ExtResource("7_ij6rp")
 Distance = 15.0
 Delay = "1/1.15"
 
@@ -110,7 +121,7 @@ top_level = true
 cast_shadow = 0
 mesh = SubResource("BoxMesh_1dmmm")
 skeleton = NodePath("../../../../../Node3D")
-surface_material_override/0 = ExtResource("5_f73lu")
+surface_material_override/0 = ExtResource("5_fwxn0")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="CrosshairGui/CrosshairContainer/CrosshairViewport/Crosshair"]
 
@@ -154,6 +165,46 @@ mesh = SubResource("BoxMesh_xknod")
 surface_material_override/0 = SubResource("StandardMaterial3D_qqeip")
 
 [node name="Node" type="Node" parent="Node3D/test"]
+
+[node name="RbxScript" type="Node" parent="Node3D/test"]
+script = ExtResource("2_i3adb")
+Source = ExtResource("11_htgqa")
+
+[node name="test2" type="StaticBody3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.65005, 0.763546, 3.87836)
+script = ExtResource("8_uf7b3")
+Enabled = false
+
+[node name="Collision" type="CollisionShape3D" parent="Node3D/test2"]
+shape = SubResource("BoxShape3D_j1e05")
+
+[node name="Mesh" type="MeshInstance3D" parent="Node3D/test2"]
+mesh = SubResource("BoxMesh_xknod")
+surface_material_override/0 = SubResource("StandardMaterial3D_qqeip")
+
+[node name="Node" type="Node" parent="Node3D/test2"]
+
+[node name="RbxScript" type="Node" parent="Node3D/test2"]
+script = ExtResource("2_i3adb")
+Source = ExtResource("11_htgqa")
+
+[node name="test3" type="StaticBody3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.65005, 0.763546, 5.53447)
+script = ExtResource("8_uf7b3")
+HoverIcon = SubResource("StandardMaterial3D_mnhfo")
+
+[node name="Collision" type="CollisionShape3D" parent="Node3D/test3"]
+shape = SubResource("BoxShape3D_j1e05")
+
+[node name="Mesh" type="MeshInstance3D" parent="Node3D/test3"]
+mesh = SubResource("BoxMesh_xknod")
+surface_material_override/0 = SubResource("StandardMaterial3D_qqeip")
+
+[node name="Node" type="Node" parent="Node3D/test3"]
+
+[node name="RbxScript" type="Node" parent="Node3D/test3"]
+script = ExtResource("2_i3adb")
+Source = ExtResource("11_htgqa")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Node3D"]
 transform = Transform3D(1, 0, 0, 0, -0.284852, 0.958572, 0, -0.958572, -0.284852, 0, 21.4164, -5.50887)

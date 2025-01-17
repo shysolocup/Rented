@@ -6,7 +6,8 @@ using CoolGame;
 public partial class Crosshair3D : StaticBody3D
 {
 	[Export] public StandardMaterial3D DefaultIcon;
-	[Export] public StandardMaterial3D LockIcon;
+	[Export] public StandardMaterial3D DefaultHoverIcon;
+	[Export] public StandardMaterial3D LockedIcon;
 	[Export] public float Distance = 1;
 	[Export] public Camera3D Camera;
 	[Export] public string Delay;

@@ -13,6 +13,10 @@ public partial class InteractObject3D : StaticBody3D
 	private bool _hovering = false;
 
 
+	[Signal] public delegate void PressEventHandler();
+	[Signal] public delegate void HoverEventHandler();
+
+
 	public virtual void _Press() {}
 	public virtual void _Hover() {}
 	
@@ -38,8 +42,11 @@ public partial class InteractObject3D : StaticBody3D
 		}
 
 		set {
-			if (Enabled) _pressed = value;
-			_Press();
+			if (value != _pressed) {
+				if (Enabled) _pressed = value;
+				_Press();
+				EmitSignal(SignalName.Press);
+			}
 		}
 	}
 
@@ -49,17 +56,21 @@ public partial class InteractObject3D : StaticBody3D
 		}
 
 		set {
-			if (Enabled) _hovering = value;
-			_Hover();
+			if (value != _hovering) {
+				_hovering = value;
 
-			if (_hovering && Enabled) {
-				Crosshair.Icon.SetSurfaceOverrideMaterial(0, HoverIcon);
-			}
-			else if (_hovering && !Enabled) {
-				Crosshair.Icon.SetSurfaceOverrideMaterial(0, Crosshair.LockIcon);
-			}
-			else if (!_hovering) {
-				Crosshair.Icon.SetSurfaceOverrideMaterial(0, Crosshair.DefaultIcon);
+				if (_hovering && Enabled) {
+					Crosshair.Icon.SetSurfaceOverrideMaterial(0, (HoverIcon != null) ? HoverIcon : Crosshair.DefaultHoverIcon);
+				}
+				else if (_hovering && !Enabled) {
+					Crosshair.Icon.SetSurfaceOverrideMaterial(0, Crosshair.LockedIcon);
+				}
+				else if (!_hovering) {
+					Crosshair.Icon.SetSurfaceOverrideMaterial(0, Crosshair.DefaultIcon);
+				}
+
+				_Hover();
+				EmitSignal(SignalName.Hover);
 			}
 		}
 	}

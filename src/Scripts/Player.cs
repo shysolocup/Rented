@@ -3,6 +3,7 @@ using Godot.Collections;
 using System;
 using System.Collections.Generic;
 using CoolGame;
+using System.Threading.Tasks;
 
 
 public partial class Player : CharacterBody3D
@@ -83,6 +84,7 @@ public partial class Player : CharacterBody3D
 	
 	public RayCast3D Raycast;
 	[Export] public InteractObject3D inter;
+	public bool ready = false;
 	
 
 	public override void _Ready()
@@ -100,6 +102,8 @@ public partial class Player : CharacterBody3D
 
 		CrouchEffect("crouchIn", crouchFovMod, crouch_speed, 0.5f);
 		CrouchEffect("crouchOut", 0, base_walk_speed, 1);
+
+		ready = true;
 
 		// console = GetTree().
 	}
@@ -137,6 +141,8 @@ public partial class Player : CharacterBody3D
 
 	public override void _Notification(int what)
 	{
+		if (!ready) return;
+
 		if (what == NotificationWMWindowFocusIn) {
 			tabbed_in = true;
 		}
@@ -160,6 +166,8 @@ public partial class Player : CharacterBody3D
 
 	public override void _Process(double delta)
 	{
+		if (!ready) return;
+
 		if (camera != null) camera.Position = Position;
 
 		if (Raycast.IsColliding()) {
@@ -184,7 +192,7 @@ public partial class Player : CharacterBody3D
 
 	public override void _PhysicsProcess(double delta)
 	{
-
+		if (!ready) return;
 
 		if (!controllable) return;
 		float d = (float)delta;
@@ -195,6 +203,8 @@ public partial class Player : CharacterBody3D
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
+		if (!ready) return;
+
 		if (@event is InputEventMouseMotion && Input.MouseMode == Input.MouseModeEnum.Captured) {
 			var mouse = @event as InputEventMouseMotion;
 			look_dir = mouse.Relative * 0.001f;

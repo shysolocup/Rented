@@ -81,10 +81,14 @@ public partial class Player : CharacterBody3D
 
 	[Export] public Panel console;
 	
+	public RayCast3D Raycast;
+	[Export] public InteractObject3D inter;
+	
 
 	public override void _Ready()
 	{	
 		camera = GetNode<Camera3D>("%PlayerCamera");
+		Raycast = GetNode<RayCast3D>("%InteractRay");
 
 		base_fov = camera.GetFov();
 		capture_mouse();
@@ -157,6 +161,25 @@ public partial class Player : CharacterBody3D
 	public override void _Process(double delta)
 	{
 		if (camera != null) camera.Position = Position;
+
+		if (Raycast.IsColliding()) {
+			GodotObject result = Raycast.GetCollider();
+
+			if (inter != null && result != inter) {
+				inter.Hovering = false;
+				inter = null;
+			}
+
+			if (result.GetType() == typeof(InteractObject3D)) {
+				InteractObject3D collider = (InteractObject3D)result;
+				inter = collider;
+				collider.Hovering = true;
+			}
+		}
+		else if (inter != null) {
+			inter.Hovering = false;
+			inter = null;
+		}
 	}
 
 	public override void _PhysicsProcess(double delta)

@@ -1,8 +1,9 @@
 using Godot;
 using System;
+using CoolGame;
 
 [GlobalClass, Icon("res://addons/shylib/Images/InteractObject3D.png")]
-public partial class InteractObject3D : CollisionShape3D
+public partial class InteractObject3D : StaticBody3D
 {
 
 	[Export] public bool Enabled = true;
@@ -57,7 +58,7 @@ public partial class InteractObject3D : CollisionShape3D
 			else if (_hovering && !Enabled) {
 				Crosshair.Icon.SetSurfaceOverrideMaterial(0, Crosshair.LockIcon);
 			}
-			else {
+			else if (!_hovering) {
 				Crosshair.Icon.SetSurfaceOverrideMaterial(0, Crosshair.DefaultIcon);
 			}
 		}

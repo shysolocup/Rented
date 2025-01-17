@@ -10,15 +10,11 @@ public partial class Crosshair3D : StaticBody3D
 	[Export] public float Distance = 1;
 	[Export] public Camera3D Camera;
 	[Export] public string Delay;
-	[Export] public float RayDistance = 10;
 
 	public MeshInstance3D Icon;
 	public Camera3D ViewportCamera;
-	public RayCast3D Raycast;
 
 	private SubViewportContainer CrosshairContainer;
-
-	public InteractObject3D inter;
 
 	private float _delay = 0;
 
@@ -33,7 +29,6 @@ public partial class Crosshair3D : StaticBody3D
 		Icon = GetNode<MeshInstance3D>("./Icon");
 		ViewportCamera = GetNodeOrNull<Camera3D>("../ViewportCamera");
 		CrosshairContainer = GetParent().GetParent<SubViewportContainer>();
-		Raycast = GetNode<RayCast3D>("%InteractRay");
 	}
 
 	public override void _Process(double delta)
@@ -56,11 +51,11 @@ public partial class Crosshair3D : StaticBody3D
 
 		// A = A + (B - A) * t
 
-		float Alpha = 1.25f - (float)Mathf.Clamp(A + (NoiseMod - A) * 1 / 1.5f, 0, 1); // 10 noise is 0.1 alpha
+		float Alpha = 1.25f - (float)Mathf.Clamp(A + (NoiseMod - A) * 1 / 3f, 0, 1); // 10 noise is 0.1 alpha
 
-		float GB = A + (NoiseMod - A) * 1 / 1.5f; // 10 noise is 0.9 green and blue
+		float GB = A + (NoiseMod - A) * 1 / 3f; // 10 noise is 0.9 green and blue
 
-		Distance += (20 - (Game.Instance.Noise * 0.1f + 5) - Distance) * 1 / 1.5f; // 10 noise is 6 meters distance
+		Distance += (20 - (Game.Instance.Noise * 0.1f + 5) - Distance) * 1 / 3f; // 10 noise is 6 meters distance
 
 		/*
 			should always be 255 for red
@@ -78,22 +73,5 @@ public partial class Crosshair3D : StaticBody3D
 		Icon.GlobalTransform = Icon.GlobalTransform.InterpolateWith(IconTransform, _delay);
 
 		if (ViewportCamera != null) ViewportCamera.GlobalTransform = Global;
-
-		Raycast.TargetPosition = IconTransform.Origin + IconTransform.Basis.Z * RayDistance;
-		
-		if (Raycast.IsColliding()) {
-			GodotObject result = Raycast.GetCollider();
-
-			if (result != inter) {
-				inter.Hovering = false;
-				inter = null;
-			}
-
-			if (result.GetType() == typeof(InteractObject3D)) {
-				InteractObject3D collider = (InteractObject3D)result;
-				inter = collider;
-				collider.Hovering = true;
-			}
-		}
 	}
 }

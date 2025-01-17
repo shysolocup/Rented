@@ -15,7 +15,6 @@ public partial class DebugCommand : GodotObject
 
 	public void AddTo(DebugConsole console) {
 		console.Commands.Add(Id, this);
-		GD.Print(console.Commands);
 	}
 }
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://s0ftqrddh5up"]
+[gd_scene load_steps=22 format=3 uid="uid://s0ftqrddh5up"]
 
 [ext_resource type="Script" path="res://addons/shylib/Classes/GameInstance.cs" id="1_doi2n"]
 [ext_resource type="Script" path="res://src/Scripts/Player.cs" id="1_wpbw3"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://src/Scripts/SaveIconSpinner.cs" id="3_35lay"]
 [ext_resource type="Script" path="res://addons/shylib/Classes/Crosshair3D.cs" id="5_0wov3"]
 [ext_resource type="Material" uid="uid://bx2ii7tmg2v88" path="res://addons/shylib/Images/DefaultCrosshair.tres" id="5_f73lu"]
+[ext_resource type="Material" uid="uid://dswrosd4bo5gn" path="res://addons/shylib/Images/LockedCrosshair.tres" id="6_07j4i"]
 [ext_resource type="Texture2D" uid="uid://dcthcg547baj0" path="res://src/Images/david bazookie.png" id="6_yaysw"]
 [ext_resource type="Script" path="res://src/Scripts/CameraSwitchScript.cs" id="7_gf62h"]
 [ext_resource type="AudioStream" uid="uid://nvube6beo7t" path="res://src/Sfx/its happening david bazookie.mp3" id="8_msmgq"]
@@ -93,20 +94,13 @@ render_target_update_mode = 4
 [node name="ViewportCamera" type="Camera3D" parent="CrosshairGui/CrosshairContainer/CrosshairViewport"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5, 0.781966, -3.22837)
 
-[node name="Raycasts" type="Node3D" parent="CrosshairGui/CrosshairContainer/CrosshairViewport/ViewportCamera"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.718034, 2.72837)
-
-[node name="InteractRay" type="RayCast3D" parent="CrosshairGui/CrosshairContainer/CrosshairViewport/ViewportCamera/Raycasts"]
-unique_name_in_owner = true
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -3.22837, -1.5, -7.72837)
-target_position = Vector3(0, 0, -1.5)
-
 [node name="Crosshair" type="StaticBody3D" parent="CrosshairGui/CrosshairContainer/CrosshairViewport"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.781966, -3.22837)
 input_ray_pickable = false
 script = ExtResource("5_0wov3")
 DefaultIcon = ExtResource("5_f73lu")
+LockIcon = ExtResource("6_07j4i")
 Distance = 15.0
 Delay = "1/1.15"
 
@@ -150,11 +144,10 @@ surface_material_override/0 = SubResource("StandardMaterial3D_qqeip")
 
 [node name="test" type="StaticBody3D" parent="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.65005, 0.763546, 2.11837)
+script = ExtResource("8_uf7b3")
 
 [node name="Collision" type="CollisionShape3D" parent="Node3D/test"]
 shape = SubResource("BoxShape3D_j1e05")
-script = ExtResource("8_uf7b3")
-Enabled = false
 
 [node name="Mesh" type="MeshInstance3D" parent="Node3D/test"]
 mesh = SubResource("BoxMesh_xknod")
@@ -216,6 +209,10 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.5)
 current = true
 fov = 90.0
+
+[node name="InteractRay" type="RayCast3D" parent="Node3D/Cameras/PlayerCamera"]
+unique_name_in_owner = true
+target_position = Vector3(0, 0, -1.5)
 
 [node name="Camera2" type="Camera3D" parent="Node3D/Cameras"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 8.4624)

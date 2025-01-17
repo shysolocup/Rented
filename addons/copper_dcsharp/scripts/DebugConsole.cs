@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 public partial class DebugConsole : CanvasLayer
 {
 
-	public Godot.Collections.Array ConsoleLog = new Godot.Collections.Array{};
-	public Godot.Collections.Dictionary<string, DebugCommand> Commands = new Godot.Collections.Dictionary<string, DebugCommand>{};
-	public Godot.Collections.Dictionary<string, DebugMonitor> Monitors = new Godot.Collections.Dictionary<string, DebugMonitor>{};
-	public Godot.Collections.Array History = new Godot.Collections.Array{};
+	public Godot.Collections.Array ConsoleLog = new Godot.Collections.Array();
+	public Godot.Collections.Dictionary<string, DebugCommand> Commands = new Godot.Collections.Dictionary<string, DebugCommand>();
+	public Godot.Collections.Dictionary<string, DebugMonitor> Monitors = new Godot.Collections.Dictionary<string, DebugMonitor>();
+	public Godot.Collections.Array<string> History = new Godot.Collections.Array<string>();
 	public int CurrentHistory =  - 1;
 
 	public bool PauseOnOpen = false;
@@ -52,8 +52,8 @@ public partial class DebugConsole : CanvasLayer
 		MiniLogScrollBar = MiniLog.GetVScrollBar();
 
 		await HideConsole();
-		
-		LogScrollBar.Connect("changed", Callable.From(_OnScrollbarChanged));
+
+		LogScrollBar.Changed += _OnScrollbarChanged;
 
 
 		// Register built-in monitors
@@ -121,37 +121,44 @@ public partial class DebugConsole : CanvasLayer
 		}
 
 		// Back in history
-		else if(ConsolePanel.Visible && @event.IsActionPressed("ui_up")) {
-			if(History.Count > 0 && CurrentHistory !=  - 1)
-			{
-				if(CurrentHistory > 0)
-				{
-					CurrentHistory -= 1;
-				}
+		else if (ConsolePanel.Visible && @event.IsActionPressed("ui_up")) {
+			if (History.Count > 0 && CurrentHistory != -1) {
+				if(CurrentHistory > 0) CurrentHistory -= 1;
+
 				CommandField.Text = (string)History[CurrentHistory];
+
 				await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+				
 				CommandField.SetCaretColumn(CommandField.Text.Length);
 			}
 		}
 
 		// Forward in history
-		else if(ConsolePanel.Visible && @event.IsActionPressed("ui_down")) {
-			if(History.Count > 0 && CurrentHistory < History.Count - 1) {
+		else if (ConsolePanel.Visible && @event.IsActionPressed("ui_down")) {
+			if (History.Count > 0 && CurrentHistory < History.Count - 1) {
 				CurrentHistory += 1;
+				
 				CommandField.Text = (string)History[CurrentHistory];
+				
 				await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+				
 				CommandField.SetCaretColumn(CommandField.Text.Length);
 			}
-			else if(CurrentHistory == History.Count - 1) {
+
+			else if (CurrentHistory == History.Count - 1) {
+				
 				CommandField.Text = "";
+				
 				CurrentHistory = History.Count;
+				
 				await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+				
 				CommandField.SetCaretColumn(CommandField.Text.Length);
 			}
 		}
 
 		// Tab completion
-		else if(ConsolePanel.Visible && _IsTabPress(@event)) {
+		else if (ConsolePanel.Visible && _IsTabPress(@event)) {
 			_AttemptAutocompletion();
 		}
 	}
@@ -173,9 +180,30 @@ public partial class DebugConsole : CanvasLayer
 		foreach(string hint in CommandHintsLabel.Text.Split("\n")) {
 			hints.Add(hint.GetSlice(']', 1).GetSlice('[', 0).GetSlice(' ', 0));
 		}
-		hints = hints.Slice(0, -1);
 
-		GD.Print(hints);
+		/*
+		hints = hints.slice(0, -1)
+		# Find the common prefix to all hints
+		var common_prefix = ""
+		if not hints.is_empty():
+			for i in range(1000):
+				if not hints.all(func(h): return len(h) > i and h[i] == hints[0][i]):
+					break
+				common_prefix += hints[0][i]
+		if not commandHintsLabel.visible or common_prefix == '':
+			return
+		if len(hints) == 1:
+			common_prefix += ' ' # Only one hint, so complete the whole word
+		# Replace the last word, if any, with `common_prefix`
+		var r = RegEx.new()
+		r.compile(r'(\w+)?$') # "Any non-whitespace characters until the end"
+		var new_text = r.sub(commandField.text, common_prefix)
+		commandField.text = new_text
+		commandField.caret_column = len(new_text)
+		_on_command_field_text_changed(new_text)
+		*/
+
+		hints = hints.Slice(0, hints.Count);
 
 		// Find the common prefix to all hints
 		var common_prefix = "";
@@ -190,8 +218,6 @@ public partial class DebugConsole : CanvasLayer
 				}
 			}
 		}
-
-		GD.Print(common_prefix);
 
 		if(!CommandHintsLabel.Visible || common_prefix == "") {
 			return;
@@ -221,6 +247,8 @@ public partial class DebugConsole : CanvasLayer
 	{
 		var commandHints = new Godot.Collections.Array();
 		var commandSplit = new Godot.Collections.Array<string>(((string)new_text).Split(" "));
+
+		GD.Print(commandSplit);
 		
 		var commandID = commandSplit[0];
 
@@ -383,11 +411,8 @@ public partial class DebugConsole : CanvasLayer
 	public void ProcessCommand(string command)
 	{
 
-		// Avoid duplicating history entries
-		if (History.Count == 0 || command != (string)History.Last()) {
-			History.Append(command);
-			CurrentHistory = History.Count;
-		}
+		History.Add(command);
+		CurrentHistory = History.Count;
 
 		// Splits command
 		var commandSplit = command.Split(" ");

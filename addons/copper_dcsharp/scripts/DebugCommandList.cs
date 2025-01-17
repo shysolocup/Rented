@@ -91,6 +91,11 @@ public static class DebugCommandList
 				new DebugParameter {
 					Name = "a",
 					Type = DebugParameterType.Bool
+				},
+
+				new DebugParameter {
+					Name = "b",
+					Type = DebugParameterType.Bool
 				}
 			},
 

@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dswrosd4bo5gn"]
+
+[ext_resource type="Texture2D" uid="uid://c0clhbw8kl6ln" path="res://src/Ui/lockedCursor.png" id="1_2ewgx"]
+
+[resource]
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+albedo_texture = ExtResource("1_2ewgx")
+albedo_texture_force_srgb = true
+uv1_scale = Vector3(3, 2, 3)

@@ -5,9 +5,9 @@ using CoolGame;
 
 public partial class DebugCommandFunctions : GodotObject 
 {
-	public void test() 
+	public bool test(bool a, bool b) 
 	{
-		GD.Print("sjdfklasdf");
+		return a == b;
 	}
 
 	public void show_stats(bool value) 
@@ -89,7 +89,7 @@ public static class DebugCommandList
 
 			Parameters = new Godot.Collections.Array<DebugParameter> {
 				new DebugParameter {
-					Name = "guh",
+					Name = "a",
 					Type = DebugParameterType.Bool
 				}
 			},
@@ -98,10 +98,10 @@ public static class DebugCommandList
 		}.AddTo(console);
 
 		#endregion
-		#region show_stats
+		#region stats
 
 		new DebugCommand {
-			Id = "show_stats",
+			Id = "stats",
 			HelpText = "Toggles whether or not the performance stats in the top left should be visible or not.",
 
 			Parameters = new Godot.Collections.Array<DebugParameter> {
@@ -148,11 +148,11 @@ public static class DebugCommandList
 
 
 		#endregion
-		#region show_mini_log
+		#region mini_log
 
 
 		new DebugCommand {
-			Id = "show_mini_log",
+			Id = "mini_log",
 			HelpText = "Toggles whether or not the mini log in the top right should be visible or not.",
 
 			Function = new Callable(funcs, DebugCommandFunctions.MethodName.show_mini_log),
@@ -175,11 +175,11 @@ public static class DebugCommandList
 
 
 		#endregion
-		#region open_cfg_dir
+		#region cfg
 
 
 		new DebugCommand {
-			Id = "open_cfg_dir",
+			Id = "cfg",
             HelpText = "Opens the directory where cfg files are put, if it exists.",
 
 			Function = new Callable(funcs, DebugCommandFunctions.MethodName.open_cfg_dir),

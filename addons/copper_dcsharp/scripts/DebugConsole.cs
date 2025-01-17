@@ -266,7 +266,7 @@ public partial class DebugConsole : CanvasLayer
 				}
 			}
 			parameterCount -= 2;
-			DebugCommand cmd = (DebugCommand)Commands[commandID];
+			DebugCommand cmd = Commands[commandID];
 
 			CommandHintHeaderLabel.Text = _GetParameterText(cmd, parameterCount);
 
@@ -370,7 +370,7 @@ public partial class DebugConsole : CanvasLayer
 		LogError($"TypeError: Parameter \"{parameter.Name}\" should be a [{parameter.Type}], but an incorrect value was passed.");
 	}
 
-	public Godot.Collections.Dictionary<bool, Godot.Collections.Array> Options = new Godot.Collections.Dictionary<bool, Godot.Collections.Array> {
+	public Godot.Collections.Dictionary<bool, Godot.Collections.Array> BoolOptions = new Godot.Collections.Dictionary<bool, Godot.Collections.Array> {
 		{true, new Godot.Collections.Array{
 			"true", "on", "1", 
 		}},
@@ -501,12 +501,12 @@ public partial class DebugConsole : CanvasLayer
 			else if (currentParameterObj.Type == DebugParameterType.Bool) {
 				var value = commandSplit[i].ToLower().Trim();
 				
-				if ( !Options[true].Contains(value) && !Options[false].Contains(value) ) {
+				if ( !BoolOptions[true].Contains(value) && !BoolOptions[false].Contains(value) ) {
 					LogTypeError(currentParameterObj);
 					return;
 				}
 
-				value = Options[true].Contains(value) ? "true" : "false";
+				value = BoolOptions[true].Contains(value) ? "true" : "false";
 				commandFunction += value + ",";
 				currentParameter += 1;
 			}
@@ -540,14 +540,6 @@ public partial class DebugConsole : CanvasLayer
 			return ;
 		}
 
-		if (commandFunction.Contains(',')) {
-			commandFunction = commandFunction.Remove(commandFunction.LastIndexOf(','));
-		}
-
-		if (commandFunction == "(") {
-			commandFunction += "null";
-		}
-
 		commandFunction += ")";
 
 		GD.Print(commandFunction);
@@ -560,7 +552,7 @@ public partial class DebugConsole : CanvasLayer
 			return;
 		}
 
-		GD.Print((object)expression.Execute(new Godot.Collections.Array(), commandData.Function.Target));
+		GD.Print((object)expression.Execute(this.GetBlank<Godot.Collections.Array>(), commandData.Function.Target));
 
 
 		# endregion

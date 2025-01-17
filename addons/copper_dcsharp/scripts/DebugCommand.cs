@@ -6,6 +6,7 @@ using Godot;
 public partial class DebugCommand : GodotObject
 {
 	public string Id;
+	public Godot.Collections.Array<string> Aliases = new Godot.Collections.Array<string>();
 	public Godot.Collections.Array<DebugParameter> Parameters = new Godot.Collections.Array<DebugParameter>();
 	public string HelpText;
 

@@ -9,6 +9,18 @@ public partial class Lib : EditorPlugin {}
 
 public static class Extensions
 {
+
+	public static System.Collections.Generic.Dictionary<string, object> Blanks = new System.Collections.Generic.Dictionary<string, object>();
+
+	public static T GetBlank<T>(this GodotObject self) where T : class {
+		string name = typeof(T).Name;
+		if (!Blanks.ContainsKey(name)) {
+			T thing = Activator.CreateInstance<T>();
+            Blanks[name] = thing;
+		}
+		return (T)Blanks[name];
+	}
+
 	public static Vector2 Snapped(this Vector2 vector, Vector2 gridSize)
 	{
 		return new Vector2(

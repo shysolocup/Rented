@@ -12,8 +12,9 @@ public partial class DebugCommand : GodotObject
 	public Callable Function;
 	public Callable GetFunction;
 
-	public DebugCommand(DebugConsole console) {
+	public void AddTo(DebugConsole console) {
 		console.Commands.Add(Id, this);
+		GD.Print(console.Commands);
 	}
 }
 
@@ -23,7 +24,7 @@ public partial class DebugParameter : GodotObject
 	public string Name;
 	public bool Required = true;
 	public DebugParameterType Type;
-	public Godot.Collections.Array Options = new Godot.Collections.Array();
+	public Godot.Collections.Array<string> Options = new Godot.Collections.Array<string>();
 }
 
 

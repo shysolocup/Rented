@@ -2,32 +2,15 @@ using CoolGame;
 using Godot;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 [GlobalClass]
 public partial class DebugConsole : CanvasLayer
 {
 
-
-	public partial class Monitor : GodotObject
-	{
-
-		public string Id;
-		public string DisplayName;
-		public Variant Value;
-		public bool Visible;
-
-		public Monitor(string id, string displayName, Variant value, bool visible)
-		{
-			this.Id = id;
-			this.DisplayName = displayName;
-			this.Value = value;
-			this.Visible = visible;
-		}
-	}
-
 	public Godot.Collections.Array ConsoleLog = new Godot.Collections.Array{};
 	public Godot.Collections.Dictionary<string, DebugCommand> Commands = new Godot.Collections.Dictionary<string, DebugCommand>{};
-	public Godot.Collections.Dictionary<string, Monitor> Monitors = new Godot.Collections.Dictionary<string, Monitor>{};
+	public Godot.Collections.Dictionary<string, DebugMonitor> Monitors = new Godot.Collections.Dictionary<string, DebugMonitor>{};
 	public Godot.Collections.Array History = new Godot.Collections.Array{};
 	public int CurrentHistory =  - 1;
 
@@ -67,27 +50,24 @@ public partial class DebugConsole : CanvasLayer
 		LogField = GetNode<ScrollContainer>("%Log");
 		LogScrollBar = LogField.GetVScrollBar();
 		MiniLogScrollBar = MiniLog.GetVScrollBar();
-		HideConsole();
+
+		await HideConsole();
+		
 		LogScrollBar.Connect("changed", Callable.From(_OnScrollbarChanged));
 
 
 		// Register built-in monitors
-		AddMonitor("fps", "FPS");
-		AddMonitor("process", "Process", false);
-		AddMonitor("physics_process", "Physics Process", false);
-		AddMonitor("navigation_process", "Navigation Process", false);
-		AddMonitor("static_memory", "Static Memory", false);
-		AddMonitor("static_memory_max", "Static Memory Max", false);
-		AddMonitor("objects", "Objects", false);
-		AddMonitor("nodes", "Nodes", false);
-		AddMonitor("noise", "Noise", false);
+
+		await Task.Run(() => DebugMonitorList.Init(this));
+
 
 		SetupCfg();
 		SetPauseOnOpen(true);
 
 
 		// Register built-in commands
-		await ToSignal(GetTree().CreateTimer(0.05), "Timeout");
+		await ToSignal(GetTree().CreateTimer(0.05), Timer.SignalName.Timeout);
+
 		DebugCommandList.Init(this);
 	}
 
@@ -98,22 +78,14 @@ public partial class DebugConsole : CanvasLayer
 
 	public override void _Process(double delta)
 	{
-		if(Stats.Visible) {
-			if(IsMonitorVisible("fps")) UpdateMonitor("fps", Performance.GetMonitor(Performance.Monitor.TimeFps));
-			if(IsMonitorVisible("process")) UpdateMonitor("process", Mathf.Snapped(Performance.GetMonitor(Performance.Monitor.TimeProcess), 0.001));
-			if(IsMonitorVisible("physics_process")) UpdateMonitor("physics_process", Mathf.Snapped(Godot.Performance.GetMonitor(Godot.Performance.Monitor.TimePhysicsProcess), 0.001));
-			if(IsMonitorVisible("navigation_process")) UpdateMonitor("navigation_process", Mathf.Snapped(Godot.Performance.GetMonitor(Godot.Performance.Monitor.TimeNavigationProcess), 0.001));
-			if(IsMonitorVisible("static_memory")) UpdateMonitor("static_memory", Mathf.Snapped(Godot.Performance.GetMonitor(Godot.Performance.Monitor.MemoryStatic), 0.001));
-			if(IsMonitorVisible("static_memory_max")) UpdateMonitor("static_memory_max", Mathf.Snapped(Godot.Performance.GetMonitor(Godot.Performance.Monitor.MemoryStaticMax), 0.001));
-			if(IsMonitorVisible("objects")) UpdateMonitor("objects", Godot.Performance.GetMonitor(Godot.Performance.Monitor.ObjectCount));
-			if(IsMonitorVisible("nodes")) UpdateMonitor("nodes", Godot.Performance.GetMonitor(Godot.Performance.Monitor.ObjectNodeCount));
-			if(IsMonitorVisible("noise"))UpdateMonitor("noise", Game.Instance.Noise);
+		if (Stats.Visible) {
 
 			Stats.Text = "";
 
-			foreach (Monitor monitor in Monitors.Values) {
-				if(monitor.Visible)
-				{
+			foreach (DebugMonitor monitor in Monitors.Values) {
+				if (monitor.Visible) {
+					monitor.Update();
+
 					if((object)monitor.Value == null) monitor.Value = "unset";
 					else monitor.Value = (string)monitor.Value;
 
@@ -132,13 +104,13 @@ public partial class DebugConsole : CanvasLayer
 			_OnCommandFieldTextChanged(CommandField.Text);
 
 			// This is stupid but it works
-			await ToSignal(GetTree().CreateTimer(0.02), "Timeout");
+			await ToSignal(GetTree().CreateTimer(0.02), Timer.SignalName.Timeout);
 			CommandField.GrabFocus();
 		}
 
 		// Close debug
 		else if (ConsolePanel.Visible && @event.IsActionPressed("ui_cancel")) {
-			HideConsole(ShowStats, ShowMiniLog);
+			await HideConsole(ShowStats, ShowMiniLog);
 		}
 
 		// Enter command
@@ -157,7 +129,7 @@ public partial class DebugConsole : CanvasLayer
 					CurrentHistory -= 1;
 				}
 				CommandField.Text = (string)History[CurrentHistory];
-				await ToSignal(GetTree(), "ProcessFrame");
+				await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 				CommandField.SetCaretColumn(CommandField.Text.Length);
 			}
 		}
@@ -167,13 +139,13 @@ public partial class DebugConsole : CanvasLayer
 			if(History.Count > 0 && CurrentHistory < History.Count - 1) {
 				CurrentHistory += 1;
 				CommandField.Text = (string)History[CurrentHistory];
-				await ToSignal(GetTree(), "ProcessFrame");
+				await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 				CommandField.SetCaretColumn(CommandField.Text.Length);
 			}
 			else if(CurrentHistory == History.Count - 1) {
 				CommandField.Text = "";
 				CurrentHistory = History.Count;
-				await ToSignal(GetTree(), "ProcessFrame");
+				await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 				CommandField.SetCaretColumn(CommandField.Text.Length);
 			}
 		}
@@ -198,16 +170,17 @@ public partial class DebugConsole : CanvasLayer
 
 		// Gather the first word of each hint, stripping the [url] wrappers
 		var hints = new Godot.Collections.Array();
-		foreach(string hint in CommandHintsLabel.Text.Split("\n"))
-		{
+		foreach(string hint in CommandHintsLabel.Text.Split("\n")) {
 			hints.Add(hint.GetSlice(']', 1).GetSlice('[', 0).GetSlice(' ', 0));
 		}
 		hints = hints.Slice(0, -1);
 
+		GD.Print(hints);
+
 		// Find the common prefix to all hints
 		var common_prefix = "";
 
-		if(hints.Count > 0) {
+		if (hints.Count > 0) {
 			foreach(int i in GD.Range(1000)) {
 				if (!hints.All((string h) => {	
 					return h.Length > i && h[i] == ((string)hints[0])[i];
@@ -217,6 +190,8 @@ public partial class DebugConsole : CanvasLayer
 				}
 			}
 		}
+
+		GD.Print(common_prefix);
 
 		if(!CommandHintsLabel.Visible || common_prefix == "") {
 			return;
@@ -328,8 +303,8 @@ public partial class DebugConsole : CanvasLayer
 				CommandHintsLabel.Visible = true;
 				CommandHintsPanel.Visible = true;
 				CommandHintsLabel.Text = "";
-				foreach(DebugCommand command in commandHints)
-				{
+				
+				foreach(DebugCommand command in commandHints) {
 					CommandHintsLabel.Text += "[url=" + command.Id + "]" + _GetParameterText(command) + "[/url]\n";
 				}
 			}
@@ -390,17 +365,18 @@ public partial class DebugConsole : CanvasLayer
 		return text;
 	}
 
-	public void LogTypeError(DebugParameter parameter)
+	public static void LogTypeError(DebugParameter parameter)
 	{
-		LogError($"TypeError: Parameter {parameter.Name} should be an {parameter.Type.GetType().Name}, but an incorrect value was passed.");
+		LogError($"TypeError: Parameter \"{parameter.Name}\" should be a [{parameter.Type}], but an incorrect value was passed.");
 	}
 
-	public Godot.Collections.Dictionary<bool, Godot.Collections.Array> Options = new Godot.Collections.Dictionary<bool, Godot.Collections.Array>{
+	public Godot.Collections.Dictionary<bool, Godot.Collections.Array> Options = new Godot.Collections.Dictionary<bool, Godot.Collections.Array> {
 		{true, new Godot.Collections.Array{
-			true, "on", "1", 
+			"true", "on", "1", 
 		}},
+
 		{false, new Godot.Collections.Array{
-			false, "off", "0", 
+			"false", "off", "0", 
 		}}
 	};
 
@@ -408,8 +384,7 @@ public partial class DebugConsole : CanvasLayer
 	{
 
 		// Avoid duplicating history entries
-		if(History.Count == 0 || command != (string)History.Last())
-		{
+		if (History.Count == 0 || command != (string)History.Last()) {
 			History.Append(command);
 			CurrentHistory = History.Count;
 		}
@@ -417,29 +392,24 @@ public partial class DebugConsole : CanvasLayer
 		// Splits command
 		var commandSplit = command.Split(" ");
 
+
 		// Checks if command is valid
-		if(!Commands.Keys.Contains(commandSplit[0])) {
-			LogError("Command not found: " + commandSplit[0]);
+		if(!Commands.ContainsKey(commandSplit[0])) {
+			LogError("GuhError: Command not found: " + commandSplit[0]);
 			return;
 		}
+
 
 		// Keeps track of current parameter being read
 		var commandData = Commands[commandSplit[0]];
 		var currentParameter = 0;
 
-
-		// Checks that function is not lambda
-		if (commandData.Function.Method == "<anonymous lambda>") {
-			LogError("Command function must be named.");
-			Log(commandData.Function.Method);
-			return;
-		}
 		var commandFunction = commandData.Function.Method + "(";
 		var currentString = "";
 
 		var required = commandData.Parameters.Where( p => p.Required );
 
-		if (commandData.Parameters.Count() > currentParameter) {
+		if (commandData.Parameters.Count < currentParameter) {
 			LogError($"ParamError: Command \"{commandData.Id}\" requires {commandData.Parameters.Count} parameters, but too many were given.");
 			return ;
 		}
@@ -529,28 +499,27 @@ public partial class DebugConsole : CanvasLayer
 
 			// Bool parameter
 			else if (currentParameterObj.Type == DebugParameterType.Bool) {
-				var value = commandSplit[i].ToLower();
+				var value = commandSplit[i].ToLower().Trim();
 				
-				if(!Options[true] && !Options[false].Contains(value).Contains(value)) {
+				if ( !Options[true].Contains(value) && !Options[false].Contains(value) ) {
 					LogTypeError(currentParameterObj);
-					return ;
+					return;
 				}
-				value = ( options[true].Contains(value) ? true : false );
+
+				value = Options[true].Contains(value) ? "true" : "false";
 				commandFunction += value + ",";
 				currentParameter += 1;
 			}
 
 			// Options parameter
-			else if(currentParameterObj.Type == DebugCommand.ParameterType.Options)
+			else if(currentParameterObj.Type == DebugParameterType.Options)
 			{
-				if(currentParameterObj.Options.IsEmpty())
-				{
-					DebugConsole.LogError("Parameter \"" + currentParameterObj.Name + "\" is meant to have options, but none were set.");
+				if (currentParameterObj.Options.Count == 0) {
+					LogError("ParamError: Parameter \"" + currentParameterObj.Name + "\" is meant to have options, but none were set.");
 					return ;
 				}
-				if(!currentParameterObj.Options.Has(commandSplit[i]))
-				{
-					DebugConsole.LogError("\"" + commandSplit[i] + "\"" + " is not a valid option for parameter \"" + currentParameterObj.Name + "\".");
+				if (!currentParameterObj.Options.Contains(commandSplit[i])) {
+					LogError($"ParamError: \"{commandSplit[i]}\" is not a valid option for parameter \"{currentParameterObj.Name}\".");
 					return ;
 				}
 				commandFunction += "\"" + commandSplit[i] + "\",";
@@ -558,38 +527,49 @@ public partial class DebugConsole : CanvasLayer
 			}
 
 			// Other
-			else
-			{
-				DebugConsole.LogError("Parameter \"" + currentParameterObj.Name + "\" received an invalid value.");
+			else {
+				LogError($"ParamError: Parameter \"{currentParameterObj.Name}\" recieved an invalid value.");
 				return ;
 			}
 		}
 
 
 		// Checks if all parameters are entered
-		if(commandData.Parameters.Size() != currentParameter)
-		{
-			DebugConsole.LogError("Command " + commandData.Id + " requires " + Str(commandData.Parameters.Size()) + " parameters, but only " + Str(currentParameter) + " were given.");
+		if (currentParameter < required.Count()) {
+			LogError($"ParamError: Command {commandData.Id} requires {commandData.Parameters.Count} parameters but only {currentParameter} were given.");
 			return ;
+		}
+
+		if (commandFunction.Contains(',')) {
+			commandFunction = commandFunction.Remove(commandFunction.LastIndexOf(','));
+		}
+
+		if (commandFunction == "(") {
+			commandFunction += "null";
 		}
 
 		commandFunction += ")";
 
-		var expression = Expression.New();
+		GD.Print(commandFunction);
+
+		var expression = new Expression();
 		var error = expression.Parse(commandFunction);
-		if(error)
-		{
-			DebugConsole.LogError("Parsing error: " + Error.ToString(error));
-			return ;
+		
+		if (error != Error.Ok) {
+			LogError($"ParsingError: {expression.GetErrorText()}");
+			return;
 		}
 
-		expression.Execute(new Array{}, commandData.FunctionInstance);
+		GD.Print((object)expression.Execute(new Godot.Collections.Array(), commandData.Function.Target));
 
 
 		# endregion
 
-	}# region Logging
-	public static void Log(Godot.Variant message)
+	}
+	
+	# region Logging
+	
+	public static void Log(string message)
 	{
 
 		// Add to log
@@ -598,19 +578,19 @@ public partial class DebugConsole : CanvasLayer
 
 
 		// Print to Godot output
-		GD.Print(Str(message));
+		GD.Print(message);
 	}
 
-	public static void LogError(Godot.Variant message)
+	public static void LogError(string message)
 	{
 
 		// Add to log
-		GetConsole().ConsoleLog.Append("[color=red]" + Str(message) + "[/color]");
+		GetConsole().ConsoleLog.Append("[color=red]" + message + "[/color]");
 		_UpdateLog();
 
 
 		// Print to Godot output
-		GD.PrintErr(Str(message));
+		GD.PrintErr(message);
 	}
 
 	public static void ClearLog()
@@ -621,8 +601,11 @@ public partial class DebugConsole : CanvasLayer
 
 		# endregion
 
-	}# region Creating commands
-	public static void AddCommand(String id, Callable function, Godot.Object functionInstance, Array parameters = new Array{}, String helpText = "", Godot.Variant getFunction = null)
+	}
+	
+	/*# region Creating commands
+	
+	public static void AddCommand(String id, Callable function, GodotObject functionInstance, Array parameters = new Array{}, String helpText = "", Godot.Variant getFunction = null)
 	{
 		GetConsole().Commands[id] = DebugCommand.New(id, function, functionInstance, parameters, helpText, getFunction);
 	}
@@ -657,8 +640,12 @@ public partial class DebugConsole : CanvasLayer
 			# endregion
 
 		}
-	}# region Monitors
-	public static void AddMonitor(Godot.Variant id, Godot.Variant displayName, bool visible = true)
+	}
+	*/
+
+	# region Monitors
+	
+	/*public static void AddMonitor(string id, string displayName, bool visible = true)
 	{
 		if(id.Contains(" "))
 		{
@@ -673,91 +660,57 @@ public partial class DebugConsole : CanvasLayer
 		{
 			GetConsole().Monitors[id] = Monitor.New(id, displayName, null, Visible);
 		}
-	}
+	}*/
 
-	public static void UpdateMonitor(Godot.Variant id, Godot.Variant value)
-	{
-		if(!GetConsole().Monitors.Keys().Contains(id))
-		{
-			DebugConsole.LogError("Monitor " + id + " does not exist.");
-		}
-		else
-		{
-			GetConsole().Monitors[id].Value = value;
-		}
-	}
-
-	public static bool IsMonitorVisible(Godot.Variant id)
-	{
-		var monitors = GetConsole().Monitors;
-		if(!Monitors.Keys().Contains(id))
-		{return false;
-		}
-		else
-		{return Monitors[id].Visible;
-		}
-	}
-
-	public static void SetMonitorVisible(Godot.Variant id, Godot.Variant visible)
-	{
-		if(!GetConsole().Monitors.Keys().Contains(id))
-		{
-			DebugConsole.LogError("Monitor " + id + " does not exist.");
-		}
-		else
-		{
-			GetConsole().Monitors[id].Visible = Visible;
-
-
-			# endregion
-
-		}
-	}
 	# region Console managing
-	public static Godot.DebugConsole GetConsole()
+	public static DebugConsole GetConsole()
 	{
-		return (Godot.Engine.GetMainLoop()).Root.GetNode("/root/debug_console");
+		return (Engine.GetMainLoop() as SceneTree).Root.GetNode("/root/debug_console") as DebugConsole;
 	}
 
-	public static void HideConsole(bool showStats = false, bool showMiniLog = false)
+	public static async Task<bool> HideConsole(bool showStats = false, bool showMiniLog = false)
 	{
 		var console = GetConsole();
 		console.ConsolePanel.Visible = false;
-		console.Stats.Visible = ShowStats;
-		console.MiniLog.Visible = ShowMiniLog;
-		await ToSignal(console.GetTree().CreateTimer(0.01), "Timeout");
-		console.MiniLog.ScrollVertical = console.MiniLogScrollBar.MaxValue;
+		console.Stats.Visible = console.ShowStats;
+		console.MiniLog.Visible = console.ShowMiniLog;
 
-		Godot.Input.MouseMode = Godot.Input.MouseMode.MouseModeCaptured;
+		await console.ToSignal(console.GetTree().CreateTimer(0.01), Timer.SignalName.Timeout);
 
-		if(console.PauseOnOpen)
-		{console.GetTree().Paused = false;
+		console.MiniLog.ScrollVertical = (int)console.MiniLogScrollBar.MaxValue;
+
+		Input.MouseMode = Input.MouseModeEnum.Captured;
+
+		if (console.PauseOnOpen) {
+			console.GetTree().Paused = false;
 		}
+
+		return true;
 	}
 
 	public static void ShowConsole()
 	{
 		var console = GetConsole();
+
 		console.ConsolePanel.Visible = true;
 		console.Stats.Visible = true;
 		console.MiniLog.Visible = false;
 
-		Godot.Input.MouseMode = Godot.Input.MouseMode.MouseModeVisible;
+		Input.MouseMode = Input.MouseModeEnum.Visible;
 
-		if(console.PauseOnOpen)
-		{console.GetTree().Paused = true;
+		if(console.PauseOnOpen) {
+			console.GetTree().Paused = true;
 		}
 	}
 
 	public static bool IsConsoleVisible()
 	{
 		var console = GetConsole();
-		if(GodotObject.IsInstanceValid(console))
-		{
-			return console.GetNode("ConsolePanel").Visible;
+		if (IsInstanceValid(console)) {
+			return console.GetNode<Control>("ConsolePanel").Visible;
 		}
-		else
-		{
+
+		else {
 			return false;
 		}
 	}
@@ -771,13 +724,13 @@ public partial class DebugConsole : CanvasLayer
 	{
 		var console = GetConsole();
 		var logText = "";
-		foreach(Variant line in console.ConsoleLog)
-		{
-			logText += Str(line) + "\n";
+
+		foreach(string line in console.ConsoleLog) {
+			logText += line + "\n";
 		}
 
-		console.LogField.GetNode("MarginContainer/Log Content").Text = logText;
-		console.MiniLog.GetNode("MarginContainer/Log Content").Text = "[right]" + logText;
+		console.LogField.GetNode<RichTextLabel>("MarginContainer/Log Content").Text = logText;
+		console.MiniLog.GetNode<RichTextLabel>("MarginContainer/Log Content").Text = "[right]" + logText;
 	}
 
 
@@ -789,4 +742,5 @@ public partial class DebugConsole : CanvasLayer
 
 
 	//var file = FileAccess.open("user://cfg/autoexec.cfg", FileAccess.WRITE)
+	#endregion
 }

@@ -1,44 +1,106 @@
 using System;
 using System.Linq;
-using System.Reflection;
 using Godot;
 using CoolGame;
+
+public partial class DebugCommandFunctions : GodotObject 
+{
+	public void test() 
+	{
+		GD.Print("sjdfklasdf");
+	}
+
+	public void show_stats(bool value) 
+	{
+		var console = DebugConsole.GetConsole();
+		console.ShowStats = value;
+		console.Stats.Visible = true;
+	}
+
+	public bool stats_visible() 
+	{
+		var console = DebugConsole.GetConsole();
+		return console.ShowStats;
+	}
+
+	public void set_noise(float value)
+	{
+		Game.Instance.Noise = value;
+	}
+
+	public void clear()
+	{
+		DebugConsole.ClearLog();
+	}
+
+	public void show_mini_log(bool value) 
+	{
+		var console = DebugConsole.GetConsole();
+
+		console.ShowMiniLog = value;
+
+		if (!console.CommandField.Visible) {
+			console.MiniLog.Visible = true;
+		}
+	}
+
+	public bool mini_log_visible() 
+	{
+		var console = DebugConsole.GetConsole();
+		return console.ShowMiniLog;
+	}
+
+	public void exec(string file)
+	{
+		DebugCommandList._Exec(file);
+	}
+
+	public void open_cfg_dir()
+	{
+		DebugCommandList._OpenCfgDir();
+	}
+
+	public void monitor(DebugMonitor monitor, bool value)
+	{
+        monitor.Visible = value;
+    }
+
+	public void help(string command)
+	{
+		var helpText = DebugConsole.GetConsole().Commands[command].HelpText;
+		DebugConsole.Log($"{command} - { ((helpText != "") ? helpText : "There is no help available.") }");
+	}
+}
 
 public static class DebugCommandList
 {
 
 	public static void Init(DebugConsole console)
 	{
+		InitConfig(console);
+		
+		var funcs = new DebugCommandFunctions();
 
-		#region CONFIG
+		#region test
 
+		new DebugCommand {
+			Id = "test",
+			HelpText = "returns arguments",
 
-		var cfgs = new Godot.Collections.Array();
-		var dir = DirAccess.Open("user://cfg");
+			Parameters = new Godot.Collections.Array<DebugParameter> {
+				new DebugParameter {
+					Name = "guh",
+					Type = DebugParameterType.Bool
+				}
+			},
 
-		foreach(string file in ListFilesInDirectory("user://cfg"))
-		{
-			var fileSplit = file.Split(".");
-
-			if (fileSplit.Last() == "cfg") {
-				cfgs.Append(fileSplit[0]);
-			}
-		}
-
-		var autoexec = FileAccess.Open("user://cfg/autoexec.cfg", FileAccess.ModeFlags.Read);
-
-		if(autoexec != null) {
-			_Exec("autoexec");
-		}
-
-		var monitors = DebugConsole.GetConsole().Monitors.Keys();
-
+            Function = new Callable(funcs, DebugCommandFunctions.MethodName.test)
+		}.AddTo(console);
 
 		#endregion
 		#region show_stats
 
-
-		new DebugCommand(console) {
+		new DebugCommand {
 			Id = "show_stats",
 			HelpText = "Toggles whether or not the performance stats in the top left should be visible or not.",
 
@@ -49,23 +111,15 @@ public static class DebugCommandList
 				}
 			},
 
-            Function = Callable.From((bool value) => {
-				var console = DebugConsole.GetConsole();
-				console.ShowStats = value;
-				console.Stats.Visible = true;
-			}),
-
-			GetFunction = Callable.From<bool>(() => {
-                return console.ShowStats;
-            })
-		};
-
+            Function = new Callable(funcs, DebugCommandFunctions.MethodName.show_stats),
+			GetFunction = new Callable(funcs, DebugCommandFunctions.MethodName.stats_visible)
+		}.AddTo(console);
 
 		#endregion
 		#region set_noise
 
 
-		new DebugCommand(console) {
+		new DebugCommand {
 			Id = "set_noise",
 			HelpText = "Sets the player's \"Noise\" value.",
 
@@ -76,83 +130,70 @@ public static class DebugCommandList
 				}
 			},
 
-            Function = Callable.From((float value) => {
-				Game.Instance.Noise = value;
-			})
-		};
+            Function = new Callable(funcs, DebugCommandFunctions.MethodName.set_noise),
+		}.AddTo(console);
 
 
 		#endregion
 		#region clear
 
 
-		new DebugCommand(console) {
+		new DebugCommand {
 			Id = "clear",
 			HelpText = "Clears the console.",
 
-			Function = Callable.From(() => {
-				console.ClearLog();
-			})
-		};
+			Function = new Callable(funcs, DebugCommandFunctions.MethodName.clear)
+
+		}.AddTo(console);
 
 
 		#endregion
 		#region show_mini_log
 
 
-		new DebugCommand(console) {
+		new DebugCommand {
 			Id = "show_mini_log",
 			HelpText = "Toggles whether or not the mini log in the top right should be visible or not.",
 
-			Function = Callable.From((bool value) => {
-				var console = DebugConsole.GetConsole();
+			Function = new Callable(funcs, DebugCommandFunctions.MethodName.show_mini_log),
+			GetFunction = new Callable(funcs, DebugCommandFunctions.MethodName.mini_log_visible),
 
-				console.ShowMiniLog = value;
-
-				if (!console.CommandField.Visible) {
-					console.MiniLog.Visible = true;
-				}
-			}),
-
-			GetFunction = Callable.From<bool>(() => {
-                return console.ShowMiniLog;
-            })
-		};
+		}.AddTo(console);
 
 
 		#endregion
 		#region exec
 
 
-		new DebugCommand(console) {
+		new DebugCommand {
 			Id = "exec",
             HelpText = "Executes the given cfg file.",
 
-			Function = Callable.From((string file) => {
-				_Exec(file);
-			})
-		};
+			Function = new Callable(funcs, DebugCommandFunctions.MethodName.exec),
+
+		}.AddTo(console);
 
 
 		#endregion
 		#region open_cfg_dir
 
 
-		new DebugCommand(console) {
+		new DebugCommand {
 			Id = "open_cfg_dir",
             HelpText = "Opens the directory where cfg files are put, if it exists.",
 
-			Function = Callable.From(() => {
-				_OpenCfgDir();
-			})
-		};
+			Function = new Callable(funcs, DebugCommandFunctions.MethodName.open_cfg_dir),
+		}.AddTo(console);
 
 		
 		#endregion
 		#region monitor
 
 
-		new DebugCommand(console) {
+		var monitors = new Godot.Collections.Array<string>(DebugConsole.GetConsole().Monitors.Keys);
+
+
+		new DebugCommand {
 			Id = "monitor",
             HelpText = "Toggles the visibility of a stat monitor.",
 
@@ -169,17 +210,19 @@ public static class DebugCommandList
 				}
 			},
 
-			Function = Callable.From((DebugConsole.Monitor monitor, bool value) => {
-				DebugConsole.SetMonitorVisible(monitor, value);
-			})
-		};
+			Function = new Callable(funcs, DebugCommandFunctions.MethodName.monitor),
+		}.AddTo(console);
 
 
 		#endregion
 		#region help
 
 
-		new DebugCommand(console) {
+		var commands = new Godot.Collections.Array<string>(console.Commands.Keys);
+		commands.Sort();
+
+
+		new DebugCommand {
 			Id = "help",
             HelpText = "Use to get help on any particular command.",
 
@@ -187,15 +230,12 @@ public static class DebugCommandList
 				new DebugParameter {
 					Name = "command",
 					Type = DebugParameterType.Options,
-					Options = DebugConsole.GetConsole().Commands.Keys.Sort()
+					Options = commands
 				}
 			},
 
-			Function = Callable.From((string command) => {
-				var helpText = DebugConsole.GetConsole().Commands[command].HelpText;
-				DebugConsole.Log($"{command} - { ((helpText != "") ? helpText : "There is no help available.") }");
-			})
-		};
+			Function = new Callable(funcs, DebugCommandFunctions.MethodName.help),
+		}.AddTo(console);
 	}
 
 
@@ -250,4 +290,29 @@ public static class DebugCommandList
 	}
 
 	#endregion
+
+	public static void InitConfig(DebugConsole console) {
+		#region CONFIG
+
+		var cfgs = new Godot.Collections.Array();
+		var dir = DirAccess.Open("user://cfg");
+
+		foreach(string file in ListFilesInDirectory("user://cfg"))
+		{
+			var fileSplit = file.Split(".");
+
+			if (fileSplit.Last() == "cfg") {
+				cfgs.Append(fileSplit[0]);
+			}
+		}
+
+		var autoexec = FileAccess.Open("user://cfg/autoexec.cfg", FileAccess.ModeFlags.Read);
+
+		if(autoexec != null) {
+			_Exec("autoexec");
+		}
+
+
+		#endregion
+	}
 }

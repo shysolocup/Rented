@@ -129,11 +129,11 @@ public partial class Player : CharacterBody3D
 			if (crouchOut != null && crouchOut.IsRunning()) crouchOut.Stop();
 
 			if (speedOut != null && speedOut.IsRunning()) speedOut.Stop();
-			if (!speedIn.IsRunning()) speedIn.Play();
+			if (speedIn != null && !speedIn.IsRunning()) speedIn.Play();
 		}
 		else if (property == "sprinting" && (bool)value == false) {
-			if (speedIn.IsRunning()) speedIn.Stop();
-			if (!speedOut.IsRunning()) speedOut.Play();
+			if (speedIn != null && speedIn.IsRunning()) speedIn.Stop();
+			if (speedOut != null && !speedOut.IsRunning()) speedOut.Play();
 		}
 	}
 

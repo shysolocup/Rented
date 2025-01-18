@@ -61,10 +61,11 @@ public partial class DebugCommandFunctions : GodotObject
 		DebugCommandList._OpenCfgDir();
 	}
 
-	public void monitor(DebugMonitor monitor, bool value)
+	public void monitor(string monitor, bool value)
 	{
-        monitor.Visible = value;
-    }
+		DebugConsole console = DebugConsole.GetConsole();
+		console.Monitors[monitor].Visible = value;
+	}
 
 	public void help(string command)
 	{
@@ -100,7 +101,7 @@ public static class DebugCommandList
 				}
 			},
 
-            Function = new Callable(funcs, DebugCommandFunctions.MethodName.test)
+			Function = new Callable(funcs, DebugCommandFunctions.MethodName.test)
 		}.AddTo(console);
 
 		#endregion
@@ -112,12 +113,12 @@ public static class DebugCommandList
 
 			Parameters = new Array<DebugParameter> {
 				new DebugParameter {
-					Name = "show?",
+					Name = "show",
 					Type = DebugParameterType.Bool
 				}
 			},
 
-            Function = new Callable(funcs, DebugCommandFunctions.MethodName.show_stats),
+			Function = new Callable(funcs, DebugCommandFunctions.MethodName.show_stats),
 			GetFunction = new Callable(funcs, DebugCommandFunctions.MethodName.stats_visible)
 		}.AddTo(console);
 
@@ -136,7 +137,7 @@ public static class DebugCommandList
 				}
 			},
 
-            Function = new Callable(funcs, DebugCommandFunctions.MethodName.set_noise),
+			Function = new Callable(funcs, DebugCommandFunctions.MethodName.set_noise),
 		}.AddTo(console);
 
 
@@ -164,6 +165,13 @@ public static class DebugCommandList
 			Function = new Callable(funcs, DebugCommandFunctions.MethodName.show_mini_log),
 			GetFunction = new Callable(funcs, DebugCommandFunctions.MethodName.mini_log_visible),
 
+			Parameters = new Array<DebugParameter> {
+				new DebugParameter {
+					Name = "value",
+					Type = DebugParameterType.Bool
+				}
+			},
+
 		}.AddTo(console);
 
 
@@ -173,7 +181,7 @@ public static class DebugCommandList
 
 		new DebugCommand {
 			Id = "exec",
-            HelpText = "Executes the given cfg file.",
+			HelpText = "Executes the given cfg file.",
 
 			Function = new Callable(funcs, DebugCommandFunctions.MethodName.exec),
 
@@ -186,7 +194,7 @@ public static class DebugCommandList
 
 		new DebugCommand {
 			Id = "cfg",
-            HelpText = "Opens the directory where cfg files are put, if it exists.",
+			HelpText = "Opens the directory where cfg files are put, if it exists.",
 
 			Function = new Callable(funcs, DebugCommandFunctions.MethodName.open_cfg_dir),
 		}.AddTo(console);
@@ -201,7 +209,7 @@ public static class DebugCommandList
 
 		new DebugCommand {
 			Id = "monitor",
-            HelpText = "Toggles the visibility of a stat monitor.",
+			HelpText = "Toggles the visibility of a stat monitor.",
 
 			Parameters = new Array<DebugParameter> {
 				new DebugParameter {
@@ -230,7 +238,7 @@ public static class DebugCommandList
 
 		new DebugCommand {
 			Id = "help",
-            HelpText = "Use to get help on any particular command.",
+			HelpText = "Use to get help on any particular command.",
 
 			Parameters = new Array<DebugParameter> {
 				new DebugParameter {
@@ -257,17 +265,10 @@ public static class DebugCommandList
 			var dir = DirAccess.Open(path);
 			dir.ListDirBegin();
 
-			while(true)
-			{
+			while (true) {
 				var file = dir.GetNext();
-				if(file == "")
-				{
-					break;
-				}
-				else if(!file.StartsWith("."))
-				{
-					files.Add(file);
-				}
+				if (file == "") break;
+				else if (!file.StartsWith(".")) files.Add(file);
 			}
 
 			dir.ListDirEnd();
@@ -281,8 +282,7 @@ public static class DebugCommandList
 		var commandCount = 0;
 		foreach(string command in commands)
 		{
-			if(command.Replace(" ", "") != "")
-			{
+			if (command.Replace(" ", "") != "") {
 				DebugConsole.GetConsole().ProcessCommand(command);
 				commandCount += 1;
 			}

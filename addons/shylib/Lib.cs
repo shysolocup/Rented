@@ -1,6 +1,7 @@
 #if TOOLS
 using Godot;
 using System;
+using System.Globalization;
 using System.Threading.Tasks;
 
 [Tool]
@@ -12,13 +13,68 @@ public static class Extensions
 
 	public static System.Collections.Generic.Dictionary<string, object> Blanks = new System.Collections.Generic.Dictionary<string, object>();
 
-	public static T GetBlank<T>(this GodotObject self) where T : class {
+	public static T GetBlank<T>(this GodotObject self) where T : class 
+	{
 		string name = typeof(T).Name;
 		if (!Blanks.ContainsKey(name)) {
 			T thing = Activator.CreateInstance<T>();
             Blanks[name] = thing;
 		}
 		return (T)Blanks[name];
+	}
+
+	public static dynamic Lerp(this GodotObject self, dynamic value, dynamic goal, dynamic _t, Tween.TransitionType trans = Tween.TransitionType.Linear, Tween.EaseType ease = Tween.EaseType.InOut)
+	{
+
+		// SINE
+		if (trans == Tween.TransitionType.Sine) {
+			float e = _t;
+
+			// IN easing
+            if (ease == Tween.EaseType.In) {
+                e = 1 - Math.Cos( _t * Math.PI / 2 );
+            }
+
+            // OUT easing
+            else if (ease == Tween.EaseType.Out) {
+                e = Math.Sin( _t * Math.PI / 2 );
+            }
+
+            // IN-OUT easing
+            else if (ease == Tween.EaseType.InOut || ease == Tween.EaseType.OutIn) {
+                e = -(Math.Cos(Math.PI * _t) - 1) / 2;
+            }
+
+            return value + (goal - value) * e;
+		}
+
+		// QUAD
+		if (trans == Tween.TransitionType.Quad) {
+			float e = _t;
+
+			// IN easing
+            if (ease == Tween.EaseType.In) {
+                e = 1 - Math.Cos( _t * Math.PI / 2 );
+            }
+
+            // OUT easing
+            else if (ease == Tween.EaseType.Out) {
+                e = Math.Sin( _t * Math.PI / 2 );
+            }
+
+            // IN-OUT easing
+            else if (ease == Tween.EaseType.InOut || ease == Tween.EaseType.OutIn) {
+                e = -(Math.Cos(Math.PI * _t) - 1) / 2;
+            }
+
+            return value + (goal - value) * e;
+		}
+	
+
+		
+		else {
+			return value + (goal - value) * _t;
+		}
 	}
 
 	public static Vector2 Snapped(this Vector2 vector, Vector2 gridSize)

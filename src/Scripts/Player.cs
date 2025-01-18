@@ -112,23 +112,23 @@ public partial class Player : CharacterBody3D
 	{
 		// crouching
 		if (property == "crouching" && (bool)value == true) {
-			if (speedIn.IsRunning()) speedIn.Stop();
-			if (speedOut.IsRunning()) speedOut.Stop();
-			if (crouchOut.IsRunning()) crouchOut.Stop();
+			if (speedIn != null && speedIn.IsRunning()) speedIn.Stop();
+			if (speedOut != null && speedOut.IsRunning()) speedOut.Stop();
+			if (crouchOut != null && crouchOut.IsRunning()) crouchOut.Stop();
 
-			if (!crouchIn.IsRunning()) crouchIn.Play();
+			if (crouchIn != null && !crouchIn.IsRunning()) crouchIn.Play();
 		}
 		else if (property == "crouching" && (bool)value == false) {
-			if (crouchIn.IsRunning()) crouchIn.Stop();
-			if (!crouchOut.IsRunning()) crouchOut.Play();
+			if (crouchIn != null && crouchIn.IsRunning()) crouchIn.Stop();
+			if (crouchOut != null && !crouchOut.IsRunning()) crouchOut.Play();
 		}
 
 		// sprinting
 		else if (property == "sprinting" && (bool)value == true) {
-			if (crouchIn.IsRunning()) crouchIn.Stop();
-			if (crouchOut.IsRunning()) crouchOut.Stop();
+			if (crouchIn != null && crouchIn.IsRunning()) crouchIn.Stop();
+			if (crouchOut != null && crouchOut.IsRunning()) crouchOut.Stop();
 
-			if (speedOut.IsRunning()) speedOut.Stop();
+			if (speedOut != null && speedOut.IsRunning()) speedOut.Stop();
 			if (!speedIn.IsRunning()) speedIn.Play();
 		}
 		else if (property == "sprinting" && (bool)value == false) {

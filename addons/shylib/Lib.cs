@@ -23,58 +23,106 @@ public static class Extensions
 		return (T)Blanks[name];
 	}
 
+	/// <summary>
+	/// Base dynamic method of linear interpolation without any special easing arguments
+	/// </summary>
+	/// <param name="value">Original value before lerping</param>
+	/// <param name="goal">Goal of the lerp</param>
+	/// <param name="_t">Factor from 0 to 1 usually done by dividing 1 by a float (eg: 1/1.5f)</param>
+	/// <returns>New value after doing stupid math</returns>
+	public static dynamic BaseLerp(dynamic value, dynamic goal, dynamic _t) {
+		return (value * (1 - _t)) + (goal * _t);
+	}
+
+
+	/// <summary>
+	/// Dynamic method of linear interpolation functions with different methods of easing. It's meant to be used along with _Process that way it can smoothly transition to the goal
+	/// </summary>
+	/// <param name="value">Original value before lerping</param>
+	/// <param name="goal">Goal of the lerp</param>
+	/// <param name="_t">Factor from 0 to 1 usually done by dividing 1 by a float (eg: 1/1.5f)</param>
+	/// <param name="trans">Transition type defaulting to Tween.TransitionType.Linear</param>
+	/// <param name="ease">Transition easing defaulting to Tween.EaseType.InOut</param>
+	/// <returns>New value after doing stupid math</returns>
 	public static dynamic Lerp(this GodotObject self, dynamic value, dynamic goal, dynamic _t, Tween.TransitionType trans = Tween.TransitionType.Linear, Tween.EaseType ease = Tween.EaseType.InOut)
 	{
 
-		// SINE
-		if (trans == Tween.TransitionType.Sine) {
-			float e = _t;
+		float e = _t;
 
-			// IN easing
-            if (ease == Tween.EaseType.In) {
-                e = 1 - Math.Cos( _t * Math.PI / 2 );
-            }
+		switch(trans) 
+		{
+			case Tween.TransitionType.Sine: {
 
-            // OUT easing
-            else if (ease == Tween.EaseType.Out) {
-                e = Math.Sin( _t * Math.PI / 2 );
-            }
+				switch(ease) 
+				{
+					case Tween.EaseType.In:
+						e = 1 - Math.Cos( _t * Math.PI / 2);
+						break;
 
-            // IN-OUT easing
-            else if (ease == Tween.EaseType.InOut || ease == Tween.EaseType.OutIn) {
-                e = -(Math.Cos(Math.PI * _t) - 1) / 2;
-            }
+					case Tween.EaseType.Out:
+						e = Math.Sin( _t * Math.PI / 2 );
+						break;
 
-            return value + (goal - value) * e;
+					case Tween.EaseType n when n == Tween.EaseType.InOut || n == Tween.EaseType.OutIn:
+						e = -(Math.Cos(Math.PI * _t) - 1) / 2;
+						break;
+
+				} break;
+			}
+
+			case Tween.TransitionType.Quad: {
+				switch(ease) 
+				{
+					case Tween.EaseType.In:
+						e = Math.Pow(_t, 2);
+						break;
+
+					case Tween.EaseType.Out:
+						e = 1 - Math.Pow(1 - _t, 2);
+						break;
+
+					case Tween.EaseType n when n == Tween.EaseType.InOut || n == Tween.EaseType.OutIn:
+						e = (_t < 0.5f) ? 2 * Math.Pow(_t, 2) : 1 - Math.Pow(-2 * _t + 2, 2) / 2;
+						break;
+				} break;
+			}
+
+			case Tween.TransitionType.Cubic: {
+				switch(ease) 
+				{
+					case Tween.EaseType.In:
+						e = Math.Pow(_t, 3);
+						break;
+
+					case Tween.EaseType.Out:
+						e = 1 - Math.Pow(1 - _t, 3);
+						break;
+
+					case Tween.EaseType n when n == Tween.EaseType.InOut || n == Tween.EaseType.OutIn:
+						e = (_t < 0.5f) ? 4 * Math.Pow(_t, 3) : 1 - Math.Pow(-2 * _t + 2, 3) / 2;
+						break;
+				} break;
+			}
+
+			case Tween.TransitionType.Quart: {
+				switch(ease) 
+				{
+					case Tween.EaseType.In:
+						e = Math.Pow(_t, 4);
+						break;
+
+					case Tween.EaseType.Out:
+						e = 1 - Math.Pow(1 - _t, 4);
+						break;
+
+					case Tween.EaseType n when n == Tween.EaseType.InOut || n == Tween.EaseType.OutIn:
+						e = (_t < 0.5f) ? 8 * Math.Pow(_t, 4) : 1 - Math.Pow(-2 * _t + 2, 4) / 2;
+						break;
+				} break;
+			}
 		}
 
-		// QUAD
-		if (trans == Tween.TransitionType.Quad) {
-			float e = _t;
-
-			// IN easing
-            if (ease == Tween.EaseType.In) {
-                e = 1 - Math.Cos( _t * Math.PI / 2 );
-            }
-
-            // OUT easing
-            else if (ease == Tween.EaseType.Out) {
-                e = Math.Sin( _t * Math.PI / 2 );
-            }
-
-            // IN-OUT easing
-            else if (ease == Tween.EaseType.InOut || ease == Tween.EaseType.OutIn) {
-                e = -(Math.Cos(Math.PI * _t) - 1) / 2;
-            }
-
-            return value + (goal - value) * e;
-		}
-	
-
-		
-		else {
-			return value + (goal - value) * _t;
-		}
+		return value * (1 - e) + goal * e;
 	}
 
 	public static Vector2 Snapped(this Vector2 vector, Vector2 gridSize)

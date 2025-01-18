@@ -113,7 +113,7 @@ DefaultIcon = ExtResource("5_fwxn0")
 DefaultHoverIcon = ExtResource("6_k4ggk")
 LockedIcon = ExtResource("7_ij6rp")
 Distance = 15.0
-Delay = "1/1.15"
+Delay = "1/1.5"
 
 [node name="Icon" type="MeshInstance3D" parent="CrosshairGui/CrosshairContainer/CrosshairViewport/Crosshair"]
 transform = Transform3D(0.047, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.781966, -3.22837)
@@ -206,13 +206,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_qqeip")
 script = ExtResource("2_i3adb")
 Source = ExtResource("11_htgqa")
 
-[node name="SpotLight3D" type="SpotLight3D" parent="Node3D"]
-transform = Transform3D(1, 0, 0, 0, -0.284852, 0.958572, 0, -0.958572, -0.284852, 0, 21.4164, -5.50887)
-light_energy = 1.465
-shadow_enabled = true
-spot_range = 4096.0
-spot_attenuation = -0.1
-
 [node name="Audios" type="Node3D" parent="Node3D"]
 unique_name_in_owner = true
 
@@ -251,6 +244,17 @@ parameters/looping = true
 [node name="World" type="WorldEnvironment" parent="Node3D"]
 unique_name_in_owner = true
 environment = ExtResource("9_hrp8o")
+
+[node name="Sun" type="DirectionalLight3D" parent="Node3D/World"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.00314154, 0.999995, 0, -0.999995, 0.00314154, -3.51915, 38.7123, -10.4086)
+light_color = Color(1, 0.941176, 0.929412, 1)
+light_energy = 1.099
+light_indirect_energy = 0.802
+light_volumetric_fog_energy = 1.175
+light_angular_distance = 2.75
+shadow_enabled = true
+shadow_blur = 10.0
 
 [node name="Cameras" type="Node3D" parent="Node3D"]
 unique_name_in_owner = true

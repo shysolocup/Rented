@@ -6,10 +6,6 @@ using Godot.Collections;
 
 public partial class DebugCommandFunctions : GodotObject 
 {
-	public bool test(bool a, bool b) 
-	{
-		return a == b;
-	}
 
 	public void show_stats(bool value) 
 	{
@@ -83,29 +79,9 @@ public static class DebugCommandList
 		
 		var funcs = new DebugCommandFunctions();
 
-		#region test
-
-		new DebugCommand {
-			Id = "test",
-			HelpText = "returns arguments",
-
-			Parameters = new Array<DebugParameter> {
-				new DebugParameter {
-					Name = "a",
-					Type = DebugParameterType.Bool
-				},
-
-				new DebugParameter {
-					Name = "b",
-					Type = DebugParameterType.Bool
-				}
-			},
-
-			Function = new Callable(funcs, DebugCommandFunctions.MethodName.test)
-		}.AddTo(console);
-
-		#endregion
+		
 		#region stats
+
 
 		new DebugCommand {
 			Id = "stats",
@@ -121,6 +97,7 @@ public static class DebugCommandList
 			Function = new Callable(funcs, DebugCommandFunctions.MethodName.show_stats),
 			GetFunction = new Callable(funcs, DebugCommandFunctions.MethodName.stats_visible)
 		}.AddTo(console);
+
 
 		#endregion
 		#region set_noise
@@ -204,7 +181,7 @@ public static class DebugCommandList
 		#region monitor
 
 
-		var monitors = new Array<string>(DebugConsole.GetConsole().Monitors.Keys);
+		var monitors = new Array<string>(console.Monitors.Keys);
 
 
 		new DebugCommand {

@@ -193,8 +193,10 @@ public partial class Player : CharacterBody3D
 		if (!ready) return;
 
 		if (!controllable) return;
+		
 		float d = (float)delta;
 		if (mouse_captured) _handle_joypad_camera_rotation(d);
+
 		Velocity = _move(d) + _gravity(d) + _jump(d);
 		MoveAndSlide();
 	}

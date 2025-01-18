@@ -3,7 +3,7 @@ using Godot;
 
 [Tool]
 [GlobalClass]
-public partial class DCEntry : EditorPlugin
+public partial class CopperDCSharp : EditorPlugin
 {
 	public Variant Dock;
 

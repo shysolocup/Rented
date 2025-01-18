@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cqk3ibnpfavjg"
+path="res://.godot/imported/flashlight_rbx_export.obj-e70b9b3746d99c5a9a1df6948ee4f08f.mesh"
+
+[deps]
+
+files=["res://.godot/imported/flashlight_rbx_export.obj-e70b9b3746d99c5a9a1df6948ee4f08f.mesh"]
+
+source_file="res://src/Models/flashlight_rbx_export.obj"
+dest_files=["res://.godot/imported/flashlight_rbx_export.obj-e70b9b3746d99c5a9a1df6948ee4f08f.mesh", "res://.godot/imported/flashlight_rbx_export.obj-e70b9b3746d99c5a9a1df6948ee4f08f.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

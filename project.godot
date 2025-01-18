@@ -18,7 +18,6 @@ config/icon="res://icon.svg"
 [autoload]
 
 debug_console="*res://addons/copper_dcsharp/debug_console.tscn"
-RuntimeDebugTools="*res://addons/runtime_debug_tools/scenes/remote_inspector.tscn"
 
 [dialogic]
 
@@ -31,7 +30,7 @@ project/assembly_name="guh"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/copper_dcsharp/plugin.cfg", "res://addons/extra_snaps/plugin.cfg", "res://addons/gdscript2all/plugin.cfg", "res://addons/gdterm/plugin.cfg", "res://addons/runtime_debug_tools/plugin.cfg", "res://addons/shylib/plugin.cfg")
+enabled=PackedStringArray("res://addons/copper_dcsharp/plugin.cfg", "res://addons/extra_snaps/plugin.cfg", "res://addons/gdscript2all/plugin.cfg", "res://addons/gdterm/plugin.cfg", "res://addons/shylib/plugin.cfg")
 
 [global_group]
 

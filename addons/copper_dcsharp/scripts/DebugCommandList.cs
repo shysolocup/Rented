@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Godot;
 using CoolGame;
+using Godot.Collections;
 
 public partial class DebugCommandFunctions : GodotObject 
 {
@@ -87,7 +88,7 @@ public static class DebugCommandList
 			Id = "test",
 			HelpText = "returns arguments",
 
-			Parameters = new Godot.Collections.Array<DebugParameter> {
+			Parameters = new Array<DebugParameter> {
 				new DebugParameter {
 					Name = "a",
 					Type = DebugParameterType.Bool
@@ -109,7 +110,7 @@ public static class DebugCommandList
 			Id = "stats",
 			HelpText = "Toggles whether or not the performance stats in the top left should be visible or not.",
 
-			Parameters = new Godot.Collections.Array<DebugParameter> {
+			Parameters = new Array<DebugParameter> {
 				new DebugParameter {
 					Name = "show?",
 					Type = DebugParameterType.Bool
@@ -128,7 +129,7 @@ public static class DebugCommandList
 			Id = "set_noise",
 			HelpText = "Sets the player's \"Noise\" value.",
 
-			Parameters = new Godot.Collections.Array<DebugParameter> {
+			Parameters = new Array<DebugParameter> {
 				new DebugParameter {
 					Name = "value",
 					Type = DebugParameterType.Float
@@ -195,14 +196,14 @@ public static class DebugCommandList
 		#region monitor
 
 
-		var monitors = new Godot.Collections.Array<string>(DebugConsole.GetConsole().Monitors.Keys);
+		var monitors = new Array<string>(DebugConsole.GetConsole().Monitors.Keys);
 
 
 		new DebugCommand {
 			Id = "monitor",
             HelpText = "Toggles the visibility of a stat monitor.",
 
-			Parameters = new Godot.Collections.Array<DebugParameter> {
+			Parameters = new Array<DebugParameter> {
 				new DebugParameter {
 					Name = "monitor",
 					Type = DebugParameterType.Options,
@@ -223,7 +224,7 @@ public static class DebugCommandList
 		#region help
 
 
-		var commands = new Godot.Collections.Array<string>(console.Commands.Keys);
+		var commands = new Array<string>(console.Commands.Keys);
 		commands.Sort();
 
 
@@ -231,7 +232,7 @@ public static class DebugCommandList
 			Id = "help",
             HelpText = "Use to get help on any particular command.",
 
-			Parameters = new Godot.Collections.Array<DebugParameter> {
+			Parameters = new Array<DebugParameter> {
 				new DebugParameter {
 					Name = "command",
 					Type = DebugParameterType.Options,
@@ -248,9 +249,9 @@ public static class DebugCommandList
 	#region CLASS FUNCTIONS
 
 
-	public static Godot.Collections.Array ListFilesInDirectory(string path)
+	public static Array<string> ListFilesInDirectory(string path)
 	{
-		var files = new Godot.Collections.Array{};
+		var files = new Array<string>();
 		if(DirAccess.Open("user://").DirExists(path))
 		{
 			var dir = DirAccess.Open(path);
@@ -265,7 +266,7 @@ public static class DebugCommandList
 				}
 				else if(!file.StartsWith("."))
 				{
-					files.Append(file);
+					files.Add(file);
 				}
 			}
 
@@ -299,7 +300,7 @@ public static class DebugCommandList
 	public static void InitConfig(DebugConsole console) {
 		#region CONFIG
 
-		var cfgs = new Godot.Collections.Array();
+		var cfgs = new Array<string>();
 		var dir = DirAccess.Open("user://cfg");
 
 		foreach(string file in ListFilesInDirectory("user://cfg"))
@@ -307,7 +308,7 @@ public static class DebugCommandList
 			var fileSplit = file.Split(".");
 
 			if (fileSplit.Last() == "cfg") {
-				cfgs.Append(fileSplit[0]);
+				cfgs.Add(fileSplit[0]);
 			}
 		}
 

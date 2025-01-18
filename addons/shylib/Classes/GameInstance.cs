@@ -2,6 +2,7 @@ using CoolGame;
 using Godot;
 using System;
 using System.Threading.Tasks;
+using Godot.Collections;
 
 
 
@@ -35,19 +36,19 @@ namespace CoolGame
 		/// <summary>
 		/// Contains player save data
 		/// </summary>
-		public static Godot.Collections.Dictionary<string, Variant> Saves { get; set; } = new Godot.Collections.Dictionary<string, Variant>();
+		public static Dictionary<string, Variant> Saves { get; set; } = new Dictionary<string, Variant>();
 
 
 		/// <summary>
 		/// Template for saves
 		/// </summary>
-		public static Godot.Collections.Dictionary<string, Variant> SaveTemplate { get; set; }
+		public static Dictionary<string, Variant> SaveTemplate { get; set; }
 
 
 		/// <summary>
 		/// Different states the player can be in
 		/// </summary>
-		public static Godot.Collections.Array SaveStates { get; set; }
+		public static Array<int> SaveStates { get; set; }
 
 
 		/// <summary>
@@ -72,14 +73,14 @@ namespace CoolGame
 		/// Reads json data and returns a dictionary
 		/// </summary>
 		/// <returns>Godot.Collections.Dictionary</returns>
-		public static Godot.Collections.Dictionary<string, Variant> ReadJson(string fileDir, FileAccess.ModeFlags flag = FileAccess.ModeFlags.ReadWrite)
+		public static Dictionary<string, Variant> ReadJson(string fileDir, FileAccess.ModeFlags flag = FileAccess.ModeFlags.ReadWrite)
 		{
 			using var data = FileAccess.Open(fileDir, flag);
 
 			var json = new Json();
 			var res = json.Parse(data.GetAsText());
 
-			var dict = (Godot.Collections.Dictionary<string, Variant>)json.Data;
+			var dict = (Dictionary<string, Variant>)json.Data;
 
 			return dict;
 		}
@@ -87,7 +88,7 @@ namespace CoolGame
 		/// <summary>
 		/// Dictionary of events with string keys and StringName values
 		/// </summary>
-		public static Godot.Collections.Dictionary<string, StringName> Events { get; set; } = new Godot.Collections.Dictionary<string, StringName> {
+		public static Dictionary<string, StringName> Events { get; set; } = new Dictionary<string, StringName> {
 			{"Saving", new StringName("Saving")},
 			{"Saved", new StringName("Saved")},
 		};
@@ -97,7 +98,7 @@ namespace CoolGame
 		/// Saves Game.SaveData to Game.SavePath
 		/// </summary>
 		/// <returns>Godot.Collections.Dictionary</returns>
-		public static Godot.Collections.Dictionary<string, Variant> Save()
+		public static Dictionary<string, Variant> Save()
 		{
 			using var writer = FileAccess.Open(SavePath, FileAccess.ModeFlags.Write);
 			Saving = true;
@@ -175,13 +176,13 @@ public partial class GameInstance : Node
 	private void Iter(Variant thing, Variant filedata, Variant basedata)
 	{
 		if (thing.GetType() == typeof(Godot.Collections.Array)) {
-			Godot.Collections.Array<Variant> data = (Godot.Collections.Array<Variant>)thing;
+			Array<Variant> data = (Array<Variant>)thing;
 			for (int i = 0; i < data.Count; i++) {
 				Iter(data[i], data, ((object)basedata != null && basedata.GetType() == data.GetType()) ? ((Godot.Collections.Array)basedata)[i] : nullvar);
 			}
 		}
-		else if (thing.GetType() == typeof(Godot.Collections.Dictionary)) {
-			foreach ( (string key, Variant value) in (Godot.Collections.Dictionary<string, Variant>)thing) {
+		else if (thing.GetType() == typeof(Dictionary)) {
+			foreach ( (string key, Variant value) in (Dictionary<string, Variant>)thing) {
 				
 			}
 		}
@@ -190,7 +191,7 @@ public partial class GameInstance : Node
 		}
 	}
 
-	public Godot.Collections.Dictionary<string, Variant> UseTemplate(bool exists = false)
+	public Dictionary<string, Variant> UseTemplate(bool exists = false)
 	{
 		string source = Json.Stringify(Game.SaveTemplate, "\t");
 		using var writer = FileAccess.Open(Game.SavePath, FileAccess.ModeFlags.Write);
@@ -198,13 +199,13 @@ public partial class GameInstance : Node
 		var json = new Json();
 		var res = json.Parse(source);
 
-		var data = (Godot.Collections.Dictionary<string, Variant>)json.Data;
-		var basefile = (Godot.Collections.Dictionary<string, Variant>)data["file_base"];
+		var data = (Dictionary<string, Variant>)json.Data;
+		var basefile = (Dictionary<string, Variant>)data["file_base"];
 
 		for (int i = 0; i < 3; i++) {
 			string file = $"file_{i}";
 			if (exists && !(bool)basefile["overwrite"] && (object)data[file] != null) {
-				Godot.Collections.Dictionary<string, Variant> filedata = (Godot.Collections.Dictionary<string, Variant>)data[file];
+				Dictionary<string, Variant> filedata = (Dictionary<string, Variant>)data[file];
 				
 				foreach ( (string key, Variant value) in basefile) {
 					Iter(value, filedata, basefile);
@@ -262,7 +263,7 @@ public partial class GameInstance : Node
 		var json = new Json();
 		var res = json.Parse(Json.Stringify(Json.ParseString(savedata.GetAsText()), "\t"));
 
-		var data = (Godot.Collections.Dictionary<string, Variant>)json.Data;
+		var data = (Dictionary<string, Variant>)json.Data;
 
 		if ((string)data["version"] != (string)Game.SaveTemplate["version"]) {
 			UseTemplate(true);

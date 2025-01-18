@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using CoolGame;
 
 [GlobalClass, Icon("res://addons/shylib/Images/InteractObject3D.png")]
 public partial class InteractObject3D : StaticBody3D

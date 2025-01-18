@@ -3,15 +3,16 @@ using Godot;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Godot.Collections;
 
 [GlobalClass]
 public partial class DebugConsole : CanvasLayer
 {
 
-	public Godot.Collections.Array ConsoleLog = new Godot.Collections.Array();
-	public Godot.Collections.Dictionary<string, DebugCommand> Commands = new Godot.Collections.Dictionary<string, DebugCommand>();
-	public Godot.Collections.Dictionary<string, DebugMonitor> Monitors = new Godot.Collections.Dictionary<string, DebugMonitor>();
-	public Godot.Collections.Array<string> History = new Godot.Collections.Array<string>();
+	public Array<string> ConsoleLog = new Array<string>();
+	public Dictionary<string, DebugCommand> Commands = new Dictionary<string, DebugCommand>();
+	public Dictionary<string, DebugMonitor> Monitors = new Dictionary<string, DebugMonitor>();
+	public Array<string> History = new Array<string>();
 	public int CurrentHistory =  - 1;
 
 	public bool PauseOnOpen = false;
@@ -176,7 +177,7 @@ public partial class DebugConsole : CanvasLayer
 		_OnCommandFieldTextChanged(CommandField.Text);
 
 		// Gather the first word of each hint, stripping the [url] wrappers
-		var hints = new Godot.Collections.Array();
+		var hints = new Array<string>();
 		foreach(string hint in CommandHintsLabel.Text.Split("\n")) {
 			hints.Add(hint.GetSlice(']', 1).GetSlice('[', 0).GetSlice(' ', 0));
 		}
@@ -245,8 +246,8 @@ public partial class DebugConsole : CanvasLayer
 
 	protected void _OnCommandFieldTextChanged(string new_text)
 	{
-		var commandHints = new Godot.Collections.Array();
-		var commandSplit = new Godot.Collections.Array<string>(((string)new_text).Split(" "));
+		var commandHints = new Array<string>();
+		var commandSplit = new Array<string>(new_text.Split(" "));
 
 		GD.Print(commandSplit);
 		
@@ -313,14 +314,14 @@ public partial class DebugConsole : CanvasLayer
 		}
 
 		else {
-			var sortedCommands = new Godot.Collections.Array<string>(Commands.Keys);
+			var sortedCommands = new Array<string>(Commands.Keys);
 			sortedCommands.Sort();
 
 			foreach(string command in sortedCommands)
 			{
 				if(command.StartsWith(commandID))
 				{
-					commandHints.Append(Commands[command]);
+					commandHints.Add(commandID);
 				}
 			}
 
@@ -332,8 +333,9 @@ public partial class DebugConsole : CanvasLayer
 				CommandHintsPanel.Visible = true;
 				CommandHintsLabel.Text = "";
 				
-				foreach(DebugCommand command in commandHints) {
-					CommandHintsLabel.Text += "[url=" + command.Id + "]" + _GetParameterText(command) + "[/url]\n";
+				foreach(string commandId in commandHints) {
+					DebugCommand command = Commands[commandId];
+					CommandHintsLabel.Text += "[url=" + commandId + "]" + _GetParameterText(command) + "[/url]\n";
 				}
 			}
 
@@ -348,8 +350,8 @@ public partial class DebugConsole : CanvasLayer
 
 	protected void _OnCommandHintsMetaClicked(string meta)
 	{
-		var commandSplit = new Godot.Collections.Array<string>(CommandField.Text.Split(" "));
-		commandSplit.Append(meta);
+		var commandSplit = new Array<string>(CommandField.Text.Split(" "));
+		commandSplit.Add(meta);
 		var newText = "";
 
 		foreach(string i in commandSplit)
@@ -398,12 +400,12 @@ public partial class DebugConsole : CanvasLayer
 		LogError($"TypeError: Parameter \"{parameter.Name}\" should be a [{parameter.Type}], but an incorrect value was passed.");
 	}
 
-	public Godot.Collections.Dictionary<bool, Godot.Collections.Array> BoolOptions = new Godot.Collections.Dictionary<bool, Godot.Collections.Array> {
-		{true, new Godot.Collections.Array{
+	public Dictionary<bool, Array<string>> BoolOptions = new Dictionary<bool, Array<string>> {
+		{true, new Array<string>{
 			"true", "on", "1", 
 		}},
 
-		{false, new Godot.Collections.Array{
+		{false, new Array<string>{
 			"false", "off", "0", 
 		}}
 	};
@@ -590,7 +592,7 @@ public partial class DebugConsole : CanvasLayer
 	{
 
 		// Add to log
-		GetConsole().ConsoleLog.Append(message);
+		GetConsole().ConsoleLog.Add(message);
 		_UpdateLog();
 
 
@@ -602,7 +604,7 @@ public partial class DebugConsole : CanvasLayer
 	{
 
 		// Add to log
-		GetConsole().ConsoleLog.Append("[color=red]" + message + "[/color]");
+		GetConsole().ConsoleLog.Add("[color=red]" + message + "[/color]");
 		_UpdateLog();
 
 

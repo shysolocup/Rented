@@ -51,6 +51,10 @@ uv1_scale = Vector3(3, 2, 3)
 [node name="Game" type="Node"]
 script = ExtResource("1_doi2n")
 Version = "0.0.1"
+VersionDenot = null
+Noise = null
+HighestNoise = null
+Gravity = null
 
 [node name="SaveGui" type="Control" parent="."]
 layout_mode = 3
@@ -131,6 +135,25 @@ surface_material_override/0 = ExtResource("5_fwxn0")
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.984565, 0)
 script = ExtResource("1_wpbw3")
+speed = null
+base_walk_speed = null
+walk_speed = null
+sprint_speed = null
+acceleration = null
+jump_height = null
+camera_sens = null
+tabbed_in = null
+controllable = null
+jumping = null
+sprinting = null
+crouching = null
+mouse_captured = null
+base_fov = null
+crouch_speed = null
+tiltRot = null
+ActionCooldown = null
+sprintFovMod = null
+crouchFovMod = null
 
 [node name="Collision" type="CollisionShape3D" parent="Node3D/Player"]
 shape = SubResource("CapsuleShape3D_8xcek")
@@ -157,6 +180,9 @@ surface_material_override/0 = SubResource("StandardMaterial3D_qqeip")
 [node name="test" type="StaticBody3D" parent="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.65005, 0.763546, 2.11837)
 script = ExtResource("8_uf7b3")
+Enabled = null
+Pressed = null
+Hovering = null
 
 [node name="Collision" type="CollisionShape3D" parent="Node3D/test"]
 shape = SubResource("BoxShape3D_j1e05")
@@ -169,12 +195,15 @@ surface_material_override/0 = SubResource("StandardMaterial3D_qqeip")
 
 [node name="RbxScript" type="Node" parent="Node3D/test"]
 script = ExtResource("2_i3adb")
+Enabled = null
 Source = ExtResource("11_htgqa")
 
 [node name="test2" type="StaticBody3D" parent="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.65005, 0.763546, 3.87836)
 script = ExtResource("8_uf7b3")
 Enabled = false
+Pressed = null
+Hovering = null
 
 [node name="Collision" type="CollisionShape3D" parent="Node3D/test2"]
 shape = SubResource("BoxShape3D_j1e05")
@@ -187,12 +216,16 @@ surface_material_override/0 = SubResource("StandardMaterial3D_qqeip")
 
 [node name="RbxScript" type="Node" parent="Node3D/test2"]
 script = ExtResource("2_i3adb")
+Enabled = null
 Source = ExtResource("11_htgqa")
 
 [node name="test3" type="StaticBody3D" parent="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.65005, 0.763546, 5.53447)
 script = ExtResource("8_uf7b3")
+Enabled = null
 HoverIcon = SubResource("StandardMaterial3D_mnhfo")
+Pressed = null
+Hovering = null
 
 [node name="Collision" type="CollisionShape3D" parent="Node3D/test3"]
 shape = SubResource("BoxShape3D_j1e05")
@@ -205,6 +238,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_qqeip")
 
 [node name="RbxScript" type="Node" parent="Node3D/test3"]
 script = ExtResource("2_i3adb")
+Enabled = null
 Source = ExtResource("11_htgqa")
 
 [node name="Audios" type="Node3D" parent="Node3D"]
@@ -248,14 +282,16 @@ environment = ExtResource("9_hrp8o")
 
 [node name="Sun" type="DirectionalLight3D" parent="Node3D/World"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 0.00314154, 0.999995, 0, -0.999995, 0.00314154, -3.51915, 38.7123, -10.4086)
+transform = Transform3D(0.80394, 0.558214, 0.205128, 0, -0.344922, 0.938632, 0.594711, -0.754603, -0.277296, -3.51915, 38.7123, -36.5632)
 light_color = Color(1, 0.941176, 0.929412, 1)
 light_energy = 1.099
 light_indirect_energy = 0.802
 light_volumetric_fog_energy = 1.175
 light_angular_distance = 2.75
 shadow_enabled = true
-shadow_blur = 10.0
+shadow_bias = 0.0
+shadow_reverse_cull_face = true
+shadow_blur = 0.0
 
 [node name="Cameras" type="Node3D" parent="Node3D"]
 unique_name_in_owner = true
@@ -277,4 +313,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 8.4624)
 
 [node name="CameraSwitchScript" type="Node" parent="Node3D/ScriptDump"]
 script = ExtResource("2_i3adb")
+Enabled = null
 Source = ExtResource("7_gf62h")

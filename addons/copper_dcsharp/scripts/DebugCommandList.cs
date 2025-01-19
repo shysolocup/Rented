@@ -10,14 +10,15 @@ public partial class DebugCommandFunctions : GodotObject
 	public void show_stats(bool value) 
 	{
 		var console = DebugConsole.GetConsole();
-		console.ShowStats = value;
-		console.Stats.Visible = true;
+		console.Stats.Visible = value;
+
+		GD.Print(console.Stats.Visible);
 	}
 
 	public bool stats_visible() 
 	{
 		var console = DebugConsole.GetConsole();
-		return console.ShowStats;
+		return console.Stats.Visible;
 	}
 
 	public void set_noise(float value)
@@ -79,7 +80,7 @@ public static class DebugCommandList
 		
 		var funcs = new DebugCommandFunctions();
 
-		
+
 		#region stats
 
 

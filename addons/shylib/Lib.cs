@@ -18,7 +18,7 @@ public static class Extensions
 		string name = typeof(T).Name;
 		if (!Blanks.ContainsKey(name)) {
 			T thing = Activator.CreateInstance<T>();
-            Blanks[name] = thing;
+			Blanks[name] = thing;
 		}
 		return (T)Blanks[name];
 	}
@@ -134,36 +134,36 @@ public static class Extensions
 	}
 
 	/// <summary>
-    /// Retrieves a slice of the string, split by the given delimiter.
-    /// </summary>
-    /// <param name="source">The source string.</param>
-    /// <param name="delimiter">The delimiter character.</param>
-    /// <param name="index">The zero-based index of the slice to retrieve.</param>
-    /// <returns>The slice at the specified index or an empty string if the index is out of range.</returns>
-    public static string GetSlice(this string source, char delimiter, int index)
-    {
-        var slices = source.Split(delimiter);
-        return (index >= 0 && index < slices.Length) ? slices[index] : string.Empty;
-    }
+	/// Retrieves a slice of the string, split by the given delimiter.
+	/// </summary>
+	/// <param name="source">The source string.</param>
+	/// <param name="delimiter">The delimiter character.</param>
+	/// <param name="index">The zero-based index of the slice to retrieve.</param>
+	/// <returns>The slice at the specified index or an empty string if the index is out of range.</returns>
+	public static string GetSlice(this string source, char delimiter, int index)
+	{
+		var slices = source.Split(delimiter);
+		return (index >= 0 && index < slices.Length) ? slices[index] : string.Empty;
+	}
 
 	/// <summary>
-    /// Checks if all elements in the array satisfy the given condition.
-    /// </summary>
-    /// <typeparam name="T">The type of elements in the array.</typeparam>
-    /// <param name="array">The array to evaluate.</param>
-    /// <param name="predicate">The condition to evaluate for each element.</param>
-    /// <returns>True if all elements satisfy the condition, otherwise false.</returns>
-    public static bool All<T>(this Godot.Collections.Array array, Func<T, bool> predicate)
-    {
-        foreach (var item in array)
-        {
-            if (item is T t && !predicate(t))
-            {
-                return false;
-            }
-        }
-        return true;
-    }
+	/// Checks if all elements in the array satisfy the given condition.
+	/// </summary>
+	/// <typeparam name="T">The type of elements in the array.</typeparam>
+	/// <param name="array">The array to evaluate.</param>
+	/// <param name="predicate">The condition to evaluate for each element.</param>
+	/// <returns>True if all elements satisfy the condition, otherwise false.</returns>
+	public static bool All<T>(this Godot.Collections.Array array, Func<T, bool> predicate)
+	{
+		foreach (var item in array)
+		{
+			if (item is T t && !predicate(t))
+			{
+				return false;
+			}
+		}
+		return true;
+	}
 	
 	public static async Task<T> GetNodeAsync<T>(this Node self, string nodeName) where T : class
 	{

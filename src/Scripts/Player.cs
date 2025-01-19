@@ -139,7 +139,6 @@ public partial class Player : CharacterBody3D
 
 	public override void _Notification(int what)
 	{
-		if (!ready) return;
 
 		if (what == NotificationWMWindowFocusIn) {
 			tabbed_in = true;
@@ -164,7 +163,6 @@ public partial class Player : CharacterBody3D
 
 	public override void _Process(double delta)
 	{
-		if (!ready) return;
 
 		if (camera != null) camera.Position = Position;
 
@@ -190,7 +188,6 @@ public partial class Player : CharacterBody3D
 
 	public override void _PhysicsProcess(double delta)
 	{
-		if (!ready) return;
 
 		if (!controllable) return;
 		
@@ -203,7 +200,6 @@ public partial class Player : CharacterBody3D
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
-		if (!ready) return;
 
 		if (@event is InputEventMouseMotion && Input.MouseMode == Input.MouseModeEnum.Captured) {
 			var mouse = @event as InputEventMouseMotion;

@@ -3,32 +3,32 @@ using System;
 
 public partial class InteractTest : Node3D
 {
-    public InteractObject3D obj;
+	public InteractObject3D obj;
 
-    public override void _Ready() {
-        obj = GetParent<InteractObject3D>();
+	public override void _Ready() {
+		obj = GetParent<InteractObject3D>();
 
-        obj.Hover += Hover;
-        obj.Press += Press;
-    }
+		obj.Hover += Hover;
+		obj.Press += Press;
+	}
 
-    public void Hover()
-    {
-        if (obj.Hovering) {
-            GD.Print("Started hovering");
-        }
-        else {
-            GD.Print("Stopped hovering");
-        }
-    }
+	public void Hover()
+	{
+		if (obj.Hovering) {
+			GD.Print("Started hovering");
+		}
+		else {
+			GD.Print("Stopped hovering");
+		}
+	}
 
-    public void Press()
-    {
-        if (obj.Pressed) {
-            GD.Print("Started pressing");
-        }
-        else {
-            GD.Print("Stopped pressing");
-        }
-    }
+	public void Press()
+	{
+		if (obj.Pressed) {
+			GD.Print("Started pressing");
+		}
+		else {
+			GD.Print("Stopped pressing");
+		}
+	}
 }

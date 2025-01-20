@@ -44,7 +44,7 @@ public partial class RbxScript : Node
 			SpawnedNode = null;
 		}
 
-		SpawnedNode = (Node)source.New(this);
+		SpawnedNode = (Node)source.New();
 
 		SpawnedNodePath = new NodePath($"{Name}Source");
 		SpawnedNode.Name = SpawnedNodePath.ToString();

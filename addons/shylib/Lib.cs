@@ -30,8 +30,15 @@ public static class Extensions
 	/// <param name="goal">Goal of the lerp</param>
 	/// <param name="_t">Factor from 0 to 1 usually done by dividing 1 by a float (eg: 1/1.5f)</param>
 	/// <returns>New value after doing stupid math</returns>
-	public static dynamic BaseLerp(dynamic value, dynamic goal, dynamic _t) {
+	public static dynamic BaseLerp(dynamic value, dynamic goal, dynamic _t) 
+	{
 		return (value * (1 - _t)) + (goal * _t);
+	}
+
+
+	public static float FactorDelta(this GodotObject self, float _t, double delta) 
+	{
+		return _t / ((1/(float)delta) / (float)Performance.GetMonitor(Performance.Monitor.TimeFps));
 	}
 
 
@@ -40,12 +47,13 @@ public static class Extensions
 	/// </summary>
 	/// <param name="value">Original value before lerping</param>
 	/// <param name="goal">Goal of the lerp</param>
-	/// <param name="_t">Factor from 0 to 1 usually done by dividing 1 by a float (eg: 1/1.5f)</param>
+	/// <param name="time">Time in seconds that the lerp takes</param>
 	/// <param name="trans">Transition type defaulting to Tween.TransitionType.Linear</param>
 	/// <param name="ease">Transition easing defaulting to Tween.EaseType.InOut</param>
 	/// <returns>New value after doing stupid math</returns>
-	public static dynamic Lerp(this GodotObject self, dynamic value, dynamic goal, dynamic _t, Tween.TransitionType trans = Tween.TransitionType.Linear, Tween.EaseType ease = Tween.EaseType.InOut)
+	public static dynamic Twlerp(this GodotObject self, dynamic value, dynamic goal, float _t, double delta, Tween.TransitionType trans = Tween.TransitionType.Linear, Tween.EaseType ease = Tween.EaseType.InOut)
 	{
+		_t = self.FactorDelta(_t, delta);
 
 		float e = _t;
 
@@ -56,15 +64,15 @@ public static class Extensions
 				switch(ease) 
 				{
 					case Tween.EaseType.In:
-						e = 1 - Math.Cos( _t * Math.PI / 2);
+						e = (float)(1 - Math.Cos( _t * Math.PI / 2));
 						break;
 
 					case Tween.EaseType.Out:
-						e = Math.Sin( _t * Math.PI / 2 );
+						e = (float)Math.Sin( _t * Math.PI / 2 );
 						break;
 
 					case Tween.EaseType n when n == Tween.EaseType.InOut || n == Tween.EaseType.OutIn:
-						e = -(Math.Cos(Math.PI * _t) - 1) / 2;
+						e = (float)(-(Math.Cos(Math.PI * _t) - 1) / 2);
 						break;
 
 				} break;
@@ -74,15 +82,15 @@ public static class Extensions
 				switch(ease) 
 				{
 					case Tween.EaseType.In:
-						e = Math.Pow(_t, 2);
+						e = (float)Math.Pow(_t, 2);
 						break;
 
 					case Tween.EaseType.Out:
-						e = 1 - Math.Pow(1 - _t, 2);
+						e = (float)(1 - Math.Pow(1 - _t, 2));
 						break;
 
 					case Tween.EaseType n when n == Tween.EaseType.InOut || n == Tween.EaseType.OutIn:
-						e = (_t < 0.5f) ? 2 * Math.Pow(_t, 2) : 1 - Math.Pow(-2 * _t + 2, 2) / 2;
+						e = (float)((_t < 0.5f) ? 2 * Math.Pow(_t, 2) : 1 - Math.Pow(-2 * _t + 2, 2) / 2);
 						break;
 				} break;
 			}
@@ -91,15 +99,15 @@ public static class Extensions
 				switch(ease) 
 				{
 					case Tween.EaseType.In:
-						e = Math.Pow(_t, 3);
+						e = (float)Math.Pow(_t, 3);
 						break;
 
 					case Tween.EaseType.Out:
-						e = 1 - Math.Pow(1 - _t, 3);
+						e = (float)(1 - Math.Pow(1 - _t, 3));
 						break;
 
 					case Tween.EaseType n when n == Tween.EaseType.InOut || n == Tween.EaseType.OutIn:
-						e = (_t < 0.5f) ? 4 * Math.Pow(_t, 3) : 1 - Math.Pow(-2 * _t + 2, 3) / 2;
+						e = (float)((_t < 0.5f) ? 4 * Math.Pow(_t, 3) : 1 - Math.Pow(-2 * _t + 2, 3) / 2);
 						break;
 				} break;
 			}
@@ -108,15 +116,15 @@ public static class Extensions
 				switch(ease) 
 				{
 					case Tween.EaseType.In:
-						e = Math.Pow(_t, 4);
+						e = (float)Math.Pow(_t, 4);
 						break;
 
 					case Tween.EaseType.Out:
-						e = 1 - Math.Pow(1 - _t, 4);
+						e = (float)(1 - Math.Pow(1 - _t, 4));
 						break;
 
 					case Tween.EaseType n when n == Tween.EaseType.InOut || n == Tween.EaseType.OutIn:
-						e = (_t < 0.5f) ? 8 * Math.Pow(_t, 4) : 1 - Math.Pow(-2 * _t + 2, 4) / 2;
+						e = (float)((_t < 0.5f) ? 8 * Math.Pow(_t, 4) : 1 - Math.Pow(-2 * _t + 2, 4) / 2);
 						break;
 				} break;
 			}

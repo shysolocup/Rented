@@ -2,197 +2,170 @@ using Godot;
 using Godot.Collections;
 using System;
 using CoolGame;
+using System.Threading.Tasks;
 
 
 public partial class Player : CharacterBody3D
 {
 
 	[ExportCategory("Player")]
-	[Export(PropertyHint.Range, "1,35,1")] public float speed = 10; // m/s
+	[Export(PropertyHint.Range, "1,35,1")] public float Speed = 10; // m/s
 
-	[Export(PropertyHint.Range, "1,35,1")] public float base_walk_speed = 3; // m/s
+	[Export(PropertyHint.Range, "1,35,1")] public float BaseWalkSpeed = 3; // m/s
 	
-	[Export(PropertyHint.Range, "1,35,1")] public float walk_speed = 3; // m/s
+	[Export(PropertyHint.Range, "1,35,1")] public float WalkSpeed = 3; // m/s
 	
-	[Export(PropertyHint.Range, "1,35,1")] public float sprint_speed = 5; // m/s
+	[Export(PropertyHint.Range, "1,35,1")] public float SprintSpeed = 5; // m/s
 
-	[Export(PropertyHint.Range, "10,400,1")] public float acceleration = 100; // m/s^2
+	[Export(PropertyHint.Range, "10,400,1")] public float Acceleration = 100; // m/s^2
 
-	[Export(PropertyHint.Range, "0.1,3.0,0.1")] public float jump_height = 0.5f; // m
+	[Export(PropertyHint.Range, "0.1,3.0,0.1")] public float JumpHeight = 0.5f; // m
 
-	[Export(PropertyHint.Range, "0.1,3.0,0.1,or_greater")] public float camera_sens = 1;
+	[Export(PropertyHint.Range, "0.1,3.0,0.1,or_greater")] public float CameraSensitivity = 1;
 
-	[Export] public bool tabbed_in = true;
-	[Export] public bool controllable = true;
+	[Export] public bool TabbedIn = true;
+	[Export] public bool Controllable = true;
 
-	public bool _jumping = false;
-	public bool _sprinting = false;
-	public bool _crouching = false;
-
-	[Export] public bool jumping {
-		get { return _jumping; }
-		set { _jumping = value; changed("jumping", value); }
-	}
-
-	[Export] public bool sprinting {
-		get { return _sprinting; }
-		set { _sprinting = value; changed("sprinting", value); }
-	}
-
-	[Export] public bool crouching {
-		get { return _crouching; }
-		set { _crouching = value; changed("crouching", value); }
-	}
+	[Export ] public bool Jumping = false;
+	[Export] public bool Sprinting = false;
+	[Export] public bool Crouching = false;
 	
-	[Export] public bool mouse_captured = false;
+	[Export] public bool MouseCaptured = false;
 
-	private Vector2 move_dir; // Input direction for movement
-	private Vector2 look_dir; // Input direction for look/aim
+	private Vector2 MoveDirection; // Input direction for movement
+	private Vector2 LookDirection; // Input direction for look/aim
 
-	private Vector3 walk_vel; // Walking velocity 
-	private Vector3 grav_vel; // Gravity velocity 
-	private Vector3 jump_vel; // Jumping velocity
+	private Vector3 WalkVelocity; // Walking velocity 
+	private Vector3 GravityVelocity; // Gravity velocity 
+	private Vector3 JumpVelocity; // Jumping velocity
 
-	public Tween speedIn;
-	public Tween speedOut;
+	private bool JumpCooldown = false;
 
-	public Tween tiltLeft;
-	public Tween tiltRight;
-	public Tween tiltBack;
+	[Export] public float BaseFov;
+	[Export] public float CrouchSpeed = 0.1f;
 
-	[Export] public float base_fov;
-	[Export] public float crouch_speed = 1;
-	
-	public Tween crouchIn;
-	public Tween crouchOut;
+	[Export] public float TiltRotation = 2;
 
-	[Export] public float tiltRot = 2;
-
-	private Camera3D camera;
+	private Camera3D Camera;
 
 	private Variant nullvar = new Variant();
 
 	[Export] public bool ActionCooldown = false;
 
-	[Export] public float sprintFovMod = 15;
+	[Export] public float SprintFovMod = 20;
 
-	[Export] public float crouchFovMod = -20;
+	[Export] public float CrouchFovMod = -20;
 
-	[Export] public Panel console;
+	[Export] public bool Tilt = true;
 	
 	public RayCast3D Raycast;
-	[Export] public InteractObject3D inter;
+	public InteractObject3D Inter;
+
+	[Export] public bool Walking = false;
+	private bool WalkingEffecting = false;
 	
 
 	public override void _Ready()
 	{	
-		camera = GetNode<Camera3D>("%PlayerCamera");
+		Camera = GetNode<Camera3D>("%PlayerCamera");
 		Raycast = GetNode<RayCast3D>("%InteractRay");
 
-		base_fov = camera.GetFov();
-		capture_mouse();
+		BaseFov = Camera.GetFov();
+		CaptureMouse();
 
 		GD.Print(this.Get("camera"));
 
-		FuckSpeed("speedIn", sprintFovMod, sprint_speed, 1.5f);
-		FuckSpeed("speedOut", 0, base_walk_speed, 0.5f);
-
-		CrouchEffect("crouchIn", crouchFovMod, crouch_speed, 0.5f);
-		CrouchEffect("crouchOut", 0, base_walk_speed, 1);
+		// CrouchEffect("crouchIn", crouchFovMod, crouch_speed, 0.5f);
+		// CrouchEffect("crouchOut", 0, base_walk_speed, 1);
 
 		// console = GetTree().
-	}
-
-
-	// values handler for crouching and sprinting so when the value is changed it automatically updates
-	private void changed(string property, Variant value)
-	{
-		// crouching
-		if (property == "crouching" && (bool)value == true) {
-			if (speedIn != null && speedIn.IsRunning()) speedIn.Stop();
-			if (speedOut != null && speedOut.IsRunning()) speedOut.Stop();
-			if (crouchOut != null && crouchOut.IsRunning()) crouchOut.Stop();
-
-			if (crouchIn != null && !crouchIn.IsRunning()) crouchIn.Play();
-		}
-		else if (property == "crouching" && (bool)value == false) {
-			if (crouchIn != null && crouchIn.IsRunning()) crouchIn.Stop();
-			if (crouchOut != null && !crouchOut.IsRunning()) crouchOut.Play();
-		}
-
-		// sprinting
-		else if (property == "sprinting" && (bool)value == true) {
-			if (crouchIn != null && crouchIn.IsRunning()) crouchIn.Stop();
-			if (crouchOut != null && crouchOut.IsRunning()) crouchOut.Stop();
-
-			if (speedOut != null && speedOut.IsRunning()) speedOut.Stop();
-			if (speedIn != null && !speedIn.IsRunning()) speedIn.Play();
-		}
-		else if (property == "sprinting" && (bool)value == false) {
-			if (speedIn != null && speedIn.IsRunning()) speedIn.Stop();
-			if (speedOut != null && !speedOut.IsRunning()) speedOut.Play();
-		}
 	}
 
 	public override void _Notification(int what)
 	{
 
 		if (what == NotificationWMWindowFocusIn) {
-			tabbed_in = true;
+			TabbedIn = true;
 		}
 		else if (what == NotificationWMWindowFocusOut) {
-			tabbed_in = false;
+			TabbedIn = false;
 
-			crouching = false;
-			sprinting = false;
-
-			if (crouchIn != null && crouchIn.IsRunning()) crouchIn.Stop();
-			if (crouchOut != null && crouchOut.IsRunning()) crouchOut.Stop();
-			
-			if (speedIn != null && speedIn.IsRunning()) speedIn.Stop();
-			if (speedOut != null && speedOut.IsRunning()) speedOut.Stop();
-
-			if (tiltRight != null && tiltRight.IsRunning()) tiltRight.Stop();
-			if (tiltBack != null && tiltBack.IsRunning()) tiltBack.Stop();
-			if (tiltLeft != null && tiltLeft.IsRunning()) tiltLeft.Stop();
-		}
-	}
-
-	public override void _Process(double delta)
-	{
-
-		if (camera != null) camera.Position = Position;
-
-		if (Raycast.IsColliding()) {
-			GodotObject result = Raycast.GetCollider();
-
-			if (inter != null && result != inter) {
-				inter.Hovering = false;
-				inter = null;
-			}
-
-			if (result.GetType() == typeof(InteractObject3D)) {
-				InteractObject3D collider = (InteractObject3D)result;
-				inter = collider;
-				collider.Hovering = true;
-			}
-		}
-		else if (inter != null) {
-			inter.Hovering = false;
-			inter = null;
+			Crouching = false;
+			Sprinting = false;
 		}
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
-
 		// if (!controllable) return;
 		
 		float d = (float)delta;
-		if (mouse_captured) _handle_joypad_camera_rotation(d);
+		if (MouseCaptured) JoypadControls(d);
 
-		Velocity = _move(d) + _gravity(d) + _jump(d);
+		Velocity = GetMove(d) + GetGravity(d) + GetJump(d);
 		MoveAndSlide();
+	}
+
+	public override async void _Process(double delta)
+	{
+		if (Raycast.IsColliding()) {
+			GodotObject result = Raycast.GetCollider();
+
+			if (Inter != null && result != Inter) {
+				Inter.Hovering = false;
+				Inter = null;
+			}
+
+			if (result.GetType() == typeof(InteractObject3D)) {
+				InteractObject3D collider = (InteractObject3D)result;
+				Inter = collider;
+				collider.Hovering = true;
+			}
+		}
+		else if (Inter != null) {
+			Inter.Hovering = false;
+			Inter = null;
+		}
+
+		if (Camera != null) {
+
+			Camera.Position = Position;
+
+			// crouch effect
+			if (Crouching) {
+				SpeedEffect(CrouchFovMod, CrouchSpeed, 0.4f, 1/15f, delta);
+			}
+			else if (WalkSpeed != BaseWalkSpeed) {
+				SpeedEffect(0, BaseWalkSpeed, 1, 1/20f, delta);
+			}
+
+			// crouch effect
+			if (Sprinting) {
+				SpeedEffect(SprintFovMod, SprintSpeed, 1, 1/45f, delta);
+			}
+			else if (WalkSpeed != BaseWalkSpeed) {
+				SpeedEffect(0, BaseWalkSpeed, 1, 1/15f, delta);
+			}
+
+			// tilt effect
+			if (Input.IsActionPressed("MoveLeft")) {
+				TiltEffect(TiltRotation, 1/12f, delta);
+			}
+			else if (Input.IsActionPressed("MoveRight")) {
+				TiltEffect(-TiltRotation, 1/12f, delta);
+			}
+			else if (Camera != null && Camera.RotationDegrees.Z != 0) {
+				TiltEffect(0, 1/12f, delta);
+			}
+
+
+			// walk effect
+			if (Walking) {
+				await WalkEffect(delta);
+			}
+		}
+
+		
 	}
 
 	public override void _UnhandledInput(InputEvent @event)
@@ -200,180 +173,152 @@ public partial class Player : CharacterBody3D
 
 		if (@event is InputEventMouseMotion && Input.MouseMode == Input.MouseModeEnum.Captured) {
 			var mouse = @event as InputEventMouseMotion;
-			look_dir = mouse.Relative * 0.001f;
+			LookDirection = mouse.Relative * 0.001f;
 
-			if (mouse_captured) _rotate_camera();
+			if (MouseCaptured) RotateCamera();
 		}
 
 		// if (!controllable) return;
-
-		if (Input.IsActionJustPressed("MoveLeft")) {
-			Tilt("tiltLeft", tiltRot, 0.2f).Play();
-		}
-
-		if (!Input.IsActionPressed("MoveRight") && !Input.IsActionPressed("MoveLeft")) {
-			Tilt("tiltBack", 0, 0.2f).Play();
-		}
-
-		if (Input.IsActionJustPressed("MoveRight")) {
-			Tilt("tiltRight", -tiltRot, 0.2f).Play();
+		
+		if (Walking && !Sprinting && !Crouching && Input.IsActionPressed("Sprint") && Input.IsActionPressed("MoveForward")) {
+			Sprinting = true;
 		}
 		
-		if (!ActionCooldown && !sprinting && !crouching && Input.IsActionPressed("Sprint") && Input.IsActionPressed("MoveForward")) {
-			sprinting = true;
-		}
-		else if (sprinting && (Input.IsActionJustReleased("Sprint") || Input.IsActionJustReleased("MoveForward"))) {
-			sprinting = false;
-
-			ActionCooldown = true;
-			SceneTreeTimer timer = GetTree().CreateTimer(0.25f);
-			timer.Timeout += () => ActionCooldown = false;
+		else if (Sprinting && (Input.IsActionJustReleased("Sprint") || Input.IsActionJustReleased("MoveForward") || !Walking)) {
+			Sprinting = false;
 		}
 
-		if (!ActionCooldown && !sprinting && !crouching && IsOnFloor() && Input.IsActionPressed("Crouch")) {
-			crouching = true;
+		if (!Sprinting && !Crouching && IsOnFloor() && Input.IsActionPressed("Crouch")) {
+			Crouching = true;
 		}
-		else if (crouching && Input.IsActionJustReleased("Crouch")) {
-			crouching = false;
-
-			ActionCooldown = true;
-			SceneTreeTimer timer = GetTree().CreateTimer(0.25f);
-			timer.Timeout += () => ActionCooldown = false;
+		else if (Crouching && Input.IsActionJustReleased("Crouch")) {
+			Crouching = false;
 		}
 
-		if (Input.IsActionPressed("Jump") && !crouching) {
-			jumping = true;
+		if (Input.IsActionPressed("Jump") && !Crouching && !JumpCooldown) {
+			Jumping = true;
+
+			JumpCooldown = true;
+			SceneTreeTimer t = GetTree().CreateTimer(0.55f);
+			t.Timeout += () => JumpCooldown = false;
 		}
 		// if (Input.IsActionJustPressed("Exit")) GetTree().Quit();
 	}
 
-	private void capture_mouse()
+	private void CaptureMouse()
 	{
 		Input.MouseMode = Input.MouseModeEnum.Captured;
-		mouse_captured = true;
+		MouseCaptured = true;
 	}
 
-	private void release_mouse()
+	private void ReleaseMouse()
 	{
 		Input.MouseMode = Input.MouseModeEnum.Visible;
-		mouse_captured = false;
+		MouseCaptured = false;
 	}
 
-	private void _rotate_camera(float sens_mod = 1.0f)
+	private void RotateCamera(float sens_mod = 1.0f)
 	{
-		camera.RotateY( -(look_dir.X * camera_sens * sens_mod) );
+		Camera.RotateY( -(LookDirection.X * CameraSensitivity * sens_mod) );
 
-		var x = Mathf.Clamp(camera.Rotation.X - look_dir.Y * camera_sens * sens_mod, -1.5f, 1.5f);
+		var x = Mathf.Clamp(Camera.Rotation.X - LookDirection.Y * CameraSensitivity * sens_mod, -1.5f, 1.5f);
 
-		camera.Rotation = new Vector3(x, camera.Rotation.Y, camera.Rotation.Z);
+		Camera.Rotation = new Vector3(x, Camera.Rotation.Y, Camera.Rotation.Z);
 	}
 
-	public void _handle_joypad_camera_rotation(float delta, float sens_mod = 10)
+	public void JoypadControls(float delta, float sens_mod = 10)
 	{
 		Vector2 joypad_dir = Input.GetVector("LookLeft", "LookRight", "LookUp", "LookDown");
 		if (joypad_dir.Length() > 0) {
-			look_dir += joypad_dir * delta;
+			LookDirection += joypad_dir * delta;
 			
-			_rotate_camera(sens_mod);
+			RotateCamera(sens_mod);
 			
-			look_dir = Vector2.Zero;
+			LookDirection = Vector2.Zero;
 		}
 	}
 
-	public Vector3 _move(float delta)
+	public Vector3 GetMove(float delta)
 	{
-		move_dir = Input.GetVector("MoveLeft", "MoveRight", "MoveForward", "MoveBack");
+		MoveDirection = Input.GetVector("MoveLeft", "MoveRight", "MoveForward", "MoveBack");
 
-		Vector3 _forward = camera.GlobalTransform.Basis * new Vector3(move_dir.X, 0, move_dir.Y);
+		Vector3 _forward = Camera.GlobalTransform.Basis * new Vector3(MoveDirection.X, 0, MoveDirection.Y);
 		Vector3 walk_dir = new Vector3(_forward.X, 0, _forward.Z).Normalized();
+
+		Walking = !walk_dir.IsZeroApprox() && IsOnFloor();
 		
-		walk_vel = walk_vel.MoveToward(walk_dir * walk_speed * move_dir.Length(), acceleration * delta);
-		return walk_vel;
+		WalkVelocity = WalkVelocity.MoveToward(walk_dir * WalkSpeed * MoveDirection.Length(), Acceleration * delta);
+		return WalkVelocity;
 	}
 
-	public Vector3 _gravity(float delta)
+	public Vector3 GetGravity(float delta)
 	{
-		grav_vel = IsOnFloor() ? Vector3.Zero : grav_vel.MoveToward(new Vector3(0, Velocity.Y - Game.Instance.Gravity, 0), Game.Instance.Gravity * delta);
-		return grav_vel;
+		GravityVelocity = IsOnFloor() ? Vector3.Zero : GravityVelocity.MoveToward(new Vector3(0, Velocity.Y - Game.Instance.Gravity, 0), Game.Instance.Gravity * delta);
+		return GravityVelocity;
 	}
 
-	public Vector3 _jump(float delta)
+	public Vector3 GetJump(float delta)
 	{
-		if (jumping) {
-			if (jumping) {
-				jump_vel = IsOnFloor() ? new Vector3(0, Mathf.Sqrt(4 * jump_height * Game.Instance.Gravity), 0) : jump_vel;
-				jumping = false;
+		if (Jumping) {
+			JumpVelocity = IsOnFloor() ? new Vector3(0, Mathf.Sqrt(4 * JumpHeight * Game.Instance.Gravity), 0) : JumpVelocity;
+			Jumping = false;
 
-				return jump_vel;
-			}
+			return JumpVelocity;
 		}
 
-		jump_vel = IsOnFloor() ? Vector3.Zero : jump_vel.MoveToward(Vector3.Zero, Game.Instance.Gravity * delta);
-		return jump_vel;
+		JumpVelocity = IsOnFloor() ? Vector3.Zero : JumpVelocity.MoveToward(Vector3.Zero, Game.Instance.Gravity * delta);
+		return JumpVelocity;
 	}
 
-	public Tween FuckSpeed(string name, float zoommod = 0, float speed = 0, float time = 0)
+	public void SpeedEffect(float zoommod, float speed, float scale, float _t, double delta)
 	{
-		Tween t = (Tween)Get(name);
-
-		if (t != null) {
-			t.Kill();
-			Set(name, nullvar);
-		};
-
-		t = CreateTween();
-		Set(name, t);
-
-		t.Parallel().TweenProperty(this, new NodePath("walk_speed"), speed, time);
-		t.Parallel().TweenProperty(camera, "fov", base_fov+zoommod, time);
-		t.Finished += () => FuckSpeed(name, zoommod, speed, time);
-
-		t.Stop();
-
-		return t;
+		WalkSpeed = this.Twlerp(WalkSpeed, speed, _t, delta, Tween.TransitionType.Linear);
+		Camera.Fov = this.Twlerp(Camera.Fov, BaseFov+zoommod, _t, delta, Tween.TransitionType.Linear);
+		Scale = new Vector3(Scale.X, this.Twlerp(Scale.Y, scale, _t/1.1f, delta, Tween.TransitionType.Linear), Scale.Z);
 	}
 
-	public Tween CrouchEffect(string name, float zoommod = 0, float speed = 0, float scale = 0)
+	public void TiltEffect(float degrees, float _t, double delta)
 	{
-		Tween t = (Tween)Get(name);
-
-		if (t != null) {
-			t.Kill();
-			Set(name, nullvar);
-		};
-
-		t = CreateTween();
-		Set(name, t);
-
-		t.SetTrans(Tween.TransitionType.Cubic);
-
-		t.Parallel().TweenProperty(this, new NodePath("walk_speed"), speed, 0.5f);
-		t.Parallel().TweenProperty(camera, "fov", base_fov+zoommod, 0.5f);
-		t.Parallel().TweenProperty(this, "scale:y", scale, 0.7f);
-
-		t.Finished += () => CrouchEffect(name, zoommod, speed, scale);
-
-		t.Stop();
-
-		return t;
+		float z = this.Twlerp(Camera.RotationDegrees.Z, degrees, _t, delta);
+		Camera.RotationDegrees = new Vector3(Camera.RotationDegrees.X, Camera.RotationDegrees.Y, z);
 	}
 
-	public Tween Tilt(string name, float degrees = 0, float time = 0.2f)
-	{	
-		if (tiltRight != null) { tiltRight.Kill(); tiltRight = null; }
-		if (tiltBack != null) { tiltBack.Kill(); tiltBack = null; }
-		if (tiltLeft != null) { tiltLeft.Kill(); tiltLeft = null; }
 
-		Tween t = CreateTween();
-		Set(name, t);
+	/// <summary>
+	/// idk what to name it but this variable is responsible for the different walk effect stages
+	/// </summary>
+	private bool WalkerGuh = false;
 
-		t.SetTrans(Tween.TransitionType.Quad);
-		t.TweenProperty(camera, "rotation_degrees:z", degrees, time);
+	public async Task WalkEffect(double delta)
+	{
+		/*if (WalkingEffecting) return;
 
-		t.Finished += () => t.Kill(); Set(name, nullvar);
+		WalkingEffecting = true;
 
-		t.Stop();
+		Transform3D Global = Camera.GlobalTransform;
+		Vector3 Origin = Global.Origin;
 
-		return t;
+		Vector3 ForwardVector = Global.Basis.Z;
+		Vector3 LeftVector = Global.Basis.X;
+		Vector3 UpVector = Global.Basis.Y;
+
+		float X = (WalkerGuh ? -WalkSpeed : WalkSpeed)/10;
+		// float Y = WalkerGuh ? -5 : -WalkSpeed;
+
+		WalkerGuh = !WalkerGuh;
+
+		GD.Print($"X: {X}");
+		// GD.Print($"Y: {Y}");
+
+		Origin += LeftVector * X;
+		// Origin += UpVector * Y;
+
+		Transform3D Transform = new Transform3D(LeftVector, UpVector, ForwardVector, Origin);
+
+		Camera.GlobalTransform = Camera.GlobalTransform.InterpolateWith(Transform, this.FactorDelta(1/1.5f, delta));
+
+		await Task.Delay(200);
+
+		WalkingEffecting = false;*/
 	}
 }

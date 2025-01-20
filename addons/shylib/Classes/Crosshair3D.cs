@@ -52,11 +52,13 @@ public partial class Crosshair3D : StaticBody3D
 
 		// A = A + (B - A) * t
 
-		float Alpha = 1.25f - (float)Mathf.Clamp(A + (NoiseMod - A) * 1 / 3f, 0, 1); // 10 noise is 0.1 alpha
+		float NoiseDelay = this.FactorDelta(1/5f, delta);
+
+		float Alpha = 1.25f - (float)Mathf.Clamp(A + (NoiseMod - A) * NoiseDelay, 0, 1); // 10 noise is 0.1 alpha
 
 		float GB = A + (NoiseMod - A) * 1 / 3f; // 10 noise is 0.9 green and blue
 
-		Distance += (20 - (Game.Instance.Noise * 0.1f + 5) - Distance) * 1 / 3f; // 10 noise is 6 meters distance
+		Distance += (20 - (Game.Instance.Noise * 0.1f + 5) - Distance) * NoiseDelay; // 10 noise is 6 meters distance
 
 		/*
 			should always be 255 for red
@@ -71,7 +73,7 @@ public partial class Crosshair3D : StaticBody3D
 
 		Transform3D IconTransform = new Transform3D(LeftVector, UpVector, ForwardVector, Origin);
 
-		Icon.GlobalTransform = Icon.GlobalTransform.InterpolateWith(IconTransform, _delay);
+		Icon.GlobalTransform = Icon.GlobalTransform.InterpolateWith(IconTransform, this.FactorDelta(_delay, delta));
 
 		if (ViewportCamera != null) ViewportCamera.GlobalTransform = Global;
 	}

@@ -113,7 +113,7 @@ DefaultIcon = ExtResource("5_fwxn0")
 DefaultHoverIcon = ExtResource("6_k4ggk")
 LockedIcon = ExtResource("7_ij6rp")
 Distance = 15.0
-Delay = "1/1.5"
+Delay = "1/1.7"
 
 [node name="Icon" type="MeshInstance3D" parent="CrosshairGui/CrosshairContainer/CrosshairViewport/Crosshair"]
 transform = Transform3D(0.047, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.781966, -3.22837)
@@ -129,7 +129,7 @@ surface_material_override/0 = ExtResource("5_fwxn0")
 
 [node name="Player" type="CharacterBody3D" parent="Node3D"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.984565, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.84066, 0)
 script = ExtResource("1_wpbw3")
 
 [node name="Collision" type="CollisionShape3D" parent="Node3D/Player"]

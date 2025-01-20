@@ -36,7 +36,7 @@ public partial class EasingTest : Button
 	public override void _Process(double delta)
 	{
 		if (easing) {
-			thing.Position = this.Lerp(thing.Position.X, goal, 1/1.5);
+			thing.Position = new Vector2(this.Twlerp(thing.Position.X, goal, 1/1.5f, delta), thing.Position.Y);
 
 			if (goal == thing.Position.X) {
 				easing = false;

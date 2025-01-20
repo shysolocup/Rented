@@ -1,9 +1,8 @@
 using Godot;
 using System;
 
-public partial class InteractTest : RbxScriptSource
+public partial class InteractTest : Node3D
 {
-    public InteractTest(RbxScript parent) : base(parent) {}
     public InteractObject3D obj;
 
     public override void _Ready() {

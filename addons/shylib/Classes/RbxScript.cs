@@ -1,14 +1,6 @@
 using Godot;
 using System;
 
-[GlobalClass]
-public partial class RbxScriptSource : Node {
-	[Export] public RbxScript ParentScript;
-
-	public RbxScriptSource(RbxScript parent) : base() { 
-		ParentScript = parent;
-	}
-}
 
 [GlobalClass, Icon("res://addons/shylib/Images/Script.png")]
 public partial class RbxScript : Node
@@ -52,7 +44,7 @@ public partial class RbxScript : Node
 			SpawnedNode = null;
 		}
 
-		SpawnedNode = (RbxScriptSource)source.New(this);
+		SpawnedNode = (Node)source.New(this);
 
 		SpawnedNodePath = new NodePath($"{Name}Source");
 		SpawnedNode.Name = SpawnedNodePath.ToString();

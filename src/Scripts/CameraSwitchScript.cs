@@ -2,10 +2,8 @@ using Godot;
 using System;
 using CoolGame;
 
-public partial class CameraSwitchScript : RbxScriptSource
+public partial class CameraSwitchScript : Node3D
 {
-	public CameraSwitchScript(RbxScript parent) : base(parent) {}
-
 	public Camera3D camera1;
 	public Camera3D camera2;
 

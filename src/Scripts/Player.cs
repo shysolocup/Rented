@@ -82,7 +82,6 @@ public partial class Player : CharacterBody3D
 	
 	public RayCast3D Raycast;
 	[Export] public InteractObject3D inter;
-	public bool ready = false;
 	
 
 	public override void _Ready()
@@ -100,8 +99,6 @@ public partial class Player : CharacterBody3D
 
 		CrouchEffect("crouchIn", crouchFovMod, crouch_speed, 0.5f);
 		CrouchEffect("crouchOut", 0, base_walk_speed, 1);
-
-		ready = true;
 
 		// console = GetTree().
 	}
@@ -189,7 +186,7 @@ public partial class Player : CharacterBody3D
 	public override void _PhysicsProcess(double delta)
 	{
 
-		if (!controllable) return;
+		// if (!controllable) return;
 		
 		float d = (float)delta;
 		if (mouse_captured) _handle_joypad_camera_rotation(d);
@@ -208,7 +205,7 @@ public partial class Player : CharacterBody3D
 			if (mouse_captured) _rotate_camera();
 		}
 
-		if (!controllable) return;
+		// if (!controllable) return;
 
 		if (Input.IsActionJustPressed("MoveLeft")) {
 			Tilt("tiltLeft", tiltRot, 0.2f).Play();

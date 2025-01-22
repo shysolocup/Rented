@@ -227,8 +227,8 @@ public partial class Shaker3DInstance : Resource
 	[Export] public float FadeInDuration = 0;
 	[Export] public float FadeOutDuration = 0;
 
-    private int Tick = new RandomNumberGenerator().RandiRange(-100, 100);
-    private float CurrentFadeTime;
+	private int Tick = new RandomNumberGenerator().RandiRange(-100, 100);
+	private float CurrentFadeTime;
 	
 	public Shaker3D Shaker3D;
 
@@ -245,7 +245,7 @@ public partial class Shaker3DInstance : Resource
 
 	private static readonly FastNoiseLite noise = new();
 
-    private bool _sustain;
+	private bool _sustain;
 
 	[Export] public bool Sustain {
 		get {
@@ -283,7 +283,7 @@ public partial class Shaker3DInstance : Resource
 			else if (FadeOutDuration > 0) Sustain = false;
 		}
 
-        if (!Sustain) {
+		if (!Sustain) {
 			cft -= (float)delta / FadeOutDuration;
 
 			Tick = (int)(_tick + (float)(delta * Roughness * RoughnessMod * CurrentFadeTime));

@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://s0ftqrddh5up"]
+[gd_scene load_steps=26 format=3 uid="uid://s0ftqrddh5up"]
 
 [ext_resource type="Script" uid="uid://cfoo1gxat5mv8" path="res://addons/shylib/Classes/GameInstance.cs" id="1_doi2n"]
 [ext_resource type="Script" uid="uid://c1i8r8l2u4t3q" path="res://src/Scripts/Player.cs" id="1_wpbw3"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://g5yf73ygsftw" path="res://addons/shylib/Classes/InteractObject3D.cs" id="8_uf7b3"]
 [ext_resource type="Environment" uid="uid://d4kl3puo0e8dw" path="res://src/Skies/Day.tres" id="9_hrp8o"]
 [ext_resource type="Script" uid="uid://dxjnsxon5efnv" path="res://src/Scripts/InteractTest.cs" id="11_htgqa"]
+[ext_resource type="Script" uid="uid://lcd3c0o016x1" path="res://addons/shylib/Classes/Shaker3D.cs" id="13_7mk6u"]
 
 [sub_resource type="Environment" id="Environment_1fj5k"]
 
@@ -129,7 +130,7 @@ surface_material_override/0 = ExtResource("5_fwxn0")
 
 [node name="Player" type="CharacterBody3D" parent="Node3D"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.84066, 0)
+transform = Transform3D(1.3, 0, 0, 0, 1.3, 0, 0, 0, 1.3, 0, 1.15761, 0)
 script = ExtResource("1_wpbw3")
 
 [node name="Collision" type="CollisionShape3D" parent="Node3D/Player"]
@@ -163,11 +164,25 @@ shape = SubResource("BoxShape3D_j1e05")
 mesh = SubResource("BoxMesh_xknod")
 surface_material_override/0 = SubResource("StandardMaterial3D_qqeip")
 
-[node name="Node" type="Node" parent="Node3D/test"]
-
 [node name="RbxScript" type="Node" parent="Node3D/test"]
 script = ExtResource("2_i3adb")
 Source = ExtResource("11_htgqa")
+
+[node name="test4" type="StaticBody3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.65005, 0.763546, -5.61089)
+
+[node name="Collision" type="CollisionShape3D" parent="Node3D/test4"]
+shape = SubResource("BoxShape3D_j1e05")
+
+[node name="Mesh" type="MeshInstance3D" parent="Node3D/test4"]
+mesh = SubResource("BoxMesh_xknod")
+surface_material_override/0 = SubResource("StandardMaterial3D_qqeip")
+
+[node name="Shaker3D" type="Node" parent="Node3D/test4"]
+script = ExtResource("13_7mk6u")
+Preset = 7
+AutoSustain = true
+RunOnStart = true
 
 [node name="test2" type="StaticBody3D" parent="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.65005, 0.763546, 3.87836)
@@ -180,8 +195,6 @@ shape = SubResource("BoxShape3D_j1e05")
 [node name="Mesh" type="MeshInstance3D" parent="Node3D/test2"]
 mesh = SubResource("BoxMesh_xknod")
 surface_material_override/0 = SubResource("StandardMaterial3D_qqeip")
-
-[node name="Node" type="Node" parent="Node3D/test2"]
 
 [node name="RbxScript" type="Node" parent="Node3D/test2"]
 script = ExtResource("2_i3adb")
@@ -198,8 +211,6 @@ shape = SubResource("BoxShape3D_j1e05")
 [node name="Mesh" type="MeshInstance3D" parent="Node3D/test3"]
 mesh = SubResource("BoxMesh_xknod")
 surface_material_override/0 = SubResource("StandardMaterial3D_qqeip")
-
-[node name="Node" type="Node" parent="Node3D/test3"]
 
 [node name="RbxScript" type="Node" parent="Node3D/test3"]
 script = ExtResource("2_i3adb")
@@ -260,9 +271,12 @@ shadow_blur = 2.05
 [node name="Cameras" type="Node3D" parent="Node3D"]
 unique_name_in_owner = true
 
+[node name="Camera2" type="Camera3D" parent="Node3D/Cameras"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 8.4624)
+
 [node name="PlayerCamera" type="Camera3D" parent="Node3D/Cameras"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.67761, 0)
 current = true
 fov = 90.0
 far = 200.0
@@ -270,9 +284,6 @@ far = 200.0
 [node name="InteractRay" type="RayCast3D" parent="Node3D/Cameras/PlayerCamera"]
 unique_name_in_owner = true
 target_position = Vector3(0, 0, -1.5)
-
-[node name="Camera2" type="Camera3D" parent="Node3D/Cameras"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 8.4624)
 
 [node name="ScriptDump" type="Node3D" parent="Node3D"]
 

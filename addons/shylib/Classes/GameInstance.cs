@@ -36,7 +36,7 @@ namespace CoolGame
 		/// <summary>
 		/// Contains player save data
 		/// </summary>
-		public static Dictionary<string, Variant> Saves { get; set; } = new Dictionary<string, Variant>();
+		public static Dictionary<string, Variant> Saves { get; set; } = new();
 
 
 		/// <summary>
@@ -88,7 +88,7 @@ namespace CoolGame
 		/// <summary>
 		/// Dictionary of events with string keys and StringName values
 		/// </summary>
-		public static Dictionary<string, StringName> Events { get; set; } = new Dictionary<string, StringName> {
+		private static readonly Dictionary<string, StringName> Events = new() {
 			{"Saving", new StringName("Saving")},
 			{"Saved", new StringName("Saved")},
 		};
@@ -275,10 +275,5 @@ public partial class GameInstance : Node
 		foreach (var (key, value) in data) {
 			Game.Saves[key] = value;
 		}
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
 	}
 }

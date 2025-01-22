@@ -42,13 +42,13 @@ public partial class Player : CharacterBody3D
 	private bool JumpCooldown = false;
 
 	[Export] public float BaseFov;
-	[Export] public float CrouchSpeed = 0.1f;
+	[Export] public float CrouchSpeed = 1f;
 
 	[Export] public float TiltRotation = 2;
 
 	private Camera3D Camera;
 
-	private Variant nullvar = new Variant();
+	private Variant nullvar = new();
 
 	[Export] public bool ActionCooldown = false;
 
@@ -63,6 +63,11 @@ public partial class Player : CharacterBody3D
 
 	[Export] public bool Walking = false;
 	private bool WalkingEffecting = false;
+
+	private float DefaultCameraOffset = 0.4f;
+	private float CameraOffset;
+	private CollisionShape3D Collision;
+	private MeshInstance3D Mesh;
 	
 
 	public override void _Ready()
@@ -70,10 +75,15 @@ public partial class Player : CharacterBody3D
 		Camera = GetNode<Camera3D>("%PlayerCamera");
 		Raycast = GetNode<RayCast3D>("%InteractRay");
 
+		Collision = GetNode<CollisionShape3D>("./Collision");
+		Mesh = GetNode<MeshInstance3D>("./Mesh");
+
+		CameraOffset = DefaultCameraOffset;
+
 		BaseFov = Camera.GetFov();
 		CaptureMouse();
 
-		GD.Print(this.Get("camera"));
+		GD.Print(Get("camera"));
 
 		// CrouchEffect("crouchIn", crouchFovMod, crouch_speed, 0.5f);
 		// CrouchEffect("crouchOut", 0, base_walk_speed, 1);
@@ -122,6 +132,7 @@ public partial class Player : CharacterBody3D
 				collider.Hovering = true;
 			}
 		}
+
 		else if (Inter != null) {
 			Inter.Hovering = false;
 			Inter = null;
@@ -129,21 +140,16 @@ public partial class Player : CharacterBody3D
 
 		if (Camera != null) {
 
-			Camera.Position = Position;
+			Camera.Position = new Vector3(Position.X, Position.Y + CameraOffset * Collision.Scale.Y, Position.Z); 
 
 			// crouch effect
 			if (Crouching) {
 				SpeedEffect(CrouchFovMod, CrouchSpeed, 0.4f, 1/15f, delta);
 			}
-			else if (WalkSpeed != BaseWalkSpeed) {
-				SpeedEffect(0, BaseWalkSpeed, 1, 1/20f, delta);
-			}
-
-			// crouch effect
 			if (Sprinting) {
 				SpeedEffect(SprintFovMod, SprintSpeed, 1, 1/45f, delta);
 			}
-			else if (WalkSpeed != BaseWalkSpeed) {
+			else if (!Crouching && !Sprinting) {
 				SpeedEffect(0, BaseWalkSpeed, 1, 1/15f, delta);
 			}
 
@@ -184,14 +190,14 @@ public partial class Player : CharacterBody3D
 			Sprinting = true;
 		}
 		
-		else if (Sprinting && (Input.IsActionJustReleased("Sprint") || Input.IsActionJustReleased("MoveForward") || !Walking)) {
+		else if (Sprinting && (!Input.IsActionPressed("Sprint") || !Input.IsActionPressed("MoveForward") || !Walking)) {
 			Sprinting = false;
 		}
 
 		if (!Sprinting && !Crouching && IsOnFloor() && Input.IsActionPressed("Crouch")) {
 			Crouching = true;
 		}
-		else if (Crouching && Input.IsActionJustReleased("Crouch")) {
+		else if (Crouching && !Input.IsActionPressed("Crouch")) {
 			Crouching = false;
 		}
 
@@ -272,9 +278,9 @@ public partial class Player : CharacterBody3D
 
 	public void SpeedEffect(float zoommod, float speed, float scale, float _t, double delta)
 	{
-		WalkSpeed = this.Twlerp(WalkSpeed, speed, _t, delta, Tween.TransitionType.Linear);
-		Camera.Fov = this.Twlerp(Camera.Fov, BaseFov+zoommod, _t, delta, Tween.TransitionType.Linear);
-		Scale = new Vector3(Scale.X, this.Twlerp(Scale.Y, scale, _t/1.1f, delta, Tween.TransitionType.Linear), Scale.Z);
+		WalkSpeed = this.Twlerp(WalkSpeed, speed, _t, delta);
+		Camera.Fov = this.Twlerp(Camera.Fov, BaseFov+zoommod, _t, delta);
+		Collision.Scale = new Vector3(Collision.Scale.X, this.Twlerp(Collision.Scale.Y, scale, _t/1.1f, delta), Collision.Scale.Z);
 	}
 
 	public void TiltEffect(float degrees, float _t, double delta)

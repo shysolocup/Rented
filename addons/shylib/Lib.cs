@@ -11,7 +11,7 @@ public partial class Lib : EditorPlugin {}
 public static class Extensions
 {
 
-	public static System.Collections.Generic.Dictionary<string, object> Blanks = new System.Collections.Generic.Dictionary<string, object>();
+	public static System.Collections.Generic.Dictionary<string, object> Blanks = new();
 
 	public static T GetBlank<T>(this GodotObject self) where T : class 
 	{
@@ -30,9 +30,10 @@ public static class Extensions
 	/// <param name="goal">Goal of the lerp</param>
 	/// <param name="_t">Factor from 0 to 1 usually done by dividing 1 by a float (eg: 1/1.5f)</param>
 	/// <returns>New value after doing stupid math</returns>
-	public static dynamic BaseLerp(dynamic value, dynamic goal, dynamic _t) 
+	public static dynamic BaseLerp(this GodotObject self, dynamic value, dynamic goal, float _t, dynamic delta = null) 
 	{
-		return (value * (1 - _t)) + (goal * _t);
+		if (delta != null) _t = self.FactorDelta(_t, (double)delta);
+		return value + (goal - value) * _t;
 	}
 
 
@@ -130,7 +131,7 @@ public static class Extensions
 			}
 		}
 
-		return value * (1 - e) + goal * e;
+		return BaseLerp(self, value, goal, e);
 	}
 
 	public static Vector2 Snapped(this Vector2 vector, Vector2 gridSize)

@@ -45,6 +45,10 @@ public partial class Shaker3D : Node
 		}
 	}
 
+	private static float FixRotation(float deg) {
+		return Mathf.DegToRad( deg >= 360 ? deg-360 : deg < 0 ? 360+deg : deg);
+	}
+
 	public async Task<Transform3D> Update(double delta)
 	{
 		Vector3 PositionAddShake = Vector3.Zero;
@@ -65,9 +69,9 @@ public partial class Shaker3D : Node
 			RotationAddShake += ShakeVect * ShakeInstance.RotationInfluence;
 		}
 
-		Basis YBasis = Basis.FromEuler(new Vector3( 0, Mathf.DegToRad(RotationAddShake.Y), 0 ));
-		Basis XBasis = Basis.FromEuler(new Vector3( Mathf.DegToRad(RotationAddShake.X), 0, 0 ));
-		Basis ZBasis = Basis.FromEuler(new Vector3( 0, 0, Mathf.DegToRad(RotationAddShake.Z) ));
+		Basis YBasis = Basis.FromEuler(new Vector3( 0, FixRotation(RotationAddShake.Y), 0 ));
+		Basis XBasis = Basis.FromEuler(new Vector3( FixRotation(RotationAddShake.X), 0, 0 ));
+		Basis ZBasis = Basis.FromEuler(new Vector3( 0, 0, FixRotation(RotationAddShake.Z) ));
 
 		Basis ShakeBasis = Basis.Identity * YBasis * XBasis * ZBasis; // YXZ rotation order HOPEFULLY
 

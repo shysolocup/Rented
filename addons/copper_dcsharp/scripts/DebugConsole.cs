@@ -185,8 +185,6 @@ public partial class DebugConsole : CanvasLayer
 		var hints = new Array<string>();
 		foreach(string hint in CommandHintsLabel.Text.Split("\n")) {
 			string buh = hint.Replace("url=", "");
-	
-			GD.Print(buh);
 
 			hints.Add(buh);
 		}
@@ -212,8 +210,6 @@ public partial class DebugConsole : CanvasLayer
 		commandField.caret_column = len(new_text)
 		_on_command_field_text_changed(new_text)
 		*/
-
-		GD.Print(hints);
 
 		hints = hints.Slice(0, hints.Count);
 
@@ -526,16 +522,28 @@ public partial class DebugConsole : CanvasLayer
 			}
 
 			// Options parameter
-			else if(currentParameterObj.Type == DebugParameterType.Options)
-			{
+			else if(currentParameterObj.Type == DebugParameterType.Options) {
+				if (currentParameterObj.CallOptions.Method != null) {
+					var value = (Array<string>)currentParameterObj.CallOptions.Call(commandSplit);
+					
+					if (value == null) {
+						LogError("ParamError: Callable Parameter \"" + currentParameterObj.Name + "\" should have a return value.");
+						return;
+					}
+
+					currentParameterObj.Options = value;
+				}
+
 				if (currentParameterObj.Options.Count == 0) {
 					LogError("ParamError: Parameter \"" + currentParameterObj.Name + "\" is meant to have options, but none were set.");
-					return ;
+					return;
 				}
+
 				if (!currentParameterObj.Options.Contains(commandSplit[i])) {
 					LogError($"ParamError: \"{commandSplit[i]}\" is not a valid option for parameter \"{currentParameterObj.Name}\".");
-					return ;
+					return;
 				}
+
 				commandFunction += "\"" + commandSplit[i] + "\",";
 				currentParameter += 1;
 			}
@@ -543,7 +551,7 @@ public partial class DebugConsole : CanvasLayer
 			// Other
 			else {
 				LogError($"ParamError: Parameter \"{currentParameterObj.Name}\" recieved an invalid value.");
-				return ;
+				return;
 			}
 		}
 

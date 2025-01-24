@@ -69,6 +69,14 @@ public partial class DebugCommandFunctions : GodotObject
 		var helpText = DebugConsole.GetConsole().Commands[command].HelpText;
 		DebugConsole.Log($"{command} - { ((helpText != "") ? helpText : "There is no help available.") }");
 	}
+
+	public void dialogue(string character, string line) {
+
+	}
+
+	public string[] dialogue_args(string[] args) {
+		return args;
+	}
 }
 
 public static class DebugCommandList
@@ -79,6 +87,9 @@ public static class DebugCommandList
 		InitConfig(console);
 		
 		var funcs = new DebugCommandFunctions();
+
+		var chardata = Game.Instance.GetNode<DialogueData>("%DialogueData");
+		var chars = new Array<string>(chardata.Characters.Keys);
 
 
 		#region stats
@@ -97,6 +108,32 @@ public static class DebugCommandList
 
 			Function = new Callable(funcs, DebugCommandFunctions.MethodName.show_stats),
 			GetFunction = new Callable(funcs, DebugCommandFunctions.MethodName.stats_visible)
+		}.AddTo(console);
+
+
+		#endregion
+		#region dialogue
+
+
+		new DebugCommand {
+			Id = "dialogue",
+			HelpText = "Display dialogue from a character",
+
+			Parameters = new Array<DebugParameter> {
+				new DebugParameter {
+					Name = "character",
+					Type = DebugParameterType.Options,
+					Options = chars
+				},
+
+				new DebugParameter {
+					Name = "line",
+					Type = DebugParameterType.Options,
+					CallOptions = new Callable(funcs, DebugCommandFunctions.MethodName.dialogue_args)
+				}
+			},
+
+			Function = new Callable(funcs, DebugCommandFunctions.MethodName.dialogue)
 		}.AddTo(console);
 
 

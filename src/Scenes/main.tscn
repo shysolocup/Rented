@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://s0ftqrddh5up"]
+[gd_scene load_steps=31 format=3 uid="uid://s0ftqrddh5up"]
 
 [ext_resource type="Script" uid="uid://cfoo1gxat5mv8" path="res://addons/shylib/Classes/GameInstance.cs" id="1_doi2n"]
 [ext_resource type="Script" uid="uid://c1i8r8l2u4t3q" path="res://src/Scripts/Player.cs" id="1_wpbw3"]
@@ -16,7 +16,9 @@
 [ext_resource type="Environment" uid="uid://d4kl3puo0e8dw" path="res://src/Skies/Day.tres" id="9_hrp8o"]
 [ext_resource type="Script" uid="uid://dxjnsxon5efnv" path="res://src/Scripts/InteractTest.cs" id="11_htgqa"]
 [ext_resource type="Script" uid="uid://lcd3c0o016x1" path="res://addons/shylib/Classes/Shaker3D.cs" id="13_7mk6u"]
+[ext_resource type="Script" uid="uid://w1a25qc36shr" path="res://addons/shylib/Classes/Shaker3DInstance.cs" id="14_w0vrg"]
 [ext_resource type="Script" uid="uid://2f4fi75scxes" path="res://richtext2/richer_text_label.gd" id="17_e2xy3"]
+[ext_resource type="Script" uid="uid://csefxrb6ehpnb" path="res://addons/shylib/Classes/DialogueData.cs" id="19_vh02n"]
 
 [sub_resource type="Environment" id="Environment_1fj5k"]
 
@@ -42,6 +44,20 @@ heightmap_max_layers = 32
 uv1_scale = Vector3(2, 2, 2)
 uv1_triplanar = true
 
+[sub_resource type="Resource" id="Resource_isqvi"]
+script = ExtResource("14_w0vrg")
+Magnitude = 0.0
+Roughness = 0.0
+PositionInfluence = Vector3(0, 0, 0)
+RotationInfluence = Vector3(0, 0, 0)
+StopOnInactive = true
+RoughnessMod = 1.0
+MagnitudeMod = 1.0
+FadeInDuration = 0.0
+FadeOutDuration = 0.0
+Sustain = false
+metadata/_custom_type_script = ExtResource("14_w0vrg")
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mnhfo"]
 transparency = 1
 blend_mode = 1
@@ -49,6 +65,9 @@ shading_mode = 0
 albedo_texture = ExtResource("6_yaysw")
 albedo_texture_force_srgb = true
 uv1_scale = Vector3(3, 2, 3)
+
+[sub_resource type="Resource" id="Resource_vh02n"]
+metadata/__load_path__ = "res://addons/shylib/Classes/DialogueCharacters.cs"
 
 [node name="Game" type="Node"]
 script = ExtResource("1_doi2n")
@@ -191,6 +210,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_qqeip")
 [node name="Shaker3D" type="Node" parent="Root3D/test4"]
 script = ExtResource("13_7mk6u")
 Preset = 7
+ShakeInstance = SubResource("Resource_isqvi")
 AutoSustain = true
 RunOnStart = true
 
@@ -301,49 +321,66 @@ target_position = Vector3(0, 0, -1.5)
 script = ExtResource("2_i3adb")
 Source = ExtResource("7_gf62h")
 
-[node name="Dialogue" type="Control" parent="."]
-unique_name_in_owner = true
+[node name="DialogueGui" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -61.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="RicherTextLabel" type="RichTextLabel" parent="Dialogue"]
-clip_contents = false
-custom_minimum_size = Vector2(0, 22)
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+
+[node name="Dialogue" type="VBoxContainer" parent="DialogueGui"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="Base" type="RichTextLabel" parent="DialogueGui/Dialogue"]
+visible = false
+clip_contents = false
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
 theme_override_colors/font_outline_color = Color(0.2, 0.2, 0.2, 1)
-theme_override_font_sizes/bold_italics_font_size = 25
-theme_override_font_sizes/italics_font_size = 25
-theme_override_font_sizes/mono_font_size = 25
-theme_override_font_sizes/normal_font_size = 25
-theme_override_font_sizes/bold_font_size = 25
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.572)
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_outline_size = 2
+theme_override_font_sizes/bold_italics_font_size = 15
+theme_override_font_sizes/italics_font_size = 15
+theme_override_font_sizes/mono_font_size = 15
+theme_override_font_sizes/normal_font_size = 15
+theme_override_font_sizes/bold_font_size = 15
 bbcode_enabled = true
 fit_content = true
+scroll_active = false
+autowrap_mode = 0
 script = ExtResource("17_e2xy3")
-bbcode = "{VersionDenot} "
+bbcode = "*{%s}*
+[70]{%s}
+ "
 effects = 2
 alignment = 1
 color = null
 emoji_scale = 1.0
 font = "vcr"
 font_auto_setup = true
-font_size = 25
+font_size = 15
 font_bold_weight = 1.5
 font_italics_slant = 0.25
 font_italics_weight = -0.25
-shadow_enabled = false
+shadow_enabled = true
 shadow_offset = 0.08
-shadow_alpha = 0.25
+shadow_alpha = 0.572
 shadow_outline_size = 0.1
 outline_size = 0
 outline_mode = 1
@@ -360,7 +397,7 @@ markdown_format_bold2 = "[b]*%s*[]"
 markdown_format_italics2 = "[i;gray]*%s*[]"
 markdown_format_bold_italics2 = "%s"
 context_enabled = true
-context_path = NodePath("../..")
+context_path = NodePath("../DialogueData")
 context_state = {}
 context_rich_objects = true
 context_rich_ints = true
@@ -381,7 +418,12 @@ override_clipContents = false
 override_fitContent = true
 metadata/_custom_type_script = ExtResource("17_e2xy3")
 
-[node name="Header" type="Control" parent="."]
+[node name="DialogueData" type="Node" parent="DialogueGui/Dialogue"]
+unique_name_in_owner = true
+script = ExtResource("19_vh02n")
+metadata/_custom_type_script = SubResource("Resource_vh02n")
+
+[node name="HeaderGui" type="Control" parent="."]
 unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 10
@@ -389,7 +431,7 @@ anchor_right = 1.0
 offset_bottom = 81.0
 grow_horizontal = 2
 
-[node name="RicherTextLabel" type="RichTextLabel" parent="Header"]
+[node name="RicherTextLabel" type="RichTextLabel" parent="HeaderGui"]
 modulate = Color(1, 1, 1, 0.407843)
 top_level = true
 z_index = 50
@@ -464,7 +506,7 @@ override_clipContents = false
 override_fitContent = true
 metadata/_custom_type_script = ExtResource("17_e2xy3")
 
-[node name="ColorRect" type="ColorRect" parent="Header"]
+[node name="ColorRect" type="ColorRect" parent="HeaderGui"]
 layout_mode = 1
 anchors_preset = 13
 anchor_left = 0.5

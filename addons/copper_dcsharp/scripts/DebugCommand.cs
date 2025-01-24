@@ -25,6 +25,7 @@ public partial class DebugParameter : GodotObject
 	public bool Required = true;
 	public DebugParameterType Type;
 	public Array<string> Options = new Array<string>();
+	public Callable CallOptions;
 }
 
 

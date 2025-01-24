@@ -1,0 +1,19 @@
+{
+    "Id": "audrey" ,
+    "DisplayName": "Audrey" ,
+    "Wraps": [],
+    "Color": [0,0,0,0],
+    "Font": "",
+    
+    "Lines": {
+
+        "test": {
+            "Text": [
+                "googoo",
+                "line 2"
+            ],
+            "Color": [0,0,0,0],
+            "Font": ""
+        }
+    }
+}

@@ -16,7 +16,7 @@ public partial class Shaker3DInstance : Resource
 	[Export] public float FadeInDuration = 0;
 	[Export] public float FadeOutDuration = 0;
 
-	private int Tick = new RandomNumberGenerator().RandiRange(-100, 100);
+	private float Tick = new RandomNumberGenerator().RandfRange(-100, 100);
 	private float CurrentFadeTime;
 	
 	public Shaker3D Shaker3D;
@@ -75,10 +75,10 @@ public partial class Shaker3DInstance : Resource
 		if (!Sustain) {
 			cft -= (float)delta / FadeOutDuration;
 
-			Tick = (int)(_tick + (float)(delta * Roughness * RoughnessMod * CurrentFadeTime));
+			Tick = _tick + ((float)delta * Roughness * RoughnessMod * CurrentFadeTime);
 		}
 		else {
-			Tick = (int)(_tick + (float)(delta * Roughness * RoughnessMod));
+			Tick = _tick + ((float)delta * Roughness * RoughnessMod);
 		}
 
 		CurrentFadeTime = cft;

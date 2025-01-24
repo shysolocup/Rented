@@ -49,9 +49,9 @@ public partial class Shaker3D : Node
 	{
 		Vector3 PositionAddShake = Vector3.Zero;
 		Vector3 RotationAddShake = Vector3.Zero;
-
 		
 		if (ShakeInstance.State == ShakeState.Inactive && ShakeInstance.StopOnInactive) Running = false;
+		
 		else if (ShakeInstance.State != ShakeState.Inactive) {
 			var waitTask = Task.Run(async () => {
 				while (!ShakeInstance.Ready) await Task.Delay(25);
@@ -65,17 +65,11 @@ public partial class Shaker3D : Node
 			RotationAddShake += ShakeVect * ShakeInstance.RotationInfluence;
 		}
 
-		Basis ShakeBasis = Basis.FromEuler(new Vector3(
-				0,
-				Mathf.DegToRad(RotationAddShake.Y), 
-				0
-			)) *
+		Basis YBasis = Basis.FromEuler(new Vector3( 0, Mathf.DegToRad(RotationAddShake.Y), 0 ));
+		Basis XBasis = Basis.FromEuler(new Vector3( Mathf.DegToRad(RotationAddShake.X), 0, 0 ));
+		Basis ZBasis = Basis.FromEuler(new Vector3( 0, 0, Mathf.DegToRad(RotationAddShake.Z) ));
 
-			Basis.FromEuler(new Vector3(
-				Mathf.DegToRad(RotationAddShake.X), 
-				0,
-				Mathf.DegToRad(RotationAddShake.Z)
-			));
+		Basis ShakeBasis = Basis.Identity * YBasis * XBasis * ZBasis; // YXZ rotation order HOPEFULLY
 
 		Transform3D Transform = new(ShakeBasis, PositionAddShake);
 	

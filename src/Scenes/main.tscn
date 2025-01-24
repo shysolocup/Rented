@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://s0ftqrddh5up"]
+[gd_scene load_steps=27 format=3 uid="uid://s0ftqrddh5up"]
 
 [ext_resource type="Script" uid="uid://cfoo1gxat5mv8" path="res://addons/shylib/Classes/GameInstance.cs" id="1_doi2n"]
 [ext_resource type="Script" uid="uid://c1i8r8l2u4t3q" path="res://src/Scripts/Player.cs" id="1_wpbw3"]
@@ -16,6 +16,7 @@
 [ext_resource type="Environment" uid="uid://d4kl3puo0e8dw" path="res://src/Skies/Day.tres" id="9_hrp8o"]
 [ext_resource type="Script" uid="uid://dxjnsxon5efnv" path="res://src/Scripts/InteractTest.cs" id="11_htgqa"]
 [ext_resource type="Script" uid="uid://lcd3c0o016x1" path="res://addons/shylib/Classes/Shaker3D.cs" id="13_7mk6u"]
+[ext_resource type="Script" uid="uid://2f4fi75scxes" path="res://richtext2/richer_text_label.gd" id="17_e2xy3"]
 
 [sub_resource type="Environment" id="Environment_1fj5k"]
 
@@ -51,7 +52,16 @@ uv1_scale = Vector3(3, 2, 3)
 
 [node name="Game" type="Node"]
 script = ExtResource("1_doi2n")
-Version = "0.0.1"
+Gravity = 9.8
+
+[node name="Test" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="SaveGui" type="Control" parent="."]
 layout_mode = 3
@@ -121,105 +131,105 @@ transform = Transform3D(0.047, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.781966, -3.22837
 top_level = true
 cast_shadow = 0
 mesh = SubResource("BoxMesh_1dmmm")
-skeleton = NodePath("../../../../../Node3D")
+skeleton = NodePath("../../../../../Root3D")
 surface_material_override/0 = ExtResource("5_fwxn0")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="CrosshairGui/CrosshairContainer/CrosshairViewport/Crosshair"]
 
-[node name="Node3D" type="Node3D" parent="."]
+[node name="Root3D" type="Node3D" parent="."]
 
-[node name="Player" type="CharacterBody3D" parent="Node3D"]
+[node name="Player" type="CharacterBody3D" parent="Root3D"]
 unique_name_in_owner = true
 transform = Transform3D(1.3, 0, 0, 0, 1.3, 0, 0, 0, 1.3, 0, 1.15761, 0)
 script = ExtResource("1_wpbw3")
 
-[node name="Collision" type="CollisionShape3D" parent="Node3D/Player"]
+[node name="Collision" type="CollisionShape3D" parent="Root3D/Player"]
 shape = SubResource("CapsuleShape3D_8xcek")
 
-[node name="Mesh" type="MeshInstance3D" parent="Node3D/Player"]
+[node name="Mesh" type="MeshInstance3D" parent="Root3D/Player"]
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_y0axr")
 skeleton = NodePath("")
 
-[node name="Pivot" type="Node3D" parent="Node3D/Player"]
+[node name="Pivot" type="Node3D" parent="Root3D/Player"]
 
-[node name="Baseplate" type="StaticBody3D" parent="Node3D"]
+[node name="Baseplate" type="StaticBody3D" parent="Root3D"]
 transform = Transform3D(15, 0, 0, 0, 3.19346, 0, 0, 0, 15, 0, -1.61217, 0)
 
-[node name="Collision" type="CollisionShape3D" parent="Node3D/Baseplate"]
+[node name="Collision" type="CollisionShape3D" parent="Root3D/Baseplate"]
 shape = SubResource("BoxShape3D_j1e05")
 
-[node name="Mesh" type="MeshInstance3D" parent="Node3D/Baseplate"]
+[node name="Mesh" type="MeshInstance3D" parent="Root3D/Baseplate"]
 mesh = SubResource("BoxMesh_xknod")
 surface_material_override/0 = SubResource("StandardMaterial3D_qqeip")
 
-[node name="test" type="StaticBody3D" parent="Node3D"]
+[node name="test" type="StaticBody3D" parent="Root3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.65005, 0.763546, 2.11837)
 script = ExtResource("8_uf7b3")
 
-[node name="Collision" type="CollisionShape3D" parent="Node3D/test"]
+[node name="Collision" type="CollisionShape3D" parent="Root3D/test"]
 shape = SubResource("BoxShape3D_j1e05")
 
-[node name="Mesh" type="MeshInstance3D" parent="Node3D/test"]
+[node name="Mesh" type="MeshInstance3D" parent="Root3D/test"]
 mesh = SubResource("BoxMesh_xknod")
 surface_material_override/0 = SubResource("StandardMaterial3D_qqeip")
 
-[node name="RbxScript" type="Node" parent="Node3D/test"]
+[node name="RbxScript" type="Node" parent="Root3D/test"]
 script = ExtResource("2_i3adb")
 Source = ExtResource("11_htgqa")
 
-[node name="test4" type="StaticBody3D" parent="Node3D"]
+[node name="test4" type="StaticBody3D" parent="Root3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.65005, 0.763546, -5.61089)
 
-[node name="Collision" type="CollisionShape3D" parent="Node3D/test4"]
+[node name="Collision" type="CollisionShape3D" parent="Root3D/test4"]
 shape = SubResource("BoxShape3D_j1e05")
 
-[node name="Mesh" type="MeshInstance3D" parent="Node3D/test4"]
+[node name="Mesh" type="MeshInstance3D" parent="Root3D/test4"]
 mesh = SubResource("BoxMesh_xknod")
 surface_material_override/0 = SubResource("StandardMaterial3D_qqeip")
 
-[node name="Shaker3D" type="Node" parent="Node3D/test4"]
+[node name="Shaker3D" type="Node" parent="Root3D/test4"]
 script = ExtResource("13_7mk6u")
 Preset = 7
 AutoSustain = true
 RunOnStart = true
 
-[node name="test2" type="StaticBody3D" parent="Node3D"]
+[node name="test2" type="StaticBody3D" parent="Root3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.65005, 0.763546, 3.87836)
 script = ExtResource("8_uf7b3")
 Enabled = false
 
-[node name="Collision" type="CollisionShape3D" parent="Node3D/test2"]
+[node name="Collision" type="CollisionShape3D" parent="Root3D/test2"]
 shape = SubResource("BoxShape3D_j1e05")
 
-[node name="Mesh" type="MeshInstance3D" parent="Node3D/test2"]
+[node name="Mesh" type="MeshInstance3D" parent="Root3D/test2"]
 mesh = SubResource("BoxMesh_xknod")
 surface_material_override/0 = SubResource("StandardMaterial3D_qqeip")
 
-[node name="RbxScript" type="Node" parent="Node3D/test2"]
+[node name="RbxScript" type="Node" parent="Root3D/test2"]
 script = ExtResource("2_i3adb")
 Source = ExtResource("11_htgqa")
 
-[node name="test3" type="StaticBody3D" parent="Node3D"]
+[node name="test3" type="StaticBody3D" parent="Root3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.65005, 0.763546, 5.53447)
 script = ExtResource("8_uf7b3")
 HoverIcon = SubResource("StandardMaterial3D_mnhfo")
 
-[node name="Collision" type="CollisionShape3D" parent="Node3D/test3"]
+[node name="Collision" type="CollisionShape3D" parent="Root3D/test3"]
 shape = SubResource("BoxShape3D_j1e05")
 
-[node name="Mesh" type="MeshInstance3D" parent="Node3D/test3"]
+[node name="Mesh" type="MeshInstance3D" parent="Root3D/test3"]
 mesh = SubResource("BoxMesh_xknod")
 surface_material_override/0 = SubResource("StandardMaterial3D_qqeip")
 
-[node name="RbxScript" type="Node" parent="Node3D/test3"]
+[node name="RbxScript" type="Node" parent="Root3D/test3"]
 script = ExtResource("2_i3adb")
 Source = ExtResource("11_htgqa")
 
-[node name="Audios" type="Node3D" parent="Node3D"]
+[node name="Audios" type="Node3D" parent="Root3D"]
 unique_name_in_owner = true
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Node3D/Audios"]
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Root3D/Audios"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.60103, 0, 4.32475)
 stream = ExtResource("8_msmgq")
 attenuation_model = 2
@@ -227,7 +237,7 @@ autoplay = true
 max_distance = 4.0
 parameters/looping = true
 
-[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Node3D/Audios"]
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Root3D/Audios"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.24936, 0, 4.32475)
 stream = ExtResource("8_msmgq")
 attenuation_model = 2
@@ -235,7 +245,7 @@ autoplay = true
 max_distance = 4.0
 parameters/looping = true
 
-[node name="AudioStreamPlayer3D3" type="AudioStreamPlayer3D" parent="Node3D/Audios"]
+[node name="AudioStreamPlayer3D3" type="AudioStreamPlayer3D" parent="Root3D/Audios"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.24936, 0, -2.81763)
 stream = ExtResource("8_msmgq")
 attenuation_model = 2
@@ -243,7 +253,7 @@ autoplay = true
 max_distance = 4.0
 parameters/looping = true
 
-[node name="AudioStreamPlayer3D4" type="AudioStreamPlayer3D" parent="Node3D/Audios"]
+[node name="AudioStreamPlayer3D4" type="AudioStreamPlayer3D" parent="Root3D/Audios"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.57504, 0, -2.81763)
 stream = ExtResource("8_msmgq")
 attenuation_model = 2
@@ -251,11 +261,11 @@ autoplay = true
 max_distance = 4.0
 parameters/looping = true
 
-[node name="World" type="WorldEnvironment" parent="Node3D"]
+[node name="World" type="WorldEnvironment" parent="Root3D"]
 unique_name_in_owner = true
 environment = ExtResource("9_hrp8o")
 
-[node name="Sun" type="DirectionalLight3D" parent="Node3D/World"]
+[node name="Sun" type="DirectionalLight3D" parent="Root3D/World"]
 unique_name_in_owner = true
 transform = Transform3D(0.80394, 0.558214, 0.205128, 0, -0.344922, 0.938632, 0.594711, -0.754603, -0.277296, -3.51915, 38.7123, -36.5632)
 light_color = Color(1, 0.941176, 0.929412, 1)
@@ -268,25 +278,201 @@ shadow_reverse_cull_face = true
 shadow_opacity = 0.8
 shadow_blur = 2.05
 
-[node name="Cameras" type="Node3D" parent="Node3D"]
+[node name="Cameras" type="Node3D" parent="Root3D"]
 unique_name_in_owner = true
 
-[node name="Camera2" type="Camera3D" parent="Node3D/Cameras"]
+[node name="Camera2" type="Camera3D" parent="Root3D/Cameras"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 8.4624)
 
-[node name="PlayerCamera" type="Camera3D" parent="Node3D/Cameras"]
+[node name="PlayerCamera" type="Camera3D" parent="Root3D/Cameras"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.67761, 0)
 current = true
 fov = 90.0
 far = 200.0
 
-[node name="InteractRay" type="RayCast3D" parent="Node3D/Cameras/PlayerCamera"]
+[node name="InteractRay" type="RayCast3D" parent="Root3D/Cameras/PlayerCamera"]
 unique_name_in_owner = true
 target_position = Vector3(0, 0, -1.5)
 
-[node name="ScriptDump" type="Node3D" parent="Node3D"]
+[node name="ScriptDump" type="Node3D" parent="Root3D"]
 
-[node name="CameraSwitchScript" type="Node" parent="Node3D/ScriptDump"]
+[node name="CameraSwitchScript" type="Node" parent="Root3D/ScriptDump"]
 script = ExtResource("2_i3adb")
 Source = ExtResource("7_gf62h")
+
+[node name="Dialogue" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -61.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="RicherTextLabel" type="RichTextLabel" parent="Dialogue"]
+clip_contents = false
+custom_minimum_size = Vector2(0, 22)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_font_sizes/bold_italics_font_size = 25
+theme_override_font_sizes/italics_font_size = 25
+theme_override_font_sizes/mono_font_size = 25
+theme_override_font_sizes/normal_font_size = 25
+theme_override_font_sizes/bold_font_size = 25
+bbcode_enabled = true
+fit_content = true
+script = ExtResource("17_e2xy3")
+bbcode = "{VersionDenot} "
+effects = 2
+alignment = 1
+color = null
+emoji_scale = 1.0
+font = "vcr"
+font_auto_setup = true
+font_size = 25
+font_bold_weight = 1.5
+font_italics_slant = 0.25
+font_italics_weight = -0.25
+shadow_enabled = false
+shadow_offset = 0.08
+shadow_alpha = 0.25
+shadow_outline_size = 0.1
+outline_size = 0
+outline_mode = 1
+outline_adjust = 0.8
+outline_hue_adjust = 0.0125
+nicer_quotes_enabled = true
+nicer_quotes_format = "“%s”"
+markdown_enabled = true
+markdown_format_bold = "[b]%s[]"
+markdown_format_italics = "[i]%s[]"
+markdown_format_bold_italics = "[bi]%s[]"
+markdown_format_highlight = "[green;sin]%s[]"
+markdown_format_bold2 = "[b]*%s*[]"
+markdown_format_italics2 = "[i;gray]*%s*[]"
+markdown_format_bold_italics2 = "%s"
+context_enabled = true
+context_path = NodePath("../..")
+context_state = {}
+context_rich_objects = true
+context_rich_ints = true
+context_rich_array = true
+autostyle_numbers = true
+autostyle_numbers_tag = "[salmon]%s[]"
+autostyle_numbers_pad_decimals = true
+autostyle_numbers_decimals = 2
+autostyle_emojis = true
+effect_weight = 0.79
+image_path = "res://src/Images"
+image_resize_to_font_size = true
+image_scale = 1.0
+meta_auto_https = true
+meta_cursor = 2
+override_bbcodeEnabled = true
+override_clipContents = false
+override_fitContent = true
+metadata/_custom_type_script = ExtResource("17_e2xy3")
+
+[node name="Header" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 81.0
+grow_horizontal = 2
+
+[node name="RicherTextLabel" type="RichTextLabel" parent="Header"]
+modulate = Color(1, 1, 1, 0.407843)
+top_level = true
+z_index = 50
+clip_contents = false
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 18.0
+offset_bottom = -558.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_font_sizes/bold_italics_font_size = 16
+theme_override_font_sizes/italics_font_size = 16
+theme_override_font_sizes/mono_font_size = 16
+theme_override_font_sizes/normal_font_size = 16
+theme_override_font_sizes/bold_font_size = 16
+bbcode_enabled = true
+fit_content = true
+script = ExtResource("17_e2xy3")
+bbcode = "
+[!david bazookie] _{VersionDenot.to_upper()} v{Version}_ [!david bazookie]"
+effects = 2
+alignment = 1
+color = null
+emoji_scale = 1.0
+font = "spooky"
+font_auto_setup = true
+font_size = 16
+font_bold_weight = 1.5
+font_italics_slant = 0.25
+font_italics_weight = -0.25
+shadow_enabled = false
+shadow_offset = 0.08
+shadow_alpha = 0.25
+shadow_outline_size = 0.1
+outline_size = 0
+outline_mode = 1
+outline_adjust = 0.8
+outline_hue_adjust = 0.0125
+nicer_quotes_enabled = true
+nicer_quotes_format = "“%s”"
+markdown_enabled = true
+markdown_format_bold = "[b]%s[]"
+markdown_format_italics = "[i]%s[]"
+markdown_format_bold_italics = "[bi]%s[]"
+markdown_format_highlight = "[green;sin]%s[]"
+markdown_format_bold2 = "[b]*%s*[]"
+markdown_format_italics2 = "[i;gray]*%s*[]"
+markdown_format_bold_italics2 = "%s"
+context_enabled = true
+context_path = NodePath("../..")
+context_state = {}
+context_rich_objects = true
+context_rich_ints = true
+context_rich_array = true
+autostyle_numbers = false
+autostyle_numbers_tag = "[salmon]%s[]"
+autostyle_numbers_pad_decimals = true
+autostyle_numbers_decimals = 2
+autostyle_emojis = true
+effect_weight = 0.0
+image_path = "res://src/Images"
+image_resize_to_font_size = true
+image_scale = 2.0
+meta_auto_https = true
+meta_cursor = 2
+override_bbcodeEnabled = true
+override_clipContents = false
+override_fitContent = true
+metadata/_custom_type_script = ExtResource("17_e2xy3")
+
+[node name="ColorRect" type="ColorRect" parent="Header"]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -287.0
+offset_right = 288.0
+offset_bottom = -37.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.91664, 0.91664, 0.91664, 0.113725)

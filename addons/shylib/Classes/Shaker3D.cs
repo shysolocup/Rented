@@ -47,7 +47,10 @@ public partial class Shaker3D : Node
 	{
 		if (Running) {
 			Transform3D Updated = await Update(delta);
-			Instance.GlobalTransform *= Updated;
+
+			// GD.Print(Updated);
+
+			Instance.Transform *= Updated;
 		}
 	}
 
@@ -71,11 +74,19 @@ public partial class Shaker3D : Node
 			RotationAddShake += ShakeVect * ShakeInstance.RotationInfluence;
 		}
 
-		Transform3D Transform = new(Basis.FromEuler(new Vector3(
-				Mathf.DegToRad(RotationAddShake.X), 
+		Basis ShakeBasis = Basis.FromEuler(new Vector3(
+				0,
 				Mathf.DegToRad(RotationAddShake.Y), 
+				0
+			)) *
+
+			Basis.FromEuler(new Vector3(
+				Mathf.DegToRad(RotationAddShake.X), 
+				0,
 				Mathf.DegToRad(RotationAddShake.Z)
-		), EulerOrder.Yxz), PositionAddShake);
+			));
+
+		Transform3D Transform = new(ShakeBasis, PositionAddShake);
 	
 		return Transform;
 	}

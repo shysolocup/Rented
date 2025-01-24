@@ -119,12 +119,13 @@ namespace CoolGame
 	}
 }
 
+[Tool]
 [GlobalClass, Icon("res://addons/shylib/Images/Game.png")]
 public partial class GameInstance : Node
 {
 
-	[Export] public string Version = "0.0.0";
-	[Export] public string VersionDenot = "Transition";
+	[Export] public string Version = "0.0.1";
+	[Export] public string VersionDenot = "ResBuilding";
 	/// <summary>
 	/// current noise level
 	/// </summary>

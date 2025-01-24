@@ -44,7 +44,7 @@ public partial class Player : CharacterBody3D
 	[Export] public float BaseFov;
 	[Export] public float CrouchSpeed = 1f;
 
-	[Export] public float TiltRotation = 2;
+	[Export] public float TiltRotation = 3;
 
 	private Camera3D Camera;
 

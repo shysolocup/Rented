@@ -1,7 +1,6 @@
 #if TOOLS
 using Godot;
 using System;
-using System.Globalization;
 using System.Threading.Tasks;
 
 [Tool]
@@ -10,6 +9,11 @@ public partial class Lib : EditorPlugin {}
 
 public static class Extensions
 {
+
+	public static string ToHex(this Color self) {
+		(double r, double g, double b) = ( Mathf.Floor(self.R*255), Mathf.Floor(self.G*255), Mathf.Floor(self.B*255) );
+		return string.Format("0x{0:x}{1:x}{2:x}", (int)r, (int)g, (int)b);
+	}
 
 	public static System.Collections.Generic.Dictionary<string, object> Blanks = new();
 

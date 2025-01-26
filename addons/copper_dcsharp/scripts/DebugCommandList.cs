@@ -71,7 +71,8 @@ public partial class DebugCommandFunctions : GodotObject
 	}
 
 	public void dialogue(string character, string line) {
-
+		DialogueData data = Game.Instance.GetNode<DialogueData>("%DialogueData");
+		data.Play(character, line);
 	}
 
 	public string[] dialogue_args(string[] args) {

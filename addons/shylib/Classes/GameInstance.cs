@@ -119,7 +119,6 @@ namespace CoolGame
 	}
 }
 
-[Tool]
 [GlobalClass, Icon("res://addons/shylib/Images/Game.png")]
 public partial class GameInstance : Node
 {

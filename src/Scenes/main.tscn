@@ -20,13 +20,6 @@
 [ext_resource type="Script" uid="uid://2f4fi75scxes" path="res://richtext2/richer_text_label.gd" id="17_e2xy3"]
 [ext_resource type="Script" uid="uid://csefxrb6ehpnb" path="res://addons/shylib/Classes/DialogueData.cs" id="19_vh02n"]
 
-[sub_resource type="Environment" id="Environment_1fj5k"]
-
-[sub_resource type="World3D" id="World3D_wvpw1"]
-environment = SubResource("Environment_1fj5k")
-
-[sub_resource type="BoxMesh" id="BoxMesh_1dmmm"]
-
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8xcek"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_y0axr"]
@@ -66,94 +59,18 @@ albedo_texture = ExtResource("6_yaysw")
 albedo_texture_force_srgb = true
 uv1_scale = Vector3(3, 2, 3)
 
+[sub_resource type="Environment" id="Environment_1fj5k"]
+
+[sub_resource type="World3D" id="World3D_wvpw1"]
+environment = SubResource("Environment_1fj5k")
+
+[sub_resource type="BoxMesh" id="BoxMesh_1dmmm"]
+
 [sub_resource type="Resource" id="Resource_vh02n"]
 metadata/__load_path__ = "res://addons/shylib/Classes/DialogueCharacters.cs"
 
 [node name="Game" type="Node"]
 script = ExtResource("1_doi2n")
-Gravity = 9.8
-
-[node name="Test" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="SaveGui" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 0
-grow_vertical = 0
-mouse_filter = 2
-
-[node name="SaveIcon" type="Sprite2D" parent="SaveGui"]
-position = Vector2(-42, -42)
-scale = Vector2(0.64, 0.64)
-texture = ExtResource("2_up28s")
-script = ExtResource("3_35lay")
-
-[node name="CrosshairGui" type="Control" parent="."]
-top_level = true
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="CrosshairContainer" type="SubViewportContainer" parent="CrosshairGui"]
-modulate = Color(1, 1, 1, 0.156863)
-top_level = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-mouse_filter = 2
-stretch = true
-
-[node name="CrosshairViewport" type="SubViewport" parent="CrosshairGui/CrosshairContainer"]
-own_world_3d = true
-world_3d = SubResource("World3D_wvpw1")
-transparent_bg = true
-handle_input_locally = false
-gui_disable_input = true
-size = Vector2i(1152, 648)
-render_target_update_mode = 4
-
-[node name="ViewportCamera" type="Camera3D" parent="CrosshairGui/CrosshairContainer/CrosshairViewport"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5, 0.781966, -3.22837)
-
-[node name="Crosshair" type="StaticBody3D" parent="CrosshairGui/CrosshairContainer/CrosshairViewport"]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.781966, -3.22837)
-input_ray_pickable = false
-script = ExtResource("5_0wov3")
-DefaultIcon = ExtResource("5_fwxn0")
-DefaultHoverIcon = ExtResource("6_k4ggk")
-LockedIcon = ExtResource("7_ij6rp")
-Distance = 15.0
-Delay = "1/1.7"
-
-[node name="Icon" type="MeshInstance3D" parent="CrosshairGui/CrosshairContainer/CrosshairViewport/Crosshair"]
-transform = Transform3D(0.047, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.781966, -3.22837)
-top_level = true
-cast_shadow = 0
-mesh = SubResource("BoxMesh_1dmmm")
-skeleton = NodePath("../../../../../Root3D")
-surface_material_override/0 = ExtResource("5_fwxn0")
-
-[node name="OmniLight3D" type="OmniLight3D" parent="CrosshairGui/CrosshairContainer/CrosshairViewport/Crosshair"]
 
 [node name="Root3D" type="Node3D" parent="."]
 
@@ -209,7 +126,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_qqeip")
 
 [node name="Shaker3D" type="Node" parent="Root3D/test4"]
 script = ExtResource("13_7mk6u")
-Preset = 7
+Preset = 3
 ShakeInstance = SubResource("Resource_isqvi")
 AutoSustain = true
 RunOnStart = true
@@ -321,7 +238,27 @@ target_position = Vector3(0, 0, -1.5)
 script = ExtResource("2_i3adb")
 Source = ExtResource("7_gf62h")
 
-[node name="DialogueGui" type="Control" parent="."]
+[node name="Guis" type="Node" parent="."]
+
+[node name="SaveGui" type="Control" parent="Guis"]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="SaveIcon" type="Sprite2D" parent="Guis/SaveGui"]
+position = Vector2(-42, -42)
+scale = Vector2(0.64, 0.64)
+texture = ExtResource("2_up28s")
+script = ExtResource("3_35lay")
+
+[node name="CrosshairGui" type="Control" parent="Guis"]
+top_level = true
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -330,100 +267,53 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Dialogue" type="VBoxContainer" parent="DialogueGui"]
-unique_name_in_owner = true
+[node name="CrosshairContainer" type="SubViewportContainer" parent="Guis/CrosshairGui"]
+modulate = Color(1, 1, 1, 0.156863)
+top_level = true
 layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -40.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
+focus_mode = 0
 mouse_filter = 2
+stretch = true
 
-[node name="Base" type="RichTextLabel" parent="DialogueGui/Dialogue"]
-visible = false
-clip_contents = false
-custom_minimum_size = Vector2(0, 32)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-theme_override_colors/font_outline_color = Color(0.2, 0.2, 0.2, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.572)
-theme_override_constants/shadow_offset_y = 1
-theme_override_constants/shadow_offset_x = 1
-theme_override_constants/shadow_outline_size = 2
-theme_override_font_sizes/bold_italics_font_size = 15
-theme_override_font_sizes/italics_font_size = 15
-theme_override_font_sizes/mono_font_size = 15
-theme_override_font_sizes/normal_font_size = 15
-theme_override_font_sizes/bold_font_size = 15
-bbcode_enabled = true
-fit_content = true
-scroll_active = false
-autowrap_mode = 0
-script = ExtResource("17_e2xy3")
-bbcode = "*{%s}*
-[70]{%s}
- "
-effects = 2
-alignment = 1
-color = null
-emoji_scale = 1.0
-font = "vcr"
-font_auto_setup = true
-font_size = 15
-font_bold_weight = 1.5
-font_italics_slant = 0.25
-font_italics_weight = -0.25
-shadow_enabled = true
-shadow_offset = 0.08
-shadow_alpha = 0.572
-shadow_outline_size = 0.1
-outline_size = 0
-outline_mode = 1
-outline_adjust = 0.8
-outline_hue_adjust = 0.0125
-nicer_quotes_enabled = true
-nicer_quotes_format = "“%s”"
-markdown_enabled = true
-markdown_format_bold = "[b]%s[]"
-markdown_format_italics = "[i]%s[]"
-markdown_format_bold_italics = "[bi]%s[]"
-markdown_format_highlight = "[green;sin]%s[]"
-markdown_format_bold2 = "[b]*%s*[]"
-markdown_format_italics2 = "[i;gray]*%s*[]"
-markdown_format_bold_italics2 = "%s"
-context_enabled = true
-context_path = NodePath("../DialogueData")
-context_state = {}
-context_rich_objects = true
-context_rich_ints = true
-context_rich_array = true
-autostyle_numbers = true
-autostyle_numbers_tag = "[salmon]%s[]"
-autostyle_numbers_pad_decimals = true
-autostyle_numbers_decimals = 2
-autostyle_emojis = true
-effect_weight = 0.79
-image_path = "res://src/Images"
-image_resize_to_font_size = true
-image_scale = 1.0
-meta_auto_https = true
-meta_cursor = 2
-override_bbcodeEnabled = true
-override_clipContents = false
-override_fitContent = true
-metadata/_custom_type_script = ExtResource("17_e2xy3")
+[node name="CrosshairViewport" type="SubViewport" parent="Guis/CrosshairGui/CrosshairContainer"]
+own_world_3d = true
+world_3d = SubResource("World3D_wvpw1")
+transparent_bg = true
+handle_input_locally = false
+gui_disable_input = true
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
 
-[node name="DialogueData" type="Node" parent="DialogueGui/Dialogue"]
+[node name="ViewportCamera" type="Camera3D" parent="Guis/CrosshairGui/CrosshairContainer/CrosshairViewport"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5, 0.781966, -3.22837)
+
+[node name="Crosshair" type="StaticBody3D" parent="Guis/CrosshairGui/CrosshairContainer/CrosshairViewport"]
 unique_name_in_owner = true
-script = ExtResource("19_vh02n")
-metadata/_custom_type_script = SubResource("Resource_vh02n")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.781966, -3.22837)
+input_ray_pickable = false
+script = ExtResource("5_0wov3")
+DefaultIcon = ExtResource("5_fwxn0")
+DefaultHoverIcon = ExtResource("6_k4ggk")
+LockedIcon = ExtResource("7_ij6rp")
+Distance = 15.0
+Delay = "1/1.7"
 
-[node name="HeaderGui" type="Control" parent="."]
+[node name="Icon" type="MeshInstance3D" parent="Guis/CrosshairGui/CrosshairContainer/CrosshairViewport/Crosshair"]
+transform = Transform3D(0.047, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.781966, -3.22837)
+top_level = true
+cast_shadow = 0
+mesh = SubResource("BoxMesh_1dmmm")
+skeleton = NodePath("../../../../../../Root3D")
+surface_material_override/0 = ExtResource("5_fwxn0")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Guis/CrosshairGui/CrosshairContainer/CrosshairViewport/Crosshair"]
+
+[node name="HeaderGui" type="Control" parent="Guis"]
 unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 10
@@ -431,7 +321,7 @@ anchor_right = 1.0
 offset_bottom = 81.0
 grow_horizontal = 2
 
-[node name="RicherTextLabel" type="RichTextLabel" parent="HeaderGui"]
+[node name="RicherTextLabel" type="RichTextLabel" parent="Guis/HeaderGui"]
 modulate = Color(1, 1, 1, 0.407843)
 top_level = true
 z_index = 50
@@ -485,7 +375,7 @@ markdown_format_bold2 = "[b]*%s*[]"
 markdown_format_italics2 = "[i;gray]*%s*[]"
 markdown_format_bold_italics2 = "%s"
 context_enabled = true
-context_path = NodePath("../..")
+context_path = NodePath("../../..")
 context_state = {}
 context_rich_objects = true
 context_rich_ints = true
@@ -506,7 +396,7 @@ override_clipContents = false
 override_fitContent = true
 metadata/_custom_type_script = ExtResource("17_e2xy3")
 
-[node name="ColorRect" type="ColorRect" parent="HeaderGui"]
+[node name="ColorRect" type="ColorRect" parent="Guis/HeaderGui"]
 layout_mode = 1
 anchors_preset = 13
 anchor_left = 0.5
@@ -518,3 +408,131 @@ offset_bottom = -37.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.91664, 0.91664, 0.91664, 0.113725)
+
+[node name="DialogueGui" type="Control" parent="Guis"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Dialogue" type="VBoxContainer" parent="Guis/DialogueGui"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -73.0
+offset_bottom = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="DialogueData" type="Node" parent="Guis/DialogueGui/Dialogue"]
+unique_name_in_owner = true
+script = ExtResource("19_vh02n")
+metadata/_custom_type_script = SubResource("Resource_vh02n")
+
+[node name="Base" type="Control" parent="Guis/DialogueGui/Dialogue"]
+visible = false
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="TextLabel" type="RichTextLabel" parent="Guis/DialogueGui/Dialogue/Base"]
+z_index = 56
+clip_contents = false
+custom_minimum_size = Vector2(0, 26)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_colors/font_outline_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.572)
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_outline_size = 2
+theme_override_font_sizes/bold_italics_font_size = 20
+theme_override_font_sizes/italics_font_size = 20
+theme_override_font_sizes/mono_font_size = 20
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/bold_font_size = 20
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+script = ExtResource("17_e2xy3")
+bbcode = "[{0}]{1}[]
+[70][{2}]{3}[][]"
+effects = 2
+alignment = 1
+color = null
+emoji_scale = 1.0
+font = "vcr"
+font_auto_setup = true
+font_size = 20
+font_bold_weight = 1.5
+font_italics_slant = 0.25
+font_italics_weight = -0.25
+shadow_enabled = true
+shadow_offset = 0.08
+shadow_alpha = 0.572
+shadow_outline_size = 0.1
+outline_size = 0
+outline_mode = 1
+outline_adjust = 0.8
+outline_hue_adjust = 0.0125
+nicer_quotes_enabled = true
+nicer_quotes_format = "“%s”"
+markdown_enabled = true
+markdown_format_bold = "[b]%s[]"
+markdown_format_italics = "[i]%s[]"
+markdown_format_bold_italics = "[bi]%s[]"
+markdown_format_highlight = "[green;sin]%s[]"
+markdown_format_bold2 = "[b]*%s*[]"
+markdown_format_italics2 = "[i;gray]*%s*[]"
+markdown_format_bold_italics2 = "%s"
+context_enabled = true
+context_path = NodePath("../../DialogueData")
+context_state = {}
+context_rich_objects = true
+context_rich_ints = true
+context_rich_array = true
+autostyle_numbers = true
+autostyle_numbers_tag = "[salmon]%s[]"
+autostyle_numbers_pad_decimals = true
+autostyle_numbers_decimals = 2
+autostyle_emojis = true
+effect_weight = 0.79
+image_path = "res://src/Images"
+image_resize_to_font_size = true
+image_scale = 1.0
+meta_auto_https = true
+meta_cursor = 2
+override_bbcodeEnabled = true
+override_clipContents = false
+override_fitContent = true
+metadata/_custom_type_script = ExtResource("17_e2xy3")
+
+[node name="ColorRect" type="ColorRect" parent="Guis/DialogueGui/Dialogue/Base/TextLabel"]
+modulate = Color(0, 0, 0, 0.12549)
+show_behind_parent = true
+z_index = 56
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -250.0
+offset_right = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

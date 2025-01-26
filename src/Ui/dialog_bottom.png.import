@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://frgpl0djes5m"
-path="res://.godot/imported/night_effect_top.png-be8ac52afad3625ba08fb2611882f7ff.ctex"
+uid="uid://c3i67sg6xw73f"
+path="res://.godot/imported/dialog_bottom.png-1cce2cd964cf5674f69b16bf63c1d385.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/Ui/night_effect_top.png"
-dest_files=["res://.godot/imported/night_effect_top.png-be8ac52afad3625ba08fb2611882f7ff.ctex"]
+source_file="res://src/Ui/dialog_bottom.png"
+dest_files=["res://.godot/imported/dialog_bottom.png-1cce2cd964cf5674f69b16bf63c1d385.ctex"]
 
 [params]
 

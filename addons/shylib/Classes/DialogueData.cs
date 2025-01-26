@@ -24,27 +24,29 @@ public partial class DialogueData : Node
 	public BoxContainer DialogueContainer;
 	private float id = 0;
 
-	public Control PlayByInstance(DialogueCharacter character, DialogueLine line) {
-		var inst = DialogueContainer.GetNode("Base").Duplicate() as Control;
-		var label = inst.GetNode<RichTextLabel>("./TextLabel");
+
+	public RichTextLabel PlayByInstance(DialogueCharacter character, DialogueLine line) {
+		var inst = DialogueContainer.GetNode("Base").Duplicate() as RichTextLabel;
 
 		inst.Name = id.ToString().Replace(".", "");
 		id += 0.1f;
 
 		DialogueContainer.AddChild(inst);
 
+		GD.Print(line.Color.ToHex());
+
 		string text = string.Format(
-			(string)label.Get("bbcode"), 
+			(string)inst.Get("bbcode"), 
 			character.Color.ToHex(), // character color 
 			character.DisplayName, // character name
 			line.Color.ToHex(), // line color
 			line.Text // line text
 		);
 
-		label.Set("bbcode", text);
+		inst.Set("bbcode", text);
 
 		if (line.Font != null) {
-			label.Set("font", line.Font);
+			inst.Set("font", line.Font);
 		}
 
 		inst.Visible = true;
@@ -56,14 +58,14 @@ public partial class DialogueData : Node
 		return inst;
 	}
 
-	public Control Play(string character, string line) {
+	public RichTextLabel Play(string character, string line) {
 		DialogueCharacter charData = Characters[character];
 		DialogueLine lineData = charData.Lines[line];
 
 		return PlayByInstance(charData, lineData);
 	}
 
-	public Control PlayByCharacterInstance(DialogueCharacter character, string line) {
+	public RichTextLabel PlayByCharacterInstance(DialogueCharacter character, string line) {
 		DialogueLine lineData = character.Lines[line];
 		
 		return PlayByInstance(character, lineData);
@@ -73,6 +75,10 @@ public partial class DialogueData : Node
 	public override void _Ready() 
 	{
 		DialogueContainer = GetNode<BoxContainer>("%Dialogue");
+
+		if (!Engine.IsEditorHint()) {
+			DialogueContainer.GetNode<Control>("Base").Visible = false;
+		}
 
 		using var chars = DirAccess.Open(Path);
 		

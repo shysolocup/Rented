@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://s0ftqrddh5up"]
+[gd_scene load_steps=36 format=3 uid="uid://s0ftqrddh5up"]
 
 [ext_resource type="Script" uid="uid://cfoo1gxat5mv8" path="res://addons/shylib/Classes/GameInstance.cs" id="1_doi2n"]
 [ext_resource type="Script" uid="uid://c1i8r8l2u4t3q" path="res://src/Scripts/Player.cs" id="1_wpbw3"]
@@ -19,6 +19,8 @@
 [ext_resource type="Script" uid="uid://w1a25qc36shr" path="res://addons/shylib/Classes/Shaker3DInstance.cs" id="14_w0vrg"]
 [ext_resource type="Script" uid="uid://2f4fi75scxes" path="res://richtext2/richer_text_label.gd" id="17_e2xy3"]
 [ext_resource type="Script" uid="uid://csefxrb6ehpnb" path="res://addons/shylib/Classes/DialogueData.cs" id="19_vh02n"]
+[ext_resource type="Script" uid="uid://ddft6gmiruiv1" path="res://addons/shylib/Classes/DialogueCharacter.cs" id="20_k0mjx"]
+[ext_resource type="Script" uid="uid://dossiogwbp3hm" path="res://addons/shylib/Classes/DialogueLine.cs" id="21_h8oac"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8xcek"]
 
@@ -66,6 +68,30 @@ environment = SubResource("Environment_1fj5k")
 
 [sub_resource type="BoxMesh" id="BoxMesh_1dmmm"]
 
+[sub_resource type="Resource" id="Resource_k0mjx"]
+script = ExtResource("21_h8oac")
+Text = "googoo"
+Color = Color(1, 1, 1, 1)
+
+[sub_resource type="Resource" id="Resource_h8oac"]
+script = ExtResource("21_h8oac")
+Text = "googoo
+longertest
+guh
+buh"
+Color = Color(1, 1, 1, 1)
+
+[sub_resource type="Resource" id="Resource_ss4f7"]
+script = ExtResource("20_k0mjx")
+Id = "audrey"
+DisplayName = "Audrey"
+Color = Color(1, 1, 1, 1)
+Path = ""
+Lines = Dictionary[String, ExtResource("21_h8oac")]({
+"test": SubResource("Resource_k0mjx"),
+"test_2": SubResource("Resource_h8oac")
+})
+
 [sub_resource type="Resource" id="Resource_vh02n"]
 metadata/__load_path__ = "res://addons/shylib/Classes/DialogueCharacters.cs"
 
@@ -76,7 +102,7 @@ script = ExtResource("1_doi2n")
 
 [node name="Player" type="CharacterBody3D" parent="Root3D"]
 unique_name_in_owner = true
-transform = Transform3D(1.3, 0, 0, 0, 1.3, 0, 0, 0, 1.3, 0, 1.15761, 0)
+transform = Transform3D(0.7, 0, 0, 0, 1.3, 0, 0, 0, 0.7, 0, 1.15761, 0)
 script = ExtResource("1_wpbw3")
 
 [node name="Collision" type="CollisionShape3D" parent="Root3D/Player"]
@@ -86,8 +112,6 @@ shape = SubResource("CapsuleShape3D_8xcek")
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_y0axr")
 skeleton = NodePath("")
-
-[node name="Pivot" type="Node3D" parent="Root3D/Player"]
 
 [node name="Baseplate" type="StaticBody3D" parent="Root3D"]
 transform = Transform3D(15, 0, 0, 0, 3.19346, 0, 0, 0, 15, 0, -1.61217, 0)
@@ -205,7 +229,7 @@ environment = ExtResource("9_hrp8o")
 [node name="Sun" type="DirectionalLight3D" parent="Root3D/World"]
 unique_name_in_owner = true
 transform = Transform3D(0.80394, 0.558214, 0.205128, 0, -0.344922, 0.938632, 0.594711, -0.754603, -0.277296, -3.51915, 38.7123, -36.5632)
-light_color = Color(1, 0.941176, 0.929412, 1)
+light_color = Color(0.989756, 0.755968, 0.734788, 1)
 light_energy = 1.099
 light_indirect_energy = 0.802
 light_volumetric_fog_energy = 1.175
@@ -300,7 +324,6 @@ script = ExtResource("5_0wov3")
 DefaultIcon = ExtResource("5_fwxn0")
 DefaultHoverIcon = ExtResource("6_k4ggk")
 LockedIcon = ExtResource("7_ij6rp")
-Distance = 15.0
 Delay = "1/1.7"
 
 [node name="Icon" type="MeshInstance3D" parent="Guis/CrosshairGui/CrosshairContainer/CrosshairViewport/Crosshair"]
@@ -326,9 +349,8 @@ modulate = Color(1, 1, 1, 0.407843)
 top_level = true
 z_index = 50
 clip_contents = false
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 1
-anchors_preset = 15
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 18.0
@@ -344,8 +366,9 @@ theme_override_font_sizes/bold_font_size = 16
 bbcode_enabled = true
 fit_content = true
 script = ExtResource("17_e2xy3")
-bbcode = "
-[!david bazookie] _{VersionDenot.to_upper()} v{Version}_ [!david bazookie]"
+bbcode = "[!thing]
+[!david bazookie] _{VersionDenot.to_upper()} v{Version}_ [!david bazookie]
+[!thing]"
 effects = 2
 alignment = 1
 color = null
@@ -396,19 +419,6 @@ override_clipContents = false
 override_fitContent = true
 metadata/_custom_type_script = ExtResource("17_e2xy3")
 
-[node name="ColorRect" type="ColorRect" parent="Guis/HeaderGui"]
-layout_mode = 1
-anchors_preset = 13
-anchor_left = 0.5
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -287.0
-offset_right = 288.0
-offset_bottom = -37.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.91664, 0.91664, 0.91664, 0.113725)
-
 [node name="DialogueGui" type="Control" parent="Guis"]
 layout_mode = 3
 anchors_preset = 15
@@ -434,24 +444,16 @@ mouse_filter = 2
 [node name="DialogueData" type="Node" parent="Guis/DialogueGui/Dialogue"]
 unique_name_in_owner = true
 script = ExtResource("19_vh02n")
+Characters = {
+"audrey": SubResource("Resource_ss4f7")
+}
 metadata/_custom_type_script = SubResource("Resource_vh02n")
 
-[node name="Base" type="Control" parent="Guis/DialogueGui/Dialogue"]
-visible = false
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-mouse_filter = 2
-
-[node name="TextLabel" type="RichTextLabel" parent="Guis/DialogueGui/Dialogue/Base"]
+[node name="Base" type="RichTextLabel" parent="Guis/DialogueGui/Dialogue"]
 z_index = 56
 clip_contents = false
-custom_minimum_size = Vector2(0, 26)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+custom_minimum_size = Vector2(0, 94)
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
@@ -470,8 +472,11 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 script = ExtResource("17_e2xy3")
-bbcode = "[{0}]{1}[]
-[70][{2}]{3}[][]"
+bbcode = "[!dialog_top]
+[{0}]{1}[]
+[70][{2}]{3}[][]
+
+[!dialog_bottom]"
 effects = 2
 alignment = 1
 color = null
@@ -501,7 +506,7 @@ markdown_format_bold2 = "[b]*%s*[]"
 markdown_format_italics2 = "[i;gray]*%s*[]"
 markdown_format_bold_italics2 = "%s"
 context_enabled = true
-context_path = NodePath("../../DialogueData")
+context_path = NodePath("../DialogueData")
 context_state = {}
 context_rich_objects = true
 context_rich_ints = true
@@ -512,7 +517,7 @@ autostyle_numbers_pad_decimals = true
 autostyle_numbers_decimals = 2
 autostyle_emojis = true
 effect_weight = 0.79
-image_path = "res://src/Images"
+image_path = "res://src/Images/Dialog"
 image_resize_to_font_size = true
 image_scale = 1.0
 meta_auto_https = true
@@ -522,8 +527,8 @@ override_clipContents = false
 override_fitContent = true
 metadata/_custom_type_script = ExtResource("17_e2xy3")
 
-[node name="ColorRect" type="ColorRect" parent="Guis/DialogueGui/Dialogue/Base/TextLabel"]
-modulate = Color(0, 0, 0, 0.12549)
+[node name="ColorRect" type="ColorRect" parent="Guis/DialogueGui/Dialogue/Base"]
+modulate = Color(0, 0, 0, 0.0588235)
 show_behind_parent = true
 z_index = 56
 layout_mode = 1

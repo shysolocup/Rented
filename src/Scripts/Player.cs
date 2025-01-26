@@ -141,6 +141,7 @@ public partial class Player : CharacterBody3D
 		if (Camera != null) {
 
 			Camera.Position = new Vector3(Position.X, Position.Y + CameraOffset * Collision.Scale.Y, Position.Z); 
+			Rotation = new Vector3(Rotation.X, Camera.Rotation.Y, Rotation.Z);
 
 			// crouch effect
 			if (Crouching) {

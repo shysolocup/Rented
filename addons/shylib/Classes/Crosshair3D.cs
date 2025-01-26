@@ -8,9 +8,11 @@ public partial class Crosshair3D : StaticBody3D
 	[Export] public StandardMaterial3D DefaultIcon;
 	[Export] public StandardMaterial3D DefaultHoverIcon;
 	[Export] public StandardMaterial3D LockedIcon;
-	[Export] public float Distance = 1;
+	[Export] public float BaseDistance = 30;
 	[Export] public Camera3D Camera;
 	[Export] public string Delay;
+	
+	public float Distance = 0;
 
 	public MeshInstance3D Icon;
 	public Camera3D ViewportCamera;
@@ -21,6 +23,7 @@ public partial class Crosshair3D : StaticBody3D
 
 	public override void _Ready()
 	{
+		Distance = BaseDistance;
 		Delay = (Delay != null) ? Delay : "1/1";
 
 		string[] spl = Delay.Split("/");
@@ -58,7 +61,7 @@ public partial class Crosshair3D : StaticBody3D
 
 		float GB = A + (NoiseMod - A) * 1 / 3f; // 10 noise is 0.9 green and blue
 
-		Distance += (20 - (Game.Instance.Noise * 0.1f + 5) - Distance) * NoiseDelay; // 10 noise is 6 meters distance
+		Distance += (BaseDistance - (Game.Instance.Noise * 0.1f + 5) - Distance) * NoiseDelay; // 10 noise is 6 meters distance
 
 		/*
 			should always be 255 for red

@@ -11,10 +11,27 @@ public partial class Shaker3D : Node
 	[Export] public Node3D Instance;
 	[Export] public Shaker3DPreset Preset = Shaker3DPreset.None;
 
-	[Export] public Shaker3DInstance ShakeInstance = new();
+	private Shaker3DInstance s3dinstance;
+
+
+	// when changed it'll set the Shaker3D property of the Shaker3DInstance to the parent
+	[Export] public Shaker3DInstance ShakeInstance {
+		get {
+			return s3dinstance;
+		}
+
+		set {
+			if (value != s3dinstance) {
+				value.Shaker3D = this;
+				s3dinstance = value;
+			}
+		}
+	}
+
 	[Export] public bool AutoSustain = false;
 
 	[Export] public bool RunOnStart = false;
+	
 	public bool Running = false;
 	
 
@@ -24,7 +41,6 @@ public partial class Shaker3D : Node
 
 	public override void _Ready() {
 		Instance = Instance == null ? GetParent<Node3D>() : Instance;
-		Running = RunOnStart;
 
 		if (Preset == Shaker3DPreset.DONOTUSETHISTHISISBADLEAVEITALONE) throw new NotImplementedException("Shaker3DPreset should not be Unknown (Preset is likely null)");
 		else {
@@ -32,6 +48,7 @@ public partial class Shaker3D : Node
 		}
 
 		ShakeInstance.Shaker3D = this;
+		Running = RunOnStart;
 	}
 
 	public async override void _Process(double delta)

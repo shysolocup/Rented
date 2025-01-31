@@ -9,7 +9,7 @@ public partial class RbxScript : Node
 	[Signal] public delegate void EnabledChangedEventHandler(bool oldValue, bool newValue);
 	[Signal] public delegate void SourceChangedEventHandler(bool oldValue, bool newValue);
 
-	public bool _enabled = true;
+	private bool _enabled = true;
 
 	[Export] public bool Enabled {
 		get { return _enabled; }
@@ -31,7 +31,7 @@ public partial class RbxScript : Node
 		}
 	}
 
-	[Export] private Node SpawnedNode;
+	[Export] public Node SpawnedNode;
 	private Variant nullvar = new Variant();
 
 	[Export] public NodePath SpawnedNodePath;

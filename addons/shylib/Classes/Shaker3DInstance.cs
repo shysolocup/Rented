@@ -1,6 +1,6 @@
 using Godot;
 
-[Tool]
+
 [GlobalClass, Icon("res://addons/shylib/Images/Shaker3D.png")]
 public partial class Shaker3DInstance : Resource
 {
@@ -17,7 +17,7 @@ public partial class Shaker3DInstance : Resource
 	[Export] public float FadeOutDuration = 0;
 
 	private float Tick = new RandomNumberGenerator().RandfRange(-100, 100);
-	private float CurrentFadeTime;
+	public float CurrentFadeTime;
 	
 	public Shaker3D Shaker3D;
 

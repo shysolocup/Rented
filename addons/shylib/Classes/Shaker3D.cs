@@ -3,13 +3,27 @@ using Godot.Collections;
 using System;
 using System.Threading.Tasks;
 
-
+[Tool]
 [GlobalClass, Icon("res://addons/shylib/Images/Shaker3D.png")]
 public partial class Shaker3D : Node
 {
 
 	[Export] public Node3D Instance;
-	[Export] public Shaker3DPreset Preset = Shaker3DPreset.None;
+
+	private Shaker3DPreset preset = Shaker3DPreset.Custom;
+
+	[Export] public Shaker3DPreset Preset {
+		get {
+			return preset;
+		}
+		set {
+			if (value != Shaker3DPreset.Custom) {
+				OverwriteInstanceFromPreset(value);
+			}
+
+			preset = value;
+		}
+	}
 
 	private Shaker3DInstance s3dinstance;
 
@@ -33,33 +47,39 @@ public partial class Shaker3D : Node
 	[Export] public bool RunOnStart = false;
 	
 	public bool Running = false;
-	
-
-	private Vector3 PositionAddShake = Vector3.Zero;
-	public Vector3 RotationAddShake = Vector3.Zero;
 
 
 	public override void _Ready() {
-		Instance = Instance == null ? GetParent<Node3D>() : Instance;
+		if (!Engine.IsEditorHint()) {
+			Instance = Instance == null ? GetParent<Node3D>() : Instance;
 
-		if (Preset == Shaker3DPreset.DONOTUSETHISTHISISBADLEAVEITALONE) throw new NotImplementedException("Shaker3DPreset should not be Unknown (Preset is likely null)");
-		else {
-			if (Preset != Shaker3DPreset.None) ShakeInstance = PresetsData[Preset.ToString()];
+			if (Preset == Shaker3DPreset.DONOTUSETHISTHISISBADLEAVEITALONE) throw new NotImplementedException("Shaker3DPreset should not be Unknown (Preset is likely null)");
+
+			ShakeInstance.Shaker3D = this;
+			Running = RunOnStart;
 		}
-
-		ShakeInstance.Shaker3D = this;
-		Running = RunOnStart;
 	}
 
 	public async override void _Process(double delta)
 	{
-		if (Running) {
+		if (Running && !Engine.IsEditorHint()) {
 			Transform3D Updated = await Update(delta);
 
 			// GD.Print(Updated);
 
 			Instance.Transform *= Updated;
 		}
+	}
+
+	public Shaker3DInstance OverwriteInstanceFromPreset(Shaker3DPreset preset)
+	{
+		var data = PresetsData[preset];
+
+		foreach ( (string k, Variant v) in data ) {
+			ShakeInstance.Set(k, v);
+		}
+
+		return ShakeInstance;
 	}
 
 	private static float FixRotation(float deg) {
@@ -148,7 +168,7 @@ public partial class Shaker3D : Node
 
 	public enum Shaker3DPreset {
 		DONOTUSETHISTHISISBADLEAVEITALONE = 0,
-		None = 1,
+		Custom = 1,
 		Bump = 2,
 		Explosion = 3,
 		Earthquake = 4,
@@ -158,68 +178,68 @@ public partial class Shaker3D : Node
 		RoughDriving = 8
 	};
 
-	public static Dictionary<string, Shaker3DInstance> PresetsData { get; set; } = new() {
-		{"Bump", new Shaker3DInstance {
-			Magnitude = 2.5f,
-			Roughness = 4,
-			FadeInDuration = 0.1f,
-			FadeOutDuration = 0.75f,
-			PositionInfluence = new Vector3(0.15f, 0.15f, 0.15f),
-			RotationInfluence = new Vector3(1, 1, 1)
+	public static readonly Dictionary<Shaker3DPreset, Dictionary<string, Variant>> PresetsData = new() {
+		{ Shaker3DPreset.Bump, new() {
+			{ "Magnitude", 2.5f },
+			{ "Roughness", 4 },
+			{ "FadeInDuration", 0.1f },
+			{ "FadeOutDuration", 0.75f },
+			{ "PositionInfluence", new Vector3(0.15f, 0.15f, 0.15f) },
+			{ "RotationInfluence", new Vector3(1, 1, 1) }
 		}},
 
-		{"Explosion", new Shaker3DInstance {
-			Magnitude = 5,
-			Roughness = 10,
-			FadeInDuration = 0,
-			FadeOutDuration = 1.5f,
-			PositionInfluence = new Vector3(0.25f, 0.25f, 0.25f),
-			RotationInfluence = new Vector3(4, 1, 1)
+		{ Shaker3DPreset.Explosion, new() {
+			{ "Magnitude", 5 },
+			{ "Roughness", 10 },
+			{ "FadeInDuration", 0 },
+			{ "FadeOutDuration", 1.5f },
+			{ "PositionInfluence", new Vector3(0.25f, 0.25f, 0.25f) },
+			{ "RotationInfluence", new Vector3(4, 1, 1) }
 		}},
 
-		{"Earthquake", new Shaker3DInstance {
-			Magnitude = 0.6f,
-			Roughness = 3.5f,
-			FadeInDuration = 2,
-			FadeOutDuration = 10,
-			PositionInfluence = new Vector3(0.25f, 0.25f, 0.25f),
-			RotationInfluence = new Vector3(1, 1, 4)
+		{ Shaker3DPreset.Earthquake, new() {
+			{ "Magnitude", 0.6f },
+			{ "Roughness", 3.5f },
+			{ "FadeInDuration", 2 },
+			{ "FadeOutDuration", 10 },
+			{ "PositionInfluence", new Vector3(0.25f, 0.25f, 0.25f) },
+			{ "RotationInfluence", new Vector3(1, 1, 4) }
 		}},
 
-		{"BadTrip", new Shaker3DInstance {
-			Magnitude = 10,
-			Roughness = 0.15f,
-			FadeInDuration = 5,
-			FadeOutDuration = 10,
-			PositionInfluence = new Vector3(0, 0, 0.15f),
-			RotationInfluence = new Vector3(2, 1, 4)
+		{Shaker3DPreset.BadTrip, new() {
+			{ "Magnitude", 10 },
+			{ "Roughness", 0.15f },
+			{ "FadeInDuration", 5 },
+			{ "FadeOutDuration", 10 },
+			{ "PositionInfluence", new Vector3(0, 0, 0.15f) },
+			{ "RotationInfluence", new Vector3(2, 1, 4) }
 		}},
 
-		{"HandheldCamera", new Shaker3DInstance {
-			Magnitude = 1,
-			Roughness = 0.25f,
-			FadeInDuration = 5,
-			FadeOutDuration = 10,
-			PositionInfluence = new Vector3(0, 0, 0),
-			RotationInfluence = new Vector3(1, 0.5f, 0.5f)
+		{Shaker3DPreset.HandheldCamera, new() {
+			{ "Magnitude", 1 },
+			{ "Roughness", 0.25f },
+			{ "FadeInDuration", 5 },
+			{ "FadeOutDuration", 10 },
+			{ "PositionInfluence", new Vector3(0, 0, 0) },
+			{ "RotationInfluence", new Vector3(1, 0.5f, 0.5f) }
 		}},
 
-		{"Vibration", new Shaker3DInstance {
-			Magnitude = 0.4f,
-			Roughness = 20,
-			FadeInDuration = 2,
-			FadeOutDuration = 2,
-			PositionInfluence = new Vector3(0, 0.15f, 0),
-			RotationInfluence = new Vector3(1.25f, 0, 4)
+		{Shaker3DPreset.Vibration, new() {
+			{ "Magnitude", 0.4f },
+			{ "Roughness", 20 },
+			{ "FadeInDuration", 2 },
+			{ "FadeOutDuration", 2 },
+			{ "PositionInfluence", new Vector3(0, 0.15f, 0) },
+			{ "RotationInfluence", new Vector3(1.25f, 0, 4) }
 		}},
 
-		{"RoughDriving", new Shaker3DInstance {
-			Magnitude = 1,
-			Roughness = 2,
-			FadeInDuration = 1,
-			FadeOutDuration = 1,
-			PositionInfluence = new Vector3(0, 0, 0),
-			RotationInfluence = new Vector3(1, 1, 1)
+		{Shaker3DPreset.RoughDriving, new() {
+			{ "Magnitude", 1 },
+			{ "Roughness", 2 },
+			{ "FadeInDuration", 1 },
+			{ "FadeOutDuration", 1 },
+			{ "PositionInfluence", new Vector3(0, 0, 0) },
+			{ "RotationInfluence", new Vector3(1, 1, 1) }
 		}}
 	};
 }

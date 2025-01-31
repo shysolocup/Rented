@@ -25,6 +25,7 @@ public partial class Player : CharacterBody3D
 
 	[Export] public bool TabbedIn = true;
 	[Export] public bool Controllable = true;
+	[Export] public bool CameraControllable = true;
 
 	[Export ] public bool Jumping = false;
 	[Export] public bool Sprinting = false;
@@ -138,7 +139,7 @@ public partial class Player : CharacterBody3D
 			Inter = null;
 		}
 
-		if (Camera != null) {
+		if (Camera != null && CameraControllable) {
 
 			Camera.Position = new Vector3(Position.X, Position.Y + CameraOffset * Collision.Scale.Y, Position.Z); 
 			Rotation = new Vector3(Rotation.X, Camera.Rotation.Y, Rotation.Z);
@@ -178,7 +179,7 @@ public partial class Player : CharacterBody3D
 	public override void _UnhandledInput(InputEvent @event)
 	{
 
-		if (@event is InputEventMouseMotion && Input.MouseMode == Input.MouseModeEnum.Captured) {
+		if (@event is InputEventMouseMotion && Input.MouseMode == Input.MouseModeEnum.Captured && CameraControllable) {
 			var mouse = @event as InputEventMouseMotion;
 			LookDirection = mouse.Relative * 0.001f;
 

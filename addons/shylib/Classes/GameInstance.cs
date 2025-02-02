@@ -232,6 +232,32 @@ public partial class GameInstance : Node
 		return data;
 	}
 
+	/// <summary>
+	/// Waits for a given time
+	/// </summary>
+	/// <param name="time">time in milliseconds to wait for</param>
+	public async void Sleep(float time)
+	{
+		SceneTreeTimer t = GetTree().CreateTimer(time);
+		await ToSignal(t, SceneTreeTimer.SignalName.Timeout);
+		t.Dispose();
+	}
+
+
+	/// <summary>
+	/// Waits for a given time
+	/// </summary>
+	/// <param name="time">time in milliseconds to wait for</param>
+	public async void Delay(float time, Func<Task> callback  )
+	{
+		SceneTreeTimer t = GetTree().CreateTimer(time);
+		await ToSignal(t, SceneTreeTimer.SignalName.Timeout);
+		t.Dispose();
+		
+		await callback();
+	}
+
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{

@@ -7,21 +7,26 @@ public partial class Shaker3DInstance : Resource
 	[Export] public float Magnitude = 0;
 	[Export] public float Roughness = 0;
 
+
 	[Export] public Vector3 PositionInfluence = Vector3.Zero;
 	[Export] public Vector3 RotationInfluence = Vector3.Zero;
 	[Export] public bool StopOnInactive = true;
+
 
 	[Export] public float RoughnessMod = 1;
 	[Export] public float MagnitudeMod = 1;
 	[Export] public float FadeInDuration = 0;
 	[Export] public float FadeOutDuration = 0;
 
+
 	private float Tick = new RandomNumberGenerator().RandfRange(-100, 100);
-	public float CurrentFadeTime;
 	
+	public float CurrentFadeTime;
+
 	public Shaker3D Shaker3D;
 
 	public bool Ready = false;
+
 
 	public Shaker3D.ShakeState State {
 		get {
@@ -32,13 +37,14 @@ public partial class Shaker3DInstance : Resource
 		}
 	}
 
+
 	private static readonly FastNoiseLite noise = new();
 
 	private bool _sustain;
 
 	[Export] public bool Sustain {
 		get {
-			if (Shaker3D != null && Shaker3D.AutoSustain) return true;
+			if (!Engine.IsEditorHint() && Shaker3D != null && Shaker3D.AutoSustain) return true;
 			else return _sustain;
 		}
 
@@ -61,11 +67,13 @@ public partial class Shaker3DInstance : Resource
 		float _tick = Tick;
 		float cft = CurrentFadeTime;
 
+		GD.Print(State);
+
 		Vector3 Offset = new Vector3(
 			noise.GetNoise2D(_tick, 0) * 0.5f,
 			noise.GetNoise2D(0, _tick) * 0.5f,
 			noise.GetNoise2D(_tick, _tick) * 0.5f
-		);
+		) / 0.28f;
 
 		if (FadeInDuration > 0 && Sustain) {
 			if (cft < 1) cft += (float)delta / FadeInDuration;

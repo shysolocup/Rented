@@ -208,7 +208,10 @@ public partial class Player : CharacterBody3D
 
 			JumpCooldown = true;
 			SceneTreeTimer t = GetTree().CreateTimer(0.55f);
-			t.Timeout += () => JumpCooldown = false;
+			t.Timeout += () => { 
+				JumpCooldown = false; 
+				t.Dispose(); 
+			};
 		}
 		// if (Input.IsActionJustPressed("Exit")) GetTree().Quit();
 	}

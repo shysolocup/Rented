@@ -82,7 +82,7 @@ public partial class Shaker3D : Node
 
 	public async override void _Process(double delta)
 	{
-		if (!Engine.IsEditorHint()) GD.Print(Running);
+		// if (!Engine.IsEditorHint()) GD.Print(Running);
 		if (Running && !Engine.IsEditorHint()) {
 			Transform3D Updated = await Update(delta);
 			Instance.Transform *= Updated;
@@ -98,10 +98,6 @@ public partial class Shaker3D : Node
 		}
 
 		return ShakeInstance;
-	}
-
-	private static float FixRotation(float deg) {
-		return Mathf.DegToRad( deg >= 360 ? deg-360 : deg < 0 ? 360+deg : deg);
 	}
 
 	public async Task<Transform3D> Update(double delta)
@@ -124,7 +120,7 @@ public partial class Shaker3D : Node
 			RotationAddShake += ShakeVect * ShakeInstance.RotationInfluence;
 		}
 
-		Basis ShakeBasis = Basis.FromEuler(new Vector3(FixRotation(RotationAddShake.X), FixRotation(RotationAddShake.Y), FixRotation(RotationAddShake.Z)), EulerOrder.Yxz);
+		Basis ShakeBasis = Basis.FromEuler(new Vector3(Mathf.DegToRad(RotationAddShake.X), Mathf.DegToRad(RotationAddShake.Y), Mathf.DegToRad(RotationAddShake.Z)), EulerOrder.Yxz);
 		
 		Transform3D Transform = new(ShakeBasis, PositionAddShake);
 	
@@ -199,7 +195,7 @@ public partial class Shaker3D : Node
 			{ "Roughness", 4 },
 			{ "FadeInDuration", 0.1f },
 			{ "FadeOutDuration", 0.75f },
-			{ "PositionInfluence", new Vector3(0.15f, 0.15f, 0.15f) / 0.28f },
+			{ "PositionInfluence", new Vector3(0.15f, 0.15f, 0.15f) * 0.28f },
 			{ "RotationInfluence", new Vector3(1, 1, 1) }
 		}},
 
@@ -208,7 +204,7 @@ public partial class Shaker3D : Node
 			{ "Roughness", 10 },
 			{ "FadeInDuration", 0 },
 			{ "FadeOutDuration", 1.5f },
-			{ "PositionInfluence", new Vector3(0.25f, 0.25f, 0.25f) / 0.28f },
+			{ "PositionInfluence", new Vector3(0.25f, 0.25f, 0.25f) * 0.28f },
 			{ "RotationInfluence", new Vector3(4, 1, 1) }
 		}},
 
@@ -217,7 +213,7 @@ public partial class Shaker3D : Node
 			{ "Roughness", 3.5f },
 			{ "FadeInDuration", 2 },
 			{ "FadeOutDuration", 10 },
-			{ "PositionInfluence", new Vector3(0.25f, 0.25f, 0.25f) / 0.28f },
+			{ "PositionInfluence", new Vector3(0.25f, 0.25f, 0.25f) * 0.28f },
 			{ "RotationInfluence", new Vector3(1, 1, 4) }
 		}},
 
@@ -226,7 +222,7 @@ public partial class Shaker3D : Node
 			{ "Roughness", 0.15f },
 			{ "FadeInDuration", 5 },
 			{ "FadeOutDuration", 10 },
-			{ "PositionInfluence", new Vector3(0, 0, 0.15f) / 0.28f },
+			{ "PositionInfluence", new Vector3(0, 0, 0.15f) * 0.28f },
 			{ "RotationInfluence", new Vector3(2, 1, 4) }
 		}},
 
@@ -235,7 +231,7 @@ public partial class Shaker3D : Node
 			{ "Roughness", 0.25f },
 			{ "FadeInDuration", 5 },
 			{ "FadeOutDuration", 10 },
-			{ "PositionInfluence", new Vector3(0, 0, 0) / 0.28f },
+			{ "PositionInfluence", new Vector3(0, 0, 0) * 0.28f },
 			{ "RotationInfluence", new Vector3(1, 0.5f, 0.5f) }
 		}},
 
@@ -244,7 +240,7 @@ public partial class Shaker3D : Node
 			{ "Roughness", 20 },
 			{ "FadeInDuration", 2 },
 			{ "FadeOutDuration", 2 },
-			{ "PositionInfluence", new Vector3(0, 0.15f, 0) / 0.28f },
+			{ "PositionInfluence", new Vector3(0, 0.15f, 0) * 0.28f },
 			{ "RotationInfluence", new Vector3(1.25f, 0, 4) }
 		}},
 
@@ -253,7 +249,7 @@ public partial class Shaker3D : Node
 			{ "Roughness", 2 },
 			{ "FadeInDuration", 1 },
 			{ "FadeOutDuration", 1 },
-			{ "PositionInfluence", new Vector3(0, 0, 0) / 0.28f },
+			{ "PositionInfluence", new Vector3(0, 0, 0) * 0.28f },
 			{ "RotationInfluence", new Vector3(1, 1, 1) }
 		}}
 

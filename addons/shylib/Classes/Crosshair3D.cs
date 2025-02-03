@@ -33,6 +33,8 @@ public partial class Crosshair3D : StaticBody3D
 		Icon = GetNode<MeshInstance3D>("./Icon");
 		ViewportCamera = GetNodeOrNull<Camera3D>("../ViewportCamera");
 		CrosshairContainer = GetParent().GetParent<SubViewportContainer>();
+		
+		Icon.SetSurfaceOverrideMaterial(0, DefaultIcon);
 	}
 
 	public override void _Process(double delta)

@@ -67,13 +67,13 @@ public partial class Shaker3DInstance : Resource
 		float _tick = Tick;
 		float cft = CurrentFadeTime;
 
-		GD.Print(State);
+		// GD.Print(State);
 
 		Vector3 Offset = new Vector3(
 			noise.GetNoise2D(_tick, 0) * 0.5f,
 			noise.GetNoise2D(0, _tick) * 0.5f,
 			noise.GetNoise2D(_tick, _tick) * 0.5f
-		) / 0.28f;
+		) * 0.28f;
 
 		if (FadeInDuration > 0 && Sustain) {
 			if (cft < 1) cft += (float)delta / FadeInDuration;

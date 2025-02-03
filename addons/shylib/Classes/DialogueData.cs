@@ -76,9 +76,7 @@ public partial class DialogueData : Node
 	{
 		DialogueContainer = GetNode<BoxContainer>("%Dialogue");
 
-		if (!Engine.IsEditorHint()) {
-			DialogueContainer.GetNode<Control>("Base").Visible = false;
-		}
+		if (!Engine.IsEditorHint()) DialogueContainer.GetNode<Control>("Base").Visible = false;
 
 		using var chars = DirAccess.Open(Path);
 		
@@ -94,7 +92,7 @@ public partial class DialogueData : Node
 
 				var data = (Dictionary<string, Variant>)json.Data;
 
-				var color1 = (Array<int>)data["Color"];
+				var color1 = (Array<float>)data["Color"];
 				var lines = (Dictionary<string, Variant>)data["Lines"];
 
 				var character = new DialogueCharacter() {
@@ -105,7 +103,7 @@ public partial class DialogueData : Node
 
 				foreach ( (string lineId, Variant rawLineData) in lines) {
 					var lineData = (Dictionary<string, Variant>)rawLineData;
-					var color2 = (Array<int>)lineData["Color"];
+					var color2 = (Array<float>)lineData["Color"];
 
 					var line = new DialogueLine() {
 						Text = (string)lineData["Text"],

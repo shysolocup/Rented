@@ -1,0 +1,11 @@
+{
+    "version": "1.0.2",
+    "overwrite": false,
+    "file_base": {
+        "items": [],
+        "achievments": [],
+        "endings": [],
+        "state": 0,
+        "global": [ [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0] ]
+    }
+}

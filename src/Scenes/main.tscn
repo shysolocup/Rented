@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://s0ftqrddh5up"]
+[gd_scene load_steps=38 format=3 uid="uid://s0ftqrddh5up"]
 
 [ext_resource type="Script" uid="uid://cfoo1gxat5mv8" path="res://addons/shylib/Classes/GameInstance.cs" id="1_doi2n"]
 [ext_resource type="Script" uid="uid://c1i8r8l2u4t3q" path="res://src/Scripts/Player.cs" id="1_wpbw3"]
@@ -42,6 +42,27 @@ uv1_triplanar = true
 
 [sub_resource type="Resource" id="Resource_h8oac"]
 script = ExtResource("8_h8oac")
+Magnitude = 5.0
+Roughness = 10.0
+PositionInfluence = Vector3(0.07, 0.07, 0.07)
+RotationInfluence = Vector3(4, 1, 1)
+StopOnInactive = true
+RoughnessMod = 1.0
+MagnitudeMod = 1.0
+FadeInDuration = 0.0
+FadeOutDuration = 1.5
+Sustain = false
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mnhfo"]
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+albedo_texture = ExtResource("6_yaysw")
+albedo_texture_force_srgb = true
+uv1_scale = Vector3(3, 2, 3)
+
+[sub_resource type="Resource" id="Resource_ss4f7"]
+script = ExtResource("8_h8oac")
 Magnitude = 0.4
 Roughness = 20.0
 PositionInfluence = Vector3(0, 0.042, 0)
@@ -53,14 +74,6 @@ FadeInDuration = 2.0
 FadeOutDuration = 2.0
 Sustain = false
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mnhfo"]
-transparency = 1
-blend_mode = 1
-shading_mode = 0
-albedo_texture = ExtResource("6_yaysw")
-albedo_texture_force_srgb = true
-uv1_scale = Vector3(3, 2, 3)
-
 [sub_resource type="Environment" id="Environment_1fj5k"]
 
 [sub_resource type="World3D" id="World3D_wvpw1"]
@@ -68,12 +81,12 @@ environment = SubResource("Environment_1fj5k")
 
 [sub_resource type="BoxMesh" id="BoxMesh_1dmmm"]
 
-[sub_resource type="Resource" id="Resource_ss4f7"]
+[sub_resource type="Resource" id="Resource_743ng"]
 script = ExtResource("21_h8oac")
 Text = "googoo"
 Color = Color(1, 1, 1, 1)
 
-[sub_resource type="Resource" id="Resource_743ng"]
+[sub_resource type="Resource" id="Resource_8i3or"]
 script = ExtResource("21_h8oac")
 Text = "googoo
 longertest
@@ -81,15 +94,15 @@ guh
 buh"
 Color = Color(1, 1, 1, 1)
 
-[sub_resource type="Resource" id="Resource_8i3or"]
+[sub_resource type="Resource" id="Resource_p8ix8"]
 script = ExtResource("20_k0mjx")
 Id = "audrey"
 DisplayName = "Audrey"
 Color = Color(1, 1, 1, 1)
 Path = ""
 Lines = Dictionary[String, ExtResource("21_h8oac")]({
-"test": SubResource("Resource_ss4f7"),
-"test_2": SubResource("Resource_743ng")
+"test": SubResource("Resource_743ng"),
+"test_2": SubResource("Resource_8i3or")
 })
 
 [sub_resource type="Resource" id="Resource_vh02n"]
@@ -263,7 +276,7 @@ target_position = Vector3(0, 0, -1.5)
 [node name="Shaker3D" type="Node" parent="Root3D/Cameras/PlayerCamera"]
 script = ExtResource("13_7mk6u")
 Preset = 7
-ShakeInstance = SubResource("Resource_h8oac")
+ShakeInstance = SubResource("Resource_ss4f7")
 AutoSustain = true
 RunOnStart = true
 
@@ -455,7 +468,7 @@ mouse_filter = 2
 unique_name_in_owner = true
 script = ExtResource("19_vh02n")
 Characters = Dictionary[String, ExtResource("20_k0mjx")]({
-"audrey": SubResource("Resource_8i3or")
+"audrey": SubResource("Resource_p8ix8")
 })
 metadata/_custom_type_script = SubResource("Resource_vh02n")
 

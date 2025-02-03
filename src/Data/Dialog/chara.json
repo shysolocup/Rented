@@ -1,0 +1,11 @@
+{
+    "Id": "chara" ,
+    "DisplayName": "Test",
+    "Color": [1,0,0,1],
+    "Font": "res://comic.ttf",
+    "Icon": "res://icon.svg",
+    
+    "Lines": {
+        "test": { "Text": "lorem ipsum", "Color": [1,1,0,1], "Audio": "" }
+    }
+}

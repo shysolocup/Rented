@@ -74,7 +74,7 @@ namespace CoolGame
 		/// </summary>
 		/// <returns>Godot.Collections.Dictionary</returns>
 		public static Dictionary<string, Variant> ReadJson(string fileDir, FileAccess.ModeFlags flag = FileAccess.ModeFlags.ReadWrite)
-		{
+		{	
 			using var data = FileAccess.Open(fileDir, flag);
 
 			var json = new Json();
@@ -263,7 +263,7 @@ public partial class GameInstance : Node
 	{
 		Game.Instance = this;
 
-		Game.SaveTemplate = Game.ReadJson("res://src/Data/SaveTemplate.json");
+		Game.SaveTemplate = Game.ReadJson("res://src/Data/Saves/Template.json");
 
 		if (!FileAccess.FileExists(Game.SavePath)) {
 			UseTemplate();

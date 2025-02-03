@@ -8,7 +8,7 @@ using System.Linq;
 [GlobalClass]
 public partial class DialogueData : Node
 {
-	private string _path = "res://src/Dialog/";
+	private string _path = "res://src/Data/Dialog/";
 
 	[Export] public string Path {
 		get { return _path; }
@@ -74,9 +74,11 @@ public partial class DialogueData : Node
 
 	public override void _Ready() 
 	{
-		DialogueContainer = GetNode<BoxContainer>("%Dialogue");
+		DialogueContainer = GetParent<BoxContainer>();
 
-		if (!Engine.IsEditorHint()) DialogueContainer.GetNode<Control>("Base").Visible = false;
+		if (!Engine.IsEditorHint()) {
+			DialogueContainer.GetNode<Control>("Base").Visible = false;
+		}
 
 		using var chars = DirAccess.Open(Path);
 		

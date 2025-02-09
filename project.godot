@@ -8,6 +8,10 @@
 
 config_version=5
 
+[addons]
+
+ruake/toggle_ruake_action="toggle_debug"
+
 [application]
 
 config/name="guh"
@@ -20,6 +24,7 @@ config/icon="res://icon.svg"
 debug_console="*res://addons/copper_dcsharp/debug_console.tscn"
 GGS="*res://addons/ggs/plugin/singleton/ggs.tscn"
 DiscordRPCLoader="*res://addons/discord-rpc-gd/nodes/discord_autoload.gd"
+RuakeLayer="*res://addons/ruake/core/RuakeLayer.tscn"
 
 [dialogic]
 
@@ -37,7 +42,7 @@ naming/script_name_casing=1
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/copper_dcsharp/plugin.cfg", "res://addons/discord-rpc-gd/plugin.cfg", "res://addons/extra_snaps/plugin.cfg", "res://addons/gdscript2all/plugin.cfg", "res://addons/gdterm/plugin.cfg", "res://addons/ggs/plugin.cfg", "res://addons/shylib/plugin.cfg")
+enabled=PackedStringArray("res://addons/copper_dcsharp/plugin.cfg", "res://addons/discord-rpc-gd/plugin.cfg", "res://addons/extra_snaps/plugin.cfg", "res://addons/gdscript2all/plugin.cfg", "res://addons/gdterm/plugin.cfg", "res://addons/ggs/plugin.cfg", "res://addons/ruake/plugin.cfg", "res://addons/shylib/plugin.cfg")
 
 [global_group]
 

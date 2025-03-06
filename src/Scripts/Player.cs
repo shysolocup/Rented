@@ -146,13 +146,13 @@ public partial class Player : CharacterBody3D
 
 			// crouch effect
 			if (Crouching) {
-				SpeedEffect(CrouchFovMod, CrouchSpeed, 0.4f, 1/15f, delta);
+				SpeedEffect(CrouchFovMod, CrouchSpeed, 0.4f, 1/25f, delta);
 			}
 			if (Sprinting) {
 				SpeedEffect(SprintFovMod, SprintSpeed, 1, 1/45f, delta);
 			}
 			else if (!Crouching && !Sprinting) {
-				SpeedEffect(0, BaseWalkSpeed, 1, 1/15f, delta);
+				SpeedEffect(0, BaseWalkSpeed, 1, 1/30f, delta);
 			}
 
 			// tilt effect

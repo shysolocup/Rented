@@ -1,3 +1,5 @@
+#if TOOLS
+
 using Godot;
 
 
@@ -21,3 +23,5 @@ public partial class CopperDCSharp : EditorPlugin
 
 
 }
+
+#endif

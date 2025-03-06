@@ -3,5 +3,7 @@
 !.godot/.gdignore
 /android/
 
-# Windows Shortcuts
+# Windows stuff
 /*.lnk
+/*.exe
+/*.pck

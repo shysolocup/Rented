@@ -40,17 +40,17 @@ heightmap_max_layers = 32
 uv1_scale = Vector3(2, 2, 2)
 uv1_triplanar = true
 
-[sub_resource type="Resource" id="Resource_h8oac"]
+[sub_resource type="Resource" id="Resource_743ng"]
 script = ExtResource("8_h8oac")
-Magnitude = 5.0
-Roughness = 10.0
-PositionInfluence = Vector3(0.07, 0.07, 0.07)
-RotationInfluence = Vector3(4, 1, 1)
+Magnitude = 0.0
+Roughness = 0.0
+PositionInfluence = Vector3(0, 0, 0)
+RotationInfluence = Vector3(0, 0, 0)
 StopOnInactive = true
 RoughnessMod = 1.0
 MagnitudeMod = 1.0
 FadeInDuration = 0.0
-FadeOutDuration = 1.5
+FadeOutDuration = 0.0
 Sustain = false
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mnhfo"]
@@ -61,7 +61,7 @@ albedo_texture = ExtResource("6_yaysw")
 albedo_texture_force_srgb = true
 uv1_scale = Vector3(3, 2, 3)
 
-[sub_resource type="Resource" id="Resource_ss4f7"]
+[sub_resource type="Resource" id="Resource_8i3or"]
 script = ExtResource("8_h8oac")
 Magnitude = 0.4
 Roughness = 20.0
@@ -81,12 +81,12 @@ environment = SubResource("Environment_1fj5k")
 
 [sub_resource type="BoxMesh" id="BoxMesh_1dmmm"]
 
-[sub_resource type="Resource" id="Resource_743ng"]
+[sub_resource type="Resource" id="Resource_k0mjx"]
 script = ExtResource("21_h8oac")
 Text = "googoo"
 Color = Color(1, 1, 1, 1)
 
-[sub_resource type="Resource" id="Resource_8i3or"]
+[sub_resource type="Resource" id="Resource_h8oac"]
 script = ExtResource("21_h8oac")
 Text = "googoo
 longertest
@@ -94,15 +94,15 @@ guh
 buh"
 Color = Color(1, 1, 1, 1)
 
-[sub_resource type="Resource" id="Resource_p8ix8"]
+[sub_resource type="Resource" id="Resource_ss4f7"]
 script = ExtResource("20_k0mjx")
 Id = "audrey"
 DisplayName = "Audrey"
 Color = Color(1, 1, 1, 1)
 Path = ""
 Lines = Dictionary[String, ExtResource("21_h8oac")]({
-"test": SubResource("Resource_743ng"),
-"test_2": SubResource("Resource_8i3or")
+"test": SubResource("Resource_k0mjx"),
+"test_2": SubResource("Resource_h8oac")
 })
 
 [sub_resource type="Resource" id="Resource_vh02n"]
@@ -163,14 +163,13 @@ surface_material_override/0 = SubResource("StandardMaterial3D_qqeip")
 
 [node name="Shaker3D" type="Node" parent="Root3D/test4"]
 script = ExtResource("13_7mk6u")
-Preset = 3
-ShakeInstance = SubResource("Resource_h8oac")
+ShakeInstance = SubResource("Resource_743ng")
 
 [node name="ShakeTest" type="Node" parent="Root3D/test4/Shaker3D"]
 script = ExtResource("2_i3adb")
 Enabled = false
 Source = ExtResource("9_ss4f7")
-metadata/_custom_type_script = ExtResource("2_i3adb")
+metadata/_custom_type_script = "uid://cge1tw0n2wjvm"
 
 [node name="test2" type="StaticBody3D" parent="Root3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.65005, 0.763546, 3.87836)
@@ -276,7 +275,7 @@ target_position = Vector3(0, 0, -1.5)
 [node name="Shaker3D" type="Node" parent="Root3D/Cameras/PlayerCamera"]
 script = ExtResource("13_7mk6u")
 Preset = 7
-ShakeInstance = SubResource("Resource_ss4f7")
+ShakeInstance = SubResource("Resource_8i3or")
 AutoSustain = true
 RunOnStart = true
 
@@ -440,7 +439,7 @@ meta_cursor = 2
 override_bbcodeEnabled = true
 override_clipContents = false
 override_fitContent = true
-metadata/_custom_type_script = ExtResource("17_e2xy3")
+metadata/_custom_type_script = "uid://2f4fi75scxes"
 
 [node name="DialogueGui" type="Control" parent="Guis"]
 layout_mode = 3
@@ -468,7 +467,7 @@ mouse_filter = 2
 unique_name_in_owner = true
 script = ExtResource("19_vh02n")
 Characters = Dictionary[String, ExtResource("20_k0mjx")]({
-"audrey": SubResource("Resource_p8ix8")
+"audrey": SubResource("Resource_ss4f7")
 })
 metadata/_custom_type_script = SubResource("Resource_vh02n")
 
@@ -548,7 +547,7 @@ meta_cursor = 2
 override_bbcodeEnabled = true
 override_clipContents = false
 override_fitContent = true
-metadata/_custom_type_script = ExtResource("17_e2xy3")
+metadata/_custom_type_script = "uid://2f4fi75scxes"
 
 [node name="ColorRect" type="ColorRect" parent="Guis/DialogueGui/Dialogue/Base"]
 modulate = Color(0, 0, 0, 0.0588235)

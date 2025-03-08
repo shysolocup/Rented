@@ -2,7 +2,7 @@ using Godot;
 using System;
 
 [GlobalClass, Icon("res://addons/shylib/Images/InteractObject3D.png")]
-public partial class InteractObject3D : StaticBody3D
+public partial class InteractObject3D : RigidBody3D
 {
 
 	[Export] public bool Enabled = true;

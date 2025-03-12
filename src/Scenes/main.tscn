@@ -265,6 +265,7 @@ data_directory = "res://src/Resources/Terrain3D"
 material = SubResource("Terrain3DMaterial_h8oac")
 assets = ExtResource("21_k0mjx")
 collision_mask = 3
+cull_margin = 101.0
 top_level = true
 metadata/_edit_lock_ = true
 

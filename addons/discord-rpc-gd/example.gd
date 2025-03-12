@@ -9,11 +9,11 @@ extends Node
 ##
 ## This is your [code]_ready()[/code] function wich could be anywhere
 ## [codeblock]
-## func _ready():
+func _ready():
 ##     # Application ID
-##     DiscordRPC.app_id = 1099618430065324082
+	DiscordRPC.app_id = 1335860356379312178
 ##     # this is boolean if everything worked
-##     print("Discord working: " + str(DiscordRPC.get_is_discord_working()))
+	print("Discord working: " + str(DiscordRPC.get_is_discord_working()))
 ##     # Set the first custom text row of the activity here
 ##     DiscordRPC.details = "A demo activity by vaporvee#1231"
 ##     # Set the second custom text row of the activity here

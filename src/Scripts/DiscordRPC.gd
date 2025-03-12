@@ -1,5 +1,3 @@
-class_name GuhRPC
-extends DiscordRPC
-
-func _ready() -> void:
-    pass
+extends Node
+func _ready():
+	DiscordRPC.app_id = 1335860356379312178

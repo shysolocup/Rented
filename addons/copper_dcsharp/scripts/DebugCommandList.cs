@@ -78,6 +78,11 @@ public partial class DebugCommandFunctions : GodotObject
 	public string[] dialogue_args(string[] args) {
 		return args;
 	}
+
+	public void fullbright(bool value) {
+		Game.Instance.GameEnvironment = value ? GD.Load<Godot.Environment>("res://src/Resources/Skies/Fullbright.tres") : Game.Instance.DefaultGameEnvironment;
+		Game.Instance.GetNode<DirectionalLight3D>("%Sun").ShadowEnabled = !value;
+	}
 }
 
 public static class DebugCommandList
@@ -109,6 +114,25 @@ public static class DebugCommandList
 
 			Function = new Callable(funcs, DebugCommandFunctions.MethodName.show_stats),
 			GetFunction = new Callable(funcs, DebugCommandFunctions.MethodName.stats_visible)
+		}.AddTo(console);
+
+
+		#endregion
+		#region fullbright
+
+
+		new DebugCommand {
+			Id = "fullbright",
+			HelpText = "Disables lighting effects",
+
+			Parameters = new Array<DebugParameter> {
+				new DebugParameter {
+					Name = "value",
+					Type = DebugParameterType.Bool
+				}
+			},
+
+			Function = new Callable(funcs, DebugCommandFunctions.MethodName.fullbright)
 		}.AddTo(console);
 
 

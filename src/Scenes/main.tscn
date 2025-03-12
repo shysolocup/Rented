@@ -103,12 +103,12 @@ environment = SubResource("Environment_1fj5k")
 
 [sub_resource type="BoxMesh" id="BoxMesh_1dmmm"]
 
-[sub_resource type="Resource" id="Resource_h8oac"]
+[sub_resource type="Resource" id="Resource_k0mjx"]
 script = ExtResource("21_h8oac")
 Text = "googoo"
 Color = Color(1, 1, 1, 1)
 
-[sub_resource type="Resource" id="Resource_ss4f7"]
+[sub_resource type="Resource" id="Resource_h8oac"]
 script = ExtResource("21_h8oac")
 Text = "googoo
 longertest
@@ -116,15 +116,15 @@ guh
 buh"
 Color = Color(1, 1, 1, 1)
 
-[sub_resource type="Resource" id="Resource_743ng"]
+[sub_resource type="Resource" id="Resource_ss4f7"]
 script = ExtResource("20_k0mjx")
 Id = "audrey"
 DisplayName = "Audrey"
 Color = Color(1, 1, 1, 1)
 Path = ""
 Lines = Dictionary[String, ExtResource("21_h8oac")]({
-"test": SubResource("Resource_h8oac"),
-"test_2": SubResource("Resource_ss4f7")
+"test": SubResource("Resource_k0mjx"),
+"test_2": SubResource("Resource_h8oac")
 })
 
 [sub_resource type="Resource" id="Resource_vh02n"]
@@ -167,23 +167,6 @@ shape = SubResource("BoxShape3D_j1e05")
 [node name="Mesh" type="MeshInstance3D" parent="Root3D/test4"]
 mesh = SubResource("BoxMesh_xknod")
 surface_material_override/0 = SubResource("StandardMaterial3D_qqeip")
-
-[node name="World" type="WorldEnvironment" parent="Root3D"]
-unique_name_in_owner = true
-environment = ExtResource("11_ss4f7")
-
-[node name="Sun" type="DirectionalLight3D" parent="Root3D/World"]
-unique_name_in_owner = true
-transform = Transform3D(0.80394, 0.558214, 0.205128, 0, -0.344922, 0.938632, 0.594711, -0.754603, -0.277296, -3.51915, 38.7123, -36.5632)
-light_color = Color(0.989756, 0.755968, 0.734788, 1)
-light_energy = 1.099
-light_indirect_energy = 0.802
-light_volumetric_fog_energy = 1.175
-shadow_enabled = true
-shadow_bias = 0.0
-shadow_reverse_cull_face = true
-shadow_opacity = 0.8
-shadow_blur = 2.05
 
 [node name="Cameras" type="Node3D" parent="Root3D"]
 unique_name_in_owner = true
@@ -449,7 +432,7 @@ mouse_filter = 2
 unique_name_in_owner = true
 script = ExtResource("19_vh02n")
 Characters = Dictionary[String, ExtResource("20_k0mjx")]({
-"audrey": SubResource("Resource_743ng")
+"audrey": SubResource("Resource_ss4f7")
 })
 metadata/_custom_type_script = SubResource("Resource_vh02n")
 
@@ -583,3 +566,20 @@ unique_name_in_owner = true
 [node name="Discord" type="Node" parent="Dump"]
 script = ExtResource("22_h8oac")
 metadata/_custom_type_script = ExtResource("22_h8oac")
+
+[node name="World" type="WorldEnvironment" parent="."]
+unique_name_in_owner = true
+environment = ExtResource("11_ss4f7")
+
+[node name="Sun" type="DirectionalLight3D" parent="World"]
+unique_name_in_owner = true
+transform = Transform3D(0.80394, 0.558214, 0.205128, 0, -0.344922, 0.938632, 0.594711, -0.754603, -0.277296, -3.51915, 38.7123, -36.5632)
+light_color = Color(0.989756, 0.755968, 0.734788, 1)
+light_energy = 1.099
+light_indirect_energy = 0.802
+light_volumetric_fog_energy = 1.175
+shadow_enabled = true
+shadow_bias = 0.0
+shadow_reverse_cull_face = true
+shadow_opacity = 0.8
+shadow_blur = 2.05

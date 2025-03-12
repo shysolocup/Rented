@@ -123,6 +123,23 @@ namespace CoolGame
 public partial class GameInstance : Node
 {
 
+	/// <summary>
+	/// current lighting environment
+	/// </summary>
+	[Export] public Godot.Environment GameEnvironment {
+		get {
+			return GetNode<WorldEnvironment>("%World").Environment;
+		}
+		set {
+			if (value != null && value != GetNode<WorldEnvironment>("%World").Environment) {
+                GetNode<WorldEnvironment>("%World").Environment = value;
+            }
+		}
+	}
+
+	[Export] public Godot.Environment DefaultGameEnvironment { get; set; }
+
+
 	[Export] public string Version = "0.0.1";
 	[Export] public string VersionDenot = "ResBuilding";
 	/// <summary>
@@ -264,6 +281,9 @@ public partial class GameInstance : Node
 		Game.Instance = this;
 
 		Game.SaveTemplate = Game.ReadJson("res://src/Data/Saves/Template.json");
+
+		GameEnvironment = (DefaultGameEnvironment != null) ? DefaultGameEnvironment : GameEnvironment;
+		DefaultGameEnvironment = GameEnvironment;
 
 		if (!FileAccess.FileExists(Game.SavePath)) {
 			UseTemplate();

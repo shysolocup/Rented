@@ -103,12 +103,12 @@ environment = SubResource("Environment_1fj5k")
 
 [sub_resource type="BoxMesh" id="BoxMesh_1dmmm"]
 
-[sub_resource type="Resource" id="Resource_k0mjx"]
+[sub_resource type="Resource" id="Resource_h8oac"]
 script = ExtResource("21_h8oac")
 Text = "googoo"
 Color = Color(1, 1, 1, 1)
 
-[sub_resource type="Resource" id="Resource_h8oac"]
+[sub_resource type="Resource" id="Resource_ss4f7"]
 script = ExtResource("21_h8oac")
 Text = "googoo
 longertest
@@ -116,15 +116,15 @@ guh
 buh"
 Color = Color(1, 1, 1, 1)
 
-[sub_resource type="Resource" id="Resource_ss4f7"]
+[sub_resource type="Resource" id="Resource_743ng"]
 script = ExtResource("20_k0mjx")
 Id = "audrey"
 DisplayName = "Audrey"
 Color = Color(1, 1, 1, 1)
 Path = ""
 Lines = Dictionary[String, ExtResource("21_h8oac")]({
-"test": SubResource("Resource_k0mjx"),
-"test_2": SubResource("Resource_h8oac")
+"test": SubResource("Resource_h8oac"),
+"test_2": SubResource("Resource_ss4f7")
 })
 
 [sub_resource type="Resource" id="Resource_vh02n"]
@@ -432,7 +432,7 @@ mouse_filter = 2
 unique_name_in_owner = true
 script = ExtResource("19_vh02n")
 Characters = Dictionary[String, ExtResource("20_k0mjx")]({
-"audrey": SubResource("Resource_ss4f7")
+"audrey": SubResource("Resource_743ng")
 })
 metadata/_custom_type_script = SubResource("Resource_vh02n")
 
@@ -565,7 +565,7 @@ unique_name_in_owner = true
 
 [node name="Discord" type="Node" parent="Dump"]
 script = ExtResource("22_h8oac")
-metadata/_custom_type_script = ExtResource("22_h8oac")
+metadata/_custom_type_script = "uid://b5fv7i1e8h4q3"
 
 [node name="World" type="WorldEnvironment" parent="."]
 unique_name_in_owner = true

@@ -4,7 +4,7 @@
 /android/
 
 # Windows stuff
-/*.lnk
-/*.exe
-/*.pck
-/*.import
+**/*.lnk
+**/*.exe
+**/*.pck
+**/*.import

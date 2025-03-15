@@ -294,7 +294,7 @@ class RuakeGodotExpression:
 	func execute_in(ruake) -> Evaluation:
 		var expression = Expression.new()
 		var parsing_result = expression.parse(
-			SyntaxSugarer.new().sugared_expression(prompt),
+			# SyntaxSugarer.new().sugared_expression(prompt),
 			ruake.variables_names()
 		)
 		var result_value

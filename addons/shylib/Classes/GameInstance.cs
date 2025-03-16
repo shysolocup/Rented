@@ -182,6 +182,16 @@ public partial class GameInstance : Node
 		}
 	}
 
+	public Node LoadRoom(string room) {
+		return LoadRoom<Node>(room);
+	}
+
+	public T LoadRoom<T>(string room) where T : Node {
+		T scn = GD.Load<PackedScene>($"res://src/Scenes/Rooms/{room}.tscn").Instantiate<T>();
+		GetNode<Node>("%Rooms").AddChild(scn);
+		return scn;
+	}
+
 	/*
 		
 	*/

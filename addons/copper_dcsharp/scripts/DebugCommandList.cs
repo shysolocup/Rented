@@ -83,6 +83,10 @@ public partial class DebugCommandFunctions : GodotObject
 		Game.Instance.GameEnvironment = value ? GD.Load<Godot.Environment>("res://src/Resources/Skies/Fullbright.tres") : Game.Instance.DefaultGameEnvironment;
 		Game.Instance.GetNode<DirectionalLight3D>("%Sun").ShadowEnabled = !value;
 	}
+
+	public void loadroom(string room) {
+		Game.Instance.LoadRoom(room);
+	}
 }
 
 public static class DebugCommandList
@@ -98,6 +102,25 @@ public static class DebugCommandList
 		var chars = new Array<string>(chardata.Characters.Keys);
 
 
+		#region loadroom
+
+
+		new DebugCommand {
+			Id = "loadroom",
+			HelpText = "Loads a room by string id",
+
+			Parameters = new() {
+				new DebugParameter {
+					Name = "name",
+					Type = DebugParameterType.String
+				}
+			},
+
+			Function = new Callable(funcs, DebugCommandFunctions.MethodName.loadroom)
+		}.AddTo(console);
+
+
+		#endregion
 		#region stats
 
 
@@ -105,7 +128,7 @@ public static class DebugCommandList
 			Id = "stats",
 			HelpText = "Toggles whether or not the performance stats in the top left should be visible or not.",
 
-			Parameters = new Array<DebugParameter> {
+			Parameters = new() {
 				new DebugParameter {
 					Name = "show",
 					Type = DebugParameterType.Bool
@@ -125,7 +148,7 @@ public static class DebugCommandList
 			Id = "fullbright",
 			HelpText = "Disables lighting effects",
 
-			Parameters = new Array<DebugParameter> {
+			Parameters = new() {
 				new DebugParameter {
 					Name = "value",
 					Type = DebugParameterType.Bool
@@ -144,7 +167,7 @@ public static class DebugCommandList
 			Id = "dialogue",
 			HelpText = "Display dialogue from a character",
 
-			Parameters = new Array<DebugParameter> {
+			Parameters = new() {
 				new DebugParameter {
 					Name = "character",
 					Type = DebugParameterType.Options,
@@ -170,7 +193,7 @@ public static class DebugCommandList
 			Id = "set_noise",
 			HelpText = "Sets the player's \"Noise\" value.",
 
-			Parameters = new Array<DebugParameter> {
+			Parameters = new() {
 				new DebugParameter {
 					Name = "value",
 					Type = DebugParameterType.Float
@@ -205,7 +228,7 @@ public static class DebugCommandList
 			Function = new Callable(funcs, DebugCommandFunctions.MethodName.show_mini_log),
 			GetFunction = new Callable(funcs, DebugCommandFunctions.MethodName.mini_log_visible),
 
-			Parameters = new Array<DebugParameter> {
+			Parameters = new() {
 				new DebugParameter {
 					Name = "value",
 					Type = DebugParameterType.Bool
@@ -251,7 +274,7 @@ public static class DebugCommandList
 			Id = "monitor",
 			HelpText = "Toggles the visibility of a stat monitor.",
 
-			Parameters = new Array<DebugParameter> {
+			Parameters = new() {
 				new DebugParameter {
 					Name = "monitor",
 					Type = DebugParameterType.Options,
@@ -280,7 +303,7 @@ public static class DebugCommandList
 			Id = "help",
 			HelpText = "Use to get help on any particular command.",
 
-			Parameters = new Array<DebugParameter> {
+			Parameters = new() {
 				new DebugParameter {
 					Name = "command",
 					Type = DebugParameterType.Options,

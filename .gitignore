@@ -7,3 +7,7 @@
 **/*.lnk
 **/*.exe
 **/*.pck
+
+# Building
+/build/*
+!/build/readme.md

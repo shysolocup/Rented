@@ -134,6 +134,7 @@ metadata/__load_path__ = "res://addons/shylib/Classes/DialogueCharacters.cs"
 script = ExtResource("1_doi2n")
 
 [node name="Root3D" type="Node" parent="."]
+unique_name_in_owner = true
 
 [node name="Player" type="CharacterBody3D" parent="Root3D"]
 unique_name_in_owner = true
@@ -146,7 +147,6 @@ shape = SubResource("CapsuleShape3D_h8oac")
 [node name="Mesh" type="MeshInstance3D" parent="Root3D/Player"]
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_y0axr")
-skeleton = NodePath("")
 
 [node name="Baseplate" type="StaticBody3D" parent="Root3D"]
 transform = Transform3D(15, 0, 0, 0, 3.19346, 0, 0, 0, 15, 0, -1.61217, 0)
@@ -243,12 +243,16 @@ surface_material_override/0 = SubResource("StandardMaterial3D_qqeip")
 script = ExtResource("2_i3adb")
 Source = ExtResource("11_htgqa")
 
+[node name="Rooms" type="Node" parent="."]
+unique_name_in_owner = true
+
 [node name="Terrain3D" type="Terrain3D" parent="."]
 data_directory = "res://src/Resources/Terrain3D/data"
 material = SubResource("Terrain3DMaterial_h8oac")
 assets = ExtResource("21_k0mjx")
 collision_mask = 3
 cull_margin = 101.0
+unique_name_in_owner = true
 top_level = true
 metadata/_edit_lock_ = true
 
@@ -429,6 +433,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Audios" type="Node" parent="."]
+unique_name_in_owner = true
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Audios"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.60103, 0, 4.32475)

@@ -1,25 +1,25 @@
-[gd_scene load_steps=39 format=3 uid="uid://s0ftqrddh5up"]
+[gd_scene load_steps=38 format=3 uid="uid://s0ftqrddh5up"]
 
-[ext_resource type="Script" uid="uid://cfoo1gxat5mv8" path="res://addons/shylib/Classes/GameInstance.cs" id="1_doi2n"]
+[ext_resource type="Script" uid="uid://cfoo1gxat5mv8" path="res://src/Libs/shylib/Classes/GameInstance.cs" id="1_doi2n"]
 [ext_resource type="Script" uid="uid://c1i8r8l2u4t3q" path="res://src/Scripts/Player.cs" id="1_wpbw3"]
-[ext_resource type="Script" uid="uid://cge1tw0n2wjvm" path="res://addons/shylib/Classes/RbxScript.cs" id="2_i3adb"]
+[ext_resource type="Script" uid="uid://cge1tw0n2wjvm" path="res://src/Libs/shylib/Classes/RbxScript.cs" id="2_i3adb"]
 [ext_resource type="Texture2D" uid="uid://buml50bofllu4" path="res://src/Ui/alarm clock.png" id="2_up28s"]
 [ext_resource type="Script" uid="uid://f680ovgo7k8o" path="res://src/Scripts/SaveIconSpinner.cs" id="3_35lay"]
-[ext_resource type="Script" uid="uid://5750qaowrba3" path="res://addons/shylib/Classes/Crosshair3D.cs" id="5_0wov3"]
+[ext_resource type="Script" uid="uid://5750qaowrba3" path="res://src/Libs/shylib/Classes/Crosshair3D.cs" id="5_0wov3"]
 [ext_resource type="Texture2D" uid="uid://dcthcg547baj0" path="res://src/Images/david bazookie.png" id="6_yaysw"]
 [ext_resource type="Script" uid="uid://cpogl7mretj3h" path="res://src/Scripts/CameraSwitchScript.cs" id="7_gf62h"]
-[ext_resource type="Script" uid="uid://g5yf73ygsftw" path="res://addons/shylib/Classes/InteractObject3D.cs" id="8_uf7b3"]
+[ext_resource type="Script" uid="uid://g5yf73ygsftw" path="res://src/Libs/shylib/Classes/InteractObject3D.cs" id="8_uf7b3"]
 [ext_resource type="AudioStream" uid="uid://nvube6beo7t" path="res://src/Sounds/its happening david bazookie.mp3" id="10_h8oac"]
 [ext_resource type="Script" uid="uid://dxjnsxon5efnv" path="res://src/Scripts/InteractTest.cs" id="11_htgqa"]
 [ext_resource type="Environment" uid="uid://d4kl3puo0e8dw" path="res://src/Resources/Skies/Day.tres" id="11_ss4f7"]
 [ext_resource type="Material" uid="uid://ca75ik5y2u4a2" path="res://src/Resources/Materials/david.tres" id="13_ss4f7"]
 [ext_resource type="Material" uid="uid://ce0vtdxnqp031" path="res://src/Resources/Materials/DefaultIcon.tres" id="16_ss4f7"]
 [ext_resource type="Material" uid="uid://djkfa7xtdg63i" path="res://src/Resources/Materials/DefaultHoverIcon.tres" id="17_743ng"]
-[ext_resource type="Script" uid="uid://2f4fi75scxes" path="res://richtext2/richer_text_label.gd" id="17_e2xy3"]
+[ext_resource type="Script" uid="uid://2f4fi75scxes" path="res://src/Libs/richtext2/richer_text_label.gd" id="17_e2xy3"]
+[ext_resource type="Script" uid="uid://csefxrb6ehpnb" path="res://src/Libs/shylib/Classes/DialogueData.cs" id="17_h8oac"]
 [ext_resource type="Material" uid="uid://bq8wyiwgdl28m" path="res://src/Resources/Materials/LockedIcon.tres" id="18_8i3or"]
-[ext_resource type="Script" uid="uid://csefxrb6ehpnb" path="res://addons/shylib/Classes/DialogueData.cs" id="19_vh02n"]
-[ext_resource type="Script" uid="uid://ddft6gmiruiv1" path="res://addons/shylib/Classes/DialogueCharacter.cs" id="20_k0mjx"]
-[ext_resource type="Script" uid="uid://dossiogwbp3hm" path="res://addons/shylib/Classes/DialogueLine.cs" id="21_h8oac"]
+[ext_resource type="Script" uid="uid://ddft6gmiruiv1" path="res://src/Libs/shylib/Classes/DialogueCharacter.cs" id="18_ss4f7"]
+[ext_resource type="Script" uid="uid://dossiogwbp3hm" path="res://src/Libs/shylib/Classes/DialogueLine.cs" id="19_743ng"]
 [ext_resource type="Terrain3DAssets" uid="uid://dal3jhw6241qg" path="res://src/Resources/Terrain3D/data/assets.tres" id="21_k0mjx"]
 [ext_resource type="Script" uid="uid://b5fv7i1e8h4q3" path="res://addons/discord-rpc-gd/example.gd" id="22_h8oac"]
 
@@ -104,12 +104,12 @@ environment = SubResource("Environment_1fj5k")
 [sub_resource type="BoxMesh" id="BoxMesh_1dmmm"]
 
 [sub_resource type="Resource" id="Resource_h8oac"]
-script = ExtResource("21_h8oac")
+script = ExtResource("19_743ng")
 Text = "googoo"
 Color = Color(1, 1, 1, 1)
 
 [sub_resource type="Resource" id="Resource_ss4f7"]
-script = ExtResource("21_h8oac")
+script = ExtResource("19_743ng")
 Text = "googoo
 longertest
 guh
@@ -117,18 +117,15 @@ buh"
 Color = Color(1, 1, 1, 1)
 
 [sub_resource type="Resource" id="Resource_743ng"]
-script = ExtResource("20_k0mjx")
+script = ExtResource("18_ss4f7")
 Id = "audrey"
 DisplayName = "Audrey"
 Color = Color(1, 1, 1, 1)
 Path = ""
-Lines = Dictionary[String, ExtResource("21_h8oac")]({
+Lines = Dictionary[String, ExtResource("19_743ng")]({
 "test": SubResource("Resource_h8oac"),
 "test_2": SubResource("Resource_ss4f7")
 })
-
-[sub_resource type="Resource" id="Resource_vh02n"]
-metadata/__load_path__ = "res://addons/shylib/Classes/DialogueCharacters.cs"
 
 [node name="Game" type="Node"]
 script = ExtResource("1_doi2n")
@@ -343,6 +340,7 @@ modulate = Color(1, 1, 1, 0.407843)
 top_level = true
 z_index = 50
 clip_contents = false
+custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -359,6 +357,57 @@ theme_override_font_sizes/bold_font_size = 16
 bbcode_enabled = true
 fit_content = true
 script = ExtResource("17_e2xy3")
+bbcode = "[!thing]
+[!david bazookie] _{VersionDenot.to_upper()} v{Version}_ [!david bazookie]
+[!thing]"
+effects = 2
+alignment = 1
+color = null
+emoji_scale = 1.0
+font = "spooky"
+font_auto_setup = true
+font_size = 16
+font_bold_weight = 1.5
+font_italics_slant = 0.25
+font_italics_weight = -0.25
+shadow_enabled = false
+shadow_offset = 0.08
+shadow_alpha = 0.25
+shadow_outline_size = 0.1
+outline_size = 0
+outline_mode = 1
+outline_adjust = 0.8
+outline_hue_adjust = 0.0125
+nicer_quotes_enabled = true
+nicer_quotes_format = "“%s”"
+markdown_enabled = true
+markdown_format_bold = "[b]%s[]"
+markdown_format_italics = "[i]%s[]"
+markdown_format_bold_italics = "[bi]%s[]"
+markdown_format_highlight = "[green;sin]%s[]"
+markdown_format_bold2 = "[b]*%s*[]"
+markdown_format_italics2 = "[i;gray]*%s*[]"
+markdown_format_bold_italics2 = "%s"
+context_enabled = true
+context_path = NodePath("../../..")
+context_state = {}
+context_rich_objects = true
+context_rich_ints = true
+context_rich_array = true
+autostyle_numbers = false
+autostyle_numbers_tag = "[salmon]%s[]"
+autostyle_numbers_pad_decimals = true
+autostyle_numbers_decimals = 2
+autostyle_emojis = true
+effect_weight = 0.0
+image_path = "res://src/Images"
+image_resize_to_font_size = true
+image_scale = 2.0
+meta_auto_https = true
+meta_cursor = 2
+override_bbcodeEnabled = true
+override_clipContents = false
+override_fitContent = true
 metadata/_custom_type_script = "uid://2f4fi75scxes"
 
 [node name="DialogueGui" type="Control" parent="Guis"]
@@ -383,48 +432,103 @@ grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
 
-[node name="DialogueData" type="Node" parent="Guis/DialogueGui/Dialogue"]
-unique_name_in_owner = true
-script = ExtResource("19_vh02n")
-Characters = Dictionary[String, ExtResource("20_k0mjx")]({
-"audrey": SubResource("Resource_743ng")
-})
-metadata/_custom_type_script = SubResource("Resource_vh02n")
-
 [node name="Base" type="RichTextLabel" parent="Guis/DialogueGui/Dialogue"]
 z_index = 56
 clip_contents = false
+custom_minimum_size = Vector2(0, 94)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
 theme_override_colors/font_outline_color = Color(0.2, 0.2, 0.2, 1)
-theme_override_font_sizes/bold_italics_font_size = 16
-theme_override_font_sizes/italics_font_size = 16
-theme_override_font_sizes/mono_font_size = 16
-theme_override_font_sizes/normal_font_size = 16
-theme_override_font_sizes/bold_font_size = 16
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.572)
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_outline_size = 2
+theme_override_font_sizes/bold_italics_font_size = 20
+theme_override_font_sizes/italics_font_size = 20
+theme_override_font_sizes/mono_font_size = 20
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/bold_font_size = 20
 bbcode_enabled = true
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
 script = ExtResource("17_e2xy3")
+bbcode = "[!dialog_top]
+[{0}]{1}[]
+[70][{2}]{3}[][]
+
+[!dialog_bottom]"
+effects = 2
+alignment = 1
+color = null
+emoji_scale = 1.0
+font = "vcr"
+font_auto_setup = true
+font_size = 20
+font_bold_weight = 1.5
+font_italics_slant = 0.25
+font_italics_weight = -0.25
+shadow_enabled = true
+shadow_offset = 0.08
+shadow_alpha = 0.572
+shadow_outline_size = 0.1
+outline_size = 0
+outline_mode = 1
+outline_adjust = 0.8
+outline_hue_adjust = 0.0125
+nicer_quotes_enabled = true
+nicer_quotes_format = "“%s”"
+markdown_enabled = true
+markdown_format_bold = "[b]%s[]"
+markdown_format_italics = "[i]%s[]"
+markdown_format_bold_italics = "[bi]%s[]"
+markdown_format_highlight = "[green;sin]%s[]"
+markdown_format_bold2 = "[b]*%s*[]"
+markdown_format_italics2 = "[i;gray]*%s*[]"
+markdown_format_bold_italics2 = "%s"
+context_enabled = true
+context_path = NodePath("../DialogueData")
+context_state = {}
+context_rich_objects = true
+context_rich_ints = true
+context_rich_array = true
+autostyle_numbers = true
+autostyle_numbers_tag = "[salmon]%s[]"
+autostyle_numbers_pad_decimals = true
+autostyle_numbers_decimals = 2
+autostyle_emojis = true
+effect_weight = 0.79
+image_path = "res://src/Images/Dialog"
+image_resize_to_font_size = true
+image_scale = 1.0
+meta_auto_https = true
+meta_cursor = 2
+override_bbcodeEnabled = true
+override_clipContents = false
+override_fitContent = true
 metadata/_custom_type_script = "uid://2f4fi75scxes"
 
 [node name="ColorRect" type="ColorRect" parent="Guis/DialogueGui/Dialogue/Base"]
 modulate = Color(0, 0, 0, 0.0588235)
 show_behind_parent = true
 z_index = 56
-layout_mode = 1
-anchors_preset = 13
-anchor_left = 0.5
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -250.0
-offset_right = 250.0
+layout_mode = 2
+offset_top = -70.0
+offset_right = 1152.0
+offset_bottom = -70.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="DialogueData" type="Node" parent="Guis/DialogueGui/Dialogue"]
+unique_name_in_owner = true
+script = ExtResource("17_h8oac")
+Characters = Dictionary[String, ExtResource("18_ss4f7")]({
+"audrey": SubResource("Resource_743ng")
+})
+metadata/_custom_type_script = "uid://csefxrb6ehpnb"
 
 [node name="SettingsGui" type="Control" parent="Guis"]
 layout_mode = 3

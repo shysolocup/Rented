@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://dqci4yxp0fxop"]
 
-[ext_resource type="Script" uid="uid://g5yf73ygsftw" path="res://addons/shylib/Classes/InteractObject3D.cs" id="1_xr3ny"]
+[ext_resource type="Script" uid="uid://g5yf73ygsftw" path="res://src/Libs/shylib/Classes/InteractObject3D.cs" id="1_xr3ny"]
 [ext_resource type="Texture2D" uid="uid://dcthcg547baj0" path="res://src/Images/david bazookie.png" id="2_u1q00"]
-[ext_resource type="Script" uid="uid://cge1tw0n2wjvm" path="res://addons/shylib/Classes/RbxScript.cs" id="3_i8q2c"]
+[ext_resource type="Script" uid="uid://cge1tw0n2wjvm" path="res://src/Libs/shylib/Classes/RbxScript.cs" id="3_i8q2c"]
 [ext_resource type="Script" uid="uid://dxjnsxon5efnv" path="res://src/Scripts/InteractTest.cs" id="4_hkkkq"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_uctug"]

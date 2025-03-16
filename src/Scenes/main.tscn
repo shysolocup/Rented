@@ -20,10 +20,10 @@
 [ext_resource type="Script" uid="uid://csefxrb6ehpnb" path="res://addons/shylib/Classes/DialogueData.cs" id="19_vh02n"]
 [ext_resource type="Script" uid="uid://ddft6gmiruiv1" path="res://addons/shylib/Classes/DialogueCharacter.cs" id="20_k0mjx"]
 [ext_resource type="Script" uid="uid://dossiogwbp3hm" path="res://addons/shylib/Classes/DialogueLine.cs" id="21_h8oac"]
-[ext_resource type="Terrain3DAssets" uid="uid://dal3jhw6241qg" path="res://demo/data/assets.tres" id="21_k0mjx"]
+[ext_resource type="Terrain3DAssets" uid="uid://dal3jhw6241qg" path="res://src/Resources/Terrain3D/data/assets.tres" id="21_k0mjx"]
 [ext_resource type="Script" uid="uid://b5fv7i1e8h4q3" path="res://addons/discord-rpc-gd/example.gd" id="22_h8oac"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8xcek"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_h8oac"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_y0axr"]
 
@@ -137,11 +137,11 @@ script = ExtResource("1_doi2n")
 
 [node name="Player" type="CharacterBody3D" parent="Root3D"]
 unique_name_in_owner = true
-transform = Transform3D(0.7, 0, 0, 0, 1.3, 0, 0, 0, 0.7, 0, 1.15761, 0)
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 1.15761, 0)
 script = ExtResource("1_wpbw3")
 
 [node name="Collision" type="CollisionShape3D" parent="Root3D/Player"]
-shape = SubResource("CapsuleShape3D_8xcek")
+shape = SubResource("CapsuleShape3D_h8oac")
 
 [node name="Mesh" type="MeshInstance3D" parent="Root3D/Player"]
 cast_shadow = 0
@@ -244,7 +244,7 @@ script = ExtResource("2_i3adb")
 Source = ExtResource("11_htgqa")
 
 [node name="Terrain3D" type="Terrain3D" parent="."]
-data_directory = "res://src/Resources/Terrain3D"
+data_directory = "res://src/Resources/Terrain3D/data"
 material = SubResource("Terrain3DMaterial_h8oac")
 assets = ExtResource("21_k0mjx")
 collision_mask = 3
@@ -355,55 +355,6 @@ theme_override_font_sizes/bold_font_size = 16
 bbcode_enabled = true
 fit_content = true
 script = ExtResource("17_e2xy3")
-bbcode = ""
-effects = 2
-alignment = 1
-color = null
-emoji_scale = 1.0
-font = ""
-font_auto_setup = true
-font_size = 16
-font_bold_weight = 1.5
-font_italics_slant = 0.25
-font_italics_weight = -0.25
-shadow_enabled = false
-shadow_offset = 0.08
-shadow_alpha = 0.25
-shadow_outline_size = 0.1
-outline_size = 0
-outline_mode = 1
-outline_adjust = 0.8
-outline_hue_adjust = 0.0125
-nicer_quotes_enabled = true
-nicer_quotes_format = "“%s”"
-markdown_enabled = true
-markdown_format_bold = "[b]%s[]"
-markdown_format_italics = "[i]%s[]"
-markdown_format_bold_italics = "[bi]%s[]"
-markdown_format_highlight = "[green;sin]%s[]"
-markdown_format_bold2 = "[b]*%s*[]"
-markdown_format_italics2 = "[i;gray]*%s*[]"
-markdown_format_bold_italics2 = "%s"
-context_enabled = true
-context_path = NodePath("/root/State")
-context_state = {}
-context_rich_objects = true
-context_rich_ints = true
-context_rich_array = true
-autostyle_numbers = true
-autostyle_numbers_tag = "[salmon]%s[]"
-autostyle_numbers_pad_decimals = true
-autostyle_numbers_decimals = 2
-autostyle_emojis = true
-effect_weight = 0.0
-image_path = "res://"
-image_resize_to_font_size = true
-image_scale = 1.0
-meta_auto_https = true
-meta_cursor = 2
-override_bbcodeEnabled = true
-override_clipContents = false
-override_fitContent = true
 metadata/_custom_type_script = "uid://2f4fi75scxes"
 
 [node name="DialogueGui" type="Control" parent="Guis"]
@@ -454,55 +405,6 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 script = ExtResource("17_e2xy3")
-bbcode = ""
-effects = 2
-alignment = 1
-color = null
-emoji_scale = 1.0
-font = ""
-font_auto_setup = true
-font_size = 16
-font_bold_weight = 1.5
-font_italics_slant = 0.25
-font_italics_weight = -0.25
-shadow_enabled = false
-shadow_offset = 0.08
-shadow_alpha = 0.25
-shadow_outline_size = 0.1
-outline_size = 0
-outline_mode = 1
-outline_adjust = 0.8
-outline_hue_adjust = 0.0125
-nicer_quotes_enabled = true
-nicer_quotes_format = "“%s”"
-markdown_enabled = true
-markdown_format_bold = "[b]%s[]"
-markdown_format_italics = "[i]%s[]"
-markdown_format_bold_italics = "[bi]%s[]"
-markdown_format_highlight = "[green;sin]%s[]"
-markdown_format_bold2 = "[b]*%s*[]"
-markdown_format_italics2 = "[i;gray]*%s*[]"
-markdown_format_bold_italics2 = "%s"
-context_enabled = true
-context_path = NodePath("/root/State")
-context_state = {}
-context_rich_objects = true
-context_rich_ints = true
-context_rich_array = true
-autostyle_numbers = true
-autostyle_numbers_tag = "[salmon]%s[]"
-autostyle_numbers_pad_decimals = true
-autostyle_numbers_decimals = 2
-autostyle_emojis = true
-effect_weight = 0.0
-image_path = "res://"
-image_resize_to_font_size = true
-image_scale = 1.0
-meta_auto_https = true
-meta_cursor = 2
-override_bbcodeEnabled = true
-override_clipContents = false
-override_fitContent = true
 metadata/_custom_type_script = "uid://2f4fi75scxes"
 
 [node name="ColorRect" type="ColorRect" parent="Guis/DialogueGui/Dialogue/Base"]

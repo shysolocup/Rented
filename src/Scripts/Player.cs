@@ -40,8 +40,6 @@ public partial class Player : CharacterBody3D
 	private Vector3 GravityVelocity; // Gravity velocity 
 	private Vector3 JumpVelocity; // Jumping velocity
 
-	private bool JumpCooldown = false;
-
 	[Export] public float BaseFov;
 	[Export] public float CrouchSpeed = 1f;
 
@@ -203,26 +201,19 @@ public partial class Player : CharacterBody3D
 			Crouching = false;
 		}
 
-		if (Input.IsActionPressed("Jump") && !Crouching && !JumpCooldown) {
+		if (Input.IsActionPressed("Jump") && !Crouching) {
 			Jumping = true;
-
-			JumpCooldown = true;
-			SceneTreeTimer t = GetTree().CreateTimer(0.55f);
-			t.Timeout += () => { 
-				JumpCooldown = false; 
-				t.Dispose(); 
-			};
 		}
 		// if (Input.IsActionJustPressed("Exit")) GetTree().Quit();
 	}
 
-	private void CaptureMouse()
+	public void CaptureMouse()
 	{
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 		MouseCaptured = true;
 	}
 
-	private void ReleaseMouse()
+	public void ReleaseMouse()
 	{
 		Input.MouseMode = Input.MouseModeEnum.Visible;
 		MouseCaptured = false;
@@ -237,7 +228,7 @@ public partial class Player : CharacterBody3D
 		Camera.Rotation = new Vector3(x, Camera.Rotation.Y, Camera.Rotation.Z);
 	}
 
-	public void JoypadControls(float delta, float sens_mod = 10)
+	private void JoypadControls(float delta, float sens_mod = 10)
 	{
 		Vector2 joypad_dir = Input.GetVector("LookLeft", "LookRight", "LookUp", "LookDown");
 		if (joypad_dir.Length() > 0) {
@@ -249,26 +240,26 @@ public partial class Player : CharacterBody3D
 		}
 	}
 
-	public Vector3 GetMove(float delta)
+	private Vector3 GetMove(float delta)
 	{
 		MoveDirection = Input.GetVector("MoveLeft", "MoveRight", "MoveForward", "MoveBack");
 
 		Vector3 _forward = Camera.GlobalTransform.Basis * new Vector3(MoveDirection.X, 0, MoveDirection.Y);
 		Vector3 walk_dir = new Vector3(_forward.X, 0, _forward.Z).Normalized();
 
-		Walking = !walk_dir.IsZeroApprox() && IsOnFloor();
+		Walking = !walk_dir.IsZeroApprox();
 		
 		WalkVelocity = WalkVelocity.MoveToward(walk_dir * WalkSpeed * MoveDirection.Length(), Acceleration * delta);
 		return WalkVelocity;
 	}
 
-	public Vector3 GetGravity(float delta)
+	private Vector3 GetGravity(float delta)
 	{
 		GravityVelocity = IsOnFloor() ? Vector3.Zero : GravityVelocity.MoveToward(new Vector3(0, Velocity.Y - Game.Instance.Gravity, 0), Game.Instance.Gravity * delta);
 		return GravityVelocity;
 	}
 
-	public Vector3 GetJump(float delta)
+	private Vector3 GetJump(float delta)
 	{
 		if (Jumping) {
 			JumpVelocity = IsOnFloor() ? new Vector3(0, Mathf.Sqrt(4 * JumpHeight * Game.Instance.Gravity), 0) : JumpVelocity;
@@ -281,14 +272,14 @@ public partial class Player : CharacterBody3D
 		return JumpVelocity;
 	}
 
-	public void SpeedEffect(float zoommod, float speed, float scale, float _t, double delta)
+	private void SpeedEffect(float zoommod, float speed, float scale, float _t, double delta)
 	{
 		WalkSpeed = this.Twlerp(WalkSpeed, speed, _t, delta);
 		Camera.Fov = this.Twlerp(Camera.Fov, BaseFov+zoommod, _t, delta);
 		Collision.Scale = new Vector3(Collision.Scale.X, this.Twlerp(Collision.Scale.Y, scale, _t/1.1f, delta), Collision.Scale.Z);
 	}
 
-	public void TiltEffect(float degrees, float _t, double delta)
+	private void TiltEffect(float degrees, float _t, double delta)
 	{
 		float z = this.Twlerp(Camera.RotationDegrees.Z, degrees, _t, delta);
 		Camera.RotationDegrees = new Vector3(Camera.RotationDegrees.X, Camera.RotationDegrees.Y, z);

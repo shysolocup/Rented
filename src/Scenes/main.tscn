@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://s0ftqrddh5up"]
+[gd_scene load_steps=39 format=3 uid="uid://s0ftqrddh5up"]
 
 [ext_resource type="Script" uid="uid://cfoo1gxat5mv8" path="res://src/Libs/shylib/Classes/GameInstance.cs" id="1_doi2n"]
 [ext_resource type="Script" uid="uid://c1i8r8l2u4t3q" path="res://src/Scripts/Player.cs" id="1_wpbw3"]
@@ -20,6 +20,7 @@
 [ext_resource type="Material" uid="uid://bq8wyiwgdl28m" path="res://src/Resources/Materials/LockedIcon.tres" id="18_8i3or"]
 [ext_resource type="Script" uid="uid://ddft6gmiruiv1" path="res://src/Libs/shylib/Classes/DialogueCharacter.cs" id="18_ss4f7"]
 [ext_resource type="Script" uid="uid://dossiogwbp3hm" path="res://src/Libs/shylib/Classes/DialogueLine.cs" id="19_743ng"]
+[ext_resource type="Script" uid="uid://bq8h5fsdfxg7c" path="res://src/Scripts/PauseGui.cs" id="20_ss4f7"]
 [ext_resource type="Terrain3DAssets" uid="uid://dal3jhw6241qg" path="res://src/Resources/Terrain3D/data/assets.tres" id="21_k0mjx"]
 [ext_resource type="Script" uid="uid://b5fv7i1e8h4q3" path="res://addons/discord-rpc-gd/example.gd" id="22_h8oac"]
 
@@ -357,57 +358,6 @@ theme_override_font_sizes/bold_font_size = 16
 bbcode_enabled = true
 fit_content = true
 script = ExtResource("17_e2xy3")
-bbcode = "[!thing]
-[!david bazookie] _{VersionDenot.to_upper()} v{Version}_ [!david bazookie]
-[!thing]"
-effects = 2
-alignment = 1
-color = null
-emoji_scale = 1.0
-font = "spooky"
-font_auto_setup = true
-font_size = 16
-font_bold_weight = 1.5
-font_italics_slant = 0.25
-font_italics_weight = -0.25
-shadow_enabled = false
-shadow_offset = 0.08
-shadow_alpha = 0.25
-shadow_outline_size = 0.1
-outline_size = 0
-outline_mode = 1
-outline_adjust = 0.8
-outline_hue_adjust = 0.0125
-nicer_quotes_enabled = true
-nicer_quotes_format = "“%s”"
-markdown_enabled = true
-markdown_format_bold = "[b]%s[]"
-markdown_format_italics = "[i]%s[]"
-markdown_format_bold_italics = "[bi]%s[]"
-markdown_format_highlight = "[green;sin]%s[]"
-markdown_format_bold2 = "[b]*%s*[]"
-markdown_format_italics2 = "[i;gray]*%s*[]"
-markdown_format_bold_italics2 = "%s"
-context_enabled = true
-context_path = NodePath("../../..")
-context_state = {}
-context_rich_objects = true
-context_rich_ints = true
-context_rich_array = true
-autostyle_numbers = false
-autostyle_numbers_tag = "[salmon]%s[]"
-autostyle_numbers_pad_decimals = true
-autostyle_numbers_decimals = 2
-autostyle_emojis = true
-effect_weight = 0.0
-image_path = "res://src/Images"
-image_resize_to_font_size = true
-image_scale = 2.0
-meta_auto_https = true
-meta_cursor = 2
-override_bbcodeEnabled = true
-override_clipContents = false
-override_fitContent = true
 metadata/_custom_type_script = "uid://2f4fi75scxes"
 
 [node name="DialogueGui" type="Control" parent="Guis"]
@@ -455,59 +405,6 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 script = ExtResource("17_e2xy3")
-bbcode = "[!dialog_top]
-[{0}]{1}[]
-[70][{2}]{3}[][]
-
-[!dialog_bottom]"
-effects = 2
-alignment = 1
-color = null
-emoji_scale = 1.0
-font = "vcr"
-font_auto_setup = true
-font_size = 20
-font_bold_weight = 1.5
-font_italics_slant = 0.25
-font_italics_weight = -0.25
-shadow_enabled = true
-shadow_offset = 0.08
-shadow_alpha = 0.572
-shadow_outline_size = 0.1
-outline_size = 0
-outline_mode = 1
-outline_adjust = 0.8
-outline_hue_adjust = 0.0125
-nicer_quotes_enabled = true
-nicer_quotes_format = "“%s”"
-markdown_enabled = true
-markdown_format_bold = "[b]%s[]"
-markdown_format_italics = "[i]%s[]"
-markdown_format_bold_italics = "[bi]%s[]"
-markdown_format_highlight = "[green;sin]%s[]"
-markdown_format_bold2 = "[b]*%s*[]"
-markdown_format_italics2 = "[i;gray]*%s*[]"
-markdown_format_bold_italics2 = "%s"
-context_enabled = true
-context_path = NodePath("../DialogueData")
-context_state = {}
-context_rich_objects = true
-context_rich_ints = true
-context_rich_array = true
-autostyle_numbers = true
-autostyle_numbers_tag = "[salmon]%s[]"
-autostyle_numbers_pad_decimals = true
-autostyle_numbers_decimals = 2
-autostyle_emojis = true
-effect_weight = 0.79
-image_path = "res://src/Images/Dialog"
-image_resize_to_font_size = true
-image_scale = 1.0
-meta_auto_https = true
-meta_cursor = 2
-override_bbcodeEnabled = true
-override_clipContents = false
-override_fitContent = true
 metadata/_custom_type_script = "uid://2f4fi75scxes"
 
 [node name="ColorRect" type="ColorRect" parent="Guis/DialogueGui/Dialogue/Base"]
@@ -530,11 +427,43 @@ Characters = Dictionary[String, ExtResource("18_ss4f7")]({
 })
 metadata/_custom_type_script = "uid://csefxrb6ehpnb"
 
-[node name="SettingsGui" type="Control" parent="Guis"]
+[node name="PauseGui" type="Control" parent="Guis"]
+unique_name_in_owner = true
+process_mode = 3
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -169.0
+offset_right = 150.0
+offset_bottom = 169.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("20_ss4f7")
+
+[node name="PauseContainer" type="VBoxContainer" parent="Guis/PauseGui"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Resume" type="Button" parent="Guis/PauseGui/PauseContainer"]
+layout_mode = 2
+text = "Resume Game"
+
+[node name="SettingsButton" type="Button" parent="Guis/PauseGui/PauseContainer"]
+layout_mode = 2
+text = "Settings"
+
+[node name="QuitButton" type="Button" parent="Guis/PauseGui/PauseContainer"]
+layout_mode = 2
+text = "Die"
 
 [node name="Audios" type="Node" parent="."]
 unique_name_in_owner = true

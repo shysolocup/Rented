@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://s0ftqrddh5up"]
+[gd_scene load_steps=41 format=3 uid="uid://s0ftqrddh5up"]
 
 [ext_resource type="Script" uid="uid://cfoo1gxat5mv8" path="res://src/Libs/shylib/Classes/GameInstance.cs" id="1_doi2n"]
 [ext_resource type="Script" uid="uid://c1i8r8l2u4t3q" path="res://src/Scripts/Player.cs" id="1_wpbw3"]
@@ -6,12 +6,14 @@
 [ext_resource type="Texture2D" uid="uid://buml50bofllu4" path="res://src/Ui/alarm clock.png" id="2_up28s"]
 [ext_resource type="Script" uid="uid://f680ovgo7k8o" path="res://src/Scripts/SaveIconSpinner.cs" id="3_35lay"]
 [ext_resource type="Script" uid="uid://5750qaowrba3" path="res://src/Libs/shylib/Classes/Crosshair3D.cs" id="5_0wov3"]
-[ext_resource type="Texture2D" uid="uid://dcthcg547baj0" path="res://src/Images/david bazookie.png" id="6_yaysw"]
 [ext_resource type="Script" uid="uid://cpogl7mretj3h" path="res://src/Scripts/CameraSwitchScript.cs" id="7_gf62h"]
+[ext_resource type="Material" uid="uid://ruas43novbuq" path="res://src/Resources/Materials/DavidHoverIcon.tres" id="8_8i3or"]
 [ext_resource type="Script" uid="uid://g5yf73ygsftw" path="res://src/Libs/shylib/Classes/InteractObject3D.cs" id="8_uf7b3"]
 [ext_resource type="AudioStream" uid="uid://nvube6beo7t" path="res://src/Sounds/its happening david bazookie.mp3" id="10_h8oac"]
 [ext_resource type="Script" uid="uid://dxjnsxon5efnv" path="res://src/Scripts/InteractTest.cs" id="11_htgqa"]
 [ext_resource type="Environment" uid="uid://d4kl3puo0e8dw" path="res://src/Resources/Skies/Day.tres" id="11_ss4f7"]
+[ext_resource type="Script" uid="uid://by2d21w372040" path="res://addons/TweenSuite/TweenNode.gd" id="12_8i3or"]
+[ext_resource type="Resource" uid="uid://b7tubblsiplu3" path="res://src/Anim/Tweens/clock.tres" id="13_p8ix8"]
 [ext_resource type="Material" uid="uid://ca75ik5y2u4a2" path="res://src/Resources/Materials/david.tres" id="13_ss4f7"]
 [ext_resource type="Material" uid="uid://ce0vtdxnqp031" path="res://src/Resources/Materials/DefaultIcon.tres" id="16_ss4f7"]
 [ext_resource type="Material" uid="uid://djkfa7xtdg63i" path="res://src/Resources/Materials/DefaultHoverIcon.tres" id="17_743ng"]
@@ -28,18 +30,11 @@
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_y0axr"]
 
+[sub_resource type="BoxMesh" id="BoxMesh_8i3or"]
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_j1e05"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_xknod"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qqeip"]
-albedo_texture = ExtResource("6_yaysw")
-heightmap_scale = 16.0
-heightmap_deep_parallax = true
-heightmap_min_layers = 8
-heightmap_max_layers = 32
-uv1_scale = Vector3(2, 2, 2)
-uv1_triplanar = true
 
 [sub_resource type="Gradient" id="Gradient_vr1m7"]
 offsets = PackedFloat32Array(0.2, 1)
@@ -104,12 +99,12 @@ environment = SubResource("Environment_1fj5k")
 
 [sub_resource type="BoxMesh" id="BoxMesh_1dmmm"]
 
-[sub_resource type="Resource" id="Resource_h8oac"]
+[sub_resource type="Resource" id="Resource_8i3or"]
 script = ExtResource("19_743ng")
 Text = "googoo"
 Color = Color(1, 1, 1, 1)
 
-[sub_resource type="Resource" id="Resource_ss4f7"]
+[sub_resource type="Resource" id="Resource_p8ix8"]
 script = ExtResource("19_743ng")
 Text = "googoo
 longertest
@@ -117,15 +112,15 @@ guh
 buh"
 Color = Color(1, 1, 1, 1)
 
-[sub_resource type="Resource" id="Resource_743ng"]
+[sub_resource type="Resource" id="Resource_0m3r5"]
 script = ExtResource("18_ss4f7")
 Id = "audrey"
 DisplayName = "Audrey"
 Color = Color(1, 1, 1, 1)
 Path = ""
 Lines = Dictionary[String, ExtResource("19_743ng")]({
-"test": SubResource("Resource_h8oac"),
-"test_2": SubResource("Resource_ss4f7")
+"test": SubResource("Resource_8i3or"),
+"test_2": SubResource("Resource_p8ix8")
 })
 
 [node name="Game" type="Node"]
@@ -136,7 +131,7 @@ unique_name_in_owner = true
 
 [node name="Player" type="CharacterBody3D" parent="Root3D"]
 unique_name_in_owner = true
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 1.15761, 0)
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 1.48456, 0)
 script = ExtResource("1_wpbw3")
 
 [node name="Collision" type="CollisionShape3D" parent="Root3D/Player"]
@@ -146,6 +141,10 @@ shape = SubResource("CapsuleShape3D_h8oac")
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_y0axr")
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Root3D/Player/Mesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.87691, 0, 0.00851377)
+mesh = SubResource("BoxMesh_8i3or")
+
 [node name="Baseplate" type="StaticBody3D" parent="Root3D"]
 transform = Transform3D(15, 0, 0, 0, 3.19346, 0, 0, 0, 15, 0, -1.61217, 0)
 
@@ -154,7 +153,7 @@ shape = SubResource("BoxShape3D_j1e05")
 
 [node name="Mesh" type="MeshInstance3D" parent="Root3D/Baseplate"]
 mesh = SubResource("BoxMesh_xknod")
-surface_material_override/0 = SubResource("StandardMaterial3D_qqeip")
+surface_material_override/0 = ExtResource("13_ss4f7")
 
 [node name="test4" type="StaticBody3D" parent="Root3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.65005, 2.90059, -5.61089)
@@ -164,7 +163,7 @@ shape = SubResource("BoxShape3D_j1e05")
 
 [node name="Mesh" type="MeshInstance3D" parent="Root3D/test4"]
 mesh = SubResource("BoxMesh_xknod")
-surface_material_override/0 = SubResource("StandardMaterial3D_qqeip")
+surface_material_override/0 = ExtResource("13_ss4f7")
 
 [node name="Cameras" type="Node3D" parent="Root3D"]
 unique_name_in_owner = true
@@ -199,7 +198,7 @@ shape = SubResource("BoxShape3D_j1e05")
 [node name="Mesh" type="MeshInstance3D" parent="Root3D/test"]
 mesh = SubResource("BoxMesh_xknod")
 skeleton = NodePath("")
-surface_material_override/0 = SubResource("StandardMaterial3D_qqeip")
+surface_material_override/0 = ExtResource("13_ss4f7")
 
 [node name="RbxScript" type="Node" parent="Root3D/test"]
 script = ExtResource("2_i3adb")
@@ -217,7 +216,7 @@ shape = SubResource("BoxShape3D_j1e05")
 [node name="Mesh" type="MeshInstance3D" parent="Root3D/test2"]
 mesh = SubResource("BoxMesh_xknod")
 skeleton = NodePath("")
-surface_material_override/0 = SubResource("StandardMaterial3D_qqeip")
+surface_material_override/0 = ExtResource("13_ss4f7")
 
 [node name="RbxScript" type="Node" parent="Root3D/test2"]
 script = ExtResource("2_i3adb")
@@ -227,7 +226,7 @@ Source = ExtResource("11_htgqa")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3723, 1.07724, 4.88242)
 freeze = true
 script = ExtResource("8_uf7b3")
-HoverIcon = ExtResource("13_ss4f7")
+HoverIcon = ExtResource("8_8i3or")
 
 [node name="Collision" type="CollisionShape3D" parent="Root3D/test3"]
 shape = SubResource("BoxShape3D_j1e05")
@@ -235,7 +234,7 @@ shape = SubResource("BoxShape3D_j1e05")
 [node name="Mesh" type="MeshInstance3D" parent="Root3D/test3"]
 mesh = SubResource("BoxMesh_xknod")
 skeleton = NodePath("")
-surface_material_override/0 = SubResource("StandardMaterial3D_qqeip")
+surface_material_override/0 = ExtResource("13_ss4f7")
 
 [node name="RbxScript" type="Node" parent="Root3D/test3"]
 script = ExtResource("2_i3adb")
@@ -248,7 +247,6 @@ unique_name_in_owner = true
 data_directory = "res://src/Resources/Terrain3D/data"
 material = SubResource("Terrain3DMaterial_h8oac")
 assets = ExtResource("21_k0mjx")
-collision_mask = 3
 cull_margin = 101.0
 unique_name_in_owner = true
 top_level = true
@@ -273,6 +271,11 @@ position = Vector2(-42, -42)
 scale = Vector2(0.64, 0.64)
 texture = ExtResource("2_up28s")
 script = ExtResource("3_35lay")
+
+[node name="TweenNode" type="Node" parent="Guis/SaveGui/SaveIcon"]
+script = ExtResource("12_8i3or")
+animation = ExtResource("13_p8ix8")
+metadata/_custom_type_script = "uid://by2d21w372040"
 
 [node name="CrosshairGui" type="Control" parent="Guis"]
 top_level = true
@@ -358,6 +361,55 @@ theme_override_font_sizes/bold_font_size = 16
 bbcode_enabled = true
 fit_content = true
 script = ExtResource("17_e2xy3")
+bbcode = ""
+effects = 2
+alignment = 1
+color = null
+emoji_scale = 1.0
+font = ""
+font_auto_setup = true
+font_size = 16
+font_bold_weight = 1.5
+font_italics_slant = 0.25
+font_italics_weight = -0.25
+shadow_enabled = false
+shadow_offset = 0.08
+shadow_alpha = 0.25
+shadow_outline_size = 0.1
+outline_size = 0
+outline_mode = 1
+outline_adjust = 0.8
+outline_hue_adjust = 0.0125
+nicer_quotes_enabled = true
+nicer_quotes_format = "“%s”"
+markdown_enabled = true
+markdown_format_bold = "[b]%s[]"
+markdown_format_italics = "[i]%s[]"
+markdown_format_bold_italics = "[bi]%s[]"
+markdown_format_highlight = "[green;sin]%s[]"
+markdown_format_bold2 = "[b]*%s*[]"
+markdown_format_italics2 = "[i;gray]*%s*[]"
+markdown_format_bold_italics2 = "%s"
+context_enabled = true
+context_path = NodePath("/root/State")
+context_state = {}
+context_rich_objects = true
+context_rich_ints = true
+context_rich_array = true
+autostyle_numbers = true
+autostyle_numbers_tag = "[salmon]%s[]"
+autostyle_numbers_pad_decimals = true
+autostyle_numbers_decimals = 2
+autostyle_emojis = true
+effect_weight = 0.0
+image_path = "res://"
+image_resize_to_font_size = true
+image_scale = 1.0
+meta_auto_https = true
+meta_cursor = 2
+override_bbcodeEnabled = true
+override_clipContents = false
+override_fitContent = true
 metadata/_custom_type_script = "uid://2f4fi75scxes"
 
 [node name="DialogueGui" type="Control" parent="Guis"]
@@ -405,6 +457,55 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 script = ExtResource("17_e2xy3")
+bbcode = ""
+effects = 2
+alignment = 1
+color = null
+emoji_scale = 1.0
+font = ""
+font_auto_setup = true
+font_size = 16
+font_bold_weight = 1.5
+font_italics_slant = 0.25
+font_italics_weight = -0.25
+shadow_enabled = false
+shadow_offset = 0.08
+shadow_alpha = 0.25
+shadow_outline_size = 0.1
+outline_size = 0
+outline_mode = 1
+outline_adjust = 0.8
+outline_hue_adjust = 0.0125
+nicer_quotes_enabled = true
+nicer_quotes_format = "“%s”"
+markdown_enabled = true
+markdown_format_bold = "[b]%s[]"
+markdown_format_italics = "[i]%s[]"
+markdown_format_bold_italics = "[bi]%s[]"
+markdown_format_highlight = "[green;sin]%s[]"
+markdown_format_bold2 = "[b]*%s*[]"
+markdown_format_italics2 = "[i;gray]*%s*[]"
+markdown_format_bold_italics2 = "%s"
+context_enabled = true
+context_path = NodePath("/root/State")
+context_state = {}
+context_rich_objects = true
+context_rich_ints = true
+context_rich_array = true
+autostyle_numbers = true
+autostyle_numbers_tag = "[salmon]%s[]"
+autostyle_numbers_pad_decimals = true
+autostyle_numbers_decimals = 2
+autostyle_emojis = true
+effect_weight = 0.0
+image_path = "res://"
+image_resize_to_font_size = true
+image_scale = 1.0
+meta_auto_https = true
+meta_cursor = 2
+override_bbcodeEnabled = true
+override_clipContents = false
+override_fitContent = true
 metadata/_custom_type_script = "uid://2f4fi75scxes"
 
 [node name="ColorRect" type="ColorRect" parent="Guis/DialogueGui/Dialogue/Base"]
@@ -423,7 +524,7 @@ mouse_filter = 2
 unique_name_in_owner = true
 script = ExtResource("17_h8oac")
 Characters = Dictionary[String, ExtResource("18_ss4f7")]({
-"audrey": SubResource("Resource_743ng")
+"audrey": SubResource("Resource_0m3r5")
 })
 metadata/_custom_type_script = "uid://csefxrb6ehpnb"
 

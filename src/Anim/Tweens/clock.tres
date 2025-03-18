@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="TweenAnimation" load_steps=2 format=3 uid="uid://b7tubblsiplu3"]
+
+[ext_resource type="Script" uid="uid://wnup1ahkxqji" path="res://addons/TweenSuite/TweenAnimation.gd" id="1_ik64q"]
+
+[resource]
+script = ExtResource("1_ik64q")
+step_0/0 = {
+"delay": 0.0,
+"duration": 1.5,
+"easing": -1,
+"final_value": 6.28319,
+"from": null,
+"from_current": false,
+"property": NodePath(":rotation"),
+"relative": false,
+"target": NodePath("."),
+"transition": 8,
+"type": 0
+}
+metadata/_custom_type_script = "uid://wnup1ahkxqji"

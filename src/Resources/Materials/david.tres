@@ -1,11 +1,21 @@
-[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://ca75ik5y2u4a2"]
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://ca75ik5y2u4a2"]
 
 [ext_resource type="Texture2D" uid="uid://dcthcg547baj0" path="res://src/Images/david bazookie.png" id="1_r2bob"]
+[ext_resource type="Texture2D" uid="uid://dbg81qc4cw8ao" path="res://src/Images/david bazookie normal.png" id="2_ikytg"]
 
 [resource]
-transparency = 1
-blend_mode = 1
-shading_mode = 0
 albedo_texture = ExtResource("1_r2bob")
-albedo_texture_force_srgb = true
-uv1_scale = Vector3(3, 2, 3)
+normal_enabled = true
+normal_texture = ExtResource("2_ikytg")
+rim_enabled = true
+rim_tint = 0.0
+clearcoat_roughness = 0.39
+anisotropy = -1.0
+heightmap_deep_parallax = true
+heightmap_min_layers = 1
+heightmap_max_layers = 49
+subsurf_scatter_strength = 0.09
+uv1_scale = Vector3(2, 2, 2)
+uv1_triplanar = true
+point_size = 128.0
+proximity_fade_distance = 55.75

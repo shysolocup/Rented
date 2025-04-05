@@ -4,11 +4,13 @@
 	
 	"Lines": {
 		"test": [
-			["googoo", ""]
+			["googoo"],
+			["buh buh"]
 		],
 		"test_2": [
-			["googoo", ""],
-			["buh buh", ""]
+			["googoo"],
+			["buh buh"],
+			["this is long just for the sake of being long\nI wanna make sure that it works well"]
 		]
 	}
 }

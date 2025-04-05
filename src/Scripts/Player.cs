@@ -113,8 +113,10 @@ public partial class Player : CharacterBody3D
 		float d = (float)delta;
 		if (MouseCaptured) JoypadControls(d);
 
-		Velocity = GetMove(d) + GetGravity(d) + GetJump(d);
-		MoveAndSlide();
+		if (Controllable || InDialog) {
+			Velocity = GetMove(d) + GetGravity(d) + GetJump(d);
+			MoveAndSlide();
+		}
 	}
 
 	public override async void _Process(double delta)
@@ -179,23 +181,20 @@ public partial class Player : CharacterBody3D
 
 	public async void SnatchInteract(InteractObject3D obj) 
 	{
+		Controllable = false;
 		CameraControllable = false;
 		InDialog = true;
 
 		Vector3 Direction = (obj.GlobalTransform.Origin - GlobalTransform.Origin).Normalized();
-		// Create a Basis that looks at the target; you may choose a custom up vector if needed
 		Basis TargetBasis = Basis.LookingAt(Direction, Vector3.Up);
-		// Convert the target basis to Euler angles (in radians)
 		Vector3 TargetRotation = TargetBasis.GetEuler();
 
-		float time = (obj.GlobalRotation - Camera.GlobalRotation).Length() / 1;
+		float time = (obj.GlobalRotation - Camera.GlobalRotation).Length() / 1.5f;
 
-		// Create a Tween to interpolate the "rotation:y" property.
 		Tween tween = Camera.CreateTween();
 
 		tween.Finished += () => tween.Dispose();
 
-		// Tween the "rotation:y" from current value to targetAngle over TweenDuration seconds.
 		tween.TweenProperty(Camera, "rotation", TargetRotation, time)
 			 .SetTrans(Tween.TransitionType.Quad)
 			 .SetEase(Tween.EaseType.Out);
@@ -203,17 +202,15 @@ public partial class Player : CharacterBody3D
 		DialogueData data = GetNode<DialogueData>("%DialogueData");
 		
 		await data.Play(obj.Character, obj.Line);
+
+		Controllable = true;
+		CameraControllable = true;
+		InDialog = false;
 	}
 
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
-
-		if (Input.IsActionJustPressed("dialogic_default_action") && InDialog) {
-			InDialog = false;
-			CameraControllable = true;
-		}
-
 		if (@event is InputEventMouseMotion && Input.MouseMode == Input.MouseModeEnum.Captured && CameraControllable) {
 			var mouse = @event as InputEventMouseMotion;
 			LookDirection = mouse.Relative * 0.001f;
@@ -279,6 +276,7 @@ public partial class Player : CharacterBody3D
 
 	private Vector3 GetMove(float delta)
 	{
+		if (!Controllable) return Vector3.Zero;
 		MoveDirection = Input.GetVector("MoveLeft", "MoveRight", "MoveForward", "MoveBack");
 
 		Vector3 _forward = Camera.GlobalTransform.Basis * new Vector3(MoveDirection.X, 0, MoveDirection.Y);
@@ -292,12 +290,14 @@ public partial class Player : CharacterBody3D
 
 	private Vector3 GetGravity(float delta)
 	{
+		if (!Controllable) return Vector3.Zero;
 		GravityVelocity = IsOnFloor() ? Vector3.Zero : GravityVelocity.MoveToward(new Vector3(0, Velocity.Y - Game.Instance.Gravity, 0), Game.Instance.Gravity * delta);
 		return GravityVelocity;
 	}
 
 	private Vector3 GetJump(float delta)
 	{
+		if (!Controllable) return Vector3.Zero;
 		if (Jumping) {
 			JumpVelocity = IsOnFloor() ? new Vector3(0, Mathf.Sqrt(4 * JumpHeight * Game.Instance.Gravity), 0) : JumpVelocity;
 			Jumping = false;

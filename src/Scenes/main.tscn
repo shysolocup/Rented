@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://s0ftqrddh5up"]
+[gd_scene load_steps=62 format=3 uid="uid://s0ftqrddh5up"]
 
 [ext_resource type="Script" uid="uid://cfoo1gxat5mv8" path="res://src/Libs/shylib/Classes/GameInstance.cs" id="1_doi2n"]
 [ext_resource type="Script" uid="uid://c1i8r8l2u4t3q" path="res://src/Scripts/Player.cs" id="1_wpbw3"]
@@ -20,11 +20,13 @@
 [ext_resource type="Script" uid="uid://csefxrb6ehpnb" path="res://src/Libs/shylib/Classes/DialogueData.cs" id="17_h8oac"]
 [ext_resource type="Material" uid="uid://bq8wyiwgdl28m" path="res://src/Resources/Materials/LockedIcon.tres" id="18_8i3or"]
 [ext_resource type="Shader" uid="uid://ceis0htp3v6r0" path="res://src/Resources/Shaders/text test.tres" id="18_p8ix8"]
+[ext_resource type="Script" uid="uid://ddft6gmiruiv1" path="res://src/Libs/shylib/Classes/DialogueCharacter.cs" id="19_jipul"]
+[ext_resource type="Script" uid="uid://csanood01b8b6" path="res://src/Libs/shylib/Classes/DialogueLine.cs" id="20_gc7xl"]
 [ext_resource type="Script" uid="uid://bq8h5fsdfxg7c" path="res://src/Scripts/PauseGui.cs" id="20_ss4f7"]
 [ext_resource type="Texture2D" uid="uid://bmtapdmr10o7e" path="res://src/Images/Dialog/dialog_top.png" id="21_3ahso"]
 [ext_resource type="Terrain3DAssets" uid="uid://dal3jhw6241qg" path="res://src/Resources/Terrain3D/data/assets.tres" id="21_k0mjx"]
 [ext_resource type="Script" uid="uid://c7txcaajl83ve" path="res://src/Scripts/RichTextEffects/Ghost.gd" id="23_10fqn"]
-[ext_resource type="FontFile" uid="uid://be2ygu4u3hve7" path="res://addons/gdterm/fonts/SourceCodePro-Light.ttf" id="23_jipul"]
+[ext_resource type="FontFile" uid="uid://djugwc4dfi8yc" path="res://src/Fonts/timesi.ttf" id="23_jipul"]
 [ext_resource type="Texture2D" uid="uid://dnitnwxecli3n" path="res://src/Images/Dialog/dialog_bottom.png" id="23_ng2wt"]
 [ext_resource type="Script" uid="uid://3mxc7rj1i0c8" path="res://src/Scripts/RichTextEffects/Matrix.gd" id="24_jipul"]
 [ext_resource type="Script" uid="uid://dqnhsynunwsf4" path="res://src/Scripts/Settings.gd" id="25_0m3r5"]
@@ -108,6 +110,79 @@ environment = SubResource("Environment_1fj5k")
 
 [sub_resource type="BoxMesh" id="BoxMesh_1dmmm"]
 
+[sub_resource type="Resource" id="Resource_jipul"]
+script = ExtResource("20_gc7xl")
+Text = "googoo"
+
+[sub_resource type="Resource" id="Resource_gc7xl"]
+script = ExtResource("20_gc7xl")
+Text = "googoo"
+
+[sub_resource type="Resource" id="Resource_n8c8y"]
+script = ExtResource("20_gc7xl")
+Text = "buh buh"
+
+[sub_resource type="Resource" id="Resource_8nlug"]
+script = ExtResource("19_jipul")
+Id = "audrey"
+DisplayName = "Audrey"
+Path = ""
+Lines = Dictionary[String, Array]({
+"test": Array[ExtResource("20_gc7xl")]([SubResource("Resource_jipul")]),
+"test_2": Array[ExtResource("20_gc7xl")]([SubResource("Resource_gc7xl"), SubResource("Resource_n8c8y")])
+})
+
+[sub_resource type="Resource" id="Resource_kp7xu"]
+script = ExtResource("20_gc7xl")
+Text = "lorem ipsum"
+
+[sub_resource type="Resource" id="Resource_07m1p"]
+script = ExtResource("19_jipul")
+Id = "chara"
+DisplayName = "Test"
+Path = ""
+Lines = Dictionary[String, Array]({
+"test": Array[ExtResource("20_gc7xl")]([SubResource("Resource_kp7xu")])
+})
+
+[sub_resource type="Resource" id="Resource_74nv7"]
+script = ExtResource("20_gc7xl")
+Text = "that's his name"
+
+[sub_resource type="Resource" id="Resource_pxl8w"]
+script = ExtResource("20_gc7xl")
+Text = "he's david"
+
+[sub_resource type="Resource" id="Resource_4v06e"]
+script = ExtResource("20_gc7xl")
+Text = "lorem ipsum"
+
+[sub_resource type="Resource" id="Resource_2udwj"]
+script = ExtResource("20_gc7xl")
+Text = "if you're seeing this you're not really meant to"
+
+[sub_resource type="Resource" id="Resource_jnspx"]
+script = ExtResource("20_gc7xl")
+Text = "I probably forgot to add a dialog for this object so it defaults to this"
+
+[sub_resource type="Resource" id="Resource_hxo8n"]
+script = ExtResource("20_gc7xl")
+Text = "if you don't mind could you report it"
+
+[sub_resource type="Resource" id="Resource_m1m7r"]
+script = ExtResource("20_gc7xl")
+Text = "or don't if you want to be mean :("
+
+[sub_resource type="Resource" id="Resource_yc6y7"]
+script = ExtResource("19_jipul")
+Id = "interact"
+DisplayName = ""
+Path = ""
+Lines = Dictionary[String, Array]({
+"david_bazookie": Array[ExtResource("20_gc7xl")]([SubResource("Resource_74nv7"), SubResource("Resource_pxl8w")]),
+"default": Array[ExtResource("20_gc7xl")]([SubResource("Resource_4v06e"), SubResource("Resource_2udwj"), SubResource("Resource_jnspx"), SubResource("Resource_hxo8n"), SubResource("Resource_m1m7r")])
+})
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0m3r5"]
 shader = ExtResource("18_p8ix8")
 
@@ -165,6 +240,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 8.4624)
 
 [node name="PlayerCamera" type="Camera3D" parent="Root3D/Cameras"]
 unique_name_in_owner = true
+process_mode = 3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.67761, 0)
 current = true
 fov = 90.0
@@ -183,6 +259,7 @@ Source = ExtResource("7_gf62h")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55775, 0.989776, 2.30029)
 freeze = true
 script = ExtResource("8_uf7b3")
+Line = "david_bazookie"
 
 [node name="Collision" type="CollisionShape3D" parent="Root3D/test"]
 shape = SubResource("BoxShape3D_j1e05")
@@ -192,15 +269,15 @@ mesh = SubResource("BoxMesh_xknod")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("13_ss4f7")
 
-[node name="RbxScript" type="Node" parent="Root3D/test"]
-script = ExtResource("2_i3adb")
-Source = ExtResource("7_ng2wt")
+[node name="Node" type="Node" parent="Root3D/test"]
+script = ExtResource("7_ng2wt")
 
 [node name="test2" type="RigidBody3D" parent="Root3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.47631, 1.07051, 3.56789)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55775, 0.989776, 5.04772)
 freeze = true
 script = ExtResource("8_uf7b3")
-Enabled = false
+Character = "audrey"
+Line = "test_2"
 
 [node name="Collision" type="CollisionShape3D" parent="Root3D/test2"]
 shape = SubResource("BoxShape3D_j1e05")
@@ -341,6 +418,11 @@ mouse_filter = 2
 [node name="DialogueData" type="Node" parent="Guis/DialogueGui/Dialogue"]
 unique_name_in_owner = true
 script = ExtResource("17_h8oac")
+Characters = Dictionary[String, ExtResource("19_jipul")]({
+"audrey": SubResource("Resource_8nlug"),
+"chara": SubResource("Resource_07m1p"),
+"interact": SubResource("Resource_yc6y7")
+})
 metadata/_custom_type_script = "uid://csefxrb6ehpnb"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Guis/DialogueGui/Dialogue"]

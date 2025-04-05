@@ -70,9 +70,9 @@ public partial class DebugCommandFunctions : GodotObject
 		DebugConsole.Log($"{command} - { ((helpText != "") ? helpText : "There is no help available.") }");
 	}
 
-	public void dialogue(string character, string line) {
+	public async void dialogue(string character, string line) {
 		DialogueData data = Game.Instance.GetNode<DialogueData>("%DialogueData");
-		data.Play(character, line);
+		await data.Play(character, line);
 	}
 
 	public string[] dialogue_args(string[] args) {

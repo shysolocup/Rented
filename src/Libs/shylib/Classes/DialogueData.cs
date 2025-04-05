@@ -23,11 +23,14 @@ public partial class DialogueData : Node
 	[Export] public Dictionary<string, DialogueCharacter> Characters = new();
 	public VBoxContainer DialogueContainer;
 	public VBoxContainer Base;
+	public string BaseCharacterText;
+	public string BaseText; 
 	private float id = 0;
 
 
-	public async Task<VBoxContainer> PlayByInstance(DialogueCharacter character, Array<DialogueLine> LineSequence) {
+	public async Task PlayByInstance(DialogueCharacter character, Array<DialogueLine> LineSequence) {
 		var inst = Base.Duplicate() as VBoxContainer;
+		inst.Show();
 
 		var chara = inst.GetChild<RichTextLabel>(0);
 		var text = inst.GetChild<RichTextLabel>(1);
@@ -36,28 +39,44 @@ public partial class DialogueData : Node
 		id += 0.1f;
 
 		DialogueContainer.AddChild(inst);
+		DialogueContainer.MoveChild(inst, 1);
+
+		GD.Print(LineSequence);
+
+		if (character.DisplayName.Trim().Length > 0) {
+			chara.Text = string.Format(BaseCharacterText, character.DisplayName);
+		}
+		else chara.Hide();
 
 		foreach ( DialogueLine line in LineSequence) {
-			chara.Text = string.Format(chara.Text, line.Text);
-			text.Text = string.Format(text.Text, line.Text);
+			text.Text = string.Format(BaseText, line.Text);
 
-			while (!Input.IsActionJustPressed("dialogic_default_action")) await Task.Delay(25);
+			await Task.Delay(100);
+
+			await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+
+			while (!Input.IsActionJustPressed("InteractDialog")) {
+				await Task.Delay(5);
+			}
+
+			GD.Print("pressed");
 		}
 
-		return inst;
+		inst.Free();
 	}
 
-	public async Task<VBoxContainer> Play(string character, string line) {
+	public async Task Play(string character = "interact", string line = "default") {
+		GD.Print(Characters);
 		DialogueCharacter charData = Characters[character];
 		Array<DialogueLine> lineData = charData.Lines[line];
 
-		return await PlayByInstance(charData, lineData);
+		await PlayByInstance(charData, lineData);
 	}
 
-	public async Task<VBoxContainer> PlayByCharacterInstance(DialogueCharacter character, string line) {
+	public async Task PlayByCharacterInstance(DialogueCharacter character, string line) {
 		Array<DialogueLine> lineData = character.Lines[line];
 		
-		return await PlayByInstance(character, lineData);
+		await PlayByInstance(character, lineData);
 	}
 
 
@@ -65,6 +84,8 @@ public partial class DialogueData : Node
 	{
 		DialogueContainer = GetParent<VBoxContainer>().GetChild<VBoxContainer>(1);
 		Base = DialogueContainer.GetNode<VBoxContainer>("Base");
+		BaseCharacterText = Base.GetChild<RichTextLabel>(0).Text;
+		BaseText = Base.GetChild<RichTextLabel>(1).Text;
 
 		if (!Engine.IsEditorHint()) {
 			DialogueContainer.GetNode<Control>("Base").Visible = false;
@@ -73,39 +94,39 @@ public partial class DialogueData : Node
 		using var chars = DirAccess.Open(Path);
 		
 		if (chars != null) {
-			chars.ListDirBegin();
-			string charFolder = chars.GetNext();
+			foreach (string charFile in chars.GetFiles()) {
+				if (charFile.EndsWith(".json")) {
+					using var chardata = FileAccess.Open(Path + "/" + charFile, FileAccess.ModeFlags.Read);
 
-			if (charFolder.EndsWith(".json")) {
-				using var chardata = FileAccess.Open(Path + "/" + charFolder, FileAccess.ModeFlags.Read);
+					var json = new Json();
+					json.Parse(chardata.GetAsText());
+					var data = (Dictionary<string, Variant>)json.Data;
 
-				var json = new Json();
-				json.Parse(chardata.GetAsText());
-				var data = (Dictionary<string, Variant>)json.Data;
+					var lines = (Dictionary<string, Variant>)data["Lines"];
 
-				var lines = (Dictionary<string, Variant>)data["Lines"];
+					var character = new DialogueCharacter() {
+						Id = (string)data["Id"],
+						DisplayName = (string)data["DisplayName"],
+						Lines = new()
+					};
 
-				var character = new DialogueCharacter() {
-					Id = (string)data["Id"],
-					DisplayName = (string)data["DisplayName"],
-				};
+					foreach ( (string lineId, Variant rawLineData) in lines) {
+						var linesData = (Array<Array<string>>)rawLineData;
+						character.Lines[lineId] = new();
 
-				foreach ( (string lineId, Variant rawLineData) in lines) {
-					var linesData = (Array<Array<string>>)rawLineData;
+						foreach( Array<string> lineData in linesData ) {
+							
+							var line = new DialogueLine() {
+								Text = lineData[0],
+								Audio = (lineData.ElementAtOrDefault(1) is string audio && audio.Length > 0) ? GetNode<AudioStreamPlayer>(audio) : null
+							};
 
-					foreach( Array<string> lineData in linesData ) {
-						var line = new DialogueLine() {
-							Text = lineData[0],
-							Audio = (lineData[1] is string audio && audio.Length > 0) ? GetNode<AudioStreamPlayer>(audio) : null
-						};
-
-						character.Lines[lineId].Add(line);
+							character.Lines[lineId].Add(line);
+						}
 					}
+
+					Characters[character.Id] = character;
 				}
-
-				Characters[character.Id] = character;
-
-				charFolder = chars.GetNext();
 			}
 		}
 

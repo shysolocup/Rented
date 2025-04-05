@@ -1,12 +1,14 @@
 {
 	"Id": "audrey" ,
 	"DisplayName": "Audrey",
-	"Color": [1,1,1,1],
-	"Font": "",
-	"Icon": "res://icon.svg",
 	
 	"Lines": {
-		"test": { "Text": "googoo", "Color": [1,1,1,1], "Audio": "" },
-		"test_2": { "Text": "googoo\nlongertest\nguh\nbuh", "Color": [1,0,0,1], "Audio": "" }
+		"test": [
+			["googoo", ""]
+		],
+		"test_2": [
+			["googoo", ""],
+			["buh buh", ""]
+		]
 	}
 }

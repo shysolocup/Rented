@@ -7,6 +7,9 @@ public partial class InteractObject3D : RigidBody3D
 
 	[Export] public bool Enabled = true;
 	[Export] public StandardMaterial3D HoverIcon;
+	[Export] public string Character = "interact";
+	[Export] public string Line = "default";
+	private Player Player;
 
 	private bool _pressed = false;
 	private bool _hovering = false;
@@ -24,12 +27,13 @@ public partial class InteractObject3D : RigidBody3D
 	public override void _Ready()
 	{
 		Crosshair = GetNode<Crosshair3D>("%Crosshair");
+		Player = GetNode<Player>("%Player");
 	}
 
 
 	public override void _Input(InputEvent @event) 
 	{
-		if (Input.IsMouseButtonPressed(MouseButton.Left) && Hovering) Pressed = true;
+		if (Input.IsActionJustPressed("Interact") && Hovering && !Player.InDialog) Pressed = true;
 		else Pressed = false;
 	}
 

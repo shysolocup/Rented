@@ -1,0 +1,18 @@
+{
+	"Id": "interact",
+	"DisplayName": "",
+	
+	"Lines": {
+		"david_bazookie": [
+			["that's his name"],
+			["he's david"]
+		],
+		"default": [
+			["lorem ipsum"],
+			["if you're seeing this you're not really meant to"],
+			["I probably forgot to add a dialog for this object so it defaults to this"],
+			["if you don't mind could you report it"],
+			["or don't if you want to be mean :("]
+		]
+	}
+}

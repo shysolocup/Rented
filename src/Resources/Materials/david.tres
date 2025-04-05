@@ -7,7 +7,6 @@
 albedo_texture = ExtResource("1_r2bob")
 normal_enabled = true
 normal_texture = ExtResource("2_ikytg")
-rim_enabled = true
 rim_tint = 0.0
 clearcoat_roughness = 0.39
 anisotropy = -1.0

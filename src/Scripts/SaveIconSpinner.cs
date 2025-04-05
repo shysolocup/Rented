@@ -4,9 +4,7 @@ using CoolGame;
 
 public partial class SaveIconSpinner : Sprite2D
 {
-	// Called when the node enters the scene tree for the first time.
-
-	// public Tween rotation = new Tween();
+	
 
 	public void Saving()
 	{

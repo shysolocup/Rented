@@ -14,7 +14,7 @@ step_0/0 = {
 "property": NodePath(":rotation"),
 "relative": false,
 "target": NodePath("."),
-"transition": 8,
+"transition": 9,
 "type": 0
 }
 metadata/_custom_type_script = "uid://wnup1ahkxqji"

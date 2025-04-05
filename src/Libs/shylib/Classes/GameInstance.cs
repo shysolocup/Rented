@@ -38,6 +38,9 @@ namespace CoolGame
 		/// </summary>
 		public static Dictionary<string, Variant> Saves { get; set; } = new();
 
+		/// <summary>
+		/// 
+		public static Dictionary<string, Variant> Settings {get; set; } = new();
 
 		/// <summary>
 		/// Template for saves
@@ -132,8 +135,8 @@ public partial class GameInstance : Node
 		}
 		set {
 			if (value != null && value != GetNode<WorldEnvironment>("%World").Environment) {
-                GetNode<WorldEnvironment>("%World").Environment = value;
-            }
+				GetNode<WorldEnvironment>("%World").Environment = value;
+			}
 		}
 	}
 
@@ -224,7 +227,7 @@ public partial class GameInstance : Node
 		using var writer = FileAccess.Open(Game.SavePath, FileAccess.ModeFlags.Write);
 
 		var json = new Json();
-		var res = json.Parse(source);
+		json.Parse(source);
 
 		var data = (Dictionary<string, Variant>)json.Data;
 		var basefile = (Dictionary<string, Variant>)data["file_base"];
@@ -240,7 +243,9 @@ public partial class GameInstance : Node
 			}
 			else if (exists && (bool)basefile["overwrite"]) {
 				foreach ( (string key, Variant value) in basefile) {
-
+					#region do smth with this
+					// this part is here if the save should overwrite or not
+					#endregion
 				}
 			}
 

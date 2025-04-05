@@ -3,6 +3,7 @@ using System;
 using Godot.Collections;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Threading.Tasks;
 
 [Tool]
 [GlobalClass]
@@ -19,62 +20,51 @@ public partial class DialogueData : Node
 	}
 
 	[Export] public DialogueCharacter CharacterEditor;
-	[Export] public DialogueLine DialogueEditor;
 	[Export] public Dictionary<string, DialogueCharacter> Characters = new();
-	public BoxContainer DialogueContainer;
+	public VBoxContainer DialogueContainer;
+	public VBoxContainer Base;
 	private float id = 0;
 
 
-	public RichTextLabel PlayByInstance(DialogueCharacter character, DialogueLine line) {
-		var inst = DialogueContainer.GetNode("Base").Duplicate() as RichTextLabel;
+	public async Task<VBoxContainer> PlayByInstance(DialogueCharacter character, Array<DialogueLine> LineSequence) {
+		var inst = Base.Duplicate() as VBoxContainer;
+
+		var chara = inst.GetChild<RichTextLabel>(0);
+		var text = inst.GetChild<RichTextLabel>(1);
 
 		inst.Name = id.ToString().Replace(".", "");
 		id += 0.1f;
 
 		DialogueContainer.AddChild(inst);
 
-		GD.Print(line.Color.ToHex());
+		foreach ( DialogueLine line in LineSequence) {
+			chara.Text = string.Format(chara.Text, line.Text);
+			text.Text = string.Format(text.Text, line.Text);
 
-		string text = string.Format(
-			(string)inst.Get("bbcode"), 
-			character.Color.ToHex(), // character color 
-			character.DisplayName, // character name
-			line.Color.ToHex(), // line color
-			line.Text // line text
-		);
-
-		inst.Set("bbcode", text);
-
-		if (line.Font != null) {
-			inst.Set("font", line.Font);
-		}
-
-		inst.Visible = true;
-
-		if (line.Audio != null) {
-			line.Audio.Play();
+			while (!Input.IsActionJustPressed("dialogic_default_action")) await Task.Delay(25);
 		}
 
 		return inst;
 	}
 
-	public RichTextLabel Play(string character, string line) {
+	public async Task<VBoxContainer> Play(string character, string line) {
 		DialogueCharacter charData = Characters[character];
-		DialogueLine lineData = charData.Lines[line];
+		Array<DialogueLine> lineData = charData.Lines[line];
 
-		return PlayByInstance(charData, lineData);
+		return await PlayByInstance(charData, lineData);
 	}
 
-	public RichTextLabel PlayByCharacterInstance(DialogueCharacter character, string line) {
-		DialogueLine lineData = character.Lines[line];
+	public async Task<VBoxContainer> PlayByCharacterInstance(DialogueCharacter character, string line) {
+		Array<DialogueLine> lineData = character.Lines[line];
 		
-		return PlayByInstance(character, lineData);
+		return await PlayByInstance(character, lineData);
 	}
 
 
 	public override void _Ready() 
 	{
-		DialogueContainer = GetParent<BoxContainer>();
+		DialogueContainer = GetParent<VBoxContainer>().GetChild<VBoxContainer>(1);
+		Base = DialogueContainer.GetNode<VBoxContainer>("Base");
 
 		if (!Engine.IsEditorHint()) {
 			DialogueContainer.GetNode<Control>("Base").Visible = false;
@@ -91,37 +81,27 @@ public partial class DialogueData : Node
 
 				var json = new Json();
 				json.Parse(chardata.GetAsText());
-
 				var data = (Dictionary<string, Variant>)json.Data;
 
-				var color1 = (Array<float>)data["Color"];
 				var lines = (Dictionary<string, Variant>)data["Lines"];
 
 				var character = new DialogueCharacter() {
 					Id = (string)data["Id"],
 					DisplayName = (string)data["DisplayName"],
-					Color = new Color(color1[0], color1[1], color1[2], color1[3])
 				};
 
 				foreach ( (string lineId, Variant rawLineData) in lines) {
-					var lineData = (Dictionary<string, Variant>)rawLineData;
-					var color2 = (Array<float>)lineData["Color"];
+					var linesData = (Array<Array<string>>)rawLineData;
 
-					var line = new DialogueLine() {
-						Text = (string)lineData["Text"],
-						Color = new Color(color1[0], color1[1], color1[2], color1[3]),
+					foreach( Array<string> lineData in linesData ) {
+						var line = new DialogueLine() {
+							Text = lineData[0],
+							Audio = (lineData[1] is string audio && audio.Length > 0) ? GetNode<AudioStreamPlayer>(audio) : null
+						};
 
-						Character = character
-					};
-
-					var audio = ((string)lineData["Audio"]).Trim();
-					if (audio.Length > 0) line.Audio = GetNode<AudioStreamPlayer>(audio);
-
-					character.Lines[lineId] = line;
+						character.Lines[lineId].Add(line);
+					}
 				}
-				
-				var font = ((string)data["Font"]).Trim();
-				if (font.Length > 0) character.Font = GD.Load<Font>(font);
 
 				Characters[character.Id] = character;
 

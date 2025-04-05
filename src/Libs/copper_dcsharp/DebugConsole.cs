@@ -67,7 +67,9 @@ public partial class DebugConsole : CanvasLayer
 
 
 		// Register built-in commands
-		await ToSignal(GetTree().CreateTimer(0.05), Timer.SignalName.Timeout);
+		SceneTreeTimer timer = GetTree().CreateTimer(0.05);
+		await ToSignal(timer, Timer.SignalName.Timeout);
+		timer.Dispose();
 
 		DebugCommandList.Init(this);
 	}

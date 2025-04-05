@@ -4,6 +4,7 @@ using Godot.Collections;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Threading;
 
 [Tool]
 [GlobalClass]
@@ -22,18 +23,46 @@ public partial class DialogueData : Node
 	[Export] public DialogueCharacter CharacterEditor;
 	[Export] public Dictionary<string, DialogueCharacter> Characters = new();
 	public VBoxContainer DialogueContainer;
-	public VBoxContainer Base;
-	public string BaseCharacterText;
-	public string BaseText; 
+	private VBoxContainer Base;
+	private string BaseCharacterText;
+	private string BaseText; 
+	private TextureRect Top;
+	private TextureRect Bottom;
 	private float id = 0;
 
 
+	private async Task FadeEffect(RichTextLabel label, string text, CancellationToken token)
+	{
+		for (int i = 0; i < text.Length; i++) {
+			if (token.IsCancellationRequested) break;
+
+			await Task.Delay(30);
+			
+			label.Text = string.Format(BaseText, i, i+1, text); 
+		}
+
+		token.ThrowIfCancellationRequested();
+	}
+
+
 	public async Task PlayByInstance(DialogueCharacter character, Array<DialogueLine> LineSequence) {
+		Tween toptween = Top.CreateTween();
+		toptween.Finished += () => toptween.Dispose();
+		toptween.TweenProperty(Top, "modulate:a", 1, 1.3f)
+		.SetTrans(Tween.TransitionType.Quad)
+		.SetEase(Tween.EaseType.Out);
+
+		Tween bottomtween = Top.CreateTween();
+		bottomtween.Finished += () => bottomtween.Dispose();
+		bottomtween.TweenProperty(Bottom, "modulate:a", 1, 1.3f)
+		.SetTrans(Tween.TransitionType.Quad)
+		.SetEase(Tween.EaseType.Out);
+		
 		var inst = Base.Duplicate() as VBoxContainer;
 		inst.Show();
 
 		var chara = inst.GetChild<RichTextLabel>(0);
-		var text = inst.GetChild<RichTextLabel>(1);
+		var textlabel = inst.GetChild<RichTextLabel>(1);
 
 		inst.Name = id.ToString().Replace(".", "");
 		id += 0.1f;
@@ -41,26 +70,43 @@ public partial class DialogueData : Node
 		DialogueContainer.AddChild(inst);
 		DialogueContainer.MoveChild(inst, 1);
 
-		GD.Print(LineSequence);
-
 		if (character.DisplayName.Trim().Length > 0) {
 			chara.Text = string.Format(BaseCharacterText, character.DisplayName);
 		}
 		else chara.Hide();
 
 		foreach ( DialogueLine line in LineSequence) {
-			text.Text = string.Format(BaseText, line.Text);
+			using var tokenSource = new CancellationTokenSource();
+			var token = tokenSource.Token;
 
-			await Task.Delay(100);
+			textlabel.Text = string.Format(BaseText, 0, 0, line.Text);
 
 			await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+			await GetTree().CreateTimer(0.05f).Guh();
 
-			while (!Input.IsActionJustPressed("InteractDialog")) {
-				await Task.Delay(5);
-			}
+			Task effect = FadeEffect(textlabel, line.Text, token);
 
-			GD.Print("pressed");
+			while (!Input.IsActionJustPressed("InteractDialog")) { await Task.Delay(5); };
+
+			tokenSource.Cancel();
+
+			await GetTree().CreateTimer(0.1f).Guh();
 		}
+
+		if (IsInstanceValid(toptween) && toptween.IsRunning()) toptween.Stop();
+		if (IsInstanceValid(bottomtween) && bottomtween.IsRunning()) bottomtween.Stop();
+
+		toptween = Top.CreateTween();
+		toptween.Finished += () => toptween.Dispose();
+		toptween.TweenProperty(Top, "modulate:a", 0, 1)
+		.SetTrans(Tween.TransitionType.Quad)
+		.SetEase(Tween.EaseType.Out);
+
+		bottomtween = Top.CreateTween();
+		bottomtween.Finished += () => bottomtween.Dispose();
+		bottomtween.TweenProperty(Bottom, "modulate:a", 0, 1)
+		.SetTrans(Tween.TransitionType.Quad)
+		.SetEase(Tween.EaseType.Out);
 
 		inst.Free();
 	}
@@ -83,6 +129,13 @@ public partial class DialogueData : Node
 	public override void _Ready() 
 	{
 		DialogueContainer = GetParent<VBoxContainer>().GetChild<VBoxContainer>(1);
+		
+		Top = DialogueContainer.GetNode<TextureRect>("Top");
+		Bottom = DialogueContainer.GetNode<TextureRect>("Bottom");
+
+		Top.Modulate = new Color(1, 1, 1, 0);
+		Bottom.Modulate = new Color(1, 1, 1, 0);
+
 		Base = DialogueContainer.GetNode<VBoxContainer>("Base");
 		BaseCharacterText = Base.GetChild<RichTextLabel>(0).Text;
 		BaseText = Base.GetChild<RichTextLabel>(1).Text;

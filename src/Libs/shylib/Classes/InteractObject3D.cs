@@ -9,6 +9,7 @@ public partial class InteractObject3D : RigidBody3D
 	[Export] public StandardMaterial3D HoverIcon;
 	[Export] public string Character = "interact";
 	[Export] public string Line = "default";
+	public bool Cooldown = false;
 	private Player Player;
 
 	private bool _pressed = false;

@@ -1,11 +1,18 @@
 using Godot;
 using System;
+using System.Collections;
 using System.Threading.Tasks;
 
 public partial class Lib : Node {}
 
+
 public static class Extensions
 {
+	public static async Task Guh(this SceneTreeTimer self) {
+		await self.ToSignal(self, Timer.SignalName.Timeout);
+		self.Dispose();
+	}
+
 	public static string ToHex(this Color self) {
 		(double r, double g, double b) = ( Mathf.Floor(self.R*255), Mathf.Floor(self.G*255), Mathf.Floor(self.B*255) );
 		return string.Format("0x{0:x}{1:x}{2:x}", (int)r, (int)g, (int)b);

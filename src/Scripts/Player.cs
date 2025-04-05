@@ -25,7 +25,8 @@ public partial class Player : CharacterBody3D
 
 	[Export] public bool TabbedIn = true;
 	[Export] public bool Controllable = true;
-	[Export] public bool CameraControllable = true;
+	[Export] public bool CameraRotationControllable = true;
+	[Export] public bool CameraPositionControllable = true;
 
 	[Export ] public bool Jumping = false;
 	[Export] public bool Sprinting = false;
@@ -113,10 +114,8 @@ public partial class Player : CharacterBody3D
 		float d = (float)delta;
 		if (MouseCaptured) JoypadControls(d);
 
-		if (Controllable || InDialog) {
-			Velocity = GetMove(d) + GetGravity(d) + GetJump(d);
-			MoveAndSlide();
-		}
+		Velocity = GetMove(d) + GetGravity(d) + GetJump(d);
+		MoveAndSlide();
 	}
 
 	public override async void _Process(double delta)
@@ -141,9 +140,9 @@ public partial class Player : CharacterBody3D
 			Inter = null;
 		}
 
-		if (Camera != null && CameraControllable) {
+		if (Camera != null) {
 
-			Camera.Position = new Vector3(Position.X, Position.Y + CameraOffset * Collision.Scale.Y, Position.Z); 
+			if (CameraPositionControllable) Camera.Position = new Vector3(Position.X, Position.Y + CameraOffset * Collision.Scale.Y, Position.Z); 
 			Rotation = new Vector3(Rotation.X, Camera.Rotation.Y, Rotation.Z);
 
 			// crouch effect
@@ -181,8 +180,13 @@ public partial class Player : CharacterBody3D
 
 	public async void SnatchInteract(InteractObject3D obj) 
 	{
+		if (obj.Cooldown) {
+			obj.Cooldown = false; return;
+		}
+
+		obj.Cooldown = true;
 		Controllable = false;
-		CameraControllable = false;
+		CameraRotationControllable = false;
 		InDialog = true;
 
 		Vector3 Direction = (obj.GlobalTransform.Origin - GlobalTransform.Origin).Normalized();
@@ -198,20 +202,30 @@ public partial class Player : CharacterBody3D
 		tween.TweenProperty(Camera, "rotation", TargetRotation, time)
 			 .SetTrans(Tween.TransitionType.Quad)
 			 .SetEase(Tween.EaseType.Out);
+
+		tween.Play();
 			
 		DialogueData data = GetNode<DialogueData>("%DialogueData");
 		
 		await data.Play(obj.Character, obj.Line);
 
 		Controllable = true;
-		CameraControllable = true;
+		CameraRotationControllable = true;
 		InDialog = false;
+
+		if (IsInstanceValid(tween) && tween.IsRunning()) tween.Stop();
+
+		SceneTreeTimer timer = GetTree().CreateTimer(0.3f);
+		await ToSignal(timer, Timer.SignalName.Timeout);
+		timer.Dispose();
+
+		obj.Cooldown = false;
 	}
 
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
-		if (@event is InputEventMouseMotion && Input.MouseMode == Input.MouseModeEnum.Captured && CameraControllable) {
+		if (@event is InputEventMouseMotion && Input.MouseMode == Input.MouseModeEnum.Captured) {
 			var mouse = @event as InputEventMouseMotion;
 			LookDirection = mouse.Relative * 0.001f;
 
@@ -220,22 +234,22 @@ public partial class Player : CharacterBody3D
 
 		// if (!controllable) return;
 		
-		if (Walking && !Sprinting && !Crouching && Input.IsActionPressed("Sprint") && Input.IsActionPressed("MoveForward")) {
+		if (Controllable && Walking && !Sprinting && !Crouching && Input.IsActionPressed("Sprint") && Input.IsActionPressed("MoveForward")) {
 			Sprinting = true;
 		}
 		
-		else if (Sprinting && (!Input.IsActionPressed("Sprint") || !Input.IsActionPressed("MoveForward") || !Walking)) {
+		else if (Controllable && Sprinting && (!Input.IsActionPressed("Sprint") || !Input.IsActionPressed("MoveForward") || !Walking)) {
 			Sprinting = false;
 		}
 
-		if (!Sprinting && !Crouching && IsOnFloor() && Input.IsActionPressed("Crouch")) {
+		if (Controllable && !Sprinting && !Crouching && IsOnFloor() && Input.IsActionPressed("Crouch")) {
 			Crouching = true;
 		}
-		else if (Crouching && !Input.IsActionPressed("Crouch")) {
+		else if (Controllable && Crouching && !Input.IsActionPressed("Crouch")) {
 			Crouching = false;
 		}
 
-		if (Input.IsActionPressed("Jump") && !Crouching) {
+		if (Controllable && Input.IsActionPressed("Jump") && !Crouching) {
 			Jumping = true;
 		}
 		// if (Input.IsActionJustPressed("Exit")) GetTree().Quit();
@@ -255,6 +269,7 @@ public partial class Player : CharacterBody3D
 
 	private void RotateCamera(float sens_mod = 1.0f)
 	{
+		if (!CameraRotationControllable) return;
 		Camera.RotateY( -(LookDirection.X * CameraSensitivity * sens_mod) );
 
 		var x = Mathf.Clamp(Camera.Rotation.X - LookDirection.Y * CameraSensitivity * sens_mod, -1.5f, 1.5f);
@@ -290,14 +305,12 @@ public partial class Player : CharacterBody3D
 
 	private Vector3 GetGravity(float delta)
 	{
-		if (!Controllable) return Vector3.Zero;
 		GravityVelocity = IsOnFloor() ? Vector3.Zero : GravityVelocity.MoveToward(new Vector3(0, Velocity.Y - Game.Instance.Gravity, 0), Game.Instance.Gravity * delta);
 		return GravityVelocity;
 	}
 
 	private Vector3 GetJump(float delta)
 	{
-		if (!Controllable) return Vector3.Zero;
 		if (Jumping) {
 			JumpVelocity = IsOnFloor() ? new Vector3(0, Mathf.Sqrt(4 * JumpHeight * Game.Instance.Gravity), 0) : JumpVelocity;
 			Jumping = false;
@@ -305,7 +318,7 @@ public partial class Player : CharacterBody3D
 			return JumpVelocity;
 		}
 
-		JumpVelocity = IsOnFloor() ? Vector3.Zero : JumpVelocity.MoveToward(Vector3.Zero, Game.Instance.Gravity * delta);
+		JumpVelocity = (!Controllable || IsOnFloor()) ? Vector3.Zero : JumpVelocity.MoveToward(Vector3.Zero, Game.Instance.Gravity * delta);
 		return JumpVelocity;
 	}
 

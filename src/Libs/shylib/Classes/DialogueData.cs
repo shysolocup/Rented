@@ -25,6 +25,7 @@ public partial class DialogueData : Node
 	public Dictionary<string, Array<DialogueSequence>> Lines = new();
 	public VBoxContainer DialogueContainer;
 	private VBoxContainer Base;
+	private TextureRect Background;
 	private string BaseCharacterText;
 	private string BaseText; 
 	private TextureRect Top;
@@ -56,6 +57,12 @@ public partial class DialogueData : Node
 		Tween bottomtween = Top.CreateTween();
 		bottomtween.Finished += () => bottomtween.Dispose();
 		bottomtween.TweenProperty(Bottom, "modulate:a", 1, 1.3f)
+		.SetTrans(Tween.TransitionType.Quad)
+		.SetEase(Tween.EaseType.Out);
+
+		Tween bgtween = Top.CreateTween();
+		bgtween.Finished += () => bgtween.Dispose();
+		bgtween.TweenProperty(Background, "modulate:a", 1, 1.3f)
 		.SetTrans(Tween.TransitionType.Quad)
 		.SetEase(Tween.EaseType.Out);
 		
@@ -112,6 +119,12 @@ public partial class DialogueData : Node
 		.SetTrans(Tween.TransitionType.Quad)
 		.SetEase(Tween.EaseType.Out);
 
+		bgtween = Top.CreateTween();
+		bgtween.Finished += () => bgtween.Dispose();
+		bgtween.TweenProperty(Background, "modulate:a", 0, 1)
+		.SetTrans(Tween.TransitionType.Quad)
+		.SetEase(Tween.EaseType.Out);
+
 		inst.Free();
 	}
 
@@ -126,13 +139,17 @@ public partial class DialogueData : Node
 
 	public override void _Ready() 
 	{
-		DialogueContainer = GetParent<VBoxContainer>().GetChild<VBoxContainer>(1);
+		Node parent = GetParent();
+
+		DialogueContainer = parent.GetChild<VBoxContainer>(1);
+		Background = parent.GetChild<TextureRect>(2);
 		
 		Top = DialogueContainer.GetNode<TextureRect>("Top");
 		Bottom = DialogueContainer.GetNode<TextureRect>("Bottom");
 
 		Top.Modulate = new Color(1, 1, 1, 0);
 		Bottom.Modulate = new Color(1, 1, 1, 0);
+		Background.Modulate = new Color(1, 1, 1, 0);
 
 		Base = DialogueContainer.GetNode<VBoxContainer>("Base");
 		BaseCharacterText = Base.GetChild<RichTextLabel>(0).Text;

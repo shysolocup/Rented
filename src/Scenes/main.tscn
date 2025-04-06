@@ -21,9 +21,9 @@
 [ext_resource type="Script" uid="uid://bq8h5fsdfxg7c" path="res://src/Scripts/PauseGui.cs" id="20_ss4f7"]
 [ext_resource type="Texture2D" uid="uid://bmtapdmr10o7e" path="res://src/Images/Dialog/dialog_top.png" id="21_3ahso"]
 [ext_resource type="Terrain3DAssets" uid="uid://dal3jhw6241qg" path="res://src/Resources/Terrain3D/data/assets.tres" id="21_k0mjx"]
+[ext_resource type="Texture2D" uid="uid://d01hk0epfwk0e" path="res://src/Images/Dialog/dialog_background.png" id="22_0m3r5"]
 [ext_resource type="Script" uid="uid://c7txcaajl83ve" path="res://src/Scripts/RichTextEffects/Ghost.gd" id="23_10fqn"]
 [ext_resource type="FontFile" uid="uid://djugwc4dfi8yc" path="res://src/Fonts/timesi.ttf" id="23_jipul"]
-[ext_resource type="Texture2D" uid="uid://dnitnwxecli3n" path="res://src/Images/Dialog/dialog_bottom.png" id="23_ng2wt"]
 [ext_resource type="Script" uid="uid://3mxc7rj1i0c8" path="res://src/Scripts/RichTextEffects/Matrix.gd" id="24_jipul"]
 [ext_resource type="Script" uid="uid://dqnhsynunwsf4" path="res://src/Scripts/Settings.gd" id="25_0m3r5"]
 [ext_resource type="Script" uid="uid://muq0ch483pvr" path="res://src/Libs/shylib/Classes/Discord/DiscordController.cs" id="25_p8ix8"]
@@ -327,15 +327,15 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Dialogue" type="VBoxContainer" parent="Guis/DialogueGui"]
+[node name="Dialogue" type="CenterContainer" parent="Guis/DialogueGui"]
 unique_name_in_owner = true
 layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
+anchors_preset = -1
+anchor_top = 0.608
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -73.0
-offset_bottom = -23.0
+offset_top = -24.984
+offset_bottom = -25.0
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
@@ -346,6 +346,7 @@ script = ExtResource("17_h8oac")
 metadata/_custom_type_script = "uid://csefxrb6ehpnb"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Guis/DialogueGui/Dialogue"]
+z_index = 10
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
@@ -354,15 +355,15 @@ theme_override_constants/separation = 20
 [node name="Top" type="TextureRect" parent="Guis/DialogueGui/Dialogue/VBoxContainer"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
-mouse_filter = 2
 texture = ExtResource("21_3ahso")
-stretch_mode = 3
+stretch_mode = 2
 
 [node name="Base" type="VBoxContainer" parent="Guis/DialogueGui/Dialogue/VBoxContainer"]
+z_index = 10
 layout_mode = 2
 
 [node name="Character" type="RichTextLabel" parent="Guis/DialogueGui/Dialogue/VBoxContainer/Base"]
-z_index = 56
+z_index = 10
 material = SubResource("ShaderMaterial_0m3r5")
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("23_jipul")
@@ -374,7 +375,7 @@ vertical_alignment = 1
 custom_effects = [SubResource("RichTextEffect_gc7xl"), SubResource("RichTextEffect_n8c8y")]
 
 [node name="Text" type="RichTextLabel" parent="Guis/DialogueGui/Dialogue/VBoxContainer/Base"]
-z_index = 56
+z_index = 10
 material = SubResource("ShaderMaterial_0m3r5")
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("23_jipul")
@@ -387,7 +388,7 @@ vertical_alignment = 1
 custom_effects = [SubResource("RichTextEffect_gc7xl"), SubResource("RichTextEffect_n8c8y")]
 
 [node name="Elipses" type="RichTextLabel" parent="Guis/DialogueGui/Dialogue/VBoxContainer/Base"]
-z_index = 56
+z_index = 10
 material = SubResource("ShaderMaterial_0m3r5")
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("23_jipul")
@@ -401,9 +402,14 @@ custom_effects = [SubResource("RichTextEffect_gc7xl"), SubResource("RichTextEffe
 [node name="Bottom" type="TextureRect" parent="Guis/DialogueGui/Dialogue/VBoxContainer"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
-mouse_filter = 2
-texture = ExtResource("23_ng2wt")
-stretch_mode = 3
+texture = ExtResource("21_3ahso")
+stretch_mode = 2
+flip_v = true
+
+[node name="Background" type="TextureRect" parent="Guis/DialogueGui/Dialogue"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+texture = ExtResource("22_0m3r5")
 
 [node name="PauseGui" type="Control" parent="Guis"]
 unique_name_in_owner = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=3 uid="uid://s0ftqrddh5up"]
+[gd_scene load_steps=45 format=3 uid="uid://s0ftqrddh5up"]
 
 [ext_resource type="Script" uid="uid://cfoo1gxat5mv8" path="res://src/Libs/shylib/Classes/GameInstance.cs" id="1_doi2n"]
 [ext_resource type="Script" uid="uid://c1i8r8l2u4t3q" path="res://src/Scripts/Player.cs" id="1_wpbw3"]
@@ -12,16 +12,12 @@
 [ext_resource type="Shader" uid="uid://csra1tvugixyj" path="res://src/Resources/Shaders/test.tres" id="9_ng2wt"]
 [ext_resource type="AudioStream" uid="uid://nvube6beo7t" path="res://src/Sounds/its happening david bazookie.mp3" id="10_h8oac"]
 [ext_resource type="Environment" uid="uid://d4kl3puo0e8dw" path="res://src/Resources/Skies/Day.tres" id="11_ss4f7"]
-[ext_resource type="Script" uid="uid://by2d21w372040" path="res://addons/TweenSuite/TweenNode.gd" id="12_8i3or"]
-[ext_resource type="Resource" uid="uid://b7tubblsiplu3" path="res://src/Anim/Tweens/clock.tres" id="13_p8ix8"]
 [ext_resource type="Material" uid="uid://ca75ik5y2u4a2" path="res://src/Resources/Materials/david.tres" id="13_ss4f7"]
 [ext_resource type="Material" uid="uid://ce0vtdxnqp031" path="res://src/Resources/Materials/DefaultIcon.tres" id="16_ss4f7"]
 [ext_resource type="Material" uid="uid://djkfa7xtdg63i" path="res://src/Resources/Materials/DefaultHoverIcon.tres" id="17_743ng"]
 [ext_resource type="Script" uid="uid://csefxrb6ehpnb" path="res://src/Libs/shylib/Classes/DialogueData.cs" id="17_h8oac"]
 [ext_resource type="Material" uid="uid://bq8wyiwgdl28m" path="res://src/Resources/Materials/LockedIcon.tres" id="18_8i3or"]
 [ext_resource type="Shader" uid="uid://ceis0htp3v6r0" path="res://src/Resources/Shaders/text test.tres" id="18_p8ix8"]
-[ext_resource type="Script" uid="uid://ddft6gmiruiv1" path="res://src/Libs/shylib/Classes/DialogueCharacter.cs" id="19_jipul"]
-[ext_resource type="Script" uid="uid://csanood01b8b6" path="res://src/Libs/shylib/Classes/DialogueLine.cs" id="20_gc7xl"]
 [ext_resource type="Script" uid="uid://bq8h5fsdfxg7c" path="res://src/Scripts/PauseGui.cs" id="20_ss4f7"]
 [ext_resource type="Texture2D" uid="uid://bmtapdmr10o7e" path="res://src/Images/Dialog/dialog_top.png" id="21_3ahso"]
 [ext_resource type="Terrain3DAssets" uid="uid://dal3jhw6241qg" path="res://src/Resources/Terrain3D/data/assets.tres" id="21_k0mjx"]
@@ -33,6 +29,8 @@
 [ext_resource type="Script" uid="uid://muq0ch483pvr" path="res://src/Libs/shylib/Classes/Discord/DiscordController.cs" id="25_p8ix8"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_h8oac"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ng2wt"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_y0axr"]
 
@@ -110,92 +108,6 @@ environment = SubResource("Environment_1fj5k")
 
 [sub_resource type="BoxMesh" id="BoxMesh_1dmmm"]
 
-[sub_resource type="Resource" id="Resource_jipul"]
-script = ExtResource("20_gc7xl")
-Text = "googoo"
-
-[sub_resource type="Resource" id="Resource_gc7xl"]
-script = ExtResource("20_gc7xl")
-Text = "buh buh"
-
-[sub_resource type="Resource" id="Resource_n8c8y"]
-script = ExtResource("20_gc7xl")
-Text = "googoo"
-
-[sub_resource type="Resource" id="Resource_8nlug"]
-script = ExtResource("20_gc7xl")
-Text = "buh buh"
-
-[sub_resource type="Resource" id="Resource_kp7xu"]
-script = ExtResource("20_gc7xl")
-Text = "this is long just for the sake of being long
-I wanna make sure that it works well"
-
-[sub_resource type="Resource" id="Resource_07m1p"]
-script = ExtResource("19_jipul")
-Id = "audrey"
-DisplayName = "Audrey"
-Path = ""
-Lines = Dictionary[String, Array]({
-"test": Array[ExtResource("20_gc7xl")]([SubResource("Resource_jipul"), SubResource("Resource_gc7xl")]),
-"test_2": Array[ExtResource("20_gc7xl")]([SubResource("Resource_n8c8y"), SubResource("Resource_8nlug"), SubResource("Resource_kp7xu")])
-})
-
-[sub_resource type="Resource" id="Resource_74nv7"]
-script = ExtResource("20_gc7xl")
-Text = "lorem ipsum"
-
-[sub_resource type="Resource" id="Resource_pxl8w"]
-script = ExtResource("20_gc7xl")
-Text = "googoo"
-
-[sub_resource type="Resource" id="Resource_4v06e"]
-script = ExtResource("19_jipul")
-Id = "chara"
-DisplayName = "Test"
-Path = ""
-Lines = Dictionary[String, Array]({
-"test": Array[ExtResource("20_gc7xl")]([SubResource("Resource_74nv7"), SubResource("Resource_pxl8w")])
-})
-
-[sub_resource type="Resource" id="Resource_2udwj"]
-script = ExtResource("20_gc7xl")
-Text = "that's his name"
-
-[sub_resource type="Resource" id="Resource_jnspx"]
-script = ExtResource("20_gc7xl")
-Text = "he's david."
-
-[sub_resource type="Resource" id="Resource_hxo8n"]
-script = ExtResource("20_gc7xl")
-Text = "lorem ipsum"
-
-[sub_resource type="Resource" id="Resource_m1m7r"]
-script = ExtResource("20_gc7xl")
-Text = "if you're seeing this you're not really meant to"
-
-[sub_resource type="Resource" id="Resource_yc6y7"]
-script = ExtResource("20_gc7xl")
-Text = "I probably forgot to add a dialog for this object so it defaults to this"
-
-[sub_resource type="Resource" id="Resource_5lvqn"]
-script = ExtResource("20_gc7xl")
-Text = "if you don't mind could you report it"
-
-[sub_resource type="Resource" id="Resource_klal5"]
-script = ExtResource("20_gc7xl")
-Text = "or don't if you want to be mean :("
-
-[sub_resource type="Resource" id="Resource_j6p0v"]
-script = ExtResource("19_jipul")
-Id = "interact"
-DisplayName = ""
-Path = ""
-Lines = Dictionary[String, Array]({
-"david_bazookie": Array[ExtResource("20_gc7xl")]([SubResource("Resource_2udwj"), SubResource("Resource_jnspx")]),
-"default": Array[ExtResource("20_gc7xl")]([SubResource("Resource_hxo8n"), SubResource("Resource_m1m7r"), SubResource("Resource_yc6y7"), SubResource("Resource_5lvqn"), SubResource("Resource_klal5")])
-})
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0m3r5"]
 shader = ExtResource("18_p8ix8")
 
@@ -221,6 +133,11 @@ script = ExtResource("1_wpbw3")
 
 [node name="Collision" type="CollisionShape3D" parent="Root3D/Player"]
 shape = SubResource("CapsuleShape3D_h8oac")
+
+[node name="CrouchCollision" type="CollisionShape3D" parent="Root3D/Player"]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, -0.013395, -0.517402, 0.0338128)
+shape = SubResource("SphereShape3D_ng2wt")
+disabled = true
 
 [node name="Mesh" type="MeshInstance3D" parent="Root3D/Player"]
 cast_shadow = 0
@@ -273,7 +190,7 @@ Source = ExtResource("7_gf62h")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55775, 0.989776, 2.30029)
 freeze = true
 script = ExtResource("8_uf7b3")
-Line = "david_bazookie"
+Line = "interact_david_bazookie"
 
 [node name="Collision" type="CollisionShape3D" parent="Root3D/test"]
 shape = SubResource("BoxShape3D_j1e05")
@@ -290,8 +207,7 @@ script = ExtResource("7_ng2wt")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55775, 0.989776, 5.04772)
 freeze = true
 script = ExtResource("8_uf7b3")
-Character = "audrey"
-Line = "test_2"
+Line = "convo_test"
 
 [node name="Collision" type="CollisionShape3D" parent="Root3D/test2"]
 shape = SubResource("BoxShape3D_j1e05")
@@ -339,11 +255,6 @@ position = Vector2(-42, -42)
 scale = Vector2(0.64, 0.64)
 texture = ExtResource("2_up28s")
 script = ExtResource("3_35lay")
-
-[node name="TweenNode" type="Node" parent="Guis/SaveGui/SaveIcon"]
-script = ExtResource("12_8i3or")
-animation = ExtResource("13_p8ix8")
-metadata/_custom_type_script = "uid://by2d21w372040"
 
 [node name="CrosshairGui" type="Control" parent="Guis"]
 top_level = true
@@ -432,11 +343,6 @@ mouse_filter = 2
 [node name="DialogueData" type="Node" parent="Guis/DialogueGui/Dialogue"]
 unique_name_in_owner = true
 script = ExtResource("17_h8oac")
-Characters = Dictionary[String, ExtResource("19_jipul")]({
-"audrey": SubResource("Resource_07m1p"),
-"chara": SubResource("Resource_4v06e"),
-"interact": SubResource("Resource_j6p0v")
-})
 metadata/_custom_type_script = "uid://csefxrb6ehpnb"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Guis/DialogueGui/Dialogue"]

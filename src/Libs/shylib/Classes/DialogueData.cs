@@ -5,6 +5,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
+using Microsoft.VisualBasic;
 
 [Tool]
 [GlobalClass]
@@ -20,8 +21,8 @@ public partial class DialogueData : Node
 		}
 	}
 
-	[Export] public DialogueCharacter CharacterEditor;
-	[Export] public Dictionary<string, DialogueCharacter> Characters = new();
+
+	public Dictionary<string, Array<DialogueSequence>> Lines = new();
 	public VBoxContainer DialogueContainer;
 	private VBoxContainer Base;
 	private string BaseCharacterText;
@@ -45,7 +46,7 @@ public partial class DialogueData : Node
 	}
 
 
-	public async Task PlayByInstance(DialogueCharacter character, Array<DialogueLine> LineSequence) {
+	public async Task PlayByInstance(Array<DialogueSequence> sequences) {
 		Tween toptween = Top.CreateTween();
 		toptween.Finished += () => toptween.Dispose();
 		toptween.TweenProperty(Top, "modulate:a", 1, 1.3f)
@@ -70,27 +71,30 @@ public partial class DialogueData : Node
 		DialogueContainer.AddChild(inst);
 		DialogueContainer.MoveChild(inst, 1);
 
-		if (character.DisplayName.Trim().Length > 0) {
-			chara.Text = string.Format(BaseCharacterText, character.DisplayName);
-		}
-		else chara.Hide();
+		foreach ( DialogueSequence sequence in sequences) {
+			if (sequence.Character.Trim().Length > 0) {
+				chara.Text = string.Format(BaseCharacterText, sequence.Character);
+				chara.Show();
+			}
+			else chara.Hide();
 
-		foreach ( DialogueLine line in LineSequence) {
-			using var tokenSource = new CancellationTokenSource();
-			var token = tokenSource.Token;
+			foreach (DialogueLine line in sequence.Lines) {
+				using var tokenSource = new CancellationTokenSource();
+				var token = tokenSource.Token;
 
-			textlabel.Text = string.Format(BaseText, 0, 0, line.Text);
+				textlabel.Text = string.Format(BaseText, 0, 0, line.Text);
 
-			await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
-			await GetTree().CreateTimer(0.05f).Guh();
+				await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+				await GetTree().CreateTimer(0.05f).Guh();
 
-			Task effect = FadeEffect(textlabel, line.Text, token);
+				Task effect = FadeEffect(textlabel, line.Text, token);
 
-			while (!Input.IsActionJustPressed("InteractDialog")) { await Task.Delay(5); };
+				while (!Input.IsActionJustPressed("InteractDialog")) { await Task.Delay(5); };
 
-			tokenSource.Cancel();
+				tokenSource.Cancel();
 
-			await GetTree().CreateTimer(0.1f).Guh();
+				await GetTree().CreateTimer(0.1f).Guh();
+			}
 		}
 
 		if (IsInstanceValid(toptween) && toptween.IsRunning()) toptween.Stop();
@@ -111,18 +115,12 @@ public partial class DialogueData : Node
 		inst.Free();
 	}
 
-	public async Task Play(string character = "interact", string line = "default") {
-		GD.Print(Characters);
-		DialogueCharacter charData = Characters[character];
-		Array<DialogueLine> lineData = charData.Lines[line];
-
-		await PlayByInstance(charData, lineData);
+	public async Task Play(string line = "interact_default") {
+		await PlayByInstance(Lines[line]);
 	}
 
-	public async Task PlayByCharacterInstance(DialogueCharacter character, string line) {
-		Array<DialogueLine> lineData = character.Lines[line];
-		
-		await PlayByInstance(character, lineData);
+	public async Task PlayByCharacterInstance(string line) {		
+		await PlayByInstance(Lines[line]);
 	}
 
 
@@ -144,47 +142,79 @@ public partial class DialogueData : Node
 			DialogueContainer.GetNode<Control>("Base").Visible = false;
 		}
 
-		using var chars = DirAccess.Open(Path);
-		
-		if (chars != null) {
-			foreach (string charFile in chars.GetFiles()) {
-				if (charFile.EndsWith(".json")) {
-					using var chardata = FileAccess.Open(Path + "/" + charFile, FileAccess.ModeFlags.Read);
+		using var convodata = FileAccess.Open("res://src/Data/Dialog/Convos.json", FileAccess.ModeFlags.Read);
 
-					var json = new Json();
-					json.Parse(chardata.GetAsText());
-					var data = (Dictionary<string, Variant>)json.Data;
+		var convojson = new Json();
+		convojson.Parse(convodata.GetAsText());
+		var convos = (
+			Dictionary<string, 
+				Array< // line:[], line:[]
+					Array<Variant> // "character, []
+				>
+			>
+		)convojson.Data;
 
-					var lines = (Dictionary<string, Variant>)data["Lines"];
+		foreach ( (string lineid, Array<Array<Variant>> sequences) in convos) {
+			Lines[$"convo_{lineid}"] = new();
 
-					var character = new DialogueCharacter() {
-						Id = (string)data["Id"],
-						DisplayName = (string)data["DisplayName"],
-						Lines = new()
-					};
+			foreach ( Array<Variant> sequenceData in sequences) {
+				string character = (string)sequenceData[0];
+				Array<Variant> lines = (Array<Variant>)sequenceData[1];
 
-					foreach ( (string lineId, Variant rawLineData) in lines) {
-						var linesData = (Array<Array<string>>)rawLineData;
-						character.Lines[lineId] = new();
+				DialogueSequence sequence = new() {
+					Character = character
+				};
 
-						foreach( Array<string> lineData in linesData ) {
-							
-							var line = new DialogueLine() {
-								Text = lineData[0],
-								Audio = (lineData.ElementAtOrDefault(1) is string audio && audio.Length > 0) ? GetNode<AudioStreamPlayer>(audio) : null
-							};
+				foreach ( Variant rawLineData in lines ) {
 
-							character.Lines[lineId].Add(line);
-						}
+					DialogueLine line;
+					
+					if (rawLineData.VariantType == Variant.Type.Array) {
+						Array<string> lineArr = (Array<string>)rawLineData;
+
+						line = new DialogueLine() {
+							Text = lineArr[0],
+							Audio = (lineArr.ElementAtOrDefault(1) is string audio && audio.Length > 0) ? GetNode<AudioStreamPlayer>(audio) : null
+						};
+					}
+					else {
+						line = new DialogueLine() {
+							Text = (string)rawLineData,
+							Audio = null
+						};
 					}
 
-					Characters[character.Id] = character;
-				}
+					sequence.Lines.Add(line);
+				};
+
+				Lines[$"convo_{lineid}"].Add(sequence);
 			}
 		}
 
-		else {
-			GD.Print("An error occurred when trying to access the path.");
+		using var interactdata = FileAccess.Open("res://src/Data/Dialog/Interacts.json", FileAccess.ModeFlags.Read);
+
+		var interactjson = new Json();
+		interactjson.Parse(interactdata.GetAsText());
+		var interacts = (
+			Dictionary<string, Array<string>>
+		)interactjson.Data;
+
+		foreach ( (string lineid, Array<string> sequences) in interacts) {
+			Lines[$"interact_{lineid}"] = new();
+
+			DialogueSequence sequence = new() {
+				Character = "",
+			};
+
+			foreach ( string text in sequences) {
+				sequence.Lines.Add(new DialogueLine() {
+					Text = text
+				});
+			};
+
+			Lines[$"interact_{lineid}"].Add(sequence);
 		}
+
+		GD.Print(Lines);
 	}
 }

@@ -70,13 +70,9 @@ public partial class DebugCommandFunctions : GodotObject
 		DebugConsole.Log($"{command} - { ((helpText != "") ? helpText : "There is no help available.") }");
 	}
 
-	public async void dialogue(string character, string line) {
+	public async void dialog(string character, string line) {
 		DialogueData data = Game.Instance.GetNode<DialogueData>("%DialogueData");
-		await data.Play(character, line);
-	}
-
-	public string[] dialogue_args(string[] args) {
-		return args;
+		await data.Play(line);
 	}
 
 	public void fullbright(bool value) {
@@ -98,8 +94,8 @@ public static class DebugCommandList
 		
 		var funcs = new DebugCommandFunctions();
 
-		var chardata = Game.Instance.GetNode<DialogueData>("%DialogueData");
-		var chars = new Array<string>(chardata.Characters.Keys);
+		var dialog = Game.Instance.GetNode<DialogueData>("%DialogueData");
+		var lines = new Array<string>(dialog.Lines.Keys);
 
 
 		#region loadroom
@@ -164,24 +160,18 @@ public static class DebugCommandList
 
 
 		new DebugCommand {
-			Id = "dialogue",
-			HelpText = "Display dialogue from a character",
+			Id = "dialog",
+			HelpText = "Display a dialog sequence",
 
 			Parameters = new() {
 				new DebugParameter {
-					Name = "character",
+					Name = "lines",
 					Type = DebugParameterType.Options,
-					Options = chars
-				},
-
-				new DebugParameter {
-					Name = "line",
-					Type = DebugParameterType.Options,
-					CallOptions = new Callable(funcs, DebugCommandFunctions.MethodName.dialogue_args)
+					Options = lines
 				}
 			},
 
-			Function = new Callable(funcs, DebugCommandFunctions.MethodName.dialogue)
+			Function = new Callable(funcs, DebugCommandFunctions.MethodName.dialog)
 		}.AddTo(console);
 
 

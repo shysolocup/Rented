@@ -7,8 +7,7 @@ public partial class InteractObject3D : RigidBody3D
 
 	[Export] public bool Enabled = true;
 	[Export] public StandardMaterial3D HoverIcon;
-	[Export] public string Character = "interact";
-	[Export] public string Line = "default";
+	[Export] public string Line = "interact_default";
 	public bool Cooldown = false;
 	private Player Player;
 
@@ -34,7 +33,7 @@ public partial class InteractObject3D : RigidBody3D
 
 	public override void _Input(InputEvent @event) 
 	{
-		if (Input.IsActionJustPressed("Interact") && Hovering && !Player.InDialog) Pressed = true;
+		if (Input.IsActionJustPressed("Interact") && Hovering && !Player.InDialog && !Cooldown) Pressed = true;
 		else Pressed = false;
 	}
 
@@ -47,7 +46,7 @@ public partial class InteractObject3D : RigidBody3D
 
 		set {
 			if (value != _pressed) {
-				if (Enabled) _pressed = value;
+				_pressed = (!Enabled || Cooldown) ? false : value;
 				_Press();
 				EmitSignal(SignalName.Press);
 			}
@@ -61,7 +60,7 @@ public partial class InteractObject3D : RigidBody3D
 
 		set {
 			if (value != _hovering) {
-				_hovering = value;
+				_hovering = Cooldown ? false : value;
 
 				if (_hovering && Enabled) {
 					Crosshair.Icon.SetSurfaceOverrideMaterial(0, (HoverIcon != null) ? HoverIcon : Crosshair.DefaultHoverIcon);

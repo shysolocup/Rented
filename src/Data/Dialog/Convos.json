@@ -1,0 +1,18 @@
+{
+	"test": [
+		["Audrey", [
+			"googoo",
+			"buh buh"
+		]],
+		["slingly", [
+			"you're stupid",
+			"I don't really like you\n you're pretty mean",
+			"you're a little googoo baby\nand I don't think you're\nvery nice at all like\nyou're like a a dick"
+		]]
+	],
+	"test_2": [
+		["Audrey", [
+			"googoo"
+		]]
+	]
+}

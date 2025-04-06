@@ -57,6 +57,7 @@ public partial class Player : CharacterBody3D
 	[Export] public float SprintFovMod = 20;
 
 	[Export] public float CrouchFovMod = -20;
+	[Export] public float InteractFovMod = -15;
 
 	[Export] public bool Tilt = true;
 	
@@ -69,6 +70,7 @@ public partial class Player : CharacterBody3D
 	private float DefaultCameraOffset = 0.4f;
 	private float CameraOffset;
 	private CollisionShape3D Collision;
+	private CollisionShape3D Collision2;
 	private MeshInstance3D Mesh;
 	
 
@@ -78,6 +80,7 @@ public partial class Player : CharacterBody3D
 		Raycast = GetNode<RayCast3D>("%InteractRay");
 
 		Collision = GetNode<CollisionShape3D>("./Collision");
+		Collision2 = GetNode<CollisionShape3D>("./CrouchCollision");
 		Mesh = GetNode<MeshInstance3D>("./Mesh");
 
 		CameraOffset = DefaultCameraOffset;
@@ -142,25 +145,27 @@ public partial class Player : CharacterBody3D
 
 		if (Camera != null) {
 
-			if (CameraPositionControllable) Camera.Position = new Vector3(Position.X, Position.Y + CameraOffset * Collision.Scale.Y, Position.Z); 
+			if (CameraPositionControllable) {
+				Camera.Position = new Vector3(Position.X, Position.Y + CameraOffset, Position.Z); 
+			}
 			Rotation = new Vector3(Rotation.X, Camera.Rotation.Y, Rotation.Z);
 
 			// crouch effect
 			if (Crouching) {
-				SpeedEffect(CrouchFovMod, CrouchSpeed, 0.4f, 1/25f, delta);
+				SpeedEffect(CrouchFovMod, CrouchSpeed, -0.4f, true, 1/25f, delta);
 			}
 			if (Sprinting) {
-				SpeedEffect(SprintFovMod, SprintSpeed, 1, 1/45f, delta);
+				SpeedEffect(SprintFovMod, SprintSpeed, DefaultCameraOffset, false, 1/45f, delta);
 			}
 			else if (!Crouching && !Sprinting) {
-				SpeedEffect(0, BaseWalkSpeed, 1, 1/30f, delta);
+				SpeedEffect( InDialog ? InteractFovMod : 0, BaseWalkSpeed, DefaultCameraOffset, false, 1/30f, delta);
 			}
 
 			// tilt effect
-			if (Input.IsActionPressed("MoveLeft")) {
+			if (Controllable && Input.IsActionPressed("MoveLeft")) {
 				TiltEffect(TiltRotation, 1/12f, delta);
 			}
-			else if (Input.IsActionPressed("MoveRight")) {
+			else if (Controllable && Input.IsActionPressed("MoveRight")) {
 				TiltEffect(-TiltRotation, 1/12f, delta);
 			}
 			else if (Camera != null && Camera.RotationDegrees.Z != 0) {
@@ -193,21 +198,20 @@ public partial class Player : CharacterBody3D
 		Basis TargetBasis = Basis.LookingAt(Direction, Vector3.Up);
 		Vector3 TargetRotation = TargetBasis.GetEuler();
 
-		float time = (obj.GlobalRotation - Camera.GlobalRotation).Length() / 1.5f;
+		float time = (obj.GlobalRotation - Camera.GlobalRotation).Length() / 1.3f;
 
 		Tween tween = Camera.CreateTween();
-
 		tween.Finished += () => tween.Dispose();
 
-		tween.TweenProperty(Camera, "rotation", TargetRotation, time)
-			 .SetTrans(Tween.TransitionType.Quad)
-			 .SetEase(Tween.EaseType.Out);
+		tween.SetTrans(Tween.TransitionType.Quad).SetEase(Tween.EaseType.Out);
+
+		tween.TweenProperty(Camera, "rotation", TargetRotation, time);
 
 		tween.Play();
 			
 		DialogueData data = GetNode<DialogueData>("%DialogueData");
 		
-		await data.Play(obj.Character, obj.Line);
+		await data.Play(obj.Line);
 
 		Controllable = true;
 		CameraRotationControllable = true;
@@ -238,7 +242,7 @@ public partial class Player : CharacterBody3D
 			Sprinting = true;
 		}
 		
-		else if (Controllable && Sprinting && (!Input.IsActionPressed("Sprint") || !Input.IsActionPressed("MoveForward") || !Walking)) {
+		else if (Sprinting && (!Input.IsActionPressed("Sprint") || !Input.IsActionPressed("MoveForward") || !Walking)) {
 			Sprinting = false;
 		}
 
@@ -322,11 +326,14 @@ public partial class Player : CharacterBody3D
 		return JumpVelocity;
 	}
 
-	private void SpeedEffect(float zoommod, float speed, float scale, float _t, double delta)
+	private void SpeedEffect(float zoommod, float speed, float offset, bool collision2, float _t, double delta)
 	{
 		WalkSpeed = this.Twlerp(WalkSpeed, speed, _t, delta);
 		Camera.Fov = this.Twlerp(Camera.Fov, BaseFov+zoommod, _t, delta);
-		Collision.Scale = new Vector3(Collision.Scale.X, this.Twlerp(Collision.Scale.Y, scale, _t/1.1f, delta), Collision.Scale.Z);
+		CameraOffset = this.Twlerp(CameraOffset, offset, _t, delta);
+
+		Collision.Disabled = collision2;
+		Collision2.Disabled = !collision2;
 	}
 
 	private void TiltEffect(float degrees, float _t, double delta)

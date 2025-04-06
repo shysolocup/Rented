@@ -23,7 +23,6 @@ config/icon="uid://bvo6qw6r6w6di"
 [autoload]
 
 debug_console="*res://addons/copper_dcsharp/debug_console.tscn"
-RuakeLayer="*res://addons/ruake/core/RuakeLayer.tscn"
 BeehaveGlobalMetrics="*res://addons/beehave/metrics/beehave_global_metrics.gd"
 BeehaveGlobalDebugger="*res://addons/beehave/debug/global_debugger.gd"
 Lib="*res://src/Libs/shylib/Lib.cs"
@@ -49,7 +48,7 @@ naming/script_name_casing=1
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/TweenSuite/plugin.cfg", "res://addons/UniParticles3D/plugin.cfg", "res://addons/beehave/plugin.cfg", "res://addons/discord-rpc-gd/plugin.cfg", "res://addons/gdscript2all/plugin.cfg", "res://addons/gdterm/plugin.cfg", "res://addons/terrain_3d/plugin.cfg", "res://addons/tnowe_extra_controls/plugin.cfg")
+enabled=PackedStringArray("res://addons/UniParticles3D/plugin.cfg", "res://addons/beehave/plugin.cfg", "res://addons/discord-rpc-gd/plugin.cfg", "res://addons/gdscript2all/plugin.cfg", "res://addons/gdterm/plugin.cfg", "res://addons/terrain_3d/plugin.cfg", "res://addons/tnowe_extra_controls/plugin.cfg")
 
 [global_group]
 

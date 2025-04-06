@@ -48,19 +48,19 @@ public partial class DialogueData : Node
 
 
 	public async Task PlayByInstance(Array<DialogueSequence> sequences) {
-		Tween toptween = Top.CreateTween();
+		Tween toptween = CreateTween();
 		toptween.Finished += () => toptween.Dispose();
 		toptween.TweenProperty(Top, "modulate:a", 1, 1.3f)
 		.SetTrans(Tween.TransitionType.Quad)
 		.SetEase(Tween.EaseType.Out);
 
-		Tween bottomtween = Top.CreateTween();
+		Tween bottomtween = CreateTween();
 		bottomtween.Finished += () => bottomtween.Dispose();
 		bottomtween.TweenProperty(Bottom, "modulate:a", 1, 1.3f)
 		.SetTrans(Tween.TransitionType.Quad)
 		.SetEase(Tween.EaseType.Out);
 
-		Tween bgtween = Top.CreateTween();
+		Tween bgtween = CreateTween();
 		bgtween.Finished += () => bgtween.Dispose();
 		bgtween.TweenProperty(Background, "modulate:a", 1, 1.3f)
 		.SetTrans(Tween.TransitionType.Quad)
@@ -107,19 +107,19 @@ public partial class DialogueData : Node
 		if (IsInstanceValid(toptween) && toptween.IsRunning()) toptween.Stop();
 		if (IsInstanceValid(bottomtween) && bottomtween.IsRunning()) bottomtween.Stop();
 
-		toptween = Top.CreateTween();
+		toptween = CreateTween();
 		toptween.Finished += () => toptween.Dispose();
 		toptween.TweenProperty(Top, "modulate:a", 0, 1)
 		.SetTrans(Tween.TransitionType.Quad)
 		.SetEase(Tween.EaseType.Out);
 
-		bottomtween = Top.CreateTween();
+		bottomtween = CreateTween();
 		bottomtween.Finished += () => bottomtween.Dispose();
 		bottomtween.TweenProperty(Bottom, "modulate:a", 0, 1)
 		.SetTrans(Tween.TransitionType.Quad)
 		.SetEase(Tween.EaseType.Out);
 
-		bgtween = Top.CreateTween();
+		bgtween = CreateTween();
 		bgtween.Finished += () => bgtween.Dispose();
 		bgtween.TweenProperty(Background, "modulate:a", 0, 1)
 		.SetTrans(Tween.TransitionType.Quad)

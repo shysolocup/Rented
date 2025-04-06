@@ -200,13 +200,10 @@ public partial class Player : CharacterBody3D
 
 		float time = (obj.GlobalRotation - Camera.GlobalRotation).Length() / 1.3f;
 
-		Tween tween = Camera.CreateTween();
+		Tween tween = CreateTween();
 		tween.Finished += () => tween.Dispose();
-
 		tween.SetTrans(Tween.TransitionType.Quad).SetEase(Tween.EaseType.Out);
-
-		tween.TweenProperty(Camera, "rotation", TargetRotation, time);
-
+		tween.TweenProperty(Camera, "global_rotation", TargetRotation, time);
 		tween.Play();
 			
 		DialogueData data = GetNode<DialogueData>("%DialogueData");

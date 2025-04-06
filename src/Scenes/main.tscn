@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://s0ftqrddh5up"]
+[gd_scene load_steps=56 format=4 uid="uid://s0ftqrddh5up"]
 
 [ext_resource type="Script" uid="uid://cfoo1gxat5mv8" path="res://src/Libs/shylib/Classes/GameInstance.cs" id="1_doi2n"]
 [ext_resource type="Script" uid="uid://c1i8r8l2u4t3q" path="res://src/Scripts/Player.cs" id="1_wpbw3"]
@@ -6,12 +6,15 @@
 [ext_resource type="Texture2D" uid="uid://buml50bofllu4" path="res://src/Ui/alarm clock.png" id="2_up28s"]
 [ext_resource type="Script" uid="uid://f680ovgo7k8o" path="res://src/Scripts/SaveIconSpinner.cs" id="3_35lay"]
 [ext_resource type="Script" uid="uid://5750qaowrba3" path="res://src/Libs/shylib/Classes/Crosshair3D.cs" id="5_0wov3"]
+[ext_resource type="ArrayMesh" uid="uid://c87jlspmqf35v" path="res://src/Models/building.obj" id="6_3ahso"]
+[ext_resource type="Material" uid="uid://c308v38sitbye" path="res://src/Resources/Materials/placeholder_street.tres" id="6_ng2wt"]
+[ext_resource type="Texture2D" uid="uid://bh6vfh18uu0bn" path="res://src/Textures/placeholder.png" id="7_10fqn"]
 [ext_resource type="Script" uid="uid://cpogl7mretj3h" path="res://src/Scripts/CameraSwitchScript.cs" id="7_gf62h"]
 [ext_resource type="Script" uid="uid://dlirdm8ud4hs0" path="res://src/Scripts/InteractSnatchTest.cs" id="7_ng2wt"]
+[ext_resource type="Texture2D" uid="uid://d1ae8ksha5166" path="res://src/Textures/placeholder_normal.png" id="8_jipul"]
 [ext_resource type="Script" uid="uid://g5yf73ygsftw" path="res://src/Libs/shylib/Classes/InteractObject3D.cs" id="8_uf7b3"]
 [ext_resource type="Shader" uid="uid://csra1tvugixyj" path="res://src/Resources/Shaders/test.tres" id="9_ng2wt"]
 [ext_resource type="AudioStream" uid="uid://nvube6beo7t" path="res://src/Sounds/its happening david bazookie.mp3" id="10_h8oac"]
-[ext_resource type="Environment" uid="uid://d4kl3puo0e8dw" path="res://src/Resources/Skies/Day.tres" id="11_ss4f7"]
 [ext_resource type="Material" uid="uid://ca75ik5y2u4a2" path="res://src/Resources/Materials/david.tres" id="13_ss4f7"]
 [ext_resource type="Material" uid="uid://ce0vtdxnqp031" path="res://src/Resources/Materials/DefaultIcon.tres" id="16_ss4f7"]
 [ext_resource type="Material" uid="uid://djkfa7xtdg63i" path="res://src/Resources/Materials/DefaultHoverIcon.tres" id="17_743ng"]
@@ -20,7 +23,6 @@
 [ext_resource type="Shader" uid="uid://ceis0htp3v6r0" path="res://src/Resources/Shaders/text test.tres" id="18_p8ix8"]
 [ext_resource type="Script" uid="uid://bq8h5fsdfxg7c" path="res://src/Scripts/PauseGui.cs" id="20_ss4f7"]
 [ext_resource type="Texture2D" uid="uid://bmtapdmr10o7e" path="res://src/Images/Dialog/dialog_top.png" id="21_3ahso"]
-[ext_resource type="Terrain3DAssets" uid="uid://dal3jhw6241qg" path="res://src/Resources/Terrain3D/data/assets.tres" id="21_k0mjx"]
 [ext_resource type="Texture2D" uid="uid://d01hk0epfwk0e" path="res://src/Images/Dialog/dialog_background.png" id="22_0m3r5"]
 [ext_resource type="Script" uid="uid://c7txcaajl83ve" path="res://src/Scripts/RichTextEffects/Ghost.gd" id="23_10fqn"]
 [ext_resource type="FontFile" uid="uid://djugwc4dfi8yc" path="res://src/Fonts/timesi.ttf" id="23_jipul"]
@@ -28,11 +30,124 @@
 [ext_resource type="Script" uid="uid://dqnhsynunwsf4" path="res://src/Scripts/Settings.gd" id="25_0m3r5"]
 [ext_resource type="Script" uid="uid://muq0ch483pvr" path="res://src/Libs/shylib/Classes/Discord/DiscordController.cs" id="25_p8ix8"]
 
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0m3r5"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_3ahso"]
+sky_material = SubResource("ProceduralSkyMaterial_0m3r5")
+
+[sub_resource type="Environment" id="Environment_ng2wt"]
+background_mode = 2
+sky = SubResource("Sky_3ahso")
+tonemap_mode = 2
+glow_enabled = true
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_h8oac"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ng2wt"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_y0axr"]
+
+[sub_resource type="TextMesh" id="TextMesh_3ahso"]
+text = "parking lot"
+font_size = 127
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3ahso"]
+no_depth_test = true
+shading_mode = 0
+billboard_mode = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gc7xl"]
+cull_mode = 2
+albedo_color = Color(1, 0.419608, 1, 1)
+albedo_texture = ExtResource("7_10fqn")
+metallic_specular = 1.0
+normal_enabled = true
+normal_texture = ExtResource("8_jipul")
+rim_tint = 0.0
+clearcoat_roughness = 0.39
+anisotropy = -1.0
+heightmap_deep_parallax = true
+heightmap_min_layers = 1
+heightmap_max_layers = 49
+subsurf_scatter_strength = 0.09
+uv1_scale = Vector3(2, 2, 2)
+uv1_triplanar = true
+uv1_world_triplanar = true
+grow_amount = -2.45
+point_size = 128.0
+proximity_fade_distance = 55.75
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n8c8y"]
+cull_mode = 2
+albedo_color = Color(0.130673, 0.725877, 0, 1)
+albedo_texture = ExtResource("7_10fqn")
+metallic_specular = 1.0
+normal_enabled = true
+normal_texture = ExtResource("8_jipul")
+rim_tint = 0.0
+clearcoat_roughness = 0.39
+anisotropy = -1.0
+heightmap_deep_parallax = true
+heightmap_min_layers = 1
+heightmap_max_layers = 49
+subsurf_scatter_strength = 0.09
+uv1_scale = Vector3(2, 2, 2)
+uv1_triplanar = true
+uv1_world_triplanar = true
+grow_amount = -2.45
+point_size = 128.0
+proximity_fade_distance = 55.75
+
+[sub_resource type="TextMesh" id="TextMesh_8nlug"]
+text = "grass"
+font_size = 127
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kp7xu"]
+cull_mode = 2
+albedo_color = Color(0.705882, 0.878431, 1, 1)
+albedo_texture = ExtResource("7_10fqn")
+metallic_specular = 1.0
+normal_enabled = true
+normal_texture = ExtResource("8_jipul")
+rim_tint = 0.0
+clearcoat_roughness = 0.39
+anisotropy = -1.0
+heightmap_deep_parallax = true
+heightmap_min_layers = 1
+heightmap_max_layers = 49
+subsurf_scatter_strength = 0.09
+uv1_scale = Vector3(2, 2, 2)
+uv1_triplanar = true
+uv1_world_triplanar = true
+grow_amount = -2.45
+point_size = 128.0
+proximity_fade_distance = 55.75
+
+[sub_resource type="TextMesh" id="TextMesh_10fqn"]
+text = "street
+"
+font_size = 127
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ng2wt"]
+data = PackedVector3Array(28.2714, -0.5, -102.386, 34.9698, -0.5, -13.4225, 34.9698, -0.5, -102.386, 34.9698, -0.0536, -13.4225, 28.2714, -0.0536, -20.4707, 34.9698, -0.0536, -102.386, 28.2714, -0.0536, -20.4707, 34.9698, -0.0536, -13.4225, -58.2843, -0.0536, -20.4707, 34.9698, -0.0536, -102.386, 28.2714, -0.0536, -20.4707, 28.2714, -0.0536, -102.386, 34.9698, -0.0536, -13.4225, 34.9698, -0.0536, -102.386, 34.9698, -0.5, -102.386, 34.9698, -0.5, -102.386, 34.9698, -0.0536, -102.386, 28.2714, -0.0536, -102.386, 34.9698, -0.5, -13.4225, 34.9698, -0.0536, -13.4225, 34.9698, -0.5, -102.386, 28.2714, -0.5, -20.4707, 34.9698, -0.5, -13.4225, 28.2714, -0.5, -102.386, 34.9698, -0.0536, -13.4225, 34.9698, -0.5, -13.4225, -77.7042, -0.5, -13.4225, 28.2714, -0.5, -20.4707, -77.7042, -0.5, -13.4225, 34.9698, -0.5, -13.4225, 34.9698, -0.5, -102.386, 28.2714, -0.0536, -102.386, 28.2714, -0.5, -102.386, -77.7042, -0.5, -102.386, -58.2843, -0.5, -20.4707, -58.2843, -0.5, -102.386, -77.7042, -0.0536, -13.4225, -58.2843, -0.0536, -20.4707, 34.9698, -0.0536, -13.4225, -77.7042, -0.0536, -13.4225, 34.9698, -0.0536, -13.4225, -77.7042, -0.5, -13.4225, -58.2843, -0.0536, -20.4707, -77.7042, -0.0536, -13.4225, -58.2843, -0.0536, -102.386, -77.7042, -0.0536, -102.386, -77.7042, -0.0536, -13.4225, -77.7042, -0.5, -13.4225, -58.2843, -0.0536, -102.386, -77.7042, -0.0536, -13.4225, -77.7042, -0.0536, -102.386, -77.7042, -0.0536, -102.386, -58.2843, -0.5, -102.386, -58.2843, -0.0536, -102.386, -58.2843, -0.5, -20.4707, -77.7042, -0.5, -13.4225, 28.2714, -0.5, -20.4707, -58.2843, -0.5, -20.4707, -77.7042, -0.5, -102.386, -77.7042, -0.5, -13.4225, -77.7042, -0.5, -13.4225, -77.7042, -0.5, -102.386, -77.7042, -0.0536, -102.386, -77.7042, -0.5, -102.386, -58.2843, -0.5, -102.386, -77.7042, -0.0536, -102.386, -58.2843, -0.0536, -102.386, -58.2843, -0.5, -20.4707, -58.2843, -0.0536, -20.4707, 28.2714, -0.0536, -20.4707, 28.2714, -0.5, -20.4707, 28.2714, -0.5, -102.386, -58.2843, -0.5, -20.4707, 28.2714, -0.5, -20.4707, -58.2843, -0.0536, -20.4707, 28.2714, -0.5, -102.386, 28.2714, -0.0536, -102.386, 28.2714, -0.0536, -20.4707, -58.2843, -0.5, -20.4707, -58.2843, -0.0536, -102.386, -58.2843, -0.5, -102.386, -58.2843, -0.0536, -20.4707, 28.2714, -0.5, -20.4707, 28.2714, -0.0536, -20.4707)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_ng2wt"]
+_surfaces = [{
+"aabb": AABB(-77.7042, -0.5, -102.386, 112.674, 0.44635, 88.9637),
+"attribute_data": PackedByteArray("AACAP+nHcD8AAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAQQaI9d4FzPQAAgD8AAAAAEEGiPXeBcz0AAAAAAAAAABBBoj2N4FM/AACAPwAAAAAQQaI9d4FzPQAAgD93gXM9AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAP3eBcz0AAIA/AACAPwAAAAAAAAAAAAAAAAAAgD8AAIA/EEGiPenHcD8AAAAAAACAPwAAgD/px3A/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/EEGiPenHcD8AAAAAAAAAAAAAAAAAAIA/AAAAAAAAAAB3gXM9AACAP3eBcz0AAAAAAACAPwAAAAAQQaI9zH0wPgAAgD/MfTA+AAAAAAAAgD8QQaI9jeBTPwAAAAAAAAAAAACAPwAAAAAAAAAAAAAAAAAAgD8AAIA/EEGiPY3gUz8AAAAAAACAPwAAgD+N4FM/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAP43gUz8AAAAAAACAPwAAgD8AAIA/AACAPwAAgD+N4FM/AAAAAI3gUz8AAIA/EEGiPcx9MD4AAAAAAAAAABBBoj3px3A/EEGiPcx9MD4AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAAACN4FM/AAAAAAAAgD8AAIA/ywD3PoGIfjweRw0/AACAP8sA9z4AAIA/ywD3PgAAAAAeRw0/AAAAAB5HDT/eBXw/AACAPx5HDT8AAAAAHkcNPwAAgD/LAPc+HkcNP94FfD/LAPc+3gV8P8sA9z4AAAAAHkcNPwAAgD/LAPc+gYh+PB5HDT+BiH48AACAP8sA9z4AAAAAHkcNPwAAAADLAPc+"),
+"format": 34359738391,
+"material": ExtResource("6_ng2wt"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 84,
+"vertex_data": PackedByteArray("xCviQf7//76+xczCE+ELQv7//76EwlbBE+ELQv7//76+xczCE+ELQgzAW72EwlbBxCviQQzAW73+w6PBE+ELQgzAW72+xczCxCviQQzAW73+w6PBE+ELQgzAW72EwlbBHiNpwgzAW73+w6PBE+ELQgzAW72+xczCxCviQQzAW73+w6PBxCviQQzAW72+xczCE+ELQgzAW72EwlbBE+ELQgzAW72+xczCE+ELQv7//76+xczCE+ELQv7//76+xczCE+ELQgzAW72+xczCxCviQQzAW72+xczCE+ELQv7//76EwlbBE+ELQgzAW72EwlbBE+ELQv7//76+xczCxCviQf7//77+w6PBE+ELQv7//76EwlbBxCviQf7//76+xczCE+ELQgzAW72EwlbBE+ELQv7//76EwlbBjmibwv7//76EwlbBxCviQf7//77+w6PBjmibwv7//76EwlbBE+ELQv7//76EwlbBE+ELQv7//76+xczCxCviQQzAW72+xczCxCviQf7//76+xczCjmibwv7//76+xczCHiNpwv7//77+w6PBHiNpwv7//76+xczCjmibwgzAW72EwlbBHiNpwgzAW73+w6PBE+ELQgzAW72EwlbBjmibwgzAW72EwlbBE+ELQgzAW72EwlbBjmibwv7//76EwlbBHiNpwgzAW73+w6PBjmibwgzAW72EwlbBHiNpwgzAW72+xczCjmibwgzAW72+xczCjmibwgzAW72EwlbBjmibwv7//76EwlbBHiNpwgzAW72+xczCjmibwgzAW72EwlbBjmibwgzAW72+xczCjmibwgzAW72+xczCHiNpwv7//76+xczCHiNpwgzAW72+xczCHiNpwv7//77+w6PBjmibwv7//76EwlbBxCviQf7//77+w6PBHiNpwv7//77+w6PBjmibwv7//76+xczCjmibwv7//76EwlbBjmibwv7//76EwlbBjmibwv7//76+xczCjmibwgzAW72+xczCjmibwv7//76+xczCHiNpwv7//76+xczCjmibwgzAW72+xczCHiNpwgzAW72+xczCHiNpwv7//77+w6PBHiNpwgzAW73+w6PBxCviQQzAW73+w6PBxCviQf7//77+w6PBxCviQf7//76+xczCHiNpwv7//77+w6PBxCviQf7//77+w6PBHiNpwgzAW73+w6PBxCviQf7//76+xczCxCviQQzAW72+xczCxCviQQzAW73+w6PBHiNpwv7//77+w6PBHiNpwgzAW72+xczCHiNpwv7//76+xczCHiNpwgzAW73+w6PBxCviQf7//77+w6PBxCviQQzAW73+w6PB/38AAP//AAD/fwAAAAAAAP9/AAD//wAA/3///wAAAAD/f///AAAAAP9//////wAA/3///wAAAAD/f///AAAAAP9///8AAAAA/3//////AAD/f///AAAAAP9//////wAA////f/9//n////9//3/+f////3//f/5//////wAA/z//////AAD/P/////8AAP8/////f/9//n////9//3/+f////3//f/5//38AAAAAAAD/fwAAAAAAAP9/AAD//wAA/3//fwAA/z//f/9/AAD/P/9//38AAP8//38AAAAAAAD/fwAAAAAAAP9/AAAAAAAA/////wAA/z//////AAD/P/////8AAP8//38AAP//AAD/fwAA//8AAP9/AAD//wAA/3///wAAAAD/f///AAAAAP9///8AAAAA/3//fwAA/z//f/9/AAD/P/9//38AAP8//3///wAAAAD/f///AAAAAP9//////wAAAAD/f/9//n8AAP9//3/+fwAA/3//f/5//3//////AAD/f///AAAAAP9//////wAA/////wAA/z//////AAD/P/////8AAP8//38AAP//AAD/fwAAAAAAAP9/AAAAAAAA/38AAP//AAD/fwAA//8AAP9/AAAAAAAAAAD/f/9//n8AAP9//3/+fwAA/3//f/5//////wAA/z//////AAD/P/////8AAP8/////f/9/AID///9//38AgP///3//fwCAAAD/f/9/AIAAAP9//38AgAAA/3//fwCA/////wAA/7//////AAD/v/////8AAP+/AAD/f/9/AIAAAP9//38AgAAA/3//fwCA////f/9/AID///9//38AgP///3//fwCA/////wAA/7//////AAD/v/////8AAP+/")
+}]
+
+[sub_resource type="TextMesh" id="TextMesh_ng2wt"]
+text = "building"
+font_size = 127
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_j1e05"]
 
@@ -44,62 +159,6 @@ shader = ExtResource("9_ng2wt")
 
 [sub_resource type="BoxMesh" id="BoxMesh_jipul"]
 material = SubResource("ShaderMaterial_10fqn")
-
-[sub_resource type="Gradient" id="Gradient_vr1m7"]
-offsets = PackedFloat32Array(0.2, 1)
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_d8lcj"]
-noise_type = 2
-frequency = 0.03
-cellular_jitter = 3.0
-cellular_return_type = 0
-domain_warp_enabled = true
-domain_warp_type = 1
-domain_warp_amplitude = 50.0
-domain_warp_fractal_type = 2
-domain_warp_fractal_lacunarity = 1.5
-domain_warp_fractal_gain = 1.0
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_bov7h"]
-seamless = true
-color_ramp = SubResource("Gradient_vr1m7")
-noise = SubResource("FastNoiseLite_d8lcj")
-
-[sub_resource type="Terrain3DMaterial" id="Terrain3DMaterial_h8oac"]
-_shader_parameters = {
-"_mouse_layer": 2147483648,
-"auto_base_texture": 0,
-"auto_height_reduction": 0.1,
-"auto_overlay_texture": 1,
-"auto_slope": 1.0,
-"blend_sharpness": 0.87,
-"dual_scale_far": 170.0,
-"dual_scale_near": 100.0,
-"dual_scale_reduction": 0.3,
-"dual_scale_texture": 0,
-"height_blending": true,
-"macro_variation1": Color(0.878431, 0.862745, 0.901961, 1),
-"macro_variation2": Color(0.898039, 0.898039, 0.803922, 1),
-"noise1_angle": 0.1,
-"noise1_offset": Vector2(0.5, 0.5),
-"noise1_scale": 0.04,
-"noise2_scale": 0.076,
-"noise3_scale": 0.225,
-"noise_texture": SubResource("NoiseTexture2D_bov7h"),
-"tri_scale_reduction": 0.3,
-"vertex_normals_distance": 128.0,
-"world_noise_height": 34.0,
-"world_noise_lod_distance": 7500.0,
-"world_noise_max_octaves": 4,
-"world_noise_min_octaves": 2,
-"world_noise_offset": Vector3(2.17, -1.225, 1.9),
-"world_noise_region_blend": 0.33,
-"world_noise_scale": 9.85
-}
-world_background = 2
-auto_shader = true
-dual_scaling = true
 
 [sub_resource type="Environment" id="Environment_1fj5k"]
 
@@ -122,12 +181,22 @@ metadata/_custom_type_script = "uid://3mxc7rj1i0c8"
 [node name="Game" type="Node"]
 script = ExtResource("1_doi2n")
 
-[node name="Root3D" type="Node" parent="."]
+[node name="World" type="WorldEnvironment" parent="."]
 unique_name_in_owner = true
+environment = SubResource("Environment_ng2wt")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(-0.646258, -0.586785, -0.487887, 0.495721, -0.808874, 0.316202, -0.580181, -0.0375075, 0.813623, -82.0372, 0, 0)
+shadow_enabled = true
+
+[node name="Root3D" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -82.6777, 38.51, 6.55279)
 
 [node name="Player" type="CharacterBody3D" parent="Root3D"]
 unique_name_in_owner = true
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 1.48456, 0)
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 21.9883, 1.44635, 0)
 input_ray_pickable = false
 script = ExtResource("1_wpbw3")
 
@@ -143,15 +212,190 @@ disabled = true
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_y0axr")
 
-[node name="Baseplate" type="StaticBody3D" parent="Root3D"]
-transform = Transform3D(15, 0, 0, 0, 3.19346, 0, 0, 0, 15, 0, -1.61217, 0)
+[node name="Cameras" type="Node3D" parent="Root3D"]
+unique_name_in_owner = true
 
-[node name="Collision" type="CollisionShape3D" parent="Root3D/Baseplate"]
-shape = SubResource("BoxShape3D_j1e05")
+[node name="PlayerCamera" type="Camera3D" parent="Root3D/Cameras"]
+unique_name_in_owner = true
+process_mode = 3
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.9883, 1.67761, 0)
+current = true
+fov = 90.0
 
-[node name="Mesh" type="MeshInstance3D" parent="Root3D/Baseplate"]
-mesh = SubResource("BoxMesh_xknod")
-surface_material_override/0 = ExtResource("13_ss4f7")
+[node name="InteractRay" type="RayCast3D" parent="Root3D/Cameras/PlayerCamera"]
+unique_name_in_owner = true
+target_position = Vector3(0, 0, -1.7)
+
+[node name="Camera2" type="Camera3D" parent="Root3D/Cameras"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 8.4624)
+
+[node name="ScriptDump" type="Node3D" parent="Root3D"]
+
+[node name="CameraSwitchScript" type="Node" parent="Root3D/ScriptDump"]
+script = ExtResource("2_i3adb")
+Source = ExtResource("7_gf62h")
+
+[node name="Map" type="Node3D" parent="Root3D"]
+
+[node name="Buildings" type="Node3D" parent="Root3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.108921, -0.318878)
+
+[node name="Building" type="MeshInstance3D" parent="Root3D/Map/Buildings"]
+transform = Transform3D(18.461, 0, 0, 0, 20.1918, 0, 0, 0, 24.7054, -46.1042, -0.421101, -46.7467)
+mesh = ExtResource("6_3ahso")
+surface_material_override/0 = ExtResource("6_ng2wt")
+
+[node name="Building3" type="MeshInstance3D" parent="Root3D/Map/Buildings"]
+transform = Transform3D(0.769846, 0, 24.6839, 0, 20.1918, 0, -18.4449, 0, 1.03025, -66.5485, -0.41423, -55.4116)
+mesh = ExtResource("6_3ahso")
+surface_material_override/0 = ExtResource("6_ng2wt")
+
+[node name="Building2" type="MeshInstance3D" parent="Root3D/Map/Buildings"]
+transform = Transform3D(-19.0236, 0, -2.07502e-06, 0, 10.8293, 0, 1.6631e-06, 0, -23.7354, 100.42, -0.192009, -111.653)
+mesh = ExtResource("6_3ahso")
+surface_material_override/0 = ExtResource("6_ng2wt")
+
+[node name="Building4" type="MeshInstance3D" parent="Root3D/Map/Buildings"]
+transform = Transform3D(0.26893, 0, 23.733, 0, 10.8293, 0, -19.0217, 0, 0.335544, 85.1625, -0.714546, 76.4348)
+mesh = ExtResource("6_3ahso")
+surface_material_override/0 = ExtResource("6_ng2wt")
+
+[node name="parking lot" type="Node3D" parent="Root3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5804, -1.59785, 1.40003)
+
+[node name="label" type="MeshInstance3D" parent="Root3D/Map/parking lot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.0773, 4.17153, 45.1609)
+mesh = SubResource("TextMesh_3ahso")
+skeleton = NodePath("../../street/CSGBox3D3")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ahso")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Root3D/Map/parking lot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.8939, 0.259583, -1.862)
+use_collision = true
+size = Vector3(42.3818, 1.51916, 67.7592)
+material = SubResource("StandardMaterial3D_gc7xl")
+
+[node name="label" type="MeshInstance3D" parent="Root3D/Map/parking lot/CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.62792, 0)
+mesh = SubResource("TextMesh_3ahso")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ahso")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Root3D/Map/parking lot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.06103, 0.234104, -7.93525)
+use_collision = true
+size = Vector3(58.706, 1.51916, 25.9127)
+material = SubResource("StandardMaterial3D_gc7xl")
+
+[node name="label" type="MeshInstance3D" parent="Root3D/Map/parking lot/CSGBox3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.62792, 0)
+mesh = SubResource("TextMesh_3ahso")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ahso")
+
+[node name="grass patches" type="Node3D" parent="Root3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5804, -1.59785, 1.40003)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Root3D/Map/grass patches"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 84.4712, 0.668091, -57.8971)
+use_collision = true
+size = Vector3(67.4774, 2.33618, 36.6382)
+material = SubResource("StandardMaterial3D_n8c8y")
+
+[node name="label" type="MeshInstance3D" parent="Root3D/Map/grass patches/CSGBox3D3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.62792, 0)
+mesh = SubResource("TextMesh_8nlug")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ahso")
+
+[node name="street" type="Node3D" parent="Root3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5804, -1.59785, 1.40003)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Root3D/Map/street"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.0269, -0.167652, -25.148)
+use_collision = true
+size = Vector3(17.5351, 2.33618, 290.749)
+material = SubResource("StandardMaterial3D_kp7xu")
+
+[node name="label" type="MeshInstance3D" parent="Root3D/Map/street"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.0269, 4.29601, -34.8205)
+mesh = SubResource("TextMesh_10fqn")
+skeleton = NodePath("../CSGBox3D4")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ahso")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Root3D/Map/street"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -43.5526, -0.167652, -30.0592)
+use_collision = true
+size = Vector3(18.5049, 2.33618, 145.725)
+material = SubResource("StandardMaterial3D_kp7xu")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Root3D/Map/street"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.4018, 0.54361, 45.1609)
+use_collision = true
+size = Vector3(6.21802, 2.08722, 132.143)
+material = ExtResource("6_ng2wt")
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="Root3D/Map/street"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -10.4149, 0.54361, 7.55914)
+use_collision = true
+size = Vector3(6.21802, 2.08722, 67.4193)
+material = ExtResource("6_ng2wt")
+
+[node name="sidewalk" type="Node3D" parent="Root3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -24.2648)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Root3D/Map/sidewalk"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Root3D/Map/sidewalk/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_ng2wt")
+
+[node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="Root3D/Map/sidewalk/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.17786, 0)
+mesh = SubResource("ArrayMesh_ng2wt")
+skeleton = NodePath("../..")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Root3D/Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.4621, 11.5104, -74.3405)
+use_collision = true
+size = Vector3(33.1792, 24.0208, 60.1099)
+material = ExtResource("6_ng2wt")
+
+[node name="label" type="MeshInstance3D" parent="Root3D/Map/CSGBox3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.66463, -6.75248, 29.3478)
+mesh = SubResource("TextMesh_ng2wt")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ahso")
+
+[node name="Ambient" type="Node3D" parent="Root3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.01644, 17.5536, 0)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Root3D/Ambient"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.60103, -16.0247, 4.32475)
+stream = ExtResource("10_h8oac")
+attenuation_model = 2
+autoplay = true
+max_distance = 4.0
+parameters/looping = true
+
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Root3D/Ambient"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.24936, -16.0247, 4.32475)
+stream = ExtResource("10_h8oac")
+attenuation_model = 2
+autoplay = true
+max_distance = 4.0
+parameters/looping = true
+
+[node name="AudioStreamPlayer3D3" type="AudioStreamPlayer3D" parent="Root3D/Ambient"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.24936, -16.0247, -2.81763)
+stream = ExtResource("10_h8oac")
+attenuation_model = 2
+autoplay = true
+max_distance = 4.0
+parameters/looping = true
+
+[node name="AudioStreamPlayer3D4" type="AudioStreamPlayer3D" parent="Root3D/Ambient"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.57504, -16.0247, -2.81763)
+stream = ExtResource("10_h8oac")
+attenuation_model = 2
+autoplay = true
+max_distance = 4.0
+parameters/looping = true
 
 [node name="test4" type="StaticBody3D" parent="Root3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.65005, 2.90059, -5.61089)
@@ -163,31 +407,8 @@ shape = SubResource("BoxShape3D_j1e05")
 mesh = SubResource("BoxMesh_xknod")
 surface_material_override/0 = ExtResource("13_ss4f7")
 
-[node name="Cameras" type="Node3D" parent="Root3D"]
-unique_name_in_owner = true
-
-[node name="Camera2" type="Camera3D" parent="Root3D/Cameras"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 8.4624)
-
-[node name="PlayerCamera" type="Camera3D" parent="Root3D/Cameras"]
-unique_name_in_owner = true
-process_mode = 3
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.67761, 0)
-current = true
-fov = 90.0
-
-[node name="InteractRay" type="RayCast3D" parent="Root3D/Cameras/PlayerCamera"]
-unique_name_in_owner = true
-target_position = Vector3(0, 0, -1.7)
-
-[node name="ScriptDump" type="Node3D" parent="Root3D"]
-
-[node name="CameraSwitchScript" type="Node" parent="Root3D/ScriptDump"]
-script = ExtResource("2_i3adb")
-Source = ExtResource("7_gf62h")
-
 [node name="test" type="RigidBody3D" parent="Root3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55775, 0.989776, 2.30029)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55775, 0.989777, 2.30029)
 freeze = true
 script = ExtResource("8_uf7b3")
 Line = "interact_david_bazookie"
@@ -204,7 +425,7 @@ surface_material_override/0 = ExtResource("13_ss4f7")
 script = ExtResource("7_ng2wt")
 
 [node name="test2" type="RigidBody3D" parent="Root3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55775, 0.989776, 5.04772)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55775, 0.989777, 5.04772)
 freeze = true
 script = ExtResource("8_uf7b3")
 Line = "convo_test"
@@ -223,18 +444,10 @@ script = ExtResource("7_ng2wt")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Root3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.95322, 1.80408, 0)
 mesh = SubResource("BoxMesh_jipul")
+skeleton = NodePath("")
 
 [node name="Rooms" type="Node" parent="."]
 unique_name_in_owner = true
-
-[node name="Terrain3D" type="Terrain3D" parent="."]
-data_directory = "res://src/Resources/Terrain3D/data"
-material = SubResource("Terrain3DMaterial_h8oac")
-assets = ExtResource("21_k0mjx")
-cull_margin = 101.0
-unique_name_in_owner = true
-top_level = true
-metadata/_edit_lock_ = true
 
 [node name="Guis" type="Node" parent="."]
 unique_name_in_owner = true
@@ -380,8 +593,7 @@ material = SubResource("ShaderMaterial_0m3r5")
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("23_jipul")
 bbcode_enabled = true
-text = "[fade start={0} length={1}][wave amp=10 freq=5.0 connected=1]{2}
-[/wave][/fade]"
+text = "[fade start={0} length={1}][wave amp=10 freq=5.0 connected=1]{2}[/wave][/fade]"
 fit_content = true
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -449,41 +661,6 @@ text = "Settings"
 layout_mode = 2
 text = "Die"
 
-[node name="Audios" type="Node" parent="."]
-unique_name_in_owner = true
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Audios"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.60103, 0, 4.32475)
-stream = ExtResource("10_h8oac")
-attenuation_model = 2
-autoplay = true
-max_distance = 4.0
-parameters/looping = true
-
-[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Audios"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.24936, 0, 4.32475)
-stream = ExtResource("10_h8oac")
-attenuation_model = 2
-autoplay = true
-max_distance = 4.0
-parameters/looping = true
-
-[node name="AudioStreamPlayer3D3" type="AudioStreamPlayer3D" parent="Audios"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.24936, 0, -2.81763)
-stream = ExtResource("10_h8oac")
-attenuation_model = 2
-autoplay = true
-max_distance = 4.0
-parameters/looping = true
-
-[node name="AudioStreamPlayer3D4" type="AudioStreamPlayer3D" parent="Audios"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.57504, 0, -2.81763)
-stream = ExtResource("10_h8oac")
-attenuation_model = 2
-autoplay = true
-max_distance = 4.0
-parameters/looping = true
-
 [node name="Dump" type="Node" parent="."]
 unique_name_in_owner = true
 
@@ -494,20 +671,3 @@ script = ExtResource("25_p8ix8")
 [node name="Settings" type="Node" parent="Dump"]
 unique_name_in_owner = true
 script = ExtResource("25_0m3r5")
-
-[node name="World" type="WorldEnvironment" parent="."]
-unique_name_in_owner = true
-environment = ExtResource("11_ss4f7")
-
-[node name="Sun" type="DirectionalLight3D" parent="World"]
-unique_name_in_owner = true
-transform = Transform3D(0.80394, 0.558214, 0.205128, 0, -0.344922, 0.938632, 0.594711, -0.754603, -0.277296, -3.51915, 38.7123, -36.5632)
-light_color = Color(0.989756, 0.755968, 0.734788, 1)
-light_energy = 1.099
-light_indirect_energy = 0.802
-light_volumetric_fog_energy = 1.175
-shadow_enabled = true
-shadow_bias = 0.0
-shadow_reverse_cull_face = true
-shadow_opacity = 0.8
-shadow_blur = 2.05

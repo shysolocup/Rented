@@ -17,16 +17,3 @@ public partial class DebugCommand : GodotObject
 		console.Commands.Add(Id, this);
 	}
 }
-
-
-public partial class DebugParameter : GodotObject
-{
-	public string Name;
-	public bool Required = true;
-	public DebugParameterType Type;
-	public Array<string> Options = new Array<string>();
-	public Callable CallOptions;
-}
-
-
-public enum DebugParameterType {Int, Float, String, Bool, Options}

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
 using Microsoft.VisualBasic;
+using System.Globalization;
 
 [Tool]
 [GlobalClass]
@@ -32,14 +33,15 @@ public partial class DialogueData : Node
 	private TextureRect Top;
 	private TextureRect Bottom;
 	private float id = 0;
+	[Signal] public delegate void FinishDialogEventHandler();
 
 
-	private async Task FadeEffect(RichTextLabel label, DialogueLine line, CancellationToken token)
+	private async Task FadeEffect(RichTextLabel label, DialogueLine line, CancellationToken token, int speed = 30)
 	{
 		for (int i = 0; i < line.Text.Length; i++) {
 			if (token.IsCancellationRequested) break;
 
-			await Task.Delay(30);
+			await Task.Delay(speed);
 			
 			label.Text = string.Format(BaseText, i, i+1, line.Text); 
 		}
@@ -52,15 +54,30 @@ public partial class DialogueData : Node
 	private DialogueLine LineEval(Variant lineData)
 	{
 		switch (lineData.VariantType) {
-			case Variant.Type.Array: {
-				Array<string> lineArr = (Array<string>)lineData;
 
-				return new DialogueLine() {
-					Text = lineArr[0],
-					Audio = (lineArr.ElementAtOrDefault(1) is string audio && audio.Length > 0) ? GetNode<AudioStreamPlayer>(audio) : null
+			// Array 
+			// ["text", "audio", [["button1", "redirline1], ["button2", "redirline1"]]]
+			case Variant.Type.Array: {
+				Array<Variant> lineArr = (Array<Variant>)lineData;
+
+				DialogueLine line = new() {
+					Text = (string)lineArr[0],
+					Audio = (lineArr.ElementAtOrDefault(1).Obj is string audio && audio.Length > 0) ? GetNode<AudioStreamPlayer>(audio) : null
 				};
+
+				if (lineArr.ElementAtOrDefault(2).VariantType == Variant.Type.Array) {
+					foreach (Array<string> btn in (Array<Array<string>>)lineArr[2]) {
+						line.Buttons.Add(new DialogueButton() {
+							Text = btn[0],
+							RedirectLine = btn[1]
+						});
+					}
+				}
+
+				return line;
 			}
 
+			//
 			case Variant.Type.Dictionary: {
 				Dictionary<string, Variant> lineDict = (Dictionary<string, Variant>)lineData;
 
@@ -71,9 +88,11 @@ public partial class DialogueData : Node
 
 				if (lineDict.ContainsKey("buttons")) {
 					foreach (Array<string> btn in (Array<Array<string>>)lineDict["buttons"]) {
+						GD.Print(btn);
+
 						line.Buttons.Add(new DialogueButton() {
 							Text = btn[0],
-                            RedirectLine = btn[1]
+							RedirectLine = btn[1]
 						});
 					}
 				}
@@ -82,14 +101,16 @@ public partial class DialogueData : Node
 			}
 
 			default: return new DialogueLine() {
-				Text = (string)lineData,
-				Audio = null
+				Text = (string)lineData
 			};
+
 		};
 	}
 
 
-	public async Task PlayByInstance(Array<DialogueSequence> sequences, VBoxContainer inst = null) {
+	public async Task<bool> PlayByInstance(Array<DialogueSequence> sequences, VBoxContainer inst = null) {
+		bool recursive = inst != null;
+
 		Tween toptween = null; Tween bottomtween = null; Tween bgtween = null;
 
 		if (!Engine.IsEditorHint()) {
@@ -117,7 +138,13 @@ public partial class DialogueData : Node
 			inst.Show();
 
 			var buttons = inst.GetChild<HFlowContainer>(2);
-			buttons.GetChild(0).Free();
+			var elipses = inst.GetChild<RichTextLabel>(3);
+
+			// clear all the buttons already in the container
+			foreach (Button button in buttons.GetChildren()) {
+				buttons.RemoveChild(button);
+				button.QueueFree();
+			}
 
 			var chara = inst.GetChild<RichTextLabel>(0);
 			var textlabel = inst.GetChild<RichTextLabel>(1);
@@ -125,8 +152,10 @@ public partial class DialogueData : Node
 			inst.Name = id.ToString().Replace(".", "");
 			id += 0.1f;
 
-			DialogueContainer.AddChild(inst);
-			DialogueContainer.MoveChild(inst, 1);
+			if (!recursive) {
+				DialogueContainer.AddChild(inst);
+				DialogueContainer.MoveChild(inst, 1);
+			}
 
 			foreach ( DialogueSequence sequence in sequences) {
 				if (sequence.Character.Trim().Length > 0) {
@@ -146,28 +175,64 @@ public partial class DialogueData : Node
 
 					Task effect = FadeEffect(textlabel, line, token);
 
-					while (!Input.IsActionJustPressed("InteractDialog")) { await Task.Delay(5); };
-
-					tokenSource.Cancel();
+					buttons.Hide();
+					elipses.Show();
 
 					if (line.Buttons.Count > 0) {
+						bool done = false;
+						buttons.Show();
+						elipses.Hide();
+
+						
 						foreach (DialogueButton btnData in line.Buttons) {
 							Button btn = BaseButton.Duplicate() as Button;
 							buttons.AddChild(btn);
 							btn.Modulate = new Color(1, 1, 1, 0);
+							int index = btn.GetIndex();
 
 							btn.Text = btnData.Text;
-							btn.Pressed += async () => await Play(btnData.RedirectLine);
+							btn.Pressed += async () => {
+								foreach (Button otherBtns in buttons.GetChildren()) {
+									if (otherBtns.GetIndex() != index) {
+										Tween otherBtntween = CreateTween();
+										otherBtntween.Finished += () => otherBtntween.Dispose();
+										otherBtntween.TweenProperty(otherBtns, "modulate:a", 1, 1)
+										.SetTrans(Tween.TransitionType.Quad)
+										.SetEase(Tween.EaseType.Out);
+									}
+								}
+
+								await GetTree().CreateTimer(0.3f).Guh();
+
+								Tween buttontween = CreateTween();
+								buttontween.Finished += () => buttontween.Dispose();
+								buttontween.TweenProperty(btn, "modulate:a", 0, 1)
+								.SetTrans(Tween.TransitionType.Quad)
+								.SetEase(Tween.EaseType.Out);
+
+								await GetTree().CreateTimer(0.1f).Guh();
+								await Play(btnData.RedirectLine, inst);
+
+								// hopefully will stop the loop when a button is pressed
+								done = true;
+							};
 
 							Tween buttontween = CreateTween();
 							buttontween.Finished += () => buttontween.Dispose();
-							buttontween.TweenProperty(btn, "modulate:a", 0, 1)
+							buttontween.TweenProperty(btn, "modulate:a", 1, 1)
 							.SetTrans(Tween.TransitionType.Quad)
 							.SetEase(Tween.EaseType.Out);
 						}
-					}
 
-					await GetTree().CreateTimer(0.1f).Guh();
+						while (!done) { await Task.Delay(5); };
+					}
+					else {
+						while (!Input.IsActionJustPressed("InteractDialog")) { await Task.Delay(5); };
+
+						tokenSource.Cancel();
+
+						await GetTree().CreateTimer(0.1f).Guh();
+					}
 				}
 			}
 
@@ -175,34 +240,38 @@ public partial class DialogueData : Node
 			if (bottomtween != null && IsInstanceValid(bottomtween) && bottomtween.IsRunning()) bottomtween.Stop();
 			if (bgtween != null && IsInstanceValid(bgtween) && bgtween.IsRunning()) bgtween.Stop();
 
-			toptween = CreateTween();
-			toptween.Finished += () => toptween.Dispose();
-			toptween.TweenProperty(Top, "modulate:a", 0, 1)
-			.SetTrans(Tween.TransitionType.Quad)
-			.SetEase(Tween.EaseType.Out);
+			if (!recursive) {
+				toptween = CreateTween();
+				toptween.Finished += () => toptween.Dispose();
+				toptween.TweenProperty(Top, "modulate:a", 0, 1)
+				.SetTrans(Tween.TransitionType.Quad)
+				.SetEase(Tween.EaseType.Out);
 
-			bottomtween = CreateTween();
-			bottomtween.Finished += () => bottomtween.Dispose();
-			bottomtween.TweenProperty(Bottom, "modulate:a", 0, 1)
-			.SetTrans(Tween.TransitionType.Quad)
-			.SetEase(Tween.EaseType.Out);
+				bottomtween = CreateTween();
+				bottomtween.Finished += () => bottomtween.Dispose();
+				bottomtween.TweenProperty(Bottom, "modulate:a", 0, 1)
+				.SetTrans(Tween.TransitionType.Quad)
+				.SetEase(Tween.EaseType.Out);
 
-			bgtween = CreateTween();
-			bgtween.Finished += () => bgtween.Dispose();
-			bgtween.TweenProperty(Background, "modulate:a", 0, 1)
-			.SetTrans(Tween.TransitionType.Quad)
-			.SetEase(Tween.EaseType.Out);
-
-			inst.Free();
+				bgtween = CreateTween();
+				bgtween.Finished += () => bgtween.Dispose();
+				bgtween.TweenProperty(Background, "modulate:a", 0, 1)
+				.SetTrans(Tween.TransitionType.Quad)
+				.SetEase(Tween.EaseType.Out);
+				
+				inst.Free();
+			}
 		}
+
+		return true;
 	}
 
-	public async Task Play(string line = "interact_default") {
-		await PlayByInstance(Lines[line]);
+	public async Task<bool> Play(string line = "interact_default", VBoxContainer inst = null) {
+		return await PlayByInstance(Lines[line], inst);
 	}
 
-	public async Task PlayByCharacterInstance(string line) {		
-		await PlayByInstance(Lines[line]);
+	public async Task<bool> PlayByCharacterInstance(string line, VBoxContainer inst = null) {		
+		return await PlayByInstance(Lines[line], inst);
 	}
 
 
@@ -210,25 +279,29 @@ public partial class DialogueData : Node
 	{
 		Node parent = GetParent();
 
+		GD.Print("a");
+
 		DialogueContainer = parent.GetChild<VBoxContainer>(1);
 		Background = parent.GetChild<TextureRect>(2);
 		
 		Top = DialogueContainer.GetNode<TextureRect>("Top");
 		Bottom = DialogueContainer.GetNode<TextureRect>("Bottom");
 
-		Top.Modulate = new Color(1, 1, 1, 0);
-		Bottom.Modulate = new Color(1, 1, 1, 0);
-		Background.Modulate = new Color(1, 1, 1, 0);
+		if (!Engine.IsEditorHint()) {
+			Top.Modulate = new Color(1, 1, 1, 0);
+			Bottom.Modulate = new Color(1, 1, 1, 0);
+			Background.Modulate = new Color(1, 1, 1, 0);
+		}
 
 		Base = DialogueContainer.GetNode<VBoxContainer>("Base");
 		BaseCharacterText = Base.GetChild<RichTextLabel>(0).Text;
 		BaseText = Base.GetChild<RichTextLabel>(1).Text;
 		HFlowContainer BaseButtonContainer = Base.GetChild<HFlowContainer>(2);
 		BaseButton = BaseButtonContainer.GetChild<Button>(0);
-		BaseButtonContainer.Hide();
 
 		if (!Engine.IsEditorHint()) {
 			DialogueContainer.GetNode<Control>("Base").Visible = false;
+			BaseButtonContainer.Hide();
 		}
 
 		using var convodata = FileAccess.Open("res://src/Data/Dialog/Convos.json", FileAccess.ModeFlags.Read);

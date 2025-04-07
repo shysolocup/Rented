@@ -48,7 +48,7 @@ naming/script_name_casing=1
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/UniParticles3D/plugin.cfg", "res://addons/beehave/plugin.cfg", "res://addons/copper_dcsharp/plugin.cfg", "res://addons/csg_terrain/plugin.cfg", "res://addons/discord-rpc-gd/plugin.cfg", "res://addons/gdscript2all/plugin.cfg", "res://addons/gdterm/plugin.cfg", "res://addons/gizmo/plugin.cfg", "res://addons/repl/plugin.cfg", "res://addons/scene_manager/plugin.cfg", "res://addons/tattomoosa.spinner/plugin.cfg", "res://addons/terrain_3d/plugin.cfg", "res://addons/tnowe_extra_controls/plugin.cfg")
+enabled=PackedStringArray("res://addons/UniParticles3D/plugin.cfg", "res://addons/beehave/plugin.cfg", "res://addons/copper_dcsharp/plugin.cfg", "res://addons/csg_terrain/plugin.cfg", "res://addons/discord-rpc-gd/plugin.cfg", "res://addons/gdscript2all/plugin.cfg", "res://addons/gdterm/plugin.cfg", "res://addons/gizmo/plugin.cfg", "res://addons/repl/plugin.cfg", "res://addons/tattomoosa.spinner/plugin.cfg", "res://addons/terrain_3d/plugin.cfg", "res://addons/tnowe_extra_controls/plugin.cfg")
 
 [global_group]
 

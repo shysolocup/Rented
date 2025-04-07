@@ -24,10 +24,10 @@ public partial class InteractSnatchTest : Node
 		}
 	}
 
-	public void Press()
+	public async void Press()
 	{
 		if (obj.Pressed) {
-			player.SnatchInteract(obj);
+			await player.SnatchInteract(obj);
 		}
 	}
 }

@@ -6,5 +6,6 @@ using Godot.Collections;
 public partial class DialogueButton : Resource
 {
 	[Export] public string Text = "Press";
-	[Export] public string RedirectLine = "interact_default"; 
+	[Export] public string RedirectLine; 
+	public Button Button;
 }

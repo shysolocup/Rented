@@ -94,9 +94,6 @@ public static class DebugCommandList
 		
 		var funcs = new DebugCommandFunctions();
 
-		var dialog = Game.Instance.GetNode<DialogueData>("%DialogueData");
-		var lines = new Array<string>(dialog.Lines.Keys);
-
 
 		#region loadroom
 
@@ -166,8 +163,7 @@ public static class DebugCommandList
 			Parameters = new() {
 				new DebugParameter {
 					Name = "lines",
-					Type = DebugParameterType.Options,
-					Options = lines
+					Type = DebugParameterType.String,
 				}
 			},
 

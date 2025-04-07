@@ -183,7 +183,7 @@ public partial class Player : CharacterBody3D
 	}
 
 
-	public async void SnatchInteract(InteractObject3D obj) 
+	public async Task SnatchInteract(InteractObject3D obj) 
 	{
 		if (obj.Cooldown) {
 			obj.Cooldown = false; return;

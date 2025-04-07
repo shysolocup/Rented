@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=4 uid="uid://s0ftqrddh5up"]
+[gd_scene load_steps=60 format=4 uid="uid://s0ftqrddh5up"]
 
 [ext_resource type="Script" uid="uid://cfoo1gxat5mv8" path="res://src/Libs/shylib/Classes/GameInstance.cs" id="1_doi2n"]
 [ext_resource type="Script" uid="uid://c1i8r8l2u4t3q" path="res://src/Scripts/Player.cs" id="1_wpbw3"]
@@ -18,9 +18,9 @@
 [ext_resource type="Material" uid="uid://ca75ik5y2u4a2" path="res://src/Resources/Materials/david.tres" id="13_ss4f7"]
 [ext_resource type="Material" uid="uid://ce0vtdxnqp031" path="res://src/Resources/Materials/DefaultIcon.tres" id="16_ss4f7"]
 [ext_resource type="Material" uid="uid://djkfa7xtdg63i" path="res://src/Resources/Materials/DefaultHoverIcon.tres" id="17_743ng"]
-[ext_resource type="Script" uid="uid://csefxrb6ehpnb" path="res://src/Libs/shylib/Classes/DialogueData.cs" id="17_h8oac"]
 [ext_resource type="Material" uid="uid://bq8wyiwgdl28m" path="res://src/Resources/Materials/LockedIcon.tres" id="18_8i3or"]
 [ext_resource type="Shader" uid="uid://ceis0htp3v6r0" path="res://src/Resources/Shaders/text test.tres" id="18_p8ix8"]
+[ext_resource type="Script" uid="uid://csefxrb6ehpnb" path="res://src/Libs/shylib/Classes/DialogueData.cs" id="20_jipul"]
 [ext_resource type="Script" uid="uid://bq8h5fsdfxg7c" path="res://src/Scripts/PauseGui.cs" id="20_ss4f7"]
 [ext_resource type="Texture2D" uid="uid://bmtapdmr10o7e" path="res://src/Images/Dialog/dialog_border.png" id="21_3ahso"]
 [ext_resource type="Texture2D" uid="uid://d01hk0epfwk0e" path="res://src/Images/Dialog/dialog_background.png" id="22_0m3r5"]
@@ -31,6 +31,7 @@
 [ext_resource type="Script" uid="uid://muq0ch483pvr" path="res://src/Libs/shylib/Classes/Discord/DiscordController.cs" id="25_p8ix8"]
 [ext_resource type="StyleBox" uid="uid://doq610dbi3bsw" path="res://src/Resources/Ui/DialogButton.tres" id="26_10fqn"]
 [ext_resource type="StyleBox" uid="uid://0oi8rktonqwv" path="res://src/Resources/Ui/DialogButtonHover.tres" id="26_jipul"]
+[ext_resource type="StyleBox" uid="uid://bclw3clviyndh" path="res://src/Resources/Ui/DialogButtonPress.tres" id="27_n8c8y"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0m3r5"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -180,6 +181,8 @@ metadata/_custom_type_script = "uid://c7txcaajl83ve"
 script = ExtResource("24_jipul")
 metadata/_custom_type_script = "uid://3mxc7rj1i0c8"
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gc7xl"]
+
 [node name="Game" type="Node"]
 script = ExtResource("1_doi2n")
 
@@ -198,7 +201,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -82.6777, 38.51, 6.55279)
 
 [node name="Player" type="CharacterBody3D" parent="Root3D"]
 unique_name_in_owner = true
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 21.9883, 1.44635, 0)
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 21.9883, 0.408756, 0)
 input_ray_pickable = false
 script = ExtResource("1_wpbw3")
 
@@ -220,7 +223,7 @@ unique_name_in_owner = true
 [node name="PlayerCamera" type="Camera3D" parent="Root3D/Cameras"]
 unique_name_in_owner = true
 process_mode = 3
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.9883, 1.67761, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.9883, 0.640015, 0)
 current = true
 fov = 90.0
 
@@ -569,7 +572,7 @@ mouse_filter = 2
 
 [node name="DialogueData" type="Node" parent="Guis/DialogueGui/Dialogue"]
 unique_name_in_owner = true
-script = ExtResource("17_h8oac")
+script = ExtResource("20_jipul")
 metadata/_custom_type_script = "uid://csefxrb6ehpnb"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Guis/DialogueGui/Dialogue"]
@@ -580,7 +583,6 @@ mouse_filter = 2
 theme_override_constants/separation = 20
 
 [node name="Top" type="TextureRect" parent="Guis/DialogueGui/Dialogue/VBoxContainer"]
-modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 texture = ExtResource("21_3ahso")
 stretch_mode = 2
@@ -615,15 +617,17 @@ vertical_alignment = 1
 custom_effects = [SubResource("RichTextEffect_gc7xl"), SubResource("RichTextEffect_n8c8y")]
 
 [node name="BaseButtonContainer" type="HFlowContainer" parent="Guis/DialogueGui/Dialogue/VBoxContainer/Base"]
-visible = false
-z_index = 11
+z_index = 9
 layout_mode = 2
 alignment = 1
 
 [node name="Button" type="Button" parent="Guis/DialogueGui/Dialogue/VBoxContainer/Base/BaseButtonContainer"]
-z_index = 11
+z_index = 9
 layout_mode = 2
+theme_override_fonts/font = ExtResource("23_jipul")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_gc7xl")
 theme_override_styles/hover = ExtResource("26_jipul")
+theme_override_styles/pressed = ExtResource("27_n8c8y")
 theme_override_styles/normal = ExtResource("26_10fqn")
 action_mode = 0
 text = "boo boo"
@@ -641,15 +645,16 @@ vertical_alignment = 1
 custom_effects = [SubResource("RichTextEffect_gc7xl"), SubResource("RichTextEffect_n8c8y")]
 
 [node name="Bottom" type="TextureRect" parent="Guis/DialogueGui/Dialogue/VBoxContainer"]
-modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 texture = ExtResource("21_3ahso")
 stretch_mode = 2
 flip_v = true
 
-[node name="Background" type="TextureRect" parent="Guis/DialogueGui/Dialogue" groups=["scene_manager_entity_nodes"]]
-modulate = Color(1, 1, 1, 0)
+[node name="Background" type="TextureRect" parent="Guis/DialogueGui/Dialogue"]
+show_behind_parent = true
+z_index = 10
 layout_mode = 2
+mouse_filter = 2
 texture = ExtResource("22_0m3r5")
 
 [node name="PauseGui" type="Control" parent="Guis"]

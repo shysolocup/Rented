@@ -193,6 +193,7 @@ public partial class Player : CharacterBody3D
 		Controllable = false;
 		CameraRotationControllable = false;
 		InDialog = true;
+		ReleaseMouse();
 
 		Vector3 Direction = (obj.GlobalTransform.Origin - GlobalTransform.Origin).Normalized();
 		Basis TargetBasis = Basis.LookingAt(Direction, Vector3.Up);
@@ -213,6 +214,7 @@ public partial class Player : CharacterBody3D
 		Controllable = true;
 		CameraRotationControllable = true;
 		InDialog = false;
+		CaptureMouse();
 
 		if (IsInstanceValid(tween) && tween.IsRunning()) tween.Stop();
 

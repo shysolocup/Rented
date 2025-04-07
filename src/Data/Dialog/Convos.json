@@ -9,15 +9,24 @@
 			"I don't really like you\n you're pretty mean",
 			"you're a little googoo baby\nand I don't think you're\nvery nice at all like\nyou're like a a meanie poop",
 			"I'm gonna kill you",
-			"LET ME OUT"
-		]],
-		["Audrey", [
-			"nuh uh"
+			{ 
+				"text": "LET ME OUT",
+				"buttons": [
+					["yes", "convo_test_let_out"],
+					["no", "convo_test_nuh_uh"]
+				]
+			}
 		]]
 	],
-	"test_2": [
+	"test_let_out": [
 		["Audrey", [
-			"googoo"
+			"fiiinnneeeee"
+		]]
+	],
+	"test_nuh_uh": [
+		["Audrey", [
+			"nuh uhhhhhh",
+			"stupid baby boy"
 		]]
 	]
 }

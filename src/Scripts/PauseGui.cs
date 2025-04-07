@@ -6,6 +6,13 @@ public partial class PauseGui : Control
 {
 	private bool paused = false;
 
+	public override void _Notification(int what)
+	{
+		if (what == NotificationWMWindowFocusOut) {
+			Paused = true;
+		}
+	}
+
 	public bool Paused {
 		get { return paused; }
 

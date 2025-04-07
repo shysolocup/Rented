@@ -194,11 +194,13 @@ public partial class DialogueData : Node
 							btn.Pressed += async () => {
 								foreach (Button otherBtns in buttons.GetChildren()) {
 									if (otherBtns.GetIndex() != index) {
-										Tween otherBtntween = CreateTween();
-										otherBtntween.Finished += () => otherBtntween.Dispose();
-										otherBtntween.TweenProperty(otherBtns, "modulate:a", 1, 1)
+										Tween otherBtnTween = CreateTween();
+										otherBtnTween.Finished += () => otherBtnTween.Dispose();
+										otherBtnTween.TweenProperty(otherBtns, "modulate:a", 0, 0.2f)
 										.SetTrans(Tween.TransitionType.Quad)
 										.SetEase(Tween.EaseType.Out);
+
+										otherBtnTween.Play();
 									}
 								}
 
@@ -206,11 +208,15 @@ public partial class DialogueData : Node
 
 								Tween buttontween = CreateTween();
 								buttontween.Finished += () => buttontween.Dispose();
-								buttontween.TweenProperty(btn, "modulate:a", 0, 1)
+								buttontween.TweenProperty(btn, "modulate:a", 0, 1f)
 								.SetTrans(Tween.TransitionType.Quad)
 								.SetEase(Tween.EaseType.Out);
 
-								await GetTree().CreateTimer(0.1f).Guh();
+								buttontween.Play();
+
+								await ToSignal(buttontween, Tween.SignalName.Finished);
+
+								await GetTree().CreateTimer(0.2f).Guh();
 								await Play(btnData.RedirectLine, inst);
 
 								// hopefully will stop the loop when a button is pressed

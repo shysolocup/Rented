@@ -15,3 +15,4 @@
 addons/discord-rpc-gd/bin/windows/~discord_game_sdk_binding_debug.dll
 addons/terrain_3d/bin/~libterrain.windows.debug.x86_64.dll
 addons/terrain_3d/bin/~libterrain.windows.debug.x86_64.dll
+addons/godotsteam_server/win64/~libgodotsteam_server.windows.template_debug.x86_64.dll

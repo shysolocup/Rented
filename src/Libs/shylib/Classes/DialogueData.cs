@@ -374,24 +374,10 @@ public partial class DialogueData : Node
 		)convojson.Data;
 
 		foreach ( (string lineid, Array<Array<Variant>> sequences) in convos) {
-			Lines[$"convo_{lineid}"] = new();
-
-			foreach ( Array<Variant> sequenceData in sequences) {
-				string character = (string)sequenceData[0];
-				Array<Variant> lines = (Array<Variant>)sequenceData[1];
-
-				DialogueSequence sequence = new() {
-					Character = character
-				};
-
-				foreach ( Variant rawLineData in lines ) {
-					sequence.Lines.Add(LineEval(rawLineData));
-				};
-
-				Lines[$"convo_{lineid}"].Add(sequence);
-			}
+			Lines[$"convo_{lineid}"] = EvalConvos(sequences);
 		}
 		#endregion
+
 
 		#region Interacts
 		using var interactdata = FileAccess.Open("res://src/Data/Dialog/Interacts.json", FileAccess.ModeFlags.Read);
@@ -403,19 +389,10 @@ public partial class DialogueData : Node
 		)interactjson.Data;
 
 		foreach ( (string lineid, Array<Variant> sequences) in interacts) {
-			Lines[$"interact_{lineid}"] = new();
-
-			DialogueSequence sequence = new() {
-				Character = "",
-			};
-
-			foreach ( Variant lineData in sequences) {
-				sequence.Lines.Add(LineEval(lineData));
-			};
-
-			Lines[$"interact_{lineid}"].Add(sequence);
+			Lines[$"interact_{lineid}"] = EvalInteracts(sequences);
 		}
 		#endregion
+
 
 		#region Deaths
 		using var deathsdata = FileAccess.Open("res://src/Data/Dialog/Deaths.json", FileAccess.ModeFlags.Read);

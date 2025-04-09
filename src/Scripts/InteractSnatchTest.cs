@@ -10,8 +10,8 @@ public partial class InteractSnatchTest : Node
 		obj = GetParent<InteractObject3D>();
 		player = GetNode<Player>("../%Player");
 
-		obj.Hover += Hover;
-		obj.Press += Press;
+		obj.HoverChanged += Hover;
+		obj.PressChanged += Press;
 	}
 
 	public void Hover()

@@ -8,8 +8,8 @@ public partial class InteractTest : Node3D
 	public override void _Ready() {
 		obj = GetParent<InteractObject3D>();
 
-		obj.Hover += Hover;
-		obj.Press += Press;
+		obj.HoverChanged += Hover;
+		obj.PressChanged += Press;
 	}
 
 	public void Hover()

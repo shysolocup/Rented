@@ -15,12 +15,12 @@ public partial class InteractObject3D : RigidBody3D
 	private bool _hovering = false;
 
 
-	[Signal] public delegate void PressEventHandler();
-	[Signal] public delegate void HoverEventHandler();
+	[Signal] public delegate void PressChangedEventHandler();
+	[Signal] public delegate void HoverChangedEventHandler();
 
 
-	public virtual void _Press() {}
-	public virtual void _Hover() {}
+	public virtual void _PressChanged() {}
+	public virtual void _HoverChanged() {}
 	
 	private Crosshair3D Crosshair; 
 
@@ -47,8 +47,8 @@ public partial class InteractObject3D : RigidBody3D
 		set {
 			if (value != _pressed) {
 				_pressed = (!Enabled || Cooldown) ? false : value;
-				_Press();
-				EmitSignal(SignalName.Press);
+				_PressChanged();
+				EmitSignal(SignalName.PressChanged);
 			}
 		}
 	}
@@ -72,8 +72,8 @@ public partial class InteractObject3D : RigidBody3D
 					Crosshair.Icon.SetSurfaceOverrideMaterial(0, Crosshair.DefaultIcon);
 				}
 
-				_Hover();
-				EmitSignal(SignalName.Hover);
+				_HoverChanged();
+				EmitSignal(SignalName.HoverChanged);
 			}
 		}
 	}

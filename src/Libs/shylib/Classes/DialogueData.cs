@@ -13,6 +13,7 @@ using System.Globalization;
 public partial class DialogueData : Node
 {
 	private string _path = "res://src/Data/Dialog/";
+	private Random rand = new Random();
 
 	[Export] public string Path {
 		get { return _path; }
@@ -45,6 +46,7 @@ public partial class DialogueData : Node
 	}
 
 
+	#region FadeEffect
 	private async Task FadeEffect(RichTextLabel label, DialogueLine line, CancellationToken token, int speed = 30)
 	{
 		for (int i = 0; i < line.Text.Length; i++) {
@@ -58,15 +60,17 @@ public partial class DialogueData : Node
 
 		token.ThrowIfCancellationRequested();
 	}
+	#endregion
 
 
-
+	#region LineEval
 	private DialogueLine LineEval(Variant lineData)
 	{
 		switch (lineData.VariantType) {
 
 			// Array 
 			// ["text", "audio", [["button1", "redirline1], ["button2", "redirline1"]]]
+			#region LineEval:Array
 			case Variant.Type.Array: {
 				Array<Variant> lineArr = (Array<Variant>)lineData;
 
@@ -78,16 +82,23 @@ public partial class DialogueData : Node
 				if (lineArr.ElementAtOrDefault(2).VariantType == Variant.Type.Array) {
 					foreach (Array<string> btn in (Array<Array<string>>)lineArr[2]) {
 						line.Buttons.Add(new DialogueButton() {
-							Text = btn[0],
-							RedirectLine = btn[1]
+							Text = btn.ElementAtOrDefault(0),
+							RedirectLine = btn.ElementAtOrDefault(1)
 						});
 					}
+				}
+				else if (lineArr.ElementAtOrDefault(2).VariantType == Variant.Type.String) {
+					line.Buttons.Add(new DialogueButton() {
+						Text = (string)lineArr[2],
+					});
 				}
 
 				return line;
 			}
+			#endregion
 
 			//
+			#region LineEval:Dict
 			case Variant.Type.Dictionary: {
 				Dictionary<string, Variant> lineDict = (Dictionary<string, Variant>)lineData;
 
@@ -97,27 +108,54 @@ public partial class DialogueData : Node
 				};
 
 				if (lineDict.ContainsKey("buttons")) {
-					foreach (Array<string> btn in (Array<Array<string>>)lineDict["buttons"]) {
-						GD.Print(btn);
+					foreach (Variant btnVar in (Array<Variant>)lineDict["buttons"]) {
+						GD.Print(btnVar);
 
-						line.Buttons.Add(new DialogueButton() {
-							Text = btn[0],
-							RedirectLine = btn[1]
-						});
+						if (btnVar.VariantType == Variant.Type.Array) {
+							Array<string> btn = (Array<string>)btnVar;
+
+							line.Buttons.Add(new DialogueButton() {
+								Text = btn.ElementAtOrDefault(0),
+								RedirectLine = btn.ElementAtOrDefault(1)
+							});
+						}
+
+						else if (btnVar.VariantType == Variant.Type.String) {
+							line.Buttons.Add(new DialogueButton() {
+								Text = (string)btnVar,
+							});
+						}
+					}
+				}
+
+				if (lineDict.ContainsKey("redirect")) {
+					line.Redirect = (string)lineDict["redirect"];
+				}
+
+				if (lineDict.ContainsKey("random")) {
+					foreach (Variant randomLine in (Array<Variant>)lineDict["random"]) {
+						if (randomLine.VariantType == Variant.Type.String) {
+							
+						}
 					}
 				}
 
 				return line;
 			}
+			#endregion
 
+			#region LineEval:Default
 			default: return new DialogueLine() {
 				Text = (string)lineData
 			};
+			#endregion
 
 		};
 	}
+	#endregion
 
 
+	#region PlayByInstance
 	public async Task<bool> PlayByInstance(Array<DialogueSequence> sequences, VBoxContainer inst = null) {
 		bool recursive = inst != null;
 
@@ -178,6 +216,14 @@ public partial class DialogueData : Node
 					using var tokenSource = new CancellationTokenSource();
 					var token = tokenSource.Token;
 
+					#region PBI:Random
+					if (line.Randoms.Count > 0) {
+						int r = rand.Next(line.Randoms.Count);
+						await PlayByInstance(line.Randoms.ElementAtOrDefault(r));
+						continue;
+					}
+					#endregion
+
 					textlabel.Text = string.Format(BaseText, 0, 0, line.Text);
 
 					await ToSignal(tree, SceneTree.SignalName.ProcessFrame);
@@ -188,7 +234,15 @@ public partial class DialogueData : Node
 					buttons.Hide();
 					elipses.Show();
 
-					if (line.Buttons.Count > 0) {
+					#region PBI:Redirect
+					if (line.Redirect != null) {
+						await Play(line.Redirect, inst);
+						await tree.CreateTimer(0.1f).Guh();
+					}
+					#endregion
+
+					#region PBI:Buttons
+					else if (line.Buttons.Count > 0) {
 						bool done = false;
 						buttons.Show();
 						elipses.Hide();
@@ -230,7 +284,7 @@ public partial class DialogueData : Node
 
 								await ToSignal(buttontween, Tween.SignalName.Finished);
 
-								await tree.CreateTimer(0.2f).Guh();
+								await tree.CreateTimer(0.1f).Guh();
 								await Play(btnData.RedirectLine, inst);
 
 								// hopefully will stop the loop when a button is pressed
@@ -246,6 +300,9 @@ public partial class DialogueData : Node
 
 						while (!done) { await Task.Delay(5); };
 					}
+					#endregion
+
+					#region PBI:Default
 					else {
 						while (!Input.IsActionJustPressed("InteractDialog") || tree.Paused) { await Task.Delay(5); };
 
@@ -253,6 +310,7 @@ public partial class DialogueData : Node
 
 						await tree.CreateTimer(0.1f).Guh();
 					}
+					#endregion
 				}
 			}
 
@@ -285,7 +343,9 @@ public partial class DialogueData : Node
 
 		return true;
 	}
+	#endregion
 
+	#region Misc Plays
 	public async Task<bool> Play(string line = "interact_default", VBoxContainer inst = null) {
 		return await PlayByInstance(Lines[line], inst);
 	}
@@ -293,10 +353,14 @@ public partial class DialogueData : Node
 	public async Task<bool> PlayByCharacterInstance(string line, VBoxContainer inst = null) {		
 		return await PlayByInstance(Lines[line], inst);
 	}
+	#endregion
 
 
+	#region FetchDialogs
 	public Dictionary<string, Array<DialogueSequence>> FetchDialogs()
 	{
+
+		#region Convos
 		using var convodata = FileAccess.Open("res://src/Data/Dialog/Convos.json", FileAccess.ModeFlags.Read);
 
 		var convojson = new Json();
@@ -327,7 +391,9 @@ public partial class DialogueData : Node
 				Lines[$"convo_{lineid}"].Add(sequence);
 			}
 		}
+		#endregion
 
+		#region Interacts
 		using var interactdata = FileAccess.Open("res://src/Data/Dialog/Interacts.json", FileAccess.ModeFlags.Read);
 
 		var interactjson = new Json();
@@ -349,13 +415,75 @@ public partial class DialogueData : Node
 
 			Lines[$"interact_{lineid}"].Add(sequence);
 		}
+		#endregion
+
+		#region Deaths
+		using var deathsdata = FileAccess.Open("res://src/Data/Dialog/Deaths.json", FileAccess.ModeFlags.Read);
+
+		var deathsjson = new Json();
+		deathsjson.Parse(deathsdata.GetAsText());
+		var deaths = (
+			Dictionary<string, Array<Variant>>
+		)deathsjson.Data;
+
+		foreach ( (string lineid, Array<Variant> sequences) in deaths) {
+			Lines[$"death_{lineid}"] = EvalInteracts(sequences);
+		}
+		#endregion
 
 		GD.Print(Lines);
 
 		return Lines;
 	}
+	#endregion
 
 
+	#region EvalConvos
+	public Array<DialogueSequence> EvalConvos(Array<Array<Variant>> sequences)
+	{
+		Array<DialogueSequence> arr = new();
+
+		foreach ( Array<Variant> sequenceData in sequences) {
+			string character = (string)sequenceData[0];
+			Array<Variant> lines = (Array<Variant>)sequenceData[1];
+
+			DialogueSequence sequence = new() {
+				Character = character
+			};
+
+			foreach ( Variant rawLineData in lines ) {
+				sequence.Lines.Add(LineEval(rawLineData));
+			};
+
+			arr.Add(sequence);
+		}
+
+		return arr;
+	}
+	#endregion
+
+
+	#region EvalInteracts
+	public Array<DialogueSequence> EvalInteracts(Array<Variant> sequences) 
+	{
+		DialogueSequence sequence = new() {
+			Character = "",
+		};
+
+		foreach ( Variant lineData in sequences) {
+			sequence.Lines.Add(LineEval(lineData));
+		};
+
+		Array<DialogueSequence> arr = new() {
+			sequence
+		};
+
+		return arr;
+	}
+	#endregion
+
+
+	#region _Ready
 	public override void _Ready() 
 	{
 		Node parent = GetParent();
@@ -387,4 +515,5 @@ public partial class DialogueData : Node
 
 		FetchDialogs();
 	}
+	#endregion
 }

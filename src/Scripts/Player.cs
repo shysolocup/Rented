@@ -60,6 +60,8 @@ public partial class Player : CharacterBody3D
 	[Export] public float InteractFovMod = -15;
 
 	[Export] public bool Tilt = true;
+
+	public bool Dead = false;
 	
 	public RayCast3D Raycast;
 	public InteractObject3D Inter;
@@ -72,6 +74,12 @@ public partial class Player : CharacterBody3D
 	private CollisionShape3D Collision;
 	private CollisionShape3D Collision2;
 	private MeshInstance3D Mesh;
+
+
+	public void Die(int id = 0) 
+	{
+		
+	}
 	
 
 	public override void _Ready()

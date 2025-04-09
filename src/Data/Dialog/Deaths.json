@@ -1,0 +1,56 @@
+{
+    "hass_1": [
+        { "redirect": "death_default_1" },
+        "Let's see here..",
+        "Ah.",
+        "I see...",
+        "Well I guess I get to give you a hint for beating me.",
+        {"random": [
+            [
+                "Look to the ceiling.\n"
+            ],
+            [
+                "Look to the "
+            ]
+        ]}
+    ],
+
+    "default_1": [
+        {"random": [ 
+            "Nice to see you again.",
+            "Wakey wakey.",
+            "Time to wake up now.",
+            "You can't move on yet.",
+            "You can't change the past.",
+            "You're bleeding.",
+            "" 
+        ]}
+    ],
+
+    "default_2": [
+        {"random": [
+            "That's all for now\nYou have more to do.",
+            "You're not finished yet.",
+            "You still have more to do.",
+            "You still have more to find",
+            "It's not your time yet.",
+            ""
+        ]},
+        { "redirect": "death_wake_up" }
+    ],
+
+    "unknown": [
+		"I'm not sure how this happened.",
+        "You weren't meant to die yet.",
+        { "redirect": "death_wake_up" }
+	],
+
+    "death_wake_up": [
+        {
+            "text": "Wake up.",
+            "buttons": [
+                "Wake Up"
+            ]
+        }
+    ]
+}

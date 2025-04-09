@@ -1,13 +1,16 @@
-[gd_scene load_steps=59 format=3 uid="uid://s0ftqrddh5up"]
+[gd_scene load_steps=62 format=3 uid="uid://s0ftqrddh5up"]
 
 [ext_resource type="Script" uid="uid://cfoo1gxat5mv8" path="res://src/Libs/shylib/Classes/GameInstance.cs" id="1_doi2n"]
 [ext_resource type="Script" uid="uid://c1i8r8l2u4t3q" path="res://src/Scripts/Player.cs" id="1_wpbw3"]
 [ext_resource type="Script" uid="uid://cge1tw0n2wjvm" path="res://src/Libs/shylib/Classes/RbxScript.cs" id="2_i3adb"]
+[ext_resource type="Environment" uid="uid://7y7m2l8m64o" path="res://src/Resources/Skies/Default.tres" id="2_kp7xu"]
 [ext_resource type="Texture2D" uid="uid://buml50bofllu4" path="res://src/Ui/alarm clock.png" id="2_up28s"]
 [ext_resource type="Script" uid="uid://f680ovgo7k8o" path="res://src/Scripts/SaveIconSpinner.cs" id="3_35lay"]
+[ext_resource type="Texture2D" uid="uid://dcthcg547baj0" path="res://src/Images/david bazookie.png" id="4_8nlug"]
 [ext_resource type="Script" uid="uid://5750qaowrba3" path="res://src/Libs/shylib/Classes/Crosshair3D.cs" id="5_0wov3"]
 [ext_resource type="ArrayMesh" uid="uid://c87jlspmqf35v" path="res://src/Models/building.obj" id="6_3ahso"]
 [ext_resource type="Material" uid="uid://c308v38sitbye" path="res://src/Resources/Materials/placeholder_street.tres" id="6_ng2wt"]
+[ext_resource type="PlaneMesh" uid="uid://crepyedk6ykv3" path="res://src/Resources/Materials/2DBuilding.tres" id="7_07m1p"]
 [ext_resource type="Texture2D" uid="uid://bh6vfh18uu0bn" path="res://src/Textures/placeholder.png" id="7_10fqn"]
 [ext_resource type="Script" uid="uid://cpogl7mretj3h" path="res://src/Scripts/CameraSwitchScript.cs" id="7_gf62h"]
 [ext_resource type="Script" uid="uid://dlirdm8ud4hs0" path="res://src/Scripts/InteractSnatchTest.cs" id="7_ng2wt"]
@@ -34,33 +37,32 @@
 [ext_resource type="StyleBox" uid="uid://0oi8rktonqwv" path="res://src/Resources/Ui/DialogButtonHover.tres" id="26_jipul"]
 [ext_resource type="StyleBox" uid="uid://bclw3clviyndh" path="res://src/Resources/Ui/DialogButtonPress.tres" id="27_n8c8y"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0m3r5"]
-sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
-ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
-
-[sub_resource type="Sky" id="Sky_3ahso"]
-sky_material = SubResource("ProceduralSkyMaterial_0m3r5")
-
-[sub_resource type="Environment" id="Environment_ng2wt"]
-background_mode = 2
-sky = SubResource("Sky_3ahso")
-tonemap_mode = 2
-glow_enabled = true
-
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_h8oac"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ng2wt"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_y0axr"]
 
-[sub_resource type="TextMesh" id="TextMesh_3ahso"]
-text = "parking lot"
-font_size = 127
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_n8c8y"]
+emission_shape = 3
+emission_box_extents = Vector3(15, 5, 15)
+radial_velocity_min = -2.23517e-05
+radial_velocity_max = 0.999978
+gravity = Vector3(0, -8, 0)
+radial_accel_min = -2.23517e-06
+radial_accel_max = -2.23517e-06
+damping_min = 8.831
+damping_max = 11.934
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3ahso"]
-no_depth_test = true
-shading_mode = 0
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8nlug"]
+albedo_texture = ExtResource("4_8nlug")
 billboard_mode = 1
+distance_fade_mode = 1
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_kp7xu"]
+material = SubResource("StandardMaterial3D_8nlug")
+size = Vector2(0.1, 0.1)
+orientation = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gc7xl"]
 cull_mode = 2
@@ -82,6 +84,15 @@ uv1_world_triplanar = true
 grow_amount = -2.45
 point_size = 128.0
 proximity_fade_distance = 55.75
+
+[sub_resource type="TextMesh" id="TextMesh_3ahso"]
+text = "parking lot"
+font_size = 127
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3ahso"]
+no_depth_test = true
+shading_mode = 0
+billboard_mode = 1
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n8c8y"]
 cull_mode = 2
@@ -174,12 +185,15 @@ script = ExtResource("1_doi2n")
 
 [node name="World" type="WorldEnvironment" parent="."]
 unique_name_in_owner = true
-environment = SubResource("Environment_ng2wt")
+environment = ExtResource("2_kp7xu")
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(-0.646258, -0.586785, -0.487887, 0.495721, -0.808874, 0.316202, -0.580181, -0.0375076, 0.813623, -82.0372, 7.25194, 0)
+transform = Transform3D(0.352878, -0.0357639, 0.934986, -0.906277, -0.261559, 0.332038, 0.232679, -0.964525, -0.12471, -29.4832, 60.558, 0)
+light_color = Color(1, 0.884331, 0.847029, 1)
+light_energy = 1.23
 shadow_enabled = true
+shadow_blur = 6.0
 
 [node name="Root3D" type="Node3D" parent="."]
 unique_name_in_owner = true
@@ -187,7 +201,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -82.6777, 45.8119, 6.55279)
 
 [node name="Player" type="CharacterBody3D" parent="Root3D"]
 unique_name_in_owner = true
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 5.60394, 0.408756, 2.44608)
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 27.2013, 0.408756, -34.8087)
 input_ray_pickable = false
 script = ExtResource("1_wpbw3")
 
@@ -202,6 +216,16 @@ disabled = true
 [node name="Mesh" type="MeshInstance3D" parent="Root3D/Player"]
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_y0axr")
+
+[node name="Dust" type="GPUParticles3D" parent="Root3D/Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+gi_mode = 2
+amount = 200
+lifetime = 10.0
+randomness = 1.0
+collision_base_size = 0.0
+process_material = SubResource("ParticleProcessMaterial_n8c8y")
+draw_pass_1 = SubResource("PlaneMesh_kp7xu")
 
 [node name="Cameras" type="Node3D" parent="Root3D"]
 unique_name_in_owner = true
@@ -231,57 +255,112 @@ Source = ExtResource("7_gf62h")
 [node name="Buildings" type="Node3D" parent="Root3D/Map"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.519604, -0.318878)
 
-[node name="Building" type="MeshInstance3D" parent="Root3D/Map/Buildings"]
-transform = Transform3D(18.6101, 0, 0, 0, 20.1918, 0, 0, 0, 18.7635, -46.1042, -0.421101, -46.7467)
+[node name="2DBuildings" type="Node3D" parent="Root3D/Map/Buildings"]
+
+[node name="Building" type="MeshInstance3D" parent="Root3D/Map/Buildings/2DBuildings"]
+transform = Transform3D(-28.2524, -0.00815102, 0.341455, 0.282658, -0.0709788, 36.0439, -0.210762, 0.997445, 2.5677, 5.70475, 10.5149, -211.615)
+mesh = ExtResource("7_07m1p")
+skeleton = NodePath("../..")
+
+[node name="Building5" type="MeshInstance3D" parent="Root3D/Map/Buildings/2DBuildings"]
+transform = Transform3D(-21.9991, 0.625333, 1.89028, 0.282658, -0.0709788, 36.0439, 17.728, 0.777124, 1.77101, -2.94962, -1.81206, -180.704)
+mesh = ExtResource("7_07m1p")
+skeleton = NodePath("../..")
+
+[node name="Building4" type="MeshInstance3D" parent="Root3D/Map/Buildings/2DBuildings"]
+transform = Transform3D(-28.2524, -0.00815102, 0.341455, 0.282658, -0.0709788, 36.0439, -0.210762, 0.997445, 2.5677, 33.3373, -0.793289, -262.132)
+mesh = ExtResource("7_07m1p")
+skeleton = NodePath("../..")
+
+[node name="Building3" type="MeshInstance3D" parent="Root3D/Map/Buildings/2DBuildings"]
+transform = Transform3D(-22.3195, -0.612148, -1.28787, 0.282658, -0.0709788, 36.0439, -17.323, 0.787552, 2.24745, 221.528, 26.1725, -107.055)
+mesh = ExtResource("7_07m1p")
+skeleton = NodePath("../..")
+
+[node name="Building2" type="MeshInstance3D" parent="Root3D/Map/Buildings/2DBuildings"]
+transform = Transform3D(-35.1334, -0.4272, -0.964766, 0.380886, -0.0787785, 53.0616, -14.666, 1.02134, 3.68922, 56.0068, 13.2144, -211.615)
+mesh = ExtResource("7_07m1p")
+skeleton = NodePath("../..")
+
+[node name="3DBuildings" type="Node3D" parent="Root3D/Map/Buildings"]
+
+[node name="Building" type="MeshInstance3D" parent="Root3D/Map/Buildings/3DBuildings"]
+transform = Transform3D(18.6101, 0, 0, 0, 20.1918, 0, 0, 0, 18.7635, -64.0595, -0.421101, -46.7467)
 mesh = ExtResource("6_3ahso")
+skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("6_ng2wt")
 
-[node name="Building8" type="MeshInstance3D" parent="Root3D/Map/Buildings"]
-transform = Transform3D(-0.1306, 0, 21.7389, 0, 13.9722, 0, -9.70486, 0, -0.292545, -12.1374, -0.421101, -81.9767)
+[node name="Building8" type="MeshInstance3D" parent="Root3D/Map/Buildings/3DBuildings"]
+transform = Transform3D(-0.1306, 0, 21.7389, 0, 13.9722, 0, -9.70486, 0, -0.292545, -30.0927, -0.421101, -81.9767)
 mesh = ExtResource("6_3ahso")
+skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("6_ng2wt")
 
-[node name="Building7" type="MeshInstance3D" parent="Root3D/Map/Buildings"]
-transform = Transform3D(-0.0407573, 0, -14.3718, 0, 16.1027, 0, 9.49277, 0, -0.0617055, -52.7949, -0.421101, -90.4173)
+[node name="Building7" type="MeshInstance3D" parent="Root3D/Map/Buildings/3DBuildings"]
+transform = Transform3D(-0.0407573, 0, -14.3718, 0, 16.1027, 0, 9.49277, 0, -0.0617055, -70.7503, -0.421101, -90.4173)
 mesh = ExtResource("6_3ahso")
+skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("6_ng2wt")
 
-[node name="Building3" type="MeshInstance3D" parent="Root3D/Map/Buildings"]
-transform = Transform3D(0.769846, 0, 24.6839, 0, 20.1918, 0, -18.4449, 0, 1.03025, -66.5485, -0.41423, -55.4116)
+[node name="Building3" type="MeshInstance3D" parent="Root3D/Map/Buildings/3DBuildings"]
+transform = Transform3D(0.769846, 0, 24.6839, 0, 20.1918, 0, -18.4449, 0, 1.03025, -84.5038, -0.41423, -55.4116)
 mesh = ExtResource("6_3ahso")
+skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("6_ng2wt")
 
-[node name="Building2" type="MeshInstance3D" parent="Root3D/Map/Buildings"]
-transform = Transform3D(-19.0236, 0, -2.07502e-06, 0, 10.8293, 0, 1.6631e-06, 0, -23.7354, 100.42, -0.192009, -111.653)
+[node name="Building2" type="MeshInstance3D" parent="Root3D/Map/Buildings/3DBuildings"]
+transform = Transform3D(12.4768, 0, -1.31008, 0, 10.8293, 0, 1.05472, 0, 15.4976, 64.8166, -0.245537, -80.1253)
 mesh = ExtResource("6_3ahso")
+skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("6_ng2wt")
 
-[node name="Building6" type="MeshInstance3D" parent="Root3D/Map/Buildings"]
-transform = Transform3D(0.1856, 0, -23.7343, 0, 16.2828, 0, 19.0227, 0, 0.23157, 59.8222, -0.192009, -164.105)
+[node name="Building10" type="MeshInstance3D" parent="Root3D/Map/Buildings/3DBuildings"]
+transform = Transform3D(4.61204, 0, 14.4594, 0, 12.6564, 0, -11.641, 0, 5.72867, 107.101, -0.245537, -48.4813)
 mesh = ExtResource("6_3ahso")
+skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("6_ng2wt")
 
-[node name="Building4" type="MeshInstance3D" parent="Root3D/Map/Buildings"]
+[node name="Building6" type="MeshInstance3D" parent="Root3D/Map/Buildings/3DBuildings"]
+transform = Transform3D(0.1856, 0, -23.7343, 0, 18.4019, 0, 19.0227, 0, 0.23157, 59.8222, -0.192009, -164.105)
+mesh = ExtResource("6_3ahso")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("6_ng2wt")
+
+[node name="Building9" type="MeshInstance3D" parent="Root3D/Map/Buildings/3DBuildings"]
+transform = Transform3D(16.5241, 0, 0.0105973, 0, 12.9205, 0, -0.00634568, 0, 27.5952, 17.0984, -0.192013, -138.177)
+mesh = ExtResource("6_3ahso")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("6_ng2wt")
+
+[node name="Building11" type="MeshInstance3D" parent="Root3D/Map/Buildings/3DBuildings"]
+transform = Transform3D(-0.408186, 0, -22.6036, 0, 14.7718, 0, 19.2777, 0, -0.478609, -29.0385, -0.192013, -171.776)
+mesh = ExtResource("6_3ahso")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("6_ng2wt")
+
+[node name="Building12" type="MeshInstance3D" parent="Root3D/Map/Buildings/3DBuildings"]
+transform = Transform3D(-0.0604448, 0, -3.3103, 0, 1.91977, 0, 2.85467, 0, -0.0700923, -29.0385, -41.4663, -169.71)
+mesh = ExtResource("6_3ahso")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("6_ng2wt")
+
+[node name="Building4" type="MeshInstance3D" parent="Root3D/Map/Buildings/3DBuildings"]
 transform = Transform3D(0.26893, 0, 23.733, 0, 13.0556, 0, -19.0217, 0, 0.335544, 93.025, -0.714546, 76.9801)
 mesh = ExtResource("6_3ahso")
+skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("6_ng2wt")
 
-[node name="Building5" type="MeshInstance3D" parent="Root3D/Map/Buildings"]
+[node name="Building5" type="MeshInstance3D" parent="Root3D/Map/Buildings/3DBuildings"]
 transform = Transform3D(-0.0871871, 0, -23.7637, 0, 9.25541, 0, 15.0464, 0, -0.137706, 67.4789, -0.714546, 89.9866)
 mesh = ExtResource("6_3ahso")
+skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("6_ng2wt")
 
 [node name="parking lot" type="Node3D" parent="Root3D/Map"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5804, -1.59785, 1.40003)
 
-[node name="label" type="MeshInstance3D" parent="Root3D/Map/parking lot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.0773, 4.17153, 45.1609)
-mesh = SubResource("TextMesh_3ahso")
-skeleton = NodePath("../../street/CSGBox3D3")
-surface_material_override/0 = SubResource("StandardMaterial3D_3ahso")
-
 [node name="CSGBox3D" type="CSGBox3D" parent="Root3D/Map/parking lot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.8939, 0.259583, -11.4646)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.8939, -0.138489, -11.4646)
 use_collision = true
 size = Vector3(42.3818, 1.51916, 56.2784)
 material = SubResource("StandardMaterial3D_gc7xl")
@@ -292,9 +371,9 @@ mesh = SubResource("TextMesh_3ahso")
 surface_material_override/0 = SubResource("StandardMaterial3D_3ahso")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="Root3D/Map/parking lot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.06103, -0.156689, -8.29472)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.9923, -0.156689, -8.29472)
 use_collision = true
-size = Vector3(58.706, 1.51916, 26.6316)
+size = Vector3(74.5686, 1.51916, 26.6316)
 material = SubResource("StandardMaterial3D_gc7xl")
 
 [node name="label" type="MeshInstance3D" parent="Root3D/Map/parking lot/CSGBox3D2"]
@@ -306,9 +385,9 @@ surface_material_override/0 = SubResource("StandardMaterial3D_3ahso")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5804, -1.59785, 1.40003)
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="Root3D/Map/grass patches"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 84.4712, 0.668091, -59.9186)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.8394, 0.377983, -59.0393)
 use_collision = true
-size = Vector3(67.4774, 2.33618, 32.5952)
+size = Vector3(29.1889, 2.33618, 30.8367)
 material = SubResource("StandardMaterial3D_n8c8y")
 
 [node name="label" type="MeshInstance3D" parent="Root3D/Map/grass patches/CSGBox3D3"]
@@ -317,9 +396,9 @@ mesh = SubResource("TextMesh_8nlug")
 surface_material_override/0 = SubResource("StandardMaterial3D_3ahso")
 
 [node name="CSGBox3D4" type="CSGBox3D" parent="Root3D/Map/grass patches"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.96226, -0.315025, 28.7545)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.31092, -0.315025, 50.7393)
 use_collision = true
-size = Vector3(67.4774, 2.33618, 36.6382)
+size = Vector3(64.1747, 2.33618, 80.6077)
 material = SubResource("StandardMaterial3D_n8c8y")
 
 [node name="label" type="MeshInstance3D" parent="Root3D/Map/grass patches/CSGBox3D4"]
@@ -331,9 +410,9 @@ surface_material_override/0 = SubResource("StandardMaterial3D_3ahso")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5804, -1.9837, 1.40003)
 
 [node name="CSGBox3D4" type="CSGBox3D" parent="Root3D/Map/street"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.0269, -0.167652, -5.02839)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.0269, -0.167652, 7.19167)
 use_collision = true
-size = Vector3(17.5351, 2.33618, 250.51)
+size = Vector3(17.5351, 2.33618, 226.07)
 material = SubResource("StandardMaterial3D_kp7xu")
 
 [node name="label" type="MeshInstance3D" parent="Root3D/Map/street"]
@@ -349,9 +428,9 @@ size = Vector3(17.7607, 2.33618, 145.725)
 material = SubResource("StandardMaterial3D_kp7xu")
 
 [node name="CSGBox3D8" type="CSGBox3D" parent="Root3D/Map/street"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -43.5526, -0.167652, -121.402)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -7.33298, -0.167652, -114.663)
 use_collision = true
-size = Vector3(17.7607, 2.33618, 145.725)
+size = Vector3(17.7607, 2.33618, 218.164)
 material = SubResource("StandardMaterial3D_kp7xu")
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="Root3D/Map/street"]
@@ -360,10 +439,22 @@ use_collision = true
 size = Vector3(6.21802, 2.08722, 133.248)
 material = ExtResource("6_ng2wt")
 
-[node name="CSGBox3D9" type="CSGBox3D" parent="Root3D/Map/street"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.4018, 0.456841, -75.9043)
+[node name="CSGBox3D13" type="CSGBox3D" parent="Root3D/Map/street"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -54.3145, 0.462929, 44.8876)
 use_collision = true
-size = Vector3(6.21802, 2.08722, 73.7634)
+size = Vector3(6.21802, 2.0994, 132.69)
+material = ExtResource("6_ng2wt")
+
+[node name="CSGBox3D9" type="CSGBox3D" parent="Root3D/Map/street"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.4018, 0.515926, -72.7283)
+use_collision = true
+size = Vector3(6.21802, 2.08722, 67.4115)
+material = ExtResource("6_ng2wt")
+
+[node name="CSGBox3D15" type="CSGBox3D" parent="Root3D/Map/street"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.7652, 0.515926, -72.6121)
+use_collision = true
+size = Vector3(54.687, 2.08722, 67.179)
 material = ExtResource("6_ng2wt")
 
 [node name="CSGBox3D11" type="CSGBox3D" parent="Root3D/Map/street"]
@@ -379,36 +470,120 @@ size = Vector3(6.21802, 2.08722, 133.248)
 material = ExtResource("6_ng2wt")
 
 [node name="CSGBox3D6" type="CSGBox3D" parent="Root3D/Map/street"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -10.4149, 0.456841, 7.55914)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -13.9954, 0.456841, 7.55914)
 use_collision = true
-size = Vector3(6.21802, 2.08722, 67.4193)
+size = Vector3(6.21802, 2.08722, 74.5803)
 material = ExtResource("6_ng2wt")
 
 [node name="CSGBox3D10" type="CSGBox3D" parent="Root3D/Map/street"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -35.4212, 0.456841, -65.2017)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -35.4212, 0.585369, -65.4975)
 use_collision = true
-size = Vector3(52.3303, 2.08722, 117.432)
+size = Vector3(52.9219, 2.08722, 117.432)
 material = ExtResource("6_ng2wt")
 
 [node name="CSGBox3D12" type="CSGBox3D" parent="Root3D/Map/street"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -35.4212, 0.456841, -102.417)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -35.4212, 0.533005, -99.1934)
 use_collision = true
-size = Vector3(20.9129, 2.08722, 117.432)
+size = Vector3(14.4657, 2.08722, 117.432)
+material = ExtResource("6_ng2wt")
+
+[node name="CSGBox3D14" type="CSGBox3D" parent="Root3D/Map/street"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15.8598, 0.533005, -129.938)
+use_collision = true
+size = Vector3(14.4657, 2.08722, 156.555)
 material = ExtResource("6_ng2wt")
 
 [node name="sidewalk" type="Node3D" parent="Root3D/Map"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -24.2648)
 
-[node name="CSGBox3D2" type="CSGBox3D" parent="Root3D/Map"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.4621, 11.5104, -74.3405)
+[node name="Building" type="StaticBody3D" parent="Root3D/Map"]
+
+[node name="Shell" type="CSGCombiner3D" parent="Root3D/Map/Building"]
 use_collision = true
-size = Vector3(33.1792, 24.0208, 60.1099)
+
+[node name="label" type="MeshInstance3D" parent="Root3D/Map/Building/Shell"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.01875, 4.75792, -44.9927)
+mesh = SubResource("TextMesh_ng2wt")
+skeleton = NodePath("../CSGBox3D2")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ahso")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Root3D/Map/Building/Shell"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.44241, 6.17313, -68.7137)
+use_collision = true
+size = Vector3(43.2186, 13.3463, 48.8563)
 material = ExtResource("6_ng2wt")
 
-[node name="label" type="MeshInstance3D" parent="Root3D/Map/CSGBox3D2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.66463, -6.75248, 29.3478)
-mesh = SubResource("TextMesh_ng2wt")
-surface_material_override/0 = SubResource("StandardMaterial3D_3ahso")
+[node name="CSGBox3D3" type="CSGBox3D" parent="Root3D/Map/Building/Shell"]
+transform = Transform3D(0.948871, 0, 0, 0, 1, 0, 0, 0, 0.936166, 7.98064, 5.77119, -69.3721)
+operation = 2
+use_collision = true
+size = Vector3(41.7513, 12.2498, 49.4955)
+material = ExtResource("6_ng2wt")
+
+[node name="DoorHoleBack" type="CSGBox3D" parent="Root3D/Map/Building/Shell"]
+transform = Transform3D(0.948871, 0, 0, 0, 1, 0, 0, 0, 0.936166, 25.8682, 1.09681, -44.3035)
+operation = 2
+use_collision = true
+size = Vector3(4.03476, 3.28772, 7.26869)
+material = ExtResource("6_ng2wt")
+
+[node name="DoorHoleSide" type="CSGBox3D" parent="Root3D/Map/Building/Shell"]
+transform = Transform3D(-4.14765e-08, 0, 0.936166, 0, 1, 0, -0.948871, 0, -4.09211e-08, 27.2104, 1.25251, -64.7363)
+operation = 2
+use_collision = true
+size = Vector3(4.03476, 3.28772, 7.26869)
+material = ExtResource("6_ng2wt")
+
+[node name="WindowHoleSide" type="CSGBox3D" parent="Root3D/Map/Building/Shell"]
+transform = Transform3D(-4.14765e-08, 0, 0.936166, 0, 1, 0, -0.948871, 0, -4.09211e-08, 28.0248, 3.34245, -52.4737)
+operation = 2
+use_collision = true
+size = Vector3(9.19889, 4.76817, 7.26869)
+material = ExtResource("6_ng2wt")
+
+[node name="WindowHoleBack" type="CSGBox3D" parent="Root3D/Map/Building/Shell"]
+transform = Transform3D(0.948871, 0, 0, 0, 1, 0, 0, 0, 0.936166, 17.1849, 3.14808, -46.4589)
+operation = 2
+use_collision = true
+size = Vector3(8.78416, 4.38799, 7.26869)
+material = ExtResource("6_ng2wt")
+
+[node name="DoorHoleFront" type="CSGBox3D" parent="Root3D/Map/Building/Shell"]
+transform = Transform3D(0.948871, 0, 0, 0, 1, 0, 0, 0, 0.936166, 12.8165, 1.25251, -94.2579)
+operation = 2
+use_collision = true
+size = Vector3(4.03476, 3.28772, 7.26869)
+material = ExtResource("6_ng2wt")
+
+[node name="Dish" type="CSGCombiner3D" parent="Root3D/Map/Building"]
+use_collision = true
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Root3D/Map/Building/Dish"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.6911, 6.02905, -59.7619)
+use_collision = true
+size = Vector3(28.7212, 13.1926, 2.92319)
+material = ExtResource("6_ng2wt")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Root3D/Map/Building/Dish"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.04777, 6.02905, -52.9469)
+use_collision = true
+size = Vector3(3.37349, 13.1926, 13.9825)
+material = ExtResource("6_ng2wt")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Root3D/Map/Building/Dish"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.4668, 10.6263, -51.498)
+use_collision = true
+size = Vector3(21.164, 3.99807, 11.0848)
+material = ExtResource("6_ng2wt")
+
+[node name="KitchenDoorHole" type="CSGBox3D" parent="Root3D/Map/Building/Dish"]
+transform = Transform3D(0.948871, 0, 0, 0, 1, 0, 0, 0, 0.936166, 25.6321, 1.48263, -60.5642)
+operation = 2
+use_collision = true
+size = Vector3(2.88701, 3.66937, 7.26869)
+material = ExtResource("6_ng2wt")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="Root3D/Map/Building"]
 
 [node name="Ambient" type="Node3D" parent="Root3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.01644, 17.5536, 0)
@@ -472,6 +647,23 @@ surface_material_override/0 = ExtResource("13_ss4f7")
 [node name="Node" type="Node" parent="Root3D/test"]
 script = ExtResource("7_ng2wt")
 
+[node name="test3" type="RigidBody3D" parent="Root3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.2149, 0.977314, -62.8863)
+freeze = true
+script = ExtResource("8_uf7b3")
+Line = "interact_david_bazookie"
+
+[node name="Collision" type="CollisionShape3D" parent="Root3D/test3"]
+shape = SubResource("BoxShape3D_j1e05")
+
+[node name="Mesh" type="MeshInstance3D" parent="Root3D/test3"]
+mesh = SubResource("BoxMesh_xknod")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("13_ss4f7")
+
+[node name="Node" type="Node" parent="Root3D/test3"]
+script = ExtResource("7_ng2wt")
+
 [node name="test2" type="RigidBody3D" parent="Root3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55775, 0.989777, 5.04772)
 freeze = true
@@ -498,6 +690,12 @@ skeleton = NodePath("")
 transform = Transform3D(527.247, 0, 0, 0, 1, 0, 0, 0, 694.333, 82.6671, -46.3386, -6.55556)
 use_collision = true
 material = ExtResource("14_n8c8y")
+
+[node name="MockPlayer" type="MeshInstance3D" parent="Root3D"]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 26.7163, 1.09401, -45.1054)
+cast_shadow = 0
+mesh = SubResource("CapsuleMesh_y0axr")
+skeleton = NodePath("../Player")
 
 [node name="Rooms" type="Node" parent="."]
 unique_name_in_owner = true

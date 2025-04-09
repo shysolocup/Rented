@@ -1,0 +1,13 @@
+[gd_resource type="PlaneMesh" load_steps=4 format=3 uid="uid://crepyedk6ykv3"]
+
+[ext_resource type="Texture2D" uid="uid://d3q6iiwcqtpjr" path="res://src/Textures/building.png" id="1_kxk8b"]
+[ext_resource type="Texture2D" uid="uid://bjpm8x88p8tik" path="res://src/Textures/building_normal.png" id="2_6itln"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_74nv7"]
+transparency = 1
+albedo_texture = ExtResource("1_kxk8b")
+normal_enabled = true
+normal_texture = ExtResource("2_6itln")
+
+[resource]
+material = SubResource("StandardMaterial3D_74nv7")

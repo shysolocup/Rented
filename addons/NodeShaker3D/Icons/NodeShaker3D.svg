@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="16"
+   height="16"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="Node3D.svg"
+   inkscape:version="1.4 (e7c3feb100, 2024-10-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#505050"
+     bordercolor="#ffffff"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="1"
+     inkscape:deskcolor="#505050"
+     inkscape:zoom="12.484375"
+     inkscape:cx="15.138924"
+     inkscape:cy="12.77597"
+     inkscape:window-width="1920"
+     inkscape:window-height="1008"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <circle
+     cx="8"
+     cy="8"
+     r="5"
+     fill="none"
+     stroke="#fc7f7f"
+     stroke-width="2"
+     id="circle1" />
+  <path
+     style="fill:#fc7f7f;fill-opacity:1"
+     d="M 1.2015019,3.7246558 1.1414268,1.3216521 2.9336671,1.7922403 3.4543179,0.1301627 5.3166458,1.4818523 4.7058824,2.0826033 3.8548185,1.3917397 3.4743429,2.5932416 1.942428,2.3429287 2.2428035,3.7046308 Z"
+     id="path1" />
+  <path
+     style="fill:#fc7f7f;fill-opacity:1"
+     d="m 11.559821,1.0854764 2.305575,-0.67997212 0.0093,1.85296912 1.740198,0.072733 -0.823613,2.1487126 -0.738358,-0.4344659 0.447051,-1.0008734 -1.259036,-0.056539 -0.154705,-1.5445021 -1.23756,0.6425745 z"
+     id="path2" />
+  <path
+     style="fill:#fc7f7f;fill-opacity:1"
+     d="m 14.911472,11.856851 0.07038,2.402724 -1.794242,-0.462899 -0.513518,1.664296 -1.868108,-1.343691 0.608182,-0.603365 0.854018,0.687208 0.37532,-1.203123 1.532974,0.243741 -0.306212,-1.360401 z"
+     id="path3" />
+  <path
+     style="fill:#fc7f7f;fill-opacity:1"
+     d="m 4.5645666,14.540427 -2.3026377,0.689854 -0.017247,-1.852912 -1.74049386,-0.06527 0.81439056,-2.152224 0.7402144,0.431295 -0.4427546,1.002781 1.2592669,0.05114 0.1613273,1.543824 1.2347929,-0.647876 z"
+     id="path4" />
+</svg>

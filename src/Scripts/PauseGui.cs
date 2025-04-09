@@ -26,8 +26,11 @@ public partial class PauseGui : Control
 					Player.ReleaseMouse(); 
 					Show();
 				}
-				else {
+				else if (!Player.InDialog) {
 					Player.CaptureMouse();
+					Hide();
+				}
+				else {
 					Hide();
 				}
 			}

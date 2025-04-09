@@ -1,0 +1,12 @@
+## How to use the NodeShaker3D ##
+
+1: Add the NodeShaker3D node to a 3D scene.
+2: Set the target to a node that inherits from Node3D
+3: Create a script and add an export variable that takes the NodeShaker3D as input
+4: In the ready function call the NodeShaker3D method called induce_stress
+the method induce_stress takes a float between 0.0 - 1.0, so the length of the shake can be different
+
+NOTE:
+	This was inspired by the unity tutorial camera shaker, I have converted it into godot
+	and also added some extra features.
+	Source : https://roystan.net/articles/camera-shake/

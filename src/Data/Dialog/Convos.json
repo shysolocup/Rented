@@ -15,7 +15,18 @@
 					["yes", "convo_test_let_out"],
 					["no", "convo_test_nuh_uh"]
 				]
-			}
+			},
+			"whatever whatever",
+			"you're you're mad mad for for what what what though thoguh",
+			{ 
+				"text": "pleaaasseeee?",
+				"buttons": [
+					["yes", "convo_test_let_out"],
+					["no", "convo_test_nuh_uh"],
+					["NO", "convo_test_NO"]
+				]
+			},
+			"you you suck suck"
 		]]
 	],
 	"test_let_out": [
@@ -27,6 +38,12 @@
 		["Audrey", [
 			"nuh uhhhhhh",
 			"stupid baby boy"
+		]]
+	],
+	"test_NO": [
+		["slinkly", [
+			"DAMN",
+			"FINE BITCH"
 		]]
 	]
 }

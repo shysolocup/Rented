@@ -77,7 +77,7 @@ public partial class Player : CharacterBody3D
 	public override void _Ready()
 	{	
 		Camera = GetNode<Camera3D>("%PlayerCamera");
-		Raycast = GetNode<RayCast3D>("%InteractRay");
+		Raycast = Camera.GetChild<RayCast3D>(0);
 
 		Collision = GetNode<CollisionShape3D>("./Collision");
 		Collision2 = GetNode<CollisionShape3D>("./CrouchCollision");
@@ -200,6 +200,8 @@ public partial class Player : CharacterBody3D
 		Vector3 TargetRotation = TargetBasis.GetEuler();
 
 		float time = (obj.GlobalRotation - Camera.GlobalRotation).Length() / 1.3f;
+
+		GD.Print(TargetRotation, Camera.GlobalRotation);
 
 		Tween tween = CreateTween();
 		tween.Finished += () => tween.Dispose();
@@ -349,11 +351,13 @@ public partial class Player : CharacterBody3D
 
 	public async Task WalkEffect(double delta)
 	{
-		/*if (WalkingEffecting) return;
+		if (WalkingEffecting) return;
 
 		WalkingEffecting = true;
 
-		Transform3D Global = Camera.GlobalTransform;
+		// FootstepShake.Set("shake_node", true);
+
+		/*Transform3D Global = Camera.GlobalTransform;
 		Vector3 Origin = Global.Origin;
 
 		Vector3 ForwardVector = Global.Basis.Z;
@@ -373,10 +377,10 @@ public partial class Player : CharacterBody3D
 
 		Transform3D Transform = new Transform3D(LeftVector, UpVector, ForwardVector, Origin);
 
-		Camera.GlobalTransform = Camera.GlobalTransform.InterpolateWith(Transform, this.FactorDelta(1/1.5f, delta));
+		Camera.GlobalTransform = Camera.GlobalTransform.InterpolateWith(Transform, this.FactorDelta(1/1.5f, delta));*/
 
 		await Task.Delay(200);
 
-		WalkingEffecting = false;*/
+		WalkingEffecting = false;
 	}
 }

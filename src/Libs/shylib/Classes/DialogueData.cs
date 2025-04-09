@@ -22,6 +22,8 @@ public partial class DialogueData : Node
 		}
 	}
 
+	private SceneTree tree;
+
 
 	public Dictionary<string, Array<DialogueSequence>> Lines = new();
 	public VBoxContainer DialogueContainer;
@@ -36,9 +38,17 @@ public partial class DialogueData : Node
 	[Signal] public delegate void FinishDialogEventHandler();
 
 
+	public override void _EnterTree()
+	{
+		base._EnterTree();
+		tree = GetTree();
+	}
+
+
 	private async Task FadeEffect(RichTextLabel label, DialogueLine line, CancellationToken token, int speed = 30)
 	{
 		for (int i = 0; i < line.Text.Length; i++) {
+			while (tree.Paused) await Task.Delay(5);
 			if (token.IsCancellationRequested) break;
 
 			await Task.Delay(speed);
@@ -158,20 +168,20 @@ public partial class DialogueData : Node
 			}
 
 			foreach ( DialogueSequence sequence in sequences) {
-				if (sequence.Character.Trim().Length > 0) {
-					chara.Text = string.Format(BaseCharacterText, sequence.Character);
-					chara.Show();
-				}
-				else chara.Hide();
-
 				foreach (DialogueLine line in sequence.Lines) {
+					if (sequence.Character.Trim().Length > 0) {
+						chara.Text = string.Format(BaseCharacterText, sequence.Character);
+						chara.Show();
+					}
+					else chara.Hide();
+
 					using var tokenSource = new CancellationTokenSource();
 					var token = tokenSource.Token;
 
 					textlabel.Text = string.Format(BaseText, 0, 0, line.Text);
 
-					await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
-					await GetTree().CreateTimer(0.05f).Guh();
+					await ToSignal(tree, SceneTree.SignalName.ProcessFrame);
+					await tree.CreateTimer(0.05f).Guh();
 
 					Task effect = FadeEffect(textlabel, line, token);
 
@@ -192,7 +202,11 @@ public partial class DialogueData : Node
 
 							btn.Text = btnData.Text;
 							btn.Pressed += async () => {
+								if (done) return;
+
 								foreach (Button otherBtns in buttons.GetChildren()) {
+									otherBtns.Disabled = true;
+
 									if (otherBtns.GetIndex() != index) {
 										Tween otherBtnTween = CreateTween();
 										otherBtnTween.Finished += () => otherBtnTween.Dispose();
@@ -204,7 +218,7 @@ public partial class DialogueData : Node
 									}
 								}
 
-								await GetTree().CreateTimer(0.3f).Guh();
+								await tree.CreateTimer(0.3f).Guh();
 
 								Tween buttontween = CreateTween();
 								buttontween.Finished += () => buttontween.Dispose();
@@ -216,7 +230,7 @@ public partial class DialogueData : Node
 
 								await ToSignal(buttontween, Tween.SignalName.Finished);
 
-								await GetTree().CreateTimer(0.2f).Guh();
+								await tree.CreateTimer(0.2f).Guh();
 								await Play(btnData.RedirectLine, inst);
 
 								// hopefully will stop the loop when a button is pressed
@@ -233,11 +247,11 @@ public partial class DialogueData : Node
 						while (!done) { await Task.Delay(5); };
 					}
 					else {
-						while (!Input.IsActionJustPressed("InteractDialog")) { await Task.Delay(5); };
+						while (!Input.IsActionJustPressed("InteractDialog") || tree.Paused) { await Task.Delay(5); };
 
 						tokenSource.Cancel();
 
-						await GetTree().CreateTimer(0.1f).Guh();
+						await tree.CreateTimer(0.1f).Guh();
 					}
 				}
 			}
@@ -281,35 +295,8 @@ public partial class DialogueData : Node
 	}
 
 
-	public override void _Ready() 
+	public Dictionary<string, Array<DialogueSequence>> FetchDialogs()
 	{
-		Node parent = GetParent();
-
-		GD.Print("a");
-
-		DialogueContainer = parent.GetChild<VBoxContainer>(1);
-		Background = parent.GetChild<TextureRect>(2);
-		
-		Top = DialogueContainer.GetNode<TextureRect>("Top");
-		Bottom = DialogueContainer.GetNode<TextureRect>("Bottom");
-
-		if (!Engine.IsEditorHint()) {
-			Top.Modulate = new Color(1, 1, 1, 0);
-			Bottom.Modulate = new Color(1, 1, 1, 0);
-			Background.Modulate = new Color(1, 1, 1, 0);
-		}
-
-		Base = DialogueContainer.GetNode<VBoxContainer>("Base");
-		BaseCharacterText = Base.GetChild<RichTextLabel>(0).Text;
-		BaseText = Base.GetChild<RichTextLabel>(1).Text;
-		HFlowContainer BaseButtonContainer = Base.GetChild<HFlowContainer>(2);
-		BaseButton = BaseButtonContainer.GetChild<Button>(0);
-
-		if (!Engine.IsEditorHint()) {
-			DialogueContainer.GetNode<Control>("Base").Visible = false;
-			BaseButtonContainer.Hide();
-		}
-
 		using var convodata = FileAccess.Open("res://src/Data/Dialog/Convos.json", FileAccess.ModeFlags.Read);
 
 		var convojson = new Json();
@@ -364,5 +351,40 @@ public partial class DialogueData : Node
 		}
 
 		GD.Print(Lines);
+
+		return Lines;
+	}
+
+
+	public override void _Ready() 
+	{
+		Node parent = GetParent();
+
+		GD.Print("a");
+
+		DialogueContainer = parent.GetChild<VBoxContainer>(1);
+		Background = parent.GetChild<TextureRect>(2);
+		
+		Top = DialogueContainer.GetNode<TextureRect>("Top");
+		Bottom = DialogueContainer.GetNode<TextureRect>("Bottom");
+
+		if (!Engine.IsEditorHint()) {
+			Top.Modulate = new Color(1, 1, 1, 0);
+			Bottom.Modulate = new Color(1, 1, 1, 0);
+			Background.Modulate = new Color(1, 1, 1, 0);
+		}
+
+		Base = DialogueContainer.GetNode<VBoxContainer>("Base");
+		BaseCharacterText = Base.GetChild<RichTextLabel>(0).Text;
+		BaseText = Base.GetChild<RichTextLabel>(1).Text;
+		HFlowContainer BaseButtonContainer = Base.GetChild<HFlowContainer>(2);
+		BaseButton = BaseButtonContainer.GetChild<Button>(0);
+
+		if (!Engine.IsEditorHint()) {
+			DialogueContainer.GetNode<Control>("Base").Visible = false;
+			BaseButtonContainer.Hide();
+		}
+
+		FetchDialogs();
 	}
 }

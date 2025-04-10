@@ -4,14 +4,15 @@ using Godot.Collections;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Text.RegularExpressions;
 
 [Tool]
 [GlobalClass]
 public partial class DialogueData : Node
 {
-	private string _path = "res://src/Data/Dialog/";
-	private Random rand = new Random();
-	private Color Transparent = new Color(1, 1, 1, 0);
+	static private string _path = "res://src/Data/Dialog/";
+	static private Random rand = new Random();
+	static private Color Transparent = new Color(1, 1, 1, 0);
 
 	[Export] public string Path {
 		get { return _path; }
@@ -24,8 +25,8 @@ public partial class DialogueData : Node
 	private SceneTree tree;
 
 
-	public Dictionary<string, Array<DialogueSequence>> Lines = new();
-	public Array<DialogueCharacterEffect> Effects = new();
+	static public Dictionary<string, Array<DialogueSequence>> Lines = new();
+	static public Array<DialogueCharacterEffect> Effects = new();
 	public VBoxContainer DialogueContainer;
 	private VBoxContainer Base;
 	private TextureRect Background;
@@ -46,15 +47,23 @@ public partial class DialogueData : Node
 
 
 	#region CharEffect
-	public string CharEffect(string original)
+	static private string pattern = @"\[{0}\](.*?)\[{1}\]";
+
+	static public string CharEffect(string original)
 	{
-		string[] split = original.ToLower().Split(" ");
+		string[] split = original.Split(" ");
 
-		foreach( string word in split) {
-			foreach (DialogueCharacterEffect effect in Effects) {
-				foreach (string name in effect.Names) {
-					if (word.Contains(name)) {
+		foreach (DialogueCharacterEffect effect in Effects) {
+			foreach (string name in effect.Names) {
+				MatchCollection matches = Regex.Matches(original, string.Format(pattern, name));
 
+				foreach( Match match in matches) {
+					GD.Print(match.Groups[1].Value);
+				}
+				
+				foreach (var (word, i) in split.Select((value, i) => ( value, i ))) {
+					if (word.Contains(name, StringComparison.OrdinalIgnoreCase)) {
+						split[i] = string.Format(effect.Mentioned, word); 
 					}
 				}
 			}
@@ -68,13 +77,15 @@ public partial class DialogueData : Node
 	#region FadeEffect
 	private async Task FadeEffect(RichTextLabel label, DialogueLine line, CancellationToken token, int speed = 30)
 	{
+		string realText = CharEffect(line.Text);
+
 		for (int i = 0; i < line.Text.Length; i++) {
 			while (tree.Paused) await Task.Delay(5);
 			if (token.IsCancellationRequested) break;
 
 			await Task.Delay(line.Speed);
 			
-			label.Text = string.Format(BaseText, i, i+1, line.Text); 
+			label.Text = string.Format(BaseText, i, i+1, realText); 
 		}
 
 		token.ThrowIfCancellationRequested();
@@ -243,7 +254,7 @@ public partial class DialogueData : Node
 			foreach ( DialogueSequence sequence in sequences) {
 				foreach (DialogueLine line in sequence.Lines) {
 					if (sequence.Character.Trim().Length > 0) {
-						chara.Text = string.Format(BaseCharacterText, sequence.Character);
+						chara.Text = CharEffect(string.Format(BaseCharacterText, sequence.Character));
 						chara.Show();
 					}
 					else chara.Hide();
@@ -258,8 +269,6 @@ public partial class DialogueData : Node
 						continue;
 					}
 					#endregion
-
-					textlabel.Text = string.Format(BaseText, 0, 0, line.Text);
 
 					await ToSignal(tree, SceneTree.SignalName.ProcessFrame);
 					await tree.CreateTimer(0.05f).Guh();
@@ -289,7 +298,7 @@ public partial class DialogueData : Node
 							btn.Modulate = Transparent;
 							int index = btn.GetIndex();
 
-							btn.Text = btnData.Text;
+							btn.Text = CharEffect(btnData.Text);
 							btn.Pressed += async () => {
 								if (done) return;
 

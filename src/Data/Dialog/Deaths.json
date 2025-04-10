@@ -1,22 +1,18 @@
 {
     "hass_1": [
         { "redirect": "death_default_1" },
-        "Let's see here..",
+        "Let's see here...",
         "Ah.",
-        "I see...",
+        "I see.",
         "Well I guess I get to give you a hint for beating me.",
-        {"random": [
-            [
-                "Look to the ceiling.\n"
-            ],
-            [
-                "Look to the "
-            ]
+        {"eval": 2, "random": [
+            "Look to the ceiling.\n",
+            ""
         ]}
     ],
 
     "default_1": [
-        {"random": [ 
+        {"eval": 2, "random": [ 
             "Nice to see you again.",
             "Wakey wakey.",
             "Time to wake up now.",

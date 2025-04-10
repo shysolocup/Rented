@@ -1,12 +1,9 @@
 using Godot;
 using System;
 using Godot.Collections;
-using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
-using Microsoft.VisualBasic;
-using System.Globalization;
 
 [Tool]
 [GlobalClass]
@@ -14,6 +11,7 @@ public partial class DialogueData : Node
 {
 	private string _path = "res://src/Data/Dialog/";
 	private Random rand = new Random();
+	private Color Transparent = new Color(1, 1, 1, 0);
 
 	[Export] public string Path {
 		get { return _path; }
@@ -53,7 +51,7 @@ public partial class DialogueData : Node
 			while (tree.Paused) await Task.Delay(5);
 			if (token.IsCancellationRequested) break;
 
-			await Task.Delay(speed);
+			await Task.Delay(line.Speed);
 			
 			label.Text = string.Format(BaseText, i, i+1, line.Text); 
 		}
@@ -107,6 +105,7 @@ public partial class DialogueData : Node
 					Audio = (lineDict.ContainsKey("audio") && lineDict["audio"].GetType() == typeof(AudioStreamPlayer))? (AudioStreamPlayer)lineDict["audio"] : null
 				};
 
+				#region LE:Dict:Btns
 				if (lineDict.ContainsKey("buttons")) {
 					foreach (Variant btnVar in (Array<Variant>)lineDict["buttons"]) {
 						GD.Print(btnVar);
@@ -127,18 +126,32 @@ public partial class DialogueData : Node
 						}
 					}
 				}
+				#endregion
 
 				if (lineDict.ContainsKey("redirect")) {
 					line.Redirect = (string)lineDict["redirect"];
 				}
 
+				line.Skippable = lineDict.ContainsKey("skippable") ? (bool)lineDict["skippable"] : true;
+				line.Speed = lineDict.ContainsKey("speed") ? (int)lineDict["speed"] : DialogueLine.DefaultSpeed;
+				line.EvalType = lineDict.ContainsKey("eval") ? (DialogueEvalType)(int)lineDict["speed"] : DialogueEvalType.Interact;
+
+				#region LE:Dict:Rand
 				if (lineDict.ContainsKey("random")) {
 					foreach (Variant randomLine in (Array<Variant>)lineDict["random"]) {
-						if (randomLine.VariantType == Variant.Type.String) {
-							
+						switch (line.EvalType) {
+							case DialogueEvalType.Convo: {
+								line.Randoms.Add(EvalConvos((Array<Array<Variant>>)randomLine));
+								break;
+							}
+							case DialogueEvalType.Interact: {
+								line.Randoms.Add(EvalInteracts((Array<Variant>)randomLine));
+								break;
+							}
 						}
 					}
 				}
+				#endregion
 
 				return line;
 			}
@@ -232,7 +245,7 @@ public partial class DialogueData : Node
 					Task effect = FadeEffect(textlabel, line, token);
 
 					buttons.Hide();
-					elipses.Show();
+					elipses.Visible = line.Skippable;
 
 					#region PBI:Redirect
 					if (line.Redirect != null) {
@@ -251,7 +264,7 @@ public partial class DialogueData : Node
 						foreach (DialogueButton btnData in line.Buttons) {
 							Button btn = BaseButton.Duplicate() as Button;
 							buttons.AddChild(btn);
-							btn.Modulate = new Color(1, 1, 1, 0);
+							btn.Modulate = Transparent;
 							int index = btn.GetIndex();
 
 							btn.Text = btnData.Text;
@@ -304,8 +317,15 @@ public partial class DialogueData : Node
 
 					#region PBI:Default
 					else {
-						while (!Input.IsActionJustPressed("InteractDialog") || tree.Paused) { await Task.Delay(5); };
-
+						/*
+							stays paused while
+							- not pressing an interact key
+							- game is paused
+							- line animation isn't done
+						*/
+						while (!Input.IsActionJustPressed("InteractDialog") || tree.Paused || (!line.Skippable && !effect.IsCompleted)) await Task.Delay(5);
+						
+						elipses.Show();
 						tokenSource.Cancel();
 
 						await tree.CreateTimer(0.1f).Guh();
@@ -474,9 +494,9 @@ public partial class DialogueData : Node
 		Bottom = DialogueContainer.GetNode<TextureRect>("Bottom");
 
 		if (!Engine.IsEditorHint()) {
-			Top.Modulate = new Color(1, 1, 1, 0);
-			Bottom.Modulate = new Color(1, 1, 1, 0);
-			Background.Modulate = new Color(1, 1, 1, 0);
+			Top.Modulate = Transparent;
+			Bottom.Modulate = Transparent;
+			Background.Modulate = Transparent;
 		}
 
 		Base = DialogueContainer.GetNode<VBoxContainer>("Base");

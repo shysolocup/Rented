@@ -1,4 +1,19 @@
 {
+	"locked": [
+		"It's locked."
+	],
+	"blocked": [
+		"It's blocked by rubble."
+	],
+	"dish_machine": [
+		"Some old machine used for washing dishes.",
+		"It's no longer functional."
+	],
+	"sink": [
+		"It hasn't been washed in ages.",
+		"Reeks of rotten food.",
+		"Probably should stop smelling it before you get sick."
+	],
 	"david_bazookie": [
 		"that's his name",
 		"he's david."

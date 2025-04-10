@@ -141,6 +141,7 @@ public partial class DialogueData : Node
 					foreach (Variant randomLine in (Array<Variant>)lineDict["random"]) {
 						switch (line.EvalType) {
 							case DialogueEvalType.Convo: {
+								
 								line.Randoms.Add(EvalConvos((Array<Array<Variant>>)randomLine));
 								break;
 							}
@@ -436,21 +437,29 @@ public partial class DialogueData : Node
 
 
 	#region EvalConvos
-	public Array<DialogueSequence> EvalConvos(Array<Array<Variant>> sequences)
+	public Array<DialogueSequence> EvalConvos(Variant sequences)
 	{
 		Array<DialogueSequence> arr = new();
 
-		foreach ( Array<Variant> sequenceData in sequences) {
-			string character = (string)sequenceData[0];
-			Array<Variant> lines = (Array<Variant>)sequenceData[1];
+		foreach ( Variant sequenceData in (Array<Variant>)sequences) {
+
+			string character = (string)((Array<Variant>)sequenceData)[0];
+			Variant linesVar = ((Array<Variant>)sequenceData)[1];
 
 			DialogueSequence sequence = new() {
 				Character = character
 			};
 
-			foreach ( Variant rawLineData in lines ) {
-				sequence.Lines.Add(LineEval(rawLineData));
-			};
+			if (linesVar.VariantType == Variant.Type.Array) {
+				Array<Variant> lines = (Array<Variant>)((Array<Variant>)sequenceData)[1];
+
+				foreach ( Variant rawLineData in lines ) {
+					sequence.Lines.Add(LineEval(rawLineData));
+				};
+			}
+			else {
+				sequence.Lines.Add(LineEval((string)linesVar));
+			}
 
 			arr.Add(sequence);
 		}
@@ -461,15 +470,20 @@ public partial class DialogueData : Node
 
 
 	#region EvalInteracts
-	public Array<DialogueSequence> EvalInteracts(Array<Variant> sequences) 
+	public Array<DialogueSequence> EvalInteracts(Variant sequences) 
 	{
 		DialogueSequence sequence = new() {
 			Character = "",
 		};
 
-		foreach ( Variant lineData in sequences) {
-			sequence.Lines.Add(LineEval(lineData));
-		};
+		if (sequences.VariantType == Variant.Type.Array) {
+			foreach ( Variant lineData in (Array<Variant>)sequences) {
+				sequence.Lines.Add(LineEval(lineData));
+			};
+		}
+		else {
+			sequence.Lines.Add(LineEval(sequences));
+		}
 
 		Array<DialogueSequence> arr = new() {
 			sequence

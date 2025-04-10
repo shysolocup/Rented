@@ -1,7 +1,6 @@
 {
     "hass_1": [
-        { "redirect": "death_default_1" },
-        "Let's see here...",
+        { "redirect": "death_starter_1" },
         "Ah.",
         "I see.",
         "Well I guess I get to give you a hint for beating me.",
@@ -11,7 +10,7 @@
         ]}
     ],
 
-    "default_1": [
+    "starter_1": [
         {"eval": 2, "random": [ 
             "Nice to see you again.",
             "Wakey wakey.",
@@ -19,17 +18,27 @@
             "You can't move on yet.",
             "You can't change the past.",
             "You're bleeding.",
+            "Back here.",
             "" 
+        ]},
+        {"eval": 2, "random": [
+            "Let's see what we're dealing with.",
+            "Let's see what we got here",
+            "Let's take a look.",
+            "Let's see what got you.",
+            "Let's"
         ]}
     ],
 
-    "default_2": [
-        {"random": [
+    "ender_1": [
+        {"eval": 2, "random": [
             "That's all for now\nYou have more to do.",
             "You're not finished yet.",
             "You still have more to do.",
             "You still have more to find",
             "It's not your time yet.",
+            "Get back to it.",
+            "Find your way.",
             ""
         ]},
         { "redirect": "death_wake_up" }

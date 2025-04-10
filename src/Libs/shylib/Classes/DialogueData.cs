@@ -25,6 +25,7 @@ public partial class DialogueData : Node
 
 
 	public Dictionary<string, Array<DialogueSequence>> Lines = new();
+	public Array<DialogueCharacterEffect> Effects = new();
 	public VBoxContainer DialogueContainer;
 	private VBoxContainer Base;
 	private TextureRect Background;
@@ -42,6 +43,26 @@ public partial class DialogueData : Node
 		base._EnterTree();
 		tree = GetTree();
 	}
+
+
+	#region CharEffect
+	public string CharEffect(string original)
+	{
+		string[] split = original.ToLower().Split(" ");
+
+		foreach( string word in split) {
+			foreach (DialogueCharacterEffect effect in Effects) {
+				foreach (string name in effect.Names) {
+					if (word.Contains(name)) {
+
+					}
+				}
+			}
+		}
+
+		return split.Join(" ");
+	}
+	#endregion
 
 
 	#region FadeEffect
@@ -426,6 +447,29 @@ public partial class DialogueData : Node
 
 		foreach ( (string lineid, Array<Variant> sequences) in deaths) {
 			Lines[$"death_{lineid}"] = EvalInteracts(sequences);
+		}
+		#endregion
+
+
+		#region Char Effects
+		using var effectsdata = FileAccess.Open("res://src/Data/Dialog/CharacterEffects.json", FileAccess.ModeFlags.Read);
+
+		var effectsjson = new Json();
+		effectsjson.Parse(effectsdata.GetAsText());
+		var effects = (
+			Array<Dictionary<string, Variant>>
+		)effectsjson.Data;
+
+		foreach ( Dictionary<string, Variant> charef in effects) {
+			DialogueCharacterEffect effect = new();
+
+			switch(charef["names"].VariantType) {
+				case Variant.Type.Dictionary: effect.Names = (Array<string>)charef["names"]; break;
+				default: effect.Names.Add((string)charef["names"]); break;
+			}
+
+			if (charef.ContainsKey("mentioned")) effect.Mentioned = (string)charef["mentioned"];
+			if (charef.ContainsKey("speaking")) effect.Speaking = (string)charef["speaking"];
 		}
 		#endregion
 

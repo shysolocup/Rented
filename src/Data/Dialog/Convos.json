@@ -56,5 +56,34 @@
 			"DAMN",
 			"FINE BITCH"
 		]]
+	],
+
+	"default": [
+		["Hass", {
+			"eval": 2,
+			"random": [
+				"You can't be here.",
+				"Leave.",
+				"...",
+				"What are you trying to find..?",
+				"There's nothing here.",
+				"Stop it.",
+				"Go away.",
+				"You're not meant to be here.",
+				"Turn back.",
+				"Go back.",
+				"Leave.",
+				"I know you.",
+				"You.",
+				"This isn't a place for your kind.",
+				"This isn't a place for you.",
+				"Leave this place.",
+				"Cease your wander.",
+				"Secrets aren't here.",
+				"Get back to your job.",
+				"Leave me to my peace.",
+				"Wandering is a terrible sin."
+			]
+		}]
 	]
 }

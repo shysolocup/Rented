@@ -1,0 +1,8 @@
+[gd_resource type="CameraAttributesPhysical" format=3 uid="uid://p7yfbpmriw7p"]
+
+[resource]
+exposure_multiplier = 1.468
+auto_exposure_enabled = true
+auto_exposure_scale = 0.1
+auto_exposure_speed = 0.05
+frustum_focus_distance = 0.4

@@ -15,7 +15,7 @@
 <a href="https://youtu.be/dQw4w9WgXcQ"><img src="https://custom-icon-badges.demolab.com/badge/Nintendo%20eShop-FF7D00?logo=nintendo&logoColor=fff" alt="nintendo eshop"></a>
 <a href="https://youtu.be/dQw4w9WgXcQ"><img src="https://img.shields.io/badge/Google_Play-414141?logo=google-play&logoColor=white" alt="google play" /></a>
 
-<a href="https://youtu.be/dQw4w9WgXcQ"><img src="https://img.shields.io/badge/ReRAND%20STUDIOS-%235865F2.svg?&logo=discord&logoColor=white" alt="discord"></a>
+<a href="https://discord.gg/FhPrrfYqCA"><img src="https://img.shields.io/badge/ReRAND%20STUDIOS-%235865F2.svg?&logo=discord&logoColor=white" alt="discord"></a>
 <a href="https://youtu.be/dQw4w9WgXcQ"><img src="https://img.shields.io/badge/ReRAND%20STUDIOS-%23FF0000.svg?logo=YouTube&logoColor=white" alt="youtube"></a>
 <a href="https://youtu.be/dQw4w9WgXcQ"><img src="https://img.shields.io/badge/ReRAND%20STUDIOS-%23000000.svg?logo=X&logoColor=white" alt="twitter"></a>
 

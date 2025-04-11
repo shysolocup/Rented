@@ -1,61 +1,68 @@
 {
-    "hass_1": [
-        { "redirect": "death_starter_1" },
-        "Ah.",
-        "I see.",
-        "Well I guess I get to give you a hint for beating me.",
-        {"eval": 2, "random": [
-            "Look to the ceiling.\n",
-            ""
-        ]}
-    ],
+    "prefix": "death",
+    "format": 1,
+    "scenes": {
 
-    "starter_1": [
-        {"eval": 2, "random": [ 
-            "Nice to see you again.",
-            "Wakey wakey.",
-            "Time to wake up now.",
-            "You can't move on yet.",
-            "You can't change the past.",
-            "You're bleeding.",
-            "Back here.",
-            "" 
-        ]},
-        {"eval": 2, "random": [
-            "Let's see what we're dealing with.",
-            "Let's see what we got here",
-            "Let's take a look.",
-            "Let's see what got you.",
-            "Let's"
-        ]}
-    ],
+        "hass_1": [
+            { "redirect": "death_starter_1" },
+            "Ah.",
+            "I see.",
+            {"format": 2, "random": [
+                "Well I guess you learn about me this time."
+            ]},
+            {"format": 2, "random": [
+                "Look to the ceiling.\n"
+            ]}
+        ],
 
-    "ender_1": [
-        {"eval": 2, "random": [
-            "That's all for now\nYou have more to do.",
-            "You're not finished yet.",
-            "You still have more to do.",
-            "You still have more to find",
-            "It's not your time yet.",
-            "Get back to it.",
-            "Find your way.",
-            ""
-        ]},
-        { "redirect": "death_wake_up" }
-    ],
+        "starter_1": [
+            {"format": 2, "random": [ 
+                "Nice to see you again.",
+                "Wakey wakey.",
+                "Time to wake up now.",
+                "You can't move on yet.",
+                "You can't change the past.",
+                "You're bleeding.",
+                "Back here.",
+                "" 
+            ]},
+            {"format": 2, "random": [
+                "Let's see what we're dealing with.",
+                "Let's see what we got here",
+                "Let's take a look.",
+                "Let's see what got you.",
+                "Let's"
+            ]}
+        ],
 
-    "unknown": [
-		"I'm not sure how this happened.",
-        "You weren't meant to die yet.",
-        { "redirect": "death_wake_up" }
-	],
+        "ender_1": [
+            {"format": 2, "random": [
+                "That's all for now\nYou have more to do.",
+                "You're not finished yet.",
+                "You still have more to do.",
+                "You still have more to find",
+                "It's not your time yet.",
+                "Get back to it.",
+                "Find your way.",
+                ""
+            ]},
+            { "redirect": "death_wake_up" }
+        ],
 
-    "death_wake_up": [
-        {
-            "text": "Wake up.",
-            "buttons": [
-                "Wake Up"
-            ]
-        }
-    ]
+        "unknown": [
+            "I'm not sure how this happened.",
+            "You weren't meant to die yet.",
+            { "redirect": "death_wake_up" }
+        ],
+
+        "death_wake_up": [
+            {
+                "text": "Wake up.",
+                "buttons": [
+                    "Wake Up"
+                ]
+            }
+        ]
+
+    }
 }

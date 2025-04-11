@@ -1,89 +1,95 @@
 {
-	"bob_1": [
-		["Bob", [
-			{
-				"text": "what's up kid?",
-				"buttons": [
-					["Blackwell", "bob_1_blackwell"]
-				]
-			}
-		]]
-	],
+	"prefix": "convo",
+    "format": 2,
+    "scenes": {
 
-	"test": [
-		["Audrey", [
-			"googoo",
-			"buh buh"
-		]],
-		["slingly", [
-			"you're stupid",
-			"I don't really like you\n you're pretty mean",
-			"you're a little googoo baby\nand I don't think you're\nvery nice at all like\nyou're like a a meanie poop",
-			"I'm gonna kill you",
-			{ 
-				"text": "LET ME OUT",
-				"buttons": [
-					["yes", "convo_test_let_out"],
-					["no", "convo_test_nuh_uh"]
-				]
-			},
-			"whatever whatever",
-			"you're you're mad mad for for what what what though thoguh",
-			{ 
-				"text": "pleaaasseeee?",
-				"buttons": [
-					["yes", "convo_test_let_out"],
-					["no", "convo_test_nuh_uh"],
-					["NO", "convo_test_NO"]
-				]
-			},
-			"you you suck suck"
-		]]
-	],
-	"test_let_out": [
-		["Audrey", [
-			"fiiinnneeeee"
-		]]
-	],
-	"test_nuh_uh": [
-		["Audrey", [
-			"nuh uhhhhhh",
-			"stupid baby boy"
-		]]
-	],
-	"test_NO": [
-		["slinkly", [
-			"DAMN",
-			"FINE BITCH"
-		]]
-	],
+		"bob_1": [
+			["Bob", [
+				{
+					"text": "what's up kid?",
+					"buttons": [
+						["Blackwell", "bob_1_blackwell"]
+					]
+				}
+			]]
+		],
 
-	"default": [
-		["Hass", {
-			"eval": 2,
-			"random": [
-				"You can't be here.",
-				"Leave.",
-				"...",
-				"What are you trying to find..?",
-				"There's nothing here.",
-				"Stop it.",
-				"Go away.",
-				"You're not meant to be here.",
-				"Turn back.",
-				"Go back.",
-				"Leave.",
-				"I know you.",
-				"You.",
-				"This isn't a place for your kind.",
-				"This isn't a place for you.",
-				"Leave this place.",
-				"Cease your wander.",
-				"Secrets aren't here.",
-				"Get back to your job.",
-				"Leave me to my peace.",
-				"Wandering is a terrible sin."
-			]
-		}]
-	]
+		"test": [
+			["Audrey", [
+				"googoo",
+				"buh buh"
+			]],
+			["slingly", [
+				"you're stupid",
+				"I don't really like you\n you're pretty mean",
+				"you're a little googoo baby\nand I don't think you're\nvery nice at all like\nyou're like a a meanie poop",
+				"I'm gonna kill you",
+				{ 
+					"text": "LET ME OUT",
+					"buttons": [
+						["yes", "convo_test_let_out"],
+						["no", "convo_test_nuh_uh"]
+					]
+				},
+				"whatever whatever",
+				"you're you're mad mad for for what what what though thoguh",
+				{ 
+					"text": "pleaaasseeee?",
+					"buttons": [
+						["yes", "convo_test_let_out"],
+						["no", "convo_test_nuh_uh"],
+						["NO", "convo_test_NO"]
+					]
+				},
+				"you you suck suck"
+			]]
+		],
+		"test_let_out": [
+			["Audrey", [
+				"fiiinnneeeee"
+			]]
+		],
+		"test_nuh_uh": [
+			["Audrey", [
+				"nuh uhhhhhh",
+				"stupid baby boy"
+			]]
+		],
+		"test_NO": [
+			["slinkly", [
+				"DAMN",
+				"FINE BITCH"
+			]]
+		],
+
+		"default": [
+			["Hass", {
+				"eval": 2,
+				"random": [
+					"You can't be here.",
+					"Leave.",
+					"...",
+					"What are you trying to find..?",
+					"There's nothing here.",
+					"Stop it.",
+					"Go away.",
+					"You're not meant to be here.",
+					"Turn back.",
+					"Go back.",
+					"Leave.",
+					"I know you.",
+					"You.",
+					"This isn't a place for your kind.",
+					"This isn't a place for you.",
+					"Leave this place.",
+					"Cease your wander.",
+					"Secrets aren't here.",
+					"Get back to your job.",
+					"Leave me to my peace.",
+					"Wandering is a terrible sin."
+				]
+			}]
+		]
+		
+	}
 }

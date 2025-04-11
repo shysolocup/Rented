@@ -1,9 +1,8 @@
-[gd_scene load_steps=62 format=3 uid="uid://s0ftqrddh5up"]
+[gd_scene load_steps=69 format=3 uid="uid://s0ftqrddh5up"]
 
 [ext_resource type="Script" uid="uid://cfoo1gxat5mv8" path="res://src/Libs/shylib/Classes/GameInstance.cs" id="1_doi2n"]
-[ext_resource type="Script" uid="uid://c1i8r8l2u4t3q" path="res://src/Scripts/Player.cs" id="1_wpbw3"]
+[ext_resource type="Script" uid="uid://c1i8r8l2u4t3q" path="res://src/Libs/shylib/Classes/Player.cs" id="1_wpbw3"]
 [ext_resource type="Script" uid="uid://cge1tw0n2wjvm" path="res://src/Libs/shylib/Classes/RbxScript.cs" id="2_i3adb"]
-[ext_resource type="Environment" uid="uid://7y7m2l8m64o" path="res://src/Resources/Skies/Default.tres" id="2_kp7xu"]
 [ext_resource type="Texture2D" uid="uid://buml50bofllu4" path="res://src/Ui/alarm clock.png" id="2_up28s"]
 [ext_resource type="Script" uid="uid://f680ovgo7k8o" path="res://src/Scripts/SaveIconSpinner.cs" id="3_35lay"]
 [ext_resource type="Texture2D" uid="uid://dcthcg547baj0" path="res://src/Images/david bazookie.png" id="4_8nlug"]
@@ -36,6 +35,23 @@
 [ext_resource type="StyleBox" uid="uid://doq610dbi3bsw" path="res://src/Resources/Ui/DialogButton.tres" id="26_10fqn"]
 [ext_resource type="StyleBox" uid="uid://0oi8rktonqwv" path="res://src/Resources/Ui/DialogButtonHover.tres" id="26_jipul"]
 [ext_resource type="StyleBox" uid="uid://bclw3clviyndh" path="res://src/Resources/Ui/DialogButtonPress.tres" id="27_n8c8y"]
+[ext_resource type="FontFile" uid="uid://fj2b1x4fiorb" path="res://src/Fonts/timesbi.ttf" id="35_2udwj"]
+[ext_resource type="StyleBox" uid="uid://exqyscgxswgh" path="res://src/Resources/Ui/SettingButtonPress.tres" id="36_jnspx"]
+[ext_resource type="StyleBox" uid="uid://dljp1kxxxhaej" path="res://src/Resources/Ui/SettingButtonHover.tres" id="37_hxo8n"]
+[ext_resource type="StyleBox" uid="uid://c3kf7qgi5iwyi" path="res://src/Resources/Ui/SettingButton.tres" id="38_m1m7r"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4v06e"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_2udwj"]
+sky_material = SubResource("ProceduralSkyMaterial_4v06e")
+
+[sub_resource type="Environment" id="Environment_jnspx"]
+background_mode = 2
+sky = SubResource("Sky_2udwj")
+tonemap_mode = 2
+glow_enabled = true
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_h8oac"]
 
@@ -180,20 +196,19 @@ metadata/_custom_type_script = "uid://3mxc7rj1i0c8"
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gc7xl"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yc6y7"]
+
 [node name="Game" type="Node"]
 script = ExtResource("1_doi2n")
 
 [node name="World" type="WorldEnvironment" parent="."]
 unique_name_in_owner = true
-environment = ExtResource("2_kp7xu")
+environment = SubResource("Environment_jnspx")
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(0.352878, -0.0357639, 0.934986, -0.906277, -0.261559, 0.332038, 0.232679, -0.964525, -0.12471, -29.4832, 60.558, 0)
-light_color = Color(1, 0.884331, 0.847029, 1)
-light_energy = 1.23
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 shadow_enabled = true
-shadow_blur = 6.0
 
 [node name="Root3D" type="Node3D" parent="."]
 unique_name_in_owner = true
@@ -201,7 +216,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -82.6777, 45.8119, 6.55279)
 
 [node name="Player" type="CharacterBody3D" parent="Root3D"]
 unique_name_in_owner = true
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 27.2013, 0.408756, -34.8087)
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 4.32012, 0.408756, -1.35332)
 input_ray_pickable = false
 script = ExtResource("1_wpbw3")
 
@@ -559,9 +574,9 @@ material = ExtResource("6_ng2wt")
 use_collision = true
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="Root3D/Map/Building/Dish"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.6911, 6.02905, -59.7619)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.6911, 6.02905, -58.9651)
 use_collision = true
-size = Vector3(28.7212, 13.1926, 2.92319)
+size = Vector3(28.7212, 13.1926, 1.32964)
 material = ExtResource("6_ng2wt")
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="Root3D/Map/Building/Dish"]
@@ -631,7 +646,7 @@ mesh = SubResource("BoxMesh_xknod")
 surface_material_override/0 = ExtResource("13_ss4f7")
 
 [node name="test" type="RigidBody3D" parent="Root3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55775, 0.989777, 2.30029)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55775, 0.562328, 2.30029)
 freeze = true
 script = ExtResource("8_uf7b3")
 Line = "interact_david_bazookie"
@@ -665,7 +680,7 @@ surface_material_override/0 = ExtResource("13_ss4f7")
 script = ExtResource("7_ng2wt")
 
 [node name="test2" type="RigidBody3D" parent="Root3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55775, 0.989777, 5.04772)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55775, 0.562328, 5.04772)
 freeze = true
 script = ExtResource("8_uf7b3")
 Line = "convo_test"
@@ -679,6 +694,40 @@ skeleton = NodePath("")
 surface_material_override/0 = ExtResource("13_ss4f7")
 
 [node name="Node" type="Node" parent="Root3D/test2"]
+script = ExtResource("7_ng2wt")
+
+[node name="test5" type="RigidBody3D" parent="Root3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55775, 0.562328, -0.148977)
+freeze = true
+script = ExtResource("8_uf7b3")
+Line = "death_hass_1"
+
+[node name="Collision" type="CollisionShape3D" parent="Root3D/test5"]
+shape = SubResource("BoxShape3D_j1e05")
+
+[node name="Mesh" type="MeshInstance3D" parent="Root3D/test5"]
+mesh = SubResource("BoxMesh_xknod")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("13_ss4f7")
+
+[node name="Node" type="Node" parent="Root3D/test5"]
+script = ExtResource("7_ng2wt")
+
+[node name="test6" type="RigidBody3D" parent="Root3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55775, 0.562328, -2.86034)
+freeze = true
+script = ExtResource("8_uf7b3")
+Line = "convo_default"
+
+[node name="Collision" type="CollisionShape3D" parent="Root3D/test6"]
+shape = SubResource("BoxShape3D_j1e05")
+
+[node name="Mesh" type="MeshInstance3D" parent="Root3D/test6"]
+mesh = SubResource("BoxMesh_xknod")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("13_ss4f7")
+
+[node name="Node" type="Node" parent="Root3D/test6"]
 script = ExtResource("7_ng2wt")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Root3D"]
@@ -795,17 +844,21 @@ mouse_filter = 2
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.608
+anchor_top = 0.5
 anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -24.984
-offset_bottom = -25.0
+anchor_bottom = 0.961
+offset_top = 45.0
+offset_bottom = 0.271973
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
 
 [node name="DialogueData" type="Node" parent="Guis/DialogueGui/Dialogue"]
 unique_name_in_owner = true
+process_priority = 1
+process_thread_group = 1
+process_thread_group_order = 0
+process_thread_messages = 1
 script = ExtResource("20_jipul")
 metadata/_custom_type_script = "uid://csefxrb6ehpnb"
 
@@ -897,39 +950,86 @@ texture = ExtResource("22_0m3r5")
 unique_name_in_owner = true
 process_mode = 3
 layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -150.0
-offset_top = -169.0
-offset_right = 150.0
-offset_bottom = 169.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+grow_vertical = 0
+scale = Vector2(1.3, 1.3)
 mouse_filter = 2
 script = ExtResource("20_ss4f7")
 
-[node name="PauseContainer" type="VBoxContainer" parent="Guis/PauseGui"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Guis/PauseGui"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_left = 8.0
+offset_top = -265.0
+offset_right = 407.0
+offset_bottom = 3.0
 
-[node name="Resume" type="Button" parent="Guis/PauseGui/PauseContainer"]
+[node name="Top" type="TextureRect" parent="Guis/PauseGui/VBoxContainer"]
 layout_mode = 2
+texture = ExtResource("21_3ahso")
+stretch_mode = 3
+flip_h = true
+
+[node name="PauseContainer" type="VBoxContainer" parent="Guis/PauseGui/VBoxContainer"]
+z_index = 12
+layout_mode = 2
+alignment = 2
+
+[node name="Resume" type="Button" parent="Guis/PauseGui/VBoxContainer/PauseContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("35_2udwj")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yc6y7")
+theme_override_styles/hover_pressed = ExtResource("36_jnspx")
+theme_override_styles/hover = ExtResource("37_hxo8n")
+theme_override_styles/pressed = ExtResource("36_jnspx")
+theme_override_styles/normal = ExtResource("38_m1m7r")
 text = "Resume Game"
+alignment = 0
 
-[node name="SettingsButton" type="Button" parent="Guis/PauseGui/PauseContainer"]
+[node name="SkipButton" type="Button" parent="Guis/PauseGui/VBoxContainer/PauseContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("35_2udwj")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yc6y7")
+theme_override_styles/hover_pressed = ExtResource("36_jnspx")
+theme_override_styles/hover = ExtResource("37_hxo8n")
+theme_override_styles/pressed = ExtResource("36_jnspx")
+theme_override_styles/normal = ExtResource("38_m1m7r")
+text = "Skip Cutscene"
+alignment = 0
+
+[node name="SettingsButton" type="Button" parent="Guis/PauseGui/VBoxContainer/PauseContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("35_2udwj")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yc6y7")
+theme_override_styles/hover_pressed = ExtResource("36_jnspx")
+theme_override_styles/hover = ExtResource("37_hxo8n")
+theme_override_styles/pressed = ExtResource("36_jnspx")
+theme_override_styles/normal = ExtResource("38_m1m7r")
 text = "Settings"
+alignment = 0
 
-[node name="QuitButton" type="Button" parent="Guis/PauseGui/PauseContainer"]
+[node name="QuitButton" type="Button" parent="Guis/PauseGui/VBoxContainer/PauseContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("35_2udwj")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yc6y7")
+theme_override_styles/hover_pressed = ExtResource("36_jnspx")
+theme_override_styles/hover = ExtResource("37_hxo8n")
+theme_override_styles/pressed = ExtResource("36_jnspx")
+theme_override_styles/normal = ExtResource("38_m1m7r")
 text = "Die"
+alignment = 0
+
+[node name="Bottom" type="TextureRect" parent="Guis/PauseGui/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("21_3ahso")
+stretch_mode = 3
+flip_h = true
+flip_v = true
 
 [node name="Dump" type="Node" parent="."]
 unique_name_in_owner = true

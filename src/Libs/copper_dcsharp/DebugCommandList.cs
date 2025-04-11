@@ -70,9 +70,10 @@ public partial class DebugCommandFunctions : GodotObject
 		DebugConsole.Log($"{command} - { ((helpText != "") ? helpText : "There is no help available.") }");
 	}
 
-	public async void dialog(string character, string line) {
-		DialogueData data = Game.Instance.GetNode<DialogueData>("%DialogueData");
-		await data.Play(line);
+	public async void dialogue(string line) {
+		Player player = Game.Instance.GetNode<Player>("%Player");
+		await DebugConsole.HideConsole();
+		await player.PlayDialogue(line);
 	}
 
 	public void fullbright(bool value) {
@@ -157,8 +158,8 @@ public static class DebugCommandList
 
 
 		new DebugCommand {
-			Id = "dialog",
-			HelpText = "Display a dialog sequence",
+			Id = "dialogue",
+			HelpText = "Display a dialogue sequence",
 
 			Parameters = new() {
 				new DebugParameter {
@@ -167,7 +168,7 @@ public static class DebugCommandList
 				}
 			},
 
-			Function = new Callable(funcs, DebugCommandFunctions.MethodName.dialog)
+			Function = new Callable(funcs, DebugCommandFunctions.MethodName.dialogue)
 		}.AddTo(console);
 
 

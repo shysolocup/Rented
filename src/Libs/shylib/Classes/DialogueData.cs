@@ -25,7 +25,7 @@ public partial class DialogueData : Node
 	private SceneTree tree;
 
 
-	static public Dictionary<string, Array<DialogueSequence>> Lines = new();
+	static public Dictionary<string, Array<DialogueSequence>> Scenes = new();
 	static public Array<DialogueCharacterEffect> Effects = new();
 	public VBoxContainer DialogueContainer;
 	private VBoxContainer Base;
@@ -46,46 +46,18 @@ public partial class DialogueData : Node
 	}
 
 
-	#region CharEffect
-	static private string pattern = @"\[{0}\](.*?)\[{1}\]";
-
-	static public string CharEffect(string original)
-	{
-		string[] split = original.Split(" ");
-
-		foreach (DialogueCharacterEffect effect in Effects) {
-			foreach (string name in effect.Names) {
-				MatchCollection matches = Regex.Matches(original, string.Format(pattern, name));
-
-				foreach( Match match in matches) {
-					GD.Print(match.Groups[1].Value);
-				}
-				
-				foreach (var (word, i) in split.Select((value, i) => ( value, i ))) {
-					if (word.Contains(name, StringComparison.OrdinalIgnoreCase)) {
-						split[i] = string.Format(effect.Mentioned, word); 
-					}
-				}
-			}
-		}
-
-		return split.Join(" ");
-	}
-	#endregion
-
-
 	#region FadeEffect
 	private async Task FadeEffect(RichTextLabel label, DialogueLine line, CancellationToken token, int speed = 30)
 	{
-		string realText = CharEffect(line.Text);
+		string realText = DialogueCharacterEffect.Apply(line.Text);
 
 		for (int i = 0; i < line.Text.Length; i++) {
 			while (tree.Paused) await Task.Delay(5);
 			if (token.IsCancellationRequested) break;
-
-			await Task.Delay(line.Speed);
 			
 			label.Text = string.Format(BaseText, i, i+1, realText); 
+
+			await Task.Delay(line.Speed);
 		}
 
 		token.ThrowIfCancellationRequested();
@@ -93,116 +65,8 @@ public partial class DialogueData : Node
 	#endregion
 
 
-	#region LineEval
-	private DialogueLine LineEval(Variant lineData)
-	{
-		switch (lineData.VariantType) {
-
-			// Array 
-			// ["text", "audio", [["button1", "redirline1], ["button2", "redirline1"]]]
-			#region LineEval:Array
-			case Variant.Type.Array: {
-				Array<Variant> lineArr = (Array<Variant>)lineData;
-
-				DialogueLine line = new() {
-					Text = (string)lineArr[0],
-					Audio = (lineArr.ElementAtOrDefault(1).Obj is string audio && audio.Length > 0) ? GetNode<AudioStreamPlayer>(audio) : null
-				};
-
-				if (lineArr.ElementAtOrDefault(2).VariantType == Variant.Type.Array) {
-					foreach (Array<string> btn in (Array<Array<string>>)lineArr[2]) {
-						line.Buttons.Add(new DialogueButton() {
-							Text = btn.ElementAtOrDefault(0),
-							RedirectLine = btn.ElementAtOrDefault(1)
-						});
-					}
-				}
-				else if (lineArr.ElementAtOrDefault(2).VariantType == Variant.Type.String) {
-					line.Buttons.Add(new DialogueButton() {
-						Text = (string)lineArr[2],
-					});
-				}
-
-				return line;
-			}
-			#endregion
-
-			//
-			#region LineEval:Dict
-			case Variant.Type.Dictionary: {
-				Dictionary<string, Variant> lineDict = (Dictionary<string, Variant>)lineData;
-
-				DialogueLine line = new() {
-					Text = (string)lineDict["text"],
-					Audio = (lineDict.ContainsKey("audio") && lineDict["audio"].GetType() == typeof(AudioStreamPlayer))? (AudioStreamPlayer)lineDict["audio"] : null
-				};
-
-				#region LE:Dict:Btns
-				if (lineDict.ContainsKey("buttons")) {
-					foreach (Variant btnVar in (Array<Variant>)lineDict["buttons"]) {
-						GD.Print(btnVar);
-
-						if (btnVar.VariantType == Variant.Type.Array) {
-							Array<string> btn = (Array<string>)btnVar;
-
-							line.Buttons.Add(new DialogueButton() {
-								Text = btn.ElementAtOrDefault(0),
-								RedirectLine = btn.ElementAtOrDefault(1)
-							});
-						}
-
-						else if (btnVar.VariantType == Variant.Type.String) {
-							line.Buttons.Add(new DialogueButton() {
-								Text = (string)btnVar,
-							});
-						}
-					}
-				}
-				#endregion
-
-				if (lineDict.ContainsKey("redirect")) {
-					line.Redirect = (string)lineDict["redirect"];
-				}
-
-				line.Skippable = lineDict.ContainsKey("skippable") ? (bool)lineDict["skippable"] : true;
-				line.Speed = lineDict.ContainsKey("speed") ? (int)lineDict["speed"] : DialogueLine.DefaultSpeed;
-				line.EvalType = lineDict.ContainsKey("eval") ? (DialogueEvalType)(int)lineDict["speed"] : DialogueEvalType.Interact;
-
-				#region LE:Dict:Rand
-				if (lineDict.ContainsKey("random")) {
-					foreach (Variant randomLine in (Array<Variant>)lineDict["random"]) {
-						switch (line.EvalType) {
-							case DialogueEvalType.Convo: {
-								
-								line.Randoms.Add(EvalConvos((Array<Array<Variant>>)randomLine));
-								break;
-							}
-							case DialogueEvalType.Interact: {
-								line.Randoms.Add(EvalInteracts((Array<Variant>)randomLine));
-								break;
-							}
-						}
-					}
-				}
-				#endregion
-
-				return line;
-			}
-			#endregion
-
-			#region LineEval:Default
-			default: return new DialogueLine() {
-				Text = (string)lineData
-			};
-			#endregion
-
-		};
-	}
-	#endregion
-
-
 	#region PlayByInstance
-	public async Task<bool> PlayByInstance(Array<DialogueSequence> sequences, VBoxContainer inst = null) {
+	public async Task PlayByInstance(Array<DialogueSequence> sequences, CancellationToken token = new(), VBoxContainer inst = null) {
 		bool recursive = inst != null;
 
 		Tween toptween = null; Tween bottomtween = null; Tween bgtween = null;
@@ -243,6 +107,8 @@ public partial class DialogueData : Node
 			var chara = inst.GetChild<RichTextLabel>(0);
 			var textlabel = inst.GetChild<RichTextLabel>(1);
 
+			textlabel.Text = "";
+
 			inst.Name = id.ToString().Replace(".", "");
 			id += 0.1f;
 
@@ -254,38 +120,40 @@ public partial class DialogueData : Node
 			foreach ( DialogueSequence sequence in sequences) {
 				foreach (DialogueLine line in sequence.Lines) {
 					if (sequence.Character.Trim().Length > 0) {
-						chara.Text = CharEffect(string.Format(BaseCharacterText, sequence.Character));
+						chara.Text = DialogueCharacterEffect.Apply(string.Format(BaseCharacterText, sequence.Character));
 						chara.Show();
 					}
 					else chara.Hide();
 
 					using var tokenSource = new CancellationTokenSource();
-					var token = tokenSource.Token;
+					var token2 = tokenSource.Token;
 
-					#region PBI:Random
+					await ToSignal(tree, SceneTree.SignalName.ProcessFrame);
+
+					#region Play Random
 					if (line.Randoms.Count > 0) {
 						int r = rand.Next(line.Randoms.Count);
-						await PlayByInstance(line.Randoms.ElementAtOrDefault(r));
+						await PlayByInstance(line.Randoms.ElementAtOrDefault(r), new(), inst);
 						continue;
 					}
 					#endregion
 
-					await ToSignal(tree, SceneTree.SignalName.ProcessFrame);
 					await tree.CreateTimer(0.05f).Guh();
 
-					Task effect = FadeEffect(textlabel, line, token);
+					Task effect = FadeEffect(textlabel, line, token2);
 
 					buttons.Hide();
 					elipses.Visible = line.Skippable;
 
-					#region PBI:Redirect
+					#region Play Redirect
 					if (line.Redirect != null) {
-						await Play(line.Redirect, inst);
+						GD.Print('a');
+						await Play(line.Redirect, new(), inst);
 						await tree.CreateTimer(0.1f).Guh();
 					}
 					#endregion
 
-					#region PBI:Buttons
+					#region Play Buttons
 					else if (line.Buttons.Count > 0) {
 						bool done = false;
 						buttons.Show();
@@ -298,7 +166,7 @@ public partial class DialogueData : Node
 							btn.Modulate = Transparent;
 							int index = btn.GetIndex();
 
-							btn.Text = CharEffect(btnData.Text);
+							btn.Text = DialogueCharacterEffect.Apply(btnData.Text);
 							btn.Pressed += async () => {
 								if (done) return;
 
@@ -307,7 +175,7 @@ public partial class DialogueData : Node
 
 									if (otherBtns.GetIndex() != index) {
 										Tween otherBtnTween = CreateTween();
-										otherBtnTween.Finished += () => otherBtnTween.Dispose();
+										otherBtnTween.Finished += () => { otherBtns.Free(); otherBtnTween.Dispose(); };
 										otherBtnTween.TweenProperty(otherBtns, "modulate:a", 0, 0.2f)
 										.SetTrans(Tween.TransitionType.Quad)
 										.SetEase(Tween.EaseType.Out);
@@ -329,7 +197,7 @@ public partial class DialogueData : Node
 								await ToSignal(buttontween, Tween.SignalName.Finished);
 
 								await tree.CreateTimer(0.1f).Guh();
-								await Play(btnData.RedirectLine, inst);
+								await Play(btnData.RedirectLine, new(), inst);
 
 								// hopefully will stop the loop when a button is pressed
 								done = true;
@@ -346,7 +214,7 @@ public partial class DialogueData : Node
 					}
 					#endregion
 
-					#region PBI:Default
+					#region Play Normal
 					else {
 						/*
 							stays paused while
@@ -391,18 +259,20 @@ public partial class DialogueData : Node
 				inst.Free();
 			}
 		}
-
-		return true;
 	}
 	#endregion
 
 	#region Misc Plays
-	public async Task<bool> Play(string line = "interact_default", VBoxContainer inst = null) {
-		return await PlayByInstance(Lines[line], inst);
+	public async Task Play(string scene = "interact_default", CancellationToken token = new(), VBoxContainer inst = null) {
+		await PlayByInstance(GetScene(scene), token, inst);
 	}
+	#endregion
 
-	public async Task<bool> PlayByCharacterInstance(string line, VBoxContainer inst = null) {		
-		return await PlayByInstance(Lines[line], inst);
+
+	#region GetScene
+	public Array<DialogueSequence> GetScene(string scene = "interact_default")
+	{
+		return Scenes.ContainsKey(scene) ? Scenes[scene] : Scenes["interact_nonexistent"];
 	}
 	#endregion
 
@@ -411,138 +281,60 @@ public partial class DialogueData : Node
 	public Dictionary<string, Array<DialogueSequence>> FetchDialogs()
 	{
 
-		#region Convos
-		using var convodata = FileAccess.Open("res://src/Data/Dialog/Convos.json", FileAccess.ModeFlags.Read);
+		using var dialogueDir = DirAccess.Open(Path);
 
-		var convojson = new Json();
-		convojson.Parse(convodata.GetAsText());
-		var convos = (
-			Dictionary<string, 
-				Array< // line:[], line:[]
-					Array<Variant> // "character, []
-				>
-			>
-		)convojson.Data;
+		foreach (string file in dialogueDir.GetFiles()) {
+			using var fileData = FileAccess.Open(Path + file, FileAccess.ModeFlags.Read);
 
-		foreach ( (string lineid, Array<Array<Variant>> sequences) in convos) {
-			Lines[$"convo_{lineid}"] = EvalConvos(sequences);
-		}
-		#endregion
+			var fileContent = new Json();
+			fileContent.Parse(fileData.GetAsText());
+			var content = (
+				Dictionary<string, Variant>
+			)fileContent.Data;
 
+			DialogueFormat format = (DialogueFormat)(int)content["format"];
 
-		#region Interacts
-		using var interactdata = FileAccess.Open("res://src/Data/Dialog/Interacts.json", FileAccess.ModeFlags.Read);
+			if (format == DialogueFormat.Convo || format == DialogueFormat.Interact) {
+				string prefix = (string)content["prefix"];
+				Dictionary<string, Variant> scenes = (Dictionary<string, Variant>)content["scenes"];
 
-		var interactjson = new Json();
-		interactjson.Parse(interactdata.GetAsText());
-		var interacts = (
-			Dictionary<string, Array<Variant>>
-		)interactjson.Data;
+				switch(format) {
+					case DialogueFormat.Convo: {
+						foreach ( (string scene, Variant sequences) in scenes) {
+							Scenes[$"{prefix}_{scene}"] = DialogueSequence.EvalConvos(sequences);
+						}
+						break;
+					}
 
-		foreach ( (string lineid, Array<Variant> sequences) in interacts) {
-			Lines[$"interact_{lineid}"] = EvalInteracts(sequences);
-		}
-		#endregion
-
-
-		#region Deaths
-		using var deathsdata = FileAccess.Open("res://src/Data/Dialog/Deaths.json", FileAccess.ModeFlags.Read);
-
-		var deathsjson = new Json();
-		deathsjson.Parse(deathsdata.GetAsText());
-		var deaths = (
-			Dictionary<string, Array<Variant>>
-		)deathsjson.Data;
-
-		foreach ( (string lineid, Array<Variant> sequences) in deaths) {
-			Lines[$"death_{lineid}"] = EvalInteracts(sequences);
-		}
-		#endregion
-
-
-		#region Char Effects
-		using var effectsdata = FileAccess.Open("res://src/Data/Dialog/CharacterEffects.json", FileAccess.ModeFlags.Read);
-
-		var effectsjson = new Json();
-		effectsjson.Parse(effectsdata.GetAsText());
-		var effects = (
-			Array<Dictionary<string, Variant>>
-		)effectsjson.Data;
-
-		foreach ( Dictionary<string, Variant> charef in effects) {
-			DialogueCharacterEffect effect = new();
-
-			switch(charef["names"].VariantType) {
-				case Variant.Type.Dictionary: effect.Names = (Array<string>)charef["names"]; break;
-				default: effect.Names.Add((string)charef["names"]); break;
+					default: {
+						foreach ( (string scene, Variant sequences) in scenes) {
+							Scenes[$"{prefix}_{scene}"] = DialogueSequence.EvalInteracts(sequences);
+						}
+						break;
+					}
+				}
 			}
 
-			if (charef.ContainsKey("mentioned")) effect.Mentioned = (string)charef["mentioned"];
-			if (charef.ContainsKey("speaking")) effect.Speaking = (string)charef["speaking"];
-		}
-		#endregion
+			else if (format == DialogueFormat.CharacterEffect) {
+				Array<Dictionary<string, Variant>> effectList = (Array<Dictionary<string, Variant>>)content["effects"];
 
-		GD.Print(Lines);
+				foreach ( Dictionary<string, Variant> charef in effectList) {
+					DialogueCharacterEffect effect = new();
 
-		return Lines;
-	}
-	#endregion
+					switch(charef["names"].VariantType) {
+						case Variant.Type.Dictionary: effect.Names = (Array<string>)charef["names"]; break;
+						default: effect.Names.Add((string)charef["names"]); break;
+					}
 
-
-	#region EvalConvos
-	public Array<DialogueSequence> EvalConvos(Variant sequences)
-	{
-		Array<DialogueSequence> arr = new();
-
-		foreach ( Variant sequenceData in (Array<Variant>)sequences) {
-
-			string character = (string)((Array<Variant>)sequenceData)[0];
-			Variant linesVar = ((Array<Variant>)sequenceData)[1];
-
-			DialogueSequence sequence = new() {
-				Character = character
-			};
-
-			if (linesVar.VariantType == Variant.Type.Array) {
-				Array<Variant> lines = (Array<Variant>)((Array<Variant>)sequenceData)[1];
-
-				foreach ( Variant rawLineData in lines ) {
-					sequence.Lines.Add(LineEval(rawLineData));
-				};
+					if (charef.ContainsKey("mentioned")) effect.Mentioned = (string)charef["mentioned"];
+					if (charef.ContainsKey("speaking")) effect.Speaking = (string)charef["speaking"];
+				}
 			}
-			else {
-				sequence.Lines.Add(LineEval((string)linesVar));
-			}
-
-			arr.Add(sequence);
 		}
 
-		return arr;
-	}
-	#endregion
+		GD.Print(Scenes);
 
-
-	#region EvalInteracts
-	public Array<DialogueSequence> EvalInteracts(Variant sequences) 
-	{
-		DialogueSequence sequence = new() {
-			Character = "",
-		};
-
-		if (sequences.VariantType == Variant.Type.Array) {
-			foreach ( Variant lineData in (Array<Variant>)sequences) {
-				sequence.Lines.Add(LineEval(lineData));
-			};
-		}
-		else {
-			sequence.Lines.Add(LineEval(sequences));
-		}
-
-		Array<DialogueSequence> arr = new() {
-			sequence
-		};
-
-		return arr;
+		return Scenes;
 	}
 	#endregion
 
@@ -551,8 +343,6 @@ public partial class DialogueData : Node
 	public override void _Ready() 
 	{
 		Node parent = GetParent();
-
-		GD.Print("a");
 
 		DialogueContainer = parent.GetChild<VBoxContainer>(1);
 		Background = parent.GetChild<TextureRect>(2);

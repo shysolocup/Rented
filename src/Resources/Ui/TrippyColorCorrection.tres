@@ -1,0 +1,22 @@
+[gd_resource type="NoiseTexture3D" load_steps=3 format=3 uid="uid://ca863v1blexjd"]
+
+[sub_resource type="Gradient" id="Gradient_ful86"]
+interpolation_color_space = 2
+colors = PackedColorArray(0, 0, 0, 1, 0.52027, 5.71553e-07, 2.88785e-07, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ful86"]
+noise_type = 2
+seed = 3
+frequency = 0.1621
+fractal_type = 2
+fractal_weighted_strength = 0.95
+cellular_distance_function = 1
+domain_warp_enabled = true
+domain_warp_type = 2
+
+[resource]
+width = 100
+height = 100
+seamless = true
+color_ramp = SubResource("Gradient_ful86")
+noise = SubResource("FastNoiseLite_ful86")

@@ -191,6 +191,24 @@ public partial class Player : CharacterBody3D
 	}
 
 
+	public async Task PlayDialogue(string line)
+	{
+		Controllable = false;
+		CameraRotationControllable = false;
+		InDialog = true;
+		ReleaseMouse();
+			
+		DialogueData data = GetNode<DialogueData>("%DialogueData");
+		
+		await data.Play(line);
+
+		Controllable = true;
+		CameraRotationControllable = true;
+		InDialog = false;
+		CaptureMouse();
+	}
+
+
 	public async Task SnatchInteract(InteractObject3D obj) 
 	{
 		if (obj.Cooldown) {
@@ -198,10 +216,6 @@ public partial class Player : CharacterBody3D
 		}
 
 		obj.Cooldown = true;
-		Controllable = false;
-		CameraRotationControllable = false;
-		InDialog = true;
-		ReleaseMouse();
 
 		Vector3 Direction = (obj.GlobalTransform.Origin - GlobalTransform.Origin).Normalized();
 		Basis TargetBasis = Basis.LookingAt(Direction, Vector3.Up);
@@ -216,18 +230,11 @@ public partial class Player : CharacterBody3D
 		tween.SetTrans(Tween.TransitionType.Quad).SetEase(Tween.EaseType.Out);
 		tween.TweenProperty(Camera, "global_rotation", TargetRotation, time);
 		tween.Play();
-			
-		DialogueData data = GetNode<DialogueData>("%DialogueData");
-		
-		await data.Play(obj.Line);
 
-		Controllable = true;
-		CameraRotationControllable = true;
-		InDialog = false;
-		CaptureMouse();
+		await PlayDialogue(obj.Line);
 
 		if (IsInstanceValid(tween) && tween.IsRunning()) tween.Stop();
-
+		
 		SceneTreeTimer timer = GetTree().CreateTimer(0.3f);
 		await ToSignal(timer, Timer.SignalName.Timeout);
 		timer.Dispose();

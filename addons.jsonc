@@ -7,7 +7,7 @@
 // -------------------------------------------------------------------- //
 {
   "$schema": "https://chickensoft.games/schemas/addons.schema.json",
-  // "path": "addons", // default
+  "path": "addons", // default
   // "cache": ".addons", // default
   "addons": {
     "imrp": { // name must match the folder name in the repository

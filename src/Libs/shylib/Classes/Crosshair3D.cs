@@ -2,7 +2,7 @@ using Godot;
 using System;
 using CoolGame;
 
-[GlobalClass, Icon("res://src/Libs/shylib/Images/Crosshair3D.png")]
+[GlobalClass, Icon("uid://ctfx6n3wqvqla")]
 public partial class Crosshair3D : StaticBody3D
 {
 	[Export] public StandardMaterial3D DefaultIcon;

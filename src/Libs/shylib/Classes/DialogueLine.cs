@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Text.RegularExpressions;
 
-[GlobalClass]
+[GlobalClass, Icon("uid://beseoxu7me3c0")]
 public partial class DialogueLine : Resource
 {
 	static public int DefaultSpeed = 30;

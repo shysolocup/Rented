@@ -21,7 +21,7 @@ glow_enabled = true
 environment = SubResource("Environment_oxm2o")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+transform = Transform3D(-0.601172, 0.0782242, 0.795283, 0.499898, -0.739615, 0.450634, 0.623453, 0.668468, 0.405531, 0, 0, 0)
 shadow_enabled = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

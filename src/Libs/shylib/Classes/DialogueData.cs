@@ -7,14 +7,14 @@ using System.Threading;
 using System.Text.RegularExpressions;
 
 [Tool]
-[GlobalClass]
+[GlobalClass, Icon("uid://beseoxu7me3c0")]
 public partial class DialogueData : Node
 {
 	static private string _path = "res://src/Data/Dialog/";
 	static private Random rand = new Random();
 	static private Color Transparent = new Color(1, 1, 1, 0);
 
-	[Export] public string Path {
+	public string Path {
 		get { return _path; }
 		set {
 			_path = value;

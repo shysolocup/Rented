@@ -4,7 +4,7 @@ using Godot.Collections;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-[GlobalClass]
+[GlobalClass, Icon("uid://beseoxu7me3c0")]
 public partial class DialogueCharacterEffect : Resource
 {
     /*

@@ -2,7 +2,7 @@ using Godot;
 using System;
 using Godot.Collections;
 
-[GlobalClass]
+[GlobalClass, Icon("uid://beseoxu7me3c0")]
 public partial class DialogueSequence : Resource
 {
 	[Export] public string Character = "";

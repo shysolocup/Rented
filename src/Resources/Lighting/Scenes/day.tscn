@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cc1nfhciujam1"]
+
+[ext_resource type="Environment" uid="uid://dulupswejph0s" path="res://src/Resources/Lighting/Environments/Day.tres" id="1_c6ph3"]
+[ext_resource type="CameraAttributesPractical" uid="uid://bsm43ueft2wl4" path="res://src/Resources/Lighting/CameraEffects/CameraAttributesPractical.tres" id="2_d25s3"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_d25s3"]
+
+[node name="Node" type="Node"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_d25s3")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("1_c6ph3")
+camera_attributes = ExtResource("2_d25s3")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.601172, 0.0782242, 0.795283, 0.499898, -0.739615, 0.450634, 0.623453, 0.668468, 0.405531, 0, 0, 0)
+shadow_enabled = true

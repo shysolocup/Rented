@@ -10,7 +10,17 @@ public partial class Lighting3D : Node3D
 {
 	static public PackedScene Default = GD.Load<PackedScene>("res://src/Resources/Lighting/Scenes/default.tscn");
 
-	[Export] public PackedScene Lighting = Default;
+	private PackedScene lighting = Default;
+
+	[Export] public PackedScene Lighting {
+		get { return lighting; }
+		set {
+			if (value != lighting) {
+				lighting = value;
+				ResetApply();
+			}
+		}
+	}
 
 	public Node CurrentLighting;
 	public WorldEnvironment SceneWorld;
@@ -29,8 +39,8 @@ public partial class Lighting3D : Node3D
 		}
 	}*/
 
-	[ExportToolButton("Reset")] 
-	public Callable ResetCall => Callable.From(Reset);
+	[ExportToolButton("Reset / Apply")] 
+	public Callable ResetCall => Callable.From(ResetApply);
 
 	public void DisposeLightings() 
 	{
@@ -40,7 +50,7 @@ public partial class Lighting3D : Node3D
 		Sun = null;
 	}
 
-	public void Reset() 
+	public void ResetApply() 
 	{
 		if (!Visible) return;
 
@@ -56,8 +66,6 @@ public partial class Lighting3D : Node3D
 
 		if (World is not null) AddChild(World);
 		if (Sun is not null) AddChild(Sun);
-
-		// environment = World.Environment;
 	}
 
 	public override void _ExitTree()
@@ -86,6 +94,6 @@ public partial class Lighting3D : Node3D
 		Connect(SignalName.VisibilityChanged, new Callable(this, MethodName.OnVisibilityChanged));
 
 		base._Ready();
-		if (Visible) Reset();
+		if (Visible) ResetApply();
 	}
 }

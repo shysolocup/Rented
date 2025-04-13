@@ -25,6 +25,10 @@ public partial class GameInstance : Node
 
 	[Export] public Godot.Environment DefaultGameEnvironment { get; set; }*/
 
+	public Lighting3D Lighting;
+
+	public Player Player;
+
 
 	[Export] public string Version = "0.0.1";
 	[Export] public string VersionDenot = "ResBuilding";
@@ -177,6 +181,8 @@ public partial class GameInstance : Node
 	public override void _Ready()
 	{
 		Game.Instance = this;
+		Lighting = GetNode<Lighting3D>("%Lighting3D");
+		Player = GetNode<Player>("%Player");
 
 		Game.SaveTemplate = Game.ReadJson("res://src/Data/Saves/Template.json");
 

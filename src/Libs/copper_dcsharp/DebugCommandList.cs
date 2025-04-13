@@ -81,8 +81,26 @@ public partial class DebugCommandFunctions : GodotObject
 		// Game.Instance.GetNode<DirectionalLight3D>("%Sun").ShadowEnabled = !value;
 	}
 
+	public void unlit(bool value) {
+		Game.Instance.Lighting.Visible = !value;
+	}
+
 	public void loadroom(string room) {
 		Game.Instance.LoadRoom(room);
+	}
+
+	public void loadlighting(string scene) {
+		Game.Instance.Lighting.Lighting = GD.Load<PackedScene>($"res://src/Resources/Lighting/Scenes/{scene}.tscn");
+	}
+
+	public async void freecam(bool value) {
+		Player player = Game.Instance.GetNode<Player>("%Player");
+		await DebugConsole.HideConsole();
+		player.Freecam = value;
+	}
+
+	public void pause(bool value) {
+		Game.Instance.GetTree().Paused = value;
 	}
 }
 
@@ -140,7 +158,7 @@ public static class DebugCommandList
 
 		new DebugCommand {
 			Id = "fullbright",
-			HelpText = "Disables lighting effects",
+			HelpText = "similar to unlit but it lights up the game",
 
 			Parameters = new() {
 				new DebugParameter {
@@ -150,6 +168,82 @@ public static class DebugCommandList
 			},
 
 			Function = new Callable(funcs, DebugCommandFunctions.MethodName.fullbright)
+		}.AddTo(console);
+
+
+		#endregion
+		#region unlit
+
+
+		new DebugCommand {
+			Id = "unlit",
+			HelpText = "Disables lighting effects",
+
+			Parameters = new() {
+				new DebugParameter {
+					Name = "value",
+					Type = DebugParameterType.Bool
+				}
+			},
+
+			Function = new Callable(funcs, DebugCommandFunctions.MethodName.unlit)
+		}.AddTo(console);
+
+
+		#endregion
+		#region loadlighting
+
+
+		new DebugCommand {
+			Id = "loadlighting",
+			HelpText = "Loads a lighting effect preset",
+
+			Parameters = new() {
+				new DebugParameter {
+					Name = "lighting",
+					Type = DebugParameterType.String
+				}
+			},
+
+			Function = new Callable(funcs, DebugCommandFunctions.MethodName.loadlighting)
+		}.AddTo(console);
+
+
+		#endregion
+		#region freecam
+
+
+		new DebugCommand {
+			Id = "freecam",
+			HelpText = "Lets you look around freely for secrets.. not that you'll find any of course",
+
+			Parameters = new() {
+				new DebugParameter {
+					Name = "value",
+					Type = DebugParameterType.Bool
+				}
+			},
+
+			Function = new Callable(funcs, DebugCommandFunctions.MethodName.freecam)
+		}.AddTo(console);
+
+
+		#endregion
+		#region pause
+
+
+		new DebugCommand {
+			Id = "pause",
+			HelpText = "pauses the game",
+
+			Parameters = new() {
+				new DebugParameter {
+					Name = "value",
+					Type = DebugParameterType.Bool
+				}
+			},
+
+			Function = new Callable(funcs, DebugCommandFunctions.MethodName.pause)
 		}.AddTo(console);
 
 

@@ -75,6 +75,17 @@ public partial class Player : CharacterBody3D
 	private CollisionShape3D Collision2;
 	private MeshInstance3D Mesh;
 
+	public bool Freecam = false;
+	private Transform3D FreecamOrigin = Transform3D.Identity;
+	private Vector2 FreecamMousePosition = Vector2.Zero;
+	private float FreecamTotalPitch = 0;
+	private Vector3 FreecamDirection = Vector3.Zero;
+	private Vector3 FreecamVelocity = Vector3.Zero;
+	private int FreecamAcceleration = 100;
+	private float FreecamVelMultiplier = 4;
+	private float FreecamSpeed = 1.3f;
+	private float FreecamShiftMult = 2f;
+
 
 	public void Die(int id = 0) 
 	{
@@ -121,6 +132,7 @@ public partial class Player : CharacterBody3D
 	public override void _PhysicsProcess(double delta)
 	{
 		// if (!controllable) return;
+		if (Freecam) return;
 		
 		float d = (float)delta;
 		if (MouseCaptured) JoypadControls(d);
@@ -129,8 +141,28 @@ public partial class Player : CharacterBody3D
 		MoveAndSlide();
 	}
 
+	public void UpdateFreecamMovement(double delta)
+	{
+		Vector2 V2Direction = Input.GetVector("MoveLeft", "MoveRight", "MoveForward", "MoveBack");
+
+		Vector3 _forward = Camera.GlobalTransform.Basis * new Vector3(V2Direction.X, 0, V2Direction.Y);
+		FreecamDirection = new Vector3(_forward.X, Convert.ToInt32(Input.IsKeyPressed(Key.E)) - Convert.ToInt32(Input.IsKeyPressed(Key.Q)), _forward.Z).Normalized();
+
+		float Speed = FreecamSpeed;
+
+		if (Input.IsKeyPressed(Key.Shift)) Speed *= FreecamShiftMult;
+		if (Input.IsKeyPressed(Key.Ctrl)) Speed *= 1/FreecamShiftMult;
+		
+		FreecamVelocity = FreecamVelocity.MoveToward(FreecamDirection * Speed * V2Direction.Length(), FreecamAcceleration * (float)delta);
+		Camera.Translate(FreecamVelocity * (float)delta * Speed);
+	}
+
 	public override async void _Process(double delta)
 	{
+		if (Freecam) {
+			UpdateFreecamMovement(delta);
+		}
+
 		if (Raycast.IsColliding()) {
 			GodotObject result = Raycast.GetCollider();
 
@@ -153,10 +185,10 @@ public partial class Player : CharacterBody3D
 
 		if (Camera != null) {
 
-			if (CameraPositionControllable) {
+			if (CameraPositionControllable && !Freecam) {
 				Camera.Position = new Vector3(Position.X, Position.Y + CameraOffset, Position.Z); 
 			}
-			Rotation = new Vector3(Rotation.X, Camera.Rotation.Y, Rotation.Z);
+			if (!Freecam) Rotation = new Vector3(Rotation.X, Camera.Rotation.Y, Rotation.Z);
 
 			// crouch effect
 			if (Crouching) {
@@ -217,7 +249,7 @@ public partial class Player : CharacterBody3D
 
 		obj.Cooldown = true;
 
-		Vector3 Direction = (obj.GlobalTransform.Origin - GlobalTransform.Origin).Normalized();
+		Vector3 Direction = (obj.GlobalTransform.Origin - Camera.GlobalTransform.Origin).Normalized();
 		Basis TargetBasis = Basis.LookingAt(Direction, Vector3.Up);
 		Vector3 TargetRotation = TargetBasis.GetEuler();
 
@@ -245,11 +277,28 @@ public partial class Player : CharacterBody3D
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
-		if (@event is InputEventMouseMotion && Input.MouseMode == Input.MouseModeEnum.Captured) {
-			var mouse = @event as InputEventMouseMotion;
+		if (@event is InputEventMouseMotion mouse && Input.MouseMode == Input.MouseModeEnum.Captured) {
+			if (Freecam) FreecamMousePosition = mouse.Relative;
 			LookDirection = mouse.Relative * 0.001f;
 
 			if (MouseCaptured) RotateCamera();
+		}
+
+		if (Freecam && @event is InputEventMouseButton button && Input.MouseMode == Input.MouseModeEnum.Captured) {
+			switch (button.ButtonIndex) {
+				case MouseButton.Right: {
+					Input.SetMouseMode( button.Pressed ? Input.MouseModeEnum.Captured : Input.MouseModeEnum.Visible);
+					break;
+				}
+				case MouseButton.WheelUp: {
+					FreecamVelMultiplier = Mathf.Clamp(FreecamVelMultiplier * 1.1f, 0.2f, 20);
+					break;
+				}
+				case MouseButton.WheelDown: {
+					FreecamVelMultiplier = Mathf.Clamp(FreecamVelMultiplier / 1.1f, 0.2f, 20);
+					break;
+				}
+			}
 		}
 
 		// if (!controllable) return;

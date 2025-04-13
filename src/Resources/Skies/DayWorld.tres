@@ -1,0 +1,6 @@
+[gd_resource type="World3D" load_steps=2 format=3 uid="uid://cjtoutw5n3qec"]
+
+[ext_resource type="Environment" uid="uid://dulupswejph0s" path="res://src/Resources/Skies/Day.tres" id="1_7p3pj"]
+
+[resource]
+environment = ExtResource("1_7p3pj")

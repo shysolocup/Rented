@@ -12,8 +12,8 @@ public partial class Lighting3D : Node3D
 
 	private Godot.Environment environment;
 
-	[Export] public WorldEnvironment World = new();
-	[Export] public DirectionalLight3D Sun = new();
+	[Export] public WorldEnvironment World;
+	[Export] public DirectionalLight3D Sun;
 
 	[Export] public Godot.Environment Environment {
 		get { return environment; }
@@ -33,15 +33,16 @@ public partial class Lighting3D : Node3D
 		if (World is not null) World.Free();
 		if (Sun is not null) Sun.Free();
 
-		Node def = Default.Instantiate<Node>();
+		Node def = Default.Instantiate();
+		AddChild(def);
 
-		World = def.GetChild<WorldEnvironment>(1);
-		Sun = def.GetChild<DirectionalLight3D>(2);
+		// World = def.GetChild<WorldEnvironment>(1);
+		// Sun = def.GetChild<DirectionalLight3D>(2);
 
-		AddChild(World);
-		AddChild(Sun);
+		// AddChild(World);
+		// AddChild(Sun);
 
-		environment = World.Environment;
+		// environment = World.Environment;
 	}
 
 	public override bool _Set(StringName property, Variant valueVar)

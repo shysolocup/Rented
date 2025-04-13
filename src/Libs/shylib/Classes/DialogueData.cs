@@ -99,10 +99,7 @@ public partial class DialogueData : Node
 			var elipses = inst.GetChild<RichTextLabel>(3);
 
 			// clear all the buttons already in the container
-			foreach (Button button in buttons.GetChildren()) {
-				buttons.RemoveChild(button);
-				button.QueueFree();
-			}
+			buttons.ClearChildren();
 
 			var chara = inst.GetChild<RichTextLabel>(0);
 			var textlabel = inst.GetChild<RichTextLabel>(1);

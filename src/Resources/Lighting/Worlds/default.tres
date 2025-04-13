@@ -1,0 +1,6 @@
+[gd_resource type="World3D" load_steps=2 format=3 uid="uid://b1eksls1cdro7"]
+
+[ext_resource type="Environment" uid="uid://7y7m2l8m64o" path="res://src/Resources/Lighting/Environments/Default.tres" id="1_30gfk"]
+
+[resource]
+environment = ExtResource("1_30gfk")

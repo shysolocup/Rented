@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections;
+using System.Linq;
 using System.Threading.Tasks;
 
 public partial class Lib : Node {}
@@ -8,9 +9,39 @@ public partial class Lib : Node {}
 
 public static class Extensions
 {
+
+	public static void ClearChildren(this Node self)
+	{
+		foreach (Node child in self.GetChildren()) {
+			self.RemoveChild(child);
+			child.QueueFree();
+		}
+	}
+
+	public static void ClearChildren<T>(this Node self) where T : Node
+	{
+		foreach (Node child in self.GetChildren()) {
+			if (child.GetType() == typeof(T)) {
+				self.RemoveChild(child);
+				child.QueueFree();
+			}
+		}
+	}
+
+	public static T FindChild<T>(this Node self, string pattern) where T : Node
+	{
+		if (pattern == "T") pattern = typeof(T).Name;
+		return self.FindChild(pattern) as T;
+	}
+
 	public static async Task Guh(this SceneTreeTimer self) {
 		await self.ToSignal(self, Timer.SignalName.Timeout);
 		self.Dispose();
+	}
+
+	public static T Duplicate<T>(this Node self) where T : Node
+	{
+		return self.Duplicate() as T;
 	}
 
 	public static string ToHex(this Color self) {

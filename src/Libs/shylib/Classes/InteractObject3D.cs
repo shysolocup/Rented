@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-[GlobalClass, Icon("res://src/Libs/shylib/Images/InteractObject3D.png")]
+[GlobalClass, Icon("uid://e1srvp36hc7n")]
 public partial class InteractObject3D : RigidBody3D
 {
 

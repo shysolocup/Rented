@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-[GlobalClass, Icon("res://src/Libs/shylib/Images/Discord.png")]
+[GlobalClass, Icon("uid://bhib8x7fhxxwd")]
 public partial class DiscordController : Node
 {
 

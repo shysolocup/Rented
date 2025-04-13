@@ -2,7 +2,7 @@ using Godot;
 using System;
 
 
-[GlobalClass, Icon("res://src/Libs/shylib/Images/Script.png")]
+[GlobalClass, Icon("uid://dme3m2uv5jaju")]
 public partial class RbxScript : Node
 {
 

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Godot.Collections;
 
 
-[GlobalClass, Icon("res://src/shylib/Images/Game.png")]
+[GlobalClass, Icon("uid://boo8iw5pvoaa8")]
 public partial class GameInstance : Node
 {
 

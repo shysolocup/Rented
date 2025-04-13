@@ -1,0 +1,46 @@
+// Godot addons configuration file for use with the GodotEnv tool.
+// See https://github.com/chickensoft-games/GodotEnv for more info.
+// -------------------------------------------------------------------- //
+// Note: this is a JSONC file, so you can use comments!
+// If using Rider, see https://youtrack.jetbrains.com/issue/RIDER-41716
+// for any issues with JSONC.
+// -------------------------------------------------------------------- //
+{
+  "$schema": "https://chickensoft.games/schemas/addons.schema.json",
+  "path": "addons", // default
+  // "cache": ".addons", // default
+  "addons": {
+    "imrp": { // name must match the folder name in the repository
+      "url": "https://github.com/MakovWait/improved_resource_picker",
+      // "source": "remote", // default
+      // "checkout": "main", // default
+      "subfolder": "addons/imrp"
+    },
+    "beehave": {
+      "url": "https://github.com/bitbrain/beehave",
+      "subfolder": "addons/beehave"
+    },
+    "copper_dcsharp": {
+      "url": "../addons/copper_dcsharp",
+      "checkout": "main",
+      "subfolder": "/",
+      "source": "local"
+    },
+    "csg_terrain": {
+      "url": "https://github.com/SpockBauru/CSG_Terrain",
+      "subfolder": "addons/csg_terrain"
+    },
+    "gdscript2all": {
+      "url": "https://github.com/Lcbx/GdScript2All",
+      "subfolder": "addons/gdscript2all"
+    },
+    "gdterm": {
+      "url": "https://github.com/markeel/gdterm",
+      "subfolder": "addons/gdterm"
+    },
+    "json_minifier": {
+      "url": "https://github.com/gamechuck/json-minifier-for-godot",
+      "subfolder": "addons/json_minifier"
+    }
+  }
+}

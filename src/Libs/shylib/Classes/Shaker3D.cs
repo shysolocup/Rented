@@ -143,12 +143,12 @@ public partial class Shaker3D : Node
 	}
 
 	public Shaker3DInstance Shake(Shaker3DInstance instance = null) {
-		ShakeInstance = (instance != null) ? instance : ShakeInstance;
+		ShakeInstance = instance ?? ShakeInstance;
 		return instance;
 	}
 
 	public Shaker3DInstance ShakeSustain(Shaker3DInstance instance = null) {
-		ShakeInstance = (instance != null) ? instance : ShakeInstance;
+		ShakeInstance = instance ?? ShakeInstance;
 		instance.StartFadeIn(ShakeInstance.FadeInDuration);
 		return instance;
 	}

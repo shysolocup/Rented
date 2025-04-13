@@ -24,12 +24,12 @@ public partial class Crosshair3D : StaticBody3D
 	public override void _Ready()
 	{
 		Distance = BaseDistance;
-		Delay = (Delay != null) ? Delay : "1/1";
+		Delay ??= "1/1";
 
 		string[] spl = Delay.Split("/");
 		_delay = float.Parse(spl[0]) / float.Parse(spl[1]);
 
-		Camera = (Camera != null) ? Camera : GetNode<Camera3D>("%PlayerCamera");
+		Camera ??= GetNode<Camera3D>("%PlayerCamera");
 		Icon = GetNode<MeshInstance3D>("./Icon");
 		ViewportCamera = GetNodeOrNull<Camera3D>("../ViewportCamera");
 		CrosshairContainer = GetParent().GetParent<SubViewportContainer>();

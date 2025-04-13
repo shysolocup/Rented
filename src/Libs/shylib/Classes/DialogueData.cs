@@ -92,7 +92,7 @@ public partial class DialogueData : Node
 				.SetEase(Tween.EaseType.Out);
 			}
 			
-			inst = (inst != null) ? inst : Base.Duplicate() as VBoxContainer;
+			inst ??= Base.Duplicate() as VBoxContainer;
 			inst.Show();
 
 			var buttons = inst.GetChild<HFlowContainer>(2);

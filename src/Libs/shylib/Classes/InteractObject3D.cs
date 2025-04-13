@@ -63,7 +63,7 @@ public partial class InteractObject3D : RigidBody3D
 				_hovering = Cooldown ? false : value;
 
 				if (_hovering && Enabled) {
-					Crosshair.Icon.SetSurfaceOverrideMaterial(0, (HoverIcon != null) ? HoverIcon : Crosshair.DefaultHoverIcon);
+					Crosshair.Icon.SetSurfaceOverrideMaterial(0, HoverIcon ?? Crosshair.DefaultHoverIcon);
 				}
 				else if (_hovering && !Enabled) {
 					Crosshair.Icon.SetSurfaceOverrideMaterial(0, Crosshair.LockedIcon);

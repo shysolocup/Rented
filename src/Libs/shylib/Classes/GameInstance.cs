@@ -12,7 +12,7 @@ public partial class GameInstance : Node
 	/// <summary>
 	/// current lighting environment
 	/// </summary>
-	[Export] public Godot.Environment GameEnvironment {
+	/*[Export] public Godot.Environment GameEnvironment {
 		get {
 			return GetNode<WorldEnvironment>("%World").Environment;
 		}
@@ -23,7 +23,7 @@ public partial class GameInstance : Node
 		}
 	}
 
-	[Export] public Godot.Environment DefaultGameEnvironment { get; set; }
+	[Export] public Godot.Environment DefaultGameEnvironment { get; set; }*/
 
 
 	[Export] public string Version = "0.0.1";
@@ -91,7 +91,7 @@ public partial class GameInstance : Node
 		if (thing.GetType() == typeof(Godot.Collections.Array)) {
 			Array<Variant> data = (Array<Variant>)thing;
 			for (int i = 0; i < data.Count; i++) {
-				Iter(data[i], data, ((object)basedata != null && basedata.GetType() == data.GetType()) ? ((Godot.Collections.Array)basedata)[i] : nullvar);
+				Iter(data[i], data, ((object)basedata is not null && basedata.GetType() == data.GetType()) ? ((Godot.Collections.Array)basedata)[i] : nullvar);
 			}
 		}
 		else if (thing.GetType() == typeof(Dictionary)) {
@@ -117,7 +117,7 @@ public partial class GameInstance : Node
 
 		for (int i = 0; i < 3; i++) {
 			string file = $"file_{i}";
-			if (exists && !(bool)basefile["overwrite"] && (object)data[file] != null) {
+			if (exists && !(bool)basefile["overwrite"] && (object)data[file] is not null) {
 				Dictionary<string, Variant> filedata = (Dictionary<string, Variant>)data[file];
 				
 				foreach ( (string key, Variant value) in basefile) {
@@ -180,8 +180,8 @@ public partial class GameInstance : Node
 
 		Game.SaveTemplate = Game.ReadJson("res://src/Data/Saves/Template.json");
 
-		GameEnvironment = (DefaultGameEnvironment != null) ? DefaultGameEnvironment : GameEnvironment;
-		DefaultGameEnvironment = GameEnvironment;
+		/*GameEnvironment = (DefaultGameEnvironment != null) ? DefaultGameEnvironment : GameEnvironment;
+		DefaultGameEnvironment = GameEnvironment;*/
 
 		if (!FileAccess.FileExists(Game.SavePath)) {
 			UseTemplate();

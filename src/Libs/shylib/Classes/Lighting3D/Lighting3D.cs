@@ -8,59 +8,55 @@ using System.IO;
 [GlobalClass, Icon("res://src/Libs/shylib/Images/Lighting3D")]
 public partial class Lighting3D : Node3D
 {
-	static public PackedScene Default = GD.Load<PackedScene>("res://src/Libs/shylib/Classes/Lighting3D/guh.tscn");
+	static public PackedScene Default = GD.Load<PackedScene>("res://src/Resources/Lighting/Scenes/default.tscn");
 
-	private Godot.Environment environment;
+	public PackedScene Lighting = Default;
 
 	[Export] public WorldEnvironment World;
 	[Export] public DirectionalLight3D Sun;
 
-	[Export] public Godot.Environment Environment {
+	/*[Export] public Lighting3DEnvironment Environment {
 		get { return environment; }
 		set {
 			if (value != environment) {
 				environment = value;
-				World.Environment = Environment;
+				// World.Environment = Environment;
 			}
 		}
-	}
+	}*/
 
 	[ExportToolButton("Reset")] 
 	public Callable ResetCall => Callable.From(Reset);
 
 	public void Reset() 
 	{
-		if (World is not null) World.Free();
-		if (Sun is not null) Sun.Free();
+		World?.Free();
+		Sun?.Free();
 
 		Node def = Default.Instantiate();
-		AddChild(def);
 
-		// World = def.GetChild<WorldEnvironment>(1);
-		// Sun = def.GetChild<DirectionalLight3D>(2);
+		World = def.GetChild<WorldEnvironment>(1);
+		Sun = def.GetChild<DirectionalLight3D>(2);
 
-		// AddChild(World);
-		// AddChild(Sun);
+		AddChild(World);
+		AddChild(Sun);
 
 		// environment = World.Environment;
 	}
 
-	public override bool _Set(StringName property, Variant valueVar)
+	public override void _Ready()
 	{
-		GD.Print(property);
-
-		if (property == "Visible" && valueVar.Obj is bool value) {
-			if (!value) {
-				GD.Print(World);
+		VisibilityChanged += () => {
+			if (Visible) {
+				
+			}
+			else {
 				World.Environment = null;
 				World.CameraAttributes = null;
 			}
-		}
-		return true;
-	}
+			GD.Print(World);
+		};
 
-	public override void _Ready()
-	{
 		base._Ready();
 		Reset();
 	}

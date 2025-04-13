@@ -77,8 +77,8 @@ public partial class DebugCommandFunctions : GodotObject
 	}
 
 	public void fullbright(bool value) {
-		Game.Instance.GameEnvironment = value ? GD.Load<Godot.Environment>("res://src/Resources/Skies/Fullbright.tres") : Game.Instance.DefaultGameEnvironment;
-		Game.Instance.GetNode<DirectionalLight3D>("%Sun").ShadowEnabled = !value;
+		// Game.Instance.GameEnvironment = value ? GD.Load<Godot.Environment>("res://src/Resources/Skies/Fullbright.tres") : Game.Instance.DefaultGameEnvironment;
+		// Game.Instance.GetNode<DirectionalLight3D>("%Sun").ShadowEnabled = !value;
 	}
 
 	public void loadroom(string room) {

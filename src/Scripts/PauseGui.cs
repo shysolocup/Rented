@@ -105,7 +105,7 @@ public partial class PauseGui : Control
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
-		if (Player != null && @event is InputEventKey eventKey && eventKey.Pressed && eventKey.Keycode == Key.Escape) {
+		if (Player != null && !DebugConsole.IsConsoleVisible() && @event is InputEventKey eventKey && eventKey.Pressed && eventKey.Keycode == Key.Escape) {
 			Paused ^= true;
 		}
 	}

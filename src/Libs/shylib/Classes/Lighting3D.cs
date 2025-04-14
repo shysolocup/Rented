@@ -9,8 +9,10 @@ using System.Linq;
 [GlobalClass, Icon("uid://dob8ycfdib6x8")]
 public partial class Lighting3D : Node3D
 {
+	static public string SceneDir = "res://src/Resources/Lighting/Scenes";
+
 	static private Dictionary<string, PackedScene> SceneCache = new() {
-		{ "Default", GD.Load<PackedScene>("res://src/Resources/Lighting/Scenes/Default.tscn") }
+		{ "Default", GD.Load<PackedScene>($"{SceneDir}/Default.tscn") }
 	};
 
 	private PackedScene lighting = SceneCache["Default"];
@@ -72,8 +74,8 @@ public partial class Lighting3D : Node3D
 
 	public PackedScene LoadFromScene(string scene) 
 	{
-		PackedScene ps = SceneCache.TryGetValue(scene, out PackedScene value) ? value : GD.Load<PackedScene>(scene);
-		if (SceneCache.ContainsKey(scene)) SceneCache.Add(scene, ps);
+		PackedScene ps = SceneCache.TryGetValue(scene, out PackedScene value) ? value : GD.Load<PackedScene>($"{SceneDir}/{scene}.tscn");
+		if (!SceneCache.ContainsKey(scene)) SceneCache.Add(scene, ps);
 		return ps;
 	}
 

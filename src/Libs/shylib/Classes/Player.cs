@@ -28,9 +28,11 @@ public partial class Player : CharacterBody3D
 	[Export] public bool CameraRotationControllable = true;
 	[Export] public bool CameraPositionControllable = true;
 
-	[Export ] public bool Jumping = false;
+	[Export] public bool Jumping = false;
 	[Export] public bool Sprinting = false;
 	[Export] public bool Crouching = false;
+ [Export] public bool CanCrouch = true;
+ [Export] public bool CanSprint = true;
 	
 	[Export] public bool MouseCaptured = false;
 

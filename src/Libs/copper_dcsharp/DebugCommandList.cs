@@ -90,7 +90,7 @@ public partial class DebugCommandFunctions : GodotObject
 	}
 
 	public void loadlighting(string scene) {
-		Game.Instance.Lighting.Lighting = GD.Load<PackedScene>($"res://src/Resources/Lighting/Scenes/{scene}.tscn");
+		Game.Instance.Lighting?.LoadAndSetFromScene(scene);
 	}
 
 	public async void freecam(bool value) {

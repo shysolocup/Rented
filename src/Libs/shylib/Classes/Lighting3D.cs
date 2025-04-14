@@ -2,15 +2,18 @@ using Godot;
 using System;
 using Godot.Collections;
 using System.IO;
+using System.Linq;
 
 
 [Tool]
 [GlobalClass, Icon("uid://dob8ycfdib6x8")]
 public partial class Lighting3D : Node3D
 {
-	static public PackedScene Default = GD.Load<PackedScene>("res://src/Resources/Lighting/Scenes/default.tscn");
+	static private Dictionary<string, PackedScene> SceneCache = new() {
+		{ "Default", GD.Load<PackedScene>("res://src/Resources/Lighting/Scenes/Default.tscn") }
+	};
 
-	private PackedScene lighting = Default;
+	private PackedScene lighting = SceneCache["Default"];
 
 	[Export] public PackedScene Lighting {
 		get { return lighting; }
@@ -29,43 +32,61 @@ public partial class Lighting3D : Node3D
 	public WorldEnvironment World;
 	public DirectionalLight3D Sun;
 
-	/*[Export] public Lighting3DEnvironment Environment {
-		get { return environment; }
-		set {
-			if (value != environment) {
-				environment = value;
-				// World.Environment = Environment;
-			}
-		}
-	}*/
-
 	[ExportToolButton("Reset / Apply")] 
 	public Callable ResetCall => Callable.From(ResetApply);
 
-	public void DisposeLightings() 
+	public Lighting3D DisposeLightings() 
 	{
 		World?.QueueFree(); 
 		Sun?.QueueFree(); 
 		World = null;
 		Sun = null;
+		return this;
 	}
 
-	public void ResetApply() 
+	public Lighting3D ResetApply() 
 	{
-		if (!Visible) return;
+		if (Visible) {
+			this.ClearChildren();
 
-		this.ClearChildren();
+			Node CurrentLighting = Lighting.Instantiate();
 
-		Node CurrentLighting = Lighting.Instantiate();
+			SceneWorld?.QueueFree();
+			SceneSun?.QueueFree();
+			
+			SceneWorld = null;
+			SceneSun = null;
 
-		SceneWorld = CurrentLighting.FindChild<WorldEnvironment>("T");
-		SceneSun = CurrentLighting.FindChild<DirectionalLight3D>("T");
+			SceneWorld = CurrentLighting.FindChild<WorldEnvironment>("T");
+			SceneSun = CurrentLighting.FindChild<DirectionalLight3D>("T");
 
-		World = SceneWorld?.Duplicate<WorldEnvironment>();
-		Sun = SceneSun?.Duplicate<DirectionalLight3D>();
+			World = SceneWorld?.Duplicate<WorldEnvironment>();
+			Sun = SceneSun?.Duplicate<DirectionalLight3D>();
 
-		if (World is not null) AddChild(World);
-		if (Sun is not null) AddChild(Sun);
+			if (World is not null) AddChild(World);
+			if (Sun is not null) AddChild(Sun);
+		}
+
+		return this;
+	}
+
+	public PackedScene LoadFromScene(string scene) 
+	{
+		PackedScene ps = SceneCache.TryGetValue(scene, out PackedScene value) ? value : GD.Load<PackedScene>(scene);
+		if (SceneCache.ContainsKey(scene)) SceneCache.Add(scene, ps);
+		return ps;
+	}
+
+	public Lighting3D LoadAndSetFromScene(string scene)
+	{
+		Lighting = LoadFromScene(scene);
+		return this;
+	}
+
+	public Lighting3D SetFromScene(PackedScene scene)
+	{
+		lighting = scene;
+		return this;
 	}
 
 	public override void _ExitTree()

@@ -35,7 +35,7 @@ public partial class RbxScript : Node
 
 	public string _source { get; set; }
 
-	[Export(PropertyHint.File, "*.cs,.gd,.cpp")] public string Source {
+	[Export(PropertyHint.File, "*.cs,.gd")] public string Source {
 		get { return _source; }
 		set {
 			var old = _source;

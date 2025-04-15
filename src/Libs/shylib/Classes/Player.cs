@@ -156,6 +156,9 @@ public partial class Player : CharacterBody3D
 		if (Input.IsKeyPressed(Key.Ctrl)) Speed *= 1/FreecamShiftMult;
 		
 		FreecamVelocity = FreecamVelocity.MoveToward(FreecamDirection * Speed * V2Direction.Length(), FreecamAcceleration * (float)delta);
+		
+		GD.Print(FreecamVelocity);
+		
 		Camera.Translate(FreecamVelocity * (float)delta * Speed);
 	}
 
@@ -242,20 +245,13 @@ public partial class Player : CharacterBody3D
 		CaptureMouse();
 	}
 
-
-	public async Task SnatchInteract(InteractObject3D obj) 
+	public Func<Task> SnatchCamera(Transform3D origin)
 	{
-		if (obj.Cooldown) {
-			obj.Cooldown = false; return;
-		}
-
-		obj.Cooldown = true;
-
-		Vector3 Direction = (obj.GlobalTransform.Origin - Camera.GlobalTransform.Origin).Normalized();
+		Vector3 Direction = (origin.Origin - Camera.GlobalTransform.Origin).Normalized();
 		Basis TargetBasis = Basis.LookingAt(Direction, Vector3.Up);
 		Vector3 TargetRotation = TargetBasis.GetEuler();
 
-		float time = (obj.GlobalRotation - Camera.GlobalRotation).Length() / 1.3f;
+		float time = (origin.Basis.GetEuler() - Camera.GlobalRotation).Length() / 1.3f;
 
 		GD.Print(TargetRotation, Camera.GlobalRotation);
 
@@ -265,13 +261,29 @@ public partial class Player : CharacterBody3D
 		tween.TweenProperty(Camera, "global_rotation", TargetRotation, time);
 		tween.Play();
 
+		return async () => {
+			if (IsInstanceValid(tween) && tween.IsRunning()) tween.Stop();
+		
+			SceneTreeTimer timer = GetTree().CreateTimer(0.3f);
+			await ToSignal(timer, Timer.SignalName.Timeout);
+			timer.Dispose();
+		};
+	}
+
+
+	public async Task SnatchInteract(InteractObject3D obj) 
+	{
+		if (obj.Cooldown) {
+			obj.Cooldown = false; return;
+		}
+
+		obj.Cooldown = true;
+
+		Func<Task> fin = SnatchCamera(obj.GlobalTransform);
+
 		await PlayDialogue(obj.Line);
 
-		if (IsInstanceValid(tween) && tween.IsRunning()) tween.Stop();
-		
-		SceneTreeTimer timer = GetTree().CreateTimer(0.3f);
-		await ToSignal(timer, Timer.SignalName.Timeout);
-		timer.Dispose();
+		await fin();
 
 		obj.Cooldown = false;
 	}

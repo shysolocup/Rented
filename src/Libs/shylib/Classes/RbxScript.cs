@@ -1,13 +1,26 @@
 using Godot;
 using System;
 
-
+[Tool]
 [GlobalClass, Icon("uid://dme3m2uv5jaju")]
 public partial class RbxScript : Node
 {
-
 	[Signal] public delegate void EnabledChangedEventHandler(bool oldValue, bool newValue);
 	[Signal] public delegate void SourceChangedEventHandler(bool oldValue, bool newValue);
+
+	[ExportToolButton("Execute")] public Callable ExecuteCall => Callable.From(_execute);
+	private void _execute() { Execute(); }
+
+	public Variant Execute(params object[] args) {
+		return ((Script)ReloadSource()).CallDeferred("_Ready");
+	}
+
+	[ExportToolButton("Reload Source")] public Callable ReloadSourceCall => Callable.From(ReloadSource);
+
+	public Variant ReloadSource()
+	{
+		return GD.Load(Source);
+	}
 
 	private bool _enabled = true;
 
@@ -20,9 +33,9 @@ public partial class RbxScript : Node
 		}
 	}
 
-	public CSharpScript _source { get; set; }
+	public string _source { get; set; }
 
-	[Export] public CSharpScript Source {
+	[Export(PropertyHint.File, "*.cs,.gd,.cpp")] public string Source {
 		get { return _source; }
 		set {
 			var old = _source;
@@ -37,14 +50,27 @@ public partial class RbxScript : Node
 	[Export] public NodePath SpawnedNodePath;
 
 
-	public Node AttachScript(CSharpScript source)
+	public RbxScript DetatchScript()
 	{
+		GetParent().RemoveChild(SpawnedNode);
+		SpawnedNode.QueueFree();
+		SpawnedNode = null;
+		return this;
+	}
+
+
+	public Node AttachScript(string source = null)
+	{
+		source ??= Source;
+
 		if (SpawnedNode != null) {
-			GetParent().RemoveChild(SpawnedNode);
-			SpawnedNode = null;
+			DetatchScript();
 		}
 
-		SpawnedNode = (Node)source.New();
+		Variant Script = ReloadSource();
+
+		if (Script.Obj is CSharpScript cs) SpawnedNode = (Node)cs.New();
+		else if (Script.Obj is GDScript gd) SpawnedNode = (Node)gd.New();
 
 		SpawnedNodePath = new NodePath($"{Name}Source");
 		SpawnedNode.Name = SpawnedNodePath.ToString();
@@ -58,12 +84,11 @@ public partial class RbxScript : Node
 	private void HandleEnabledChange(bool oldVal, bool newVal)
 	{
 		if (newVal == true) {
-			AttachScript(Source);
+			AttachScript();
 		}
 		else {
 			if (SpawnedNode != null) {
-				GetParent().RemoveChild(SpawnedNode);
-				SpawnedNode = null;
+				DetatchScript();
 			}
 		}
 	}
@@ -72,13 +97,15 @@ public partial class RbxScript : Node
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{	
-		EnabledChanged += HandleEnabledChange;
-		SpawnedNodePath = new NodePath($"{Name}Source");
+		if (!Engine.IsEditorHint()) {
+			EnabledChanged += HandleEnabledChange;
+			SpawnedNodePath = new NodePath($"{Name}Source");
 
-		Set("SpawnedNode", nullvar);
+			Set("SpawnedNode", nullvar);
 
-		if (Source != null && Enabled) {
-			AttachScript(Source);
-		};
+			if (Source != null && Enabled) {
+				AttachScript();
+			};
+		}
 	}
 }

@@ -31,8 +31,8 @@ public partial class Player : CharacterBody3D
 	[Export] public bool Jumping = false;
 	[Export] public bool Sprinting = false;
 	[Export] public bool Crouching = false;
- [Export] public bool CanCrouch = true;
- [Export] public bool CanSprint = true;
+	[Export] public bool CanCrouch = true;
+	[Export] public bool CanSprint = true;
 	
 	[Export] public bool MouseCaptured = false;
 
@@ -305,7 +305,7 @@ public partial class Player : CharacterBody3D
 
 		// if (!controllable) return;
 		
-		if (Controllable && Walking && !Sprinting && !Crouching && Input.IsActionPressed("Sprint") && Input.IsActionPressed("MoveForward")) {
+		if (CanSprint && Controllable && Walking && !Sprinting && !Crouching && Input.IsActionPressed("Sprint") && Input.IsActionPressed("MoveForward")) {
 			Sprinting = true;
 		}
 		
@@ -313,7 +313,7 @@ public partial class Player : CharacterBody3D
 			Sprinting = false;
 		}
 
-		if (Controllable && !Sprinting && !Crouching && IsOnFloor() && Input.IsActionPressed("Crouch")) {
+		if (CanCrouch && Controllable && !Sprinting && !Crouching && IsOnFloor() && Input.IsActionPressed("Crouch")) {
 			Crouching = true;
 		}
 		else if (Controllable && Crouching && !Input.IsActionPressed("Crouch")) {

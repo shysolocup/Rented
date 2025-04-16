@@ -190,68 +190,68 @@ public partial class Shaker3D : Node
 
 	public static readonly Dictionary<Shaker3DPreset, Dictionary<string, Variant>> PresetsData = new() {
 		
-		{ Shaker3DPreset.Bump, new() {
-			{ "Magnitude", 2.5f },
-			{ "Roughness", 4 },
-			{ "FadeInDuration", 0.1f },
-			{ "FadeOutDuration", 0.75f },
-			{ "PositionInfluence", new Vector3(0.15f, 0.15f, 0.15f) * 0.28f },
-			{ "RotationInfluence", new Vector3(1, 1, 1) }
-		}},
+		[Shaker3DPreset.Bump] = new() {
+			["Magnitude"] = 2.5f,
+			["Roughness"] = 4,
+			["FadeInDuration"] = 0.1f,
+			["FadeOutDuration"] = 0.75f,
+			["PositionInfluence"] = new Vector3(0.15f, 0.15f, 0.15f) * 0.28f,
+			["RotationInfluence"] = new Vector3(1, 1, 1)
+		},
 
-		{ Shaker3DPreset.Explosion, new() {
-			{ "Magnitude", 5 },
-			{ "Roughness", 10 },
-			{ "FadeInDuration", 0 },
-			{ "FadeOutDuration", 1.5f },
-			{ "PositionInfluence", new Vector3(0.25f, 0.25f, 0.25f) * 0.28f },
-			{ "RotationInfluence", new Vector3(4, 1, 1) }
-		}},
+		[Shaker3DPreset.Explosion] = new() {
+			["Magnitude"] = 5,
+			["Roughness"] = 10,
+			["FadeInDuration"] = 0,
+			["FadeOutDuration"] = 1.5f,
+			["PositionInfluence"] = new Vector3(0.25f, 0.25f, 0.25f) * 0.28f,
+			["RotationInfluence"] = new Vector3(4, 1, 1)
+		},
 
-		{ Shaker3DPreset.Earthquake, new() {
-			{ "Magnitude", 0.6f },
-			{ "Roughness", 3.5f },
-			{ "FadeInDuration", 2 },
-			{ "FadeOutDuration", 10 },
-			{ "PositionInfluence", new Vector3(0.25f, 0.25f, 0.25f) * 0.28f },
-			{ "RotationInfluence", new Vector3(1, 1, 4) }
-		}},
+		[Shaker3DPreset.Earthquake] = new() {
+			["Magnitude"] = 0.6f,
+			["Roughness"] = 3.5f,
+			["FadeInDuration"] = 2,
+			["FadeOutDuration"] = 10,
+			["PositionInfluence"] = new Vector3(0.25f, 0.25f, 0.25f) * 0.28f,
+			["RotationInfluence"] = new Vector3(1, 1, 4)
+		},
 
-		{Shaker3DPreset.BadTrip, new() {
-			{ "Magnitude", 10 },
-			{ "Roughness", 0.15f },
-			{ "FadeInDuration", 5 },
-			{ "FadeOutDuration", 10 },
-			{ "PositionInfluence", new Vector3(0, 0, 0.15f) * 0.28f },
-			{ "RotationInfluence", new Vector3(2, 1, 4) }
-		}},
+		[Shaker3DPreset.BadTrip] = new() {
+			["Magnitude"] = 10,
+			["Roughness"] = 0.15f,
+			["FadeInDuration"] = 5,
+			["FadeOutDuration"] = 10,
+			["PositionInfluence"] = new Vector3(0, 0, 0.15f) * 0.28f,
+			["RotationInfluence"] = new Vector3(2, 1, 4)
+		},
 
-		{Shaker3DPreset.HandheldCamera, new() {
-			{ "Magnitude", 1 },
-			{ "Roughness", 0.25f },
-			{ "FadeInDuration", 5 },
-			{ "FadeOutDuration", 10 },
-			{ "PositionInfluence", new Vector3(0, 0, 0) * 0.28f },
-			{ "RotationInfluence", new Vector3(1, 0.5f, 0.5f) }
-		}},
+		[Shaker3DPreset.HandheldCamera] = new() {
+			["Magnitude"] = 1,
+			["Roughness"] = 0.25f,
+			["FadeInDuration"] = 5,
+			["FadeOutDuration"] = 10,
+			["PositionInfluence"] = new Vector3(0, 0, 0) * 0.28f,
+			["RotationInfluence"] = new Vector3(1, 0.5f, 0.5f)
+		},
 
-		{Shaker3DPreset.Vibration, new() {
-			{ "Magnitude", 0.4f },
-			{ "Roughness", 20 },
-			{ "FadeInDuration", 2 },
-			{ "FadeOutDuration", 2 },
-			{ "PositionInfluence", new Vector3(0, 0.15f, 0) * 0.28f },
-			{ "RotationInfluence", new Vector3(1.25f, 0, 4) }
-		}},
+		[Shaker3DPreset.Vibration] = new() {
+			["Magnitude"] = 0.4f,
+			["Roughness"] = 20,
+			["FadeInDuration"] = 2,
+			["FadeOutDuration"] = 2,
+			["PositionInfluence"] = new Vector3(0, 0.15f, 0) * 0.28f,
+			["RotationInfluence"] = new Vector3(1.25f, 0, 4)
+		},
 
-		{Shaker3DPreset.RoughDriving, new() {
-			{ "Magnitude", 1 },
-			{ "Roughness", 2 },
-			{ "FadeInDuration", 1 },
-			{ "FadeOutDuration", 1 },
-			{ "PositionInfluence", new Vector3(0, 0, 0) * 0.28f },
-			{ "RotationInfluence", new Vector3(1, 1, 1) }
-		}}
+		[Shaker3DPreset.RoughDriving] = new() {
+			["Magnitude"] = 1,
+			["Roughness"] = 2,
+			["FadeInDuration"] = 1,
+			["FadeOutDuration"] = 1,
+			["PositionInfluence"] = new Vector3(0, 0, 0) * 0.28f,
+			["RotationInfluence"] = new Vector3(1, 1, 1)
+		}
 
 	};
 }

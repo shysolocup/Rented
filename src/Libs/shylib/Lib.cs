@@ -11,7 +11,6 @@ public partial class Lib : Node {}
 
 public static class Extensions
 {
-
 	public static void ClearChildren(this Node self)
 	{
 		foreach (Node child in self.GetChildren()) {

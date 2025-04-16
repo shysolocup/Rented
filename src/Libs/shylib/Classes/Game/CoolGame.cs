@@ -92,8 +92,8 @@ namespace CoolGame
 		/// Dictionary of events with string keys and StringName values
 		/// </summary>
 		private static readonly Dictionary<string, StringName> Events = new() {
-			{"Saving", new StringName("Saving")},
-			{"Saved", new StringName("Saved")},
+			["Saving"] = new StringName("Saving"),
+			["Saved"] = new StringName("Saved"),
 		};
 
 

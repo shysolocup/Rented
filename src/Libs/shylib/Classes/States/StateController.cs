@@ -69,8 +69,7 @@ public partial class StateController : Node
 					Place = (string)stateData["place"],
 
 					Status = new() {
-						Details = (string)stateData["details"],
-						State = stateData.GetValueOrDefault<string>("")
+						Details = (string)stateData["details"]
 					}
 				};
 			}

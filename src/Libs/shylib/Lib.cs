@@ -1,4 +1,6 @@
 using Godot;
+using Godot.Collections;
+using Godot.NativeInterop;
 using System;
 using System.Collections;
 using System.Linq;
@@ -49,7 +51,7 @@ public static class Extensions
 		return string.Format("0x{0:x}{1:x}{2:x}", (int)r, (int)g, (int)b);
 	}
 
-	public static System.Collections.Generic.Dictionary<string, object> Blanks = new();
+	public static System.Collections.Generic.Dictionary<string, object> Blanks = [];
 
 	public static T GetBlank<T>(this GodotObject self) where T : class 
 	{

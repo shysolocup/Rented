@@ -6,7 +6,7 @@ using Godot.Collections;
 public partial class DialogueSequence : Resource
 {
 	[Export] public string Character = "";
-	[Export] public Array<DialogueLine> Lines = new();
+	[Export] public Array<DialogueLine> Lines = [];
 
 	[Signal] public delegate void LineStartedEventHandler(DialogueLine line);
 	[Signal] public delegate void EndedEventHandler();
@@ -14,7 +14,7 @@ public partial class DialogueSequence : Resource
 
 	static public Array<DialogueSequence> EvalConvos(Variant sequences)
 	{
-		Array<DialogueSequence> arr = new();
+		Array<DialogueSequence> arr = [];
 
 		foreach ( Variant sequenceData in (Array<Variant>)sequences) {
 
@@ -58,9 +58,9 @@ public partial class DialogueSequence : Resource
 			sequence.Lines.Add(DialogueLine.Eval(sequences));
 		}
 
-		Array<DialogueSequence> arr = new() {
+		Array<DialogueSequence> arr = [
 			sequence
-		};
+		];
 
 		return arr;
 	}

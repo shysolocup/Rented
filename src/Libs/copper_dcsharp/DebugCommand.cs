@@ -7,7 +7,7 @@ using Godot.Collections;
 public partial class DebugCommand : GodotObject
 {
 	public string Id;
-	public Array<DebugParameter> Parameters = new Array<DebugParameter>();
+	public Array<DebugParameter> Parameters = [];
 	public string HelpText;
 
 	public Callable Function;

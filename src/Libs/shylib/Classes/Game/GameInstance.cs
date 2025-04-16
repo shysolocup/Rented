@@ -184,7 +184,7 @@ public partial class GameInstance : Node
 		Lighting = GetNode<Lighting3D>("%Lighting3D");
 		Player = GetNode<Player>("%Player");
 
-		Game.SaveTemplate = Game.ReadJson("res://src/Data/Saves/Template.json");
+		Game.SaveTemplate = Game.ReadJson("res://src/Data/SaveTemplate.json");
 
 		/*GameEnvironment = (DefaultGameEnvironment != null) ? DefaultGameEnvironment : GameEnvironment;
 		DefaultGameEnvironment = GameEnvironment;*/

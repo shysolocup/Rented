@@ -1,0 +1,27 @@
+{
+	"$schema": "./Schemas/States.json",
+	"chapters": [
+		{
+			"name": "1st Epoch: the gerber baby is dead",
+			"states": [
+				{
+					"id": "test",
+					"place": "Gerber Baby's Grave",
+					"details": "Exploring gerber baby's grave",
+					"large_image": "placeholder"
+				}
+			]
+		},
+		{
+			"name": "2nd Epoch: test",
+			"states": [
+				{
+					"id": "test",
+					"place": "guh",
+					"details": "goobing",
+					"large_image": "placeholder"
+				}
+			]
+		}
+	]
+}

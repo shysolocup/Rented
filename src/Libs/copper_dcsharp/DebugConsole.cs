@@ -9,10 +9,10 @@ using Godot.Collections;
 public partial class DebugConsole : CanvasLayer
 {
 
-	public Array<string> ConsoleLog = new Array<string>();
-	public Dictionary<string, DebugCommand> Commands = new Dictionary<string, DebugCommand>();
-	public Dictionary<string, DebugMonitor> Monitors = new Dictionary<string, DebugMonitor>();
-	public Array<string> History = new Array<string>();
+	public Array<string> ConsoleLog = [];
+	public Dictionary<string, DebugCommand> Commands = [];
+	public Dictionary<string, DebugMonitor> Monitors = [];
+	public Array<string> History = [];
 	public int CurrentHistory =  - 1;
 
 	public bool PauseOnOpen = false;
@@ -340,8 +340,10 @@ public partial class DebugConsole : CanvasLayer
 
 	protected void _OnCommandHintsMetaClicked(string meta)
 	{
-		var commandSplit = new Array<string>(CommandField.Text.Split(" "));
-		commandSplit.Add(meta);
+		var commandSplit = new Array<string>(CommandField.Text.Split(" "))
+        {
+            meta
+        };
 		var newText = "";
 
 		foreach(string i in commandSplit)

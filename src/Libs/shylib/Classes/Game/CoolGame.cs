@@ -36,11 +36,11 @@ namespace CoolGame
 		/// <summary>
 		/// Contains player save data
 		/// </summary>
-		public static Dictionary<string, Variant> Saves { get; set; } = new();
+		public static Dictionary<string, Variant> Saves { get; set; } = [];
 
 		/// <summary>
 		/// 
-		public static Dictionary<string, Variant> Settings {get; set; } = new();
+		public static Dictionary<string, Variant> Settings {get; set; } = [];
 
 		/// <summary>
 		/// Template for saves

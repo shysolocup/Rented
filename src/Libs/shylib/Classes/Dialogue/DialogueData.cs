@@ -25,8 +25,8 @@ public partial class DialogueData : Node
 	private SceneTree tree;
 
 
-	static public Dictionary<string, Array<DialogueSequence>> Scenes = new();
-	static public Array<DialogueCharacterEffect> Effects = new();
+	static public Dictionary<string, Array<DialogueSequence>> Scenes = [];
+	static public Array<DialogueCharacterEffect> Effects = [];
 	public VBoxContainer DialogueContainer;
 	private VBoxContainer Base;
 	private TextureRect Background;
@@ -313,7 +313,7 @@ public partial class DialogueData : Node
 			}
 
 			else if (format == DialogueFormat.CharacterEffect) {
-				Array<Dictionary<string, Variant>> effectList = (Array<Dictionary<string, Variant>>)content["effects"];
+				var effectList = (Array<Dictionary<string, Variant>>)content["effects"];
 
 				foreach ( Dictionary<string, Variant> charef in effectList) {
 					DialogueCharacterEffect effect = new();

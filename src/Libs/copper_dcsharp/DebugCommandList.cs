@@ -121,12 +121,12 @@ public static class DebugCommandList
 			Id = "loadroom",
 			HelpText = "Loads a room by string id",
 
-			Parameters = new() {
+			Parameters = [
 				new DebugParameter {
 					Name = "name",
 					Type = DebugParameterType.String
 				}
-			},
+			],
 
 			Function = new Callable(funcs, DebugCommandFunctions.MethodName.loadroom)
 		}.AddTo(console);
@@ -140,12 +140,12 @@ public static class DebugCommandList
 			Id = "stats",
 			HelpText = "Toggles whether or not the performance stats in the top left should be visible or not.",
 
-			Parameters = new() {
+			Parameters = [
 				new DebugParameter {
 					Name = "show",
 					Type = DebugParameterType.Bool
 				}
-			},
+			],
 
 			Function = new Callable(funcs, DebugCommandFunctions.MethodName.show_stats),
 			GetFunction = new Callable(funcs, DebugCommandFunctions.MethodName.stats_visible)
@@ -160,12 +160,12 @@ public static class DebugCommandList
 			Id = "fullbright",
 			HelpText = "similar to unlit but it lights up the game",
 
-			Parameters = new() {
+			Parameters = [
 				new DebugParameter {
 					Name = "value",
 					Type = DebugParameterType.Bool
 				}
-			},
+			],
 
 			Function = new Callable(funcs, DebugCommandFunctions.MethodName.fullbright)
 		}.AddTo(console);
@@ -179,12 +179,12 @@ public static class DebugCommandList
 			Id = "unlit",
 			HelpText = "Disables lighting effects",
 
-			Parameters = new() {
+			Parameters = [
 				new DebugParameter {
 					Name = "value",
 					Type = DebugParameterType.Bool
 				}
-			},
+			],
 
 			Function = new Callable(funcs, DebugCommandFunctions.MethodName.unlit)
 		}.AddTo(console);
@@ -198,12 +198,12 @@ public static class DebugCommandList
 			Id = "loadlighting",
 			HelpText = "Loads a lighting effect preset",
 
-			Parameters = new() {
+			Parameters = [
 				new DebugParameter {
 					Name = "lighting",
 					Type = DebugParameterType.String
 				}
-			},
+			],
 
 			Function = new Callable(funcs, DebugCommandFunctions.MethodName.loadlighting)
 		}.AddTo(console);
@@ -217,12 +217,12 @@ public static class DebugCommandList
 			Id = "freecam",
 			HelpText = "Lets you look around freely for secrets.. not that you'll find any of course",
 
-			Parameters = new() {
+			Parameters = [
 				new DebugParameter {
 					Name = "value",
 					Type = DebugParameterType.Bool
 				}
-			},
+			],
 
 			Function = new Callable(funcs, DebugCommandFunctions.MethodName.freecam)
 		}.AddTo(console);
@@ -236,12 +236,12 @@ public static class DebugCommandList
 			Id = "pause",
 			HelpText = "pauses the game",
 
-			Parameters = new() {
+			Parameters = [
 				new DebugParameter {
 					Name = "value",
 					Type = DebugParameterType.Bool
 				}
-			},
+			],
 
 			Function = new Callable(funcs, DebugCommandFunctions.MethodName.pause)
 		}.AddTo(console);
@@ -255,12 +255,12 @@ public static class DebugCommandList
 			Id = "dialogue",
 			HelpText = "Display a dialogue sequence",
 
-			Parameters = new() {
+			Parameters = [
 				new DebugParameter {
 					Name = "lines",
 					Type = DebugParameterType.String,
 				}
-			},
+			],
 
 			Function = new Callable(funcs, DebugCommandFunctions.MethodName.dialogue)
 		}.AddTo(console);
@@ -274,12 +274,12 @@ public static class DebugCommandList
 			Id = "set_noise",
 			HelpText = "Sets the player's \"Noise\" value.",
 
-			Parameters = new() {
+			Parameters = [
 				new DebugParameter {
 					Name = "value",
 					Type = DebugParameterType.Float
 				}
-			},
+			],
 
 			Function = new Callable(funcs, DebugCommandFunctions.MethodName.set_noise),
 		}.AddTo(console);
@@ -309,12 +309,12 @@ public static class DebugCommandList
 			Function = new Callable(funcs, DebugCommandFunctions.MethodName.show_mini_log),
 			GetFunction = new Callable(funcs, DebugCommandFunctions.MethodName.mini_log_visible),
 
-			Parameters = new() {
+			Parameters = [
 				new DebugParameter {
 					Name = "value",
 					Type = DebugParameterType.Bool
 				}
-			},
+			],
 
 		}.AddTo(console);
 
@@ -355,7 +355,7 @@ public static class DebugCommandList
 			Id = "monitor",
 			HelpText = "Toggles the visibility of a stat monitor.",
 
-			Parameters = new() {
+			Parameters = [
 				new DebugParameter {
 					Name = "monitor",
 					Type = DebugParameterType.Options,
@@ -366,7 +366,7 @@ public static class DebugCommandList
 					Name = "value",
 					Type = DebugParameterType.Bool
 				}
-			},
+			],
 
 			Function = new Callable(funcs, DebugCommandFunctions.MethodName.monitor),
 		}.AddTo(console);
@@ -384,13 +384,13 @@ public static class DebugCommandList
 			Id = "help",
 			HelpText = "Use to get help on any particular command.",
 
-			Parameters = new() {
+			Parameters = [
 				new DebugParameter {
 					Name = "command",
 					Type = DebugParameterType.Options,
 					Options = commands
 				}
-			},
+			],
 
 			Function = new Callable(funcs, DebugCommandFunctions.MethodName.help),
 		}.AddTo(console);

@@ -12,13 +12,13 @@ public partial class DialogueLine : Resource
 	static public int DefaultSpeed = 30;
 
 	[Export] public string Text; 
-	[Export] public Array<Array<DialogueSequence>> Randoms = new();
+	[Export] public Array<Array<DialogueSequence>> Randoms = [];
 	public string Redirect;
 	public bool Skippable = true;
 	public int Speed = DefaultSpeed;
 	public AudioStreamPlayer Audio;
-	public Array<DialogueButton> Buttons = new();
-	public Array<Button> NodeButtons = new();
+	public Array<DialogueButton> Buttons = [];
+	public Array<Button> NodeButtons = [];
 	public DialogueFormat Format = DialogueFormat.Interact;
 
 
@@ -30,7 +30,7 @@ public partial class DialogueLine : Resource
 			// ["text", "audio", [["button1", "redirline1], ["button2", "redirline1"]]]
 			#region LineEval Array
 			case Variant.Type.Array: {
-				Array<Variant> lineArr = (Array<Variant>)lineData;
+				var lineArr = (Array<Variant>)lineData;
 
 				DialogueLine line = new() {
 					Text = (string)lineArr[0],
@@ -38,7 +38,7 @@ public partial class DialogueLine : Resource
 				};
 
 				if (lineArr.ElementAtOrDefault(2).VariantType == Variant.Type.Array) {
-					foreach (Array<string> btn in (Array<Array<string>>)lineArr[2]) {
+					foreach (var btn in (Array<Array<string>>)lineArr[2]) {
 						line.Buttons.Add(new DialogueButton() {
 							Text = btn.ElementAtOrDefault(0),
 							RedirectLine = btn.ElementAtOrDefault(1)
@@ -58,7 +58,7 @@ public partial class DialogueLine : Resource
 			//
 			#region LineEval Dict
 			case Variant.Type.Dictionary: {
-				Dictionary<string, Variant> lineDict = (Dictionary<string, Variant>)lineData;
+				var lineDict = (Dictionary<string, Variant>)lineData;
 
 				DialogueLine line = new() {
 					Text = lineDict.ContainsKey("text") ? (string)lineDict["text"] : null,
@@ -71,7 +71,7 @@ public partial class DialogueLine : Resource
 						GD.Print(btnVar);
 
 						if (btnVar.VariantType == Variant.Type.Array) {
-							Array<string> btn = (Array<string>)btnVar;
+							var btn = (Array<string>)btnVar;
 
 							line.Buttons.Add(new DialogueButton() {
 								Text = btn.ElementAtOrDefault(0),

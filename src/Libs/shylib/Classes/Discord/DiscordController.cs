@@ -1,11 +1,30 @@
 using Godot;
 using System;
+using Godot.Collections;
 
 [GlobalClass, Icon("uid://bhib8x7fhxxwd")]
 public partial class DiscordController : Node
 {
 
-	public Node DiscordRPCNode;
+	static public Node DiscordRPCNode;
+
+	static public Dictionary<string, DiscordStatus> Statuses = [];
+
+	static private string _status = "default";
+
+	[Export] public string Status {
+		get {
+			return _status;
+		}
+		set {
+
+		}
+	}
+
+	public void SetStatus() 
+	{
+
+	}
 
 	public override void _Ready()
 	{

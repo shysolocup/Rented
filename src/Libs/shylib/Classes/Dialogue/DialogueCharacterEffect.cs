@@ -15,7 +15,7 @@ public partial class DialogueCharacterEffect : Resource
             it would also bold if a dialogue where to do [hass]text[/hass]
     */
 
-    [Export] public Array<string> Names = new();
+    [Export] public Array<string> Names = [];
     [Export] public string Mentioned = "{0}";
     [Export] public string Speaking = "{0}";
 

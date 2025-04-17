@@ -14,10 +14,6 @@ public partial class DiscordController : Node
 	{
 		DiscordStatus status = place.Status;
 
-		GD.Print(status.LargeImage.ToString());
-		GD.Print($"\"{status.State}\"");
-		GD.Print(place.Epoch.Title);
-
 		bool hasSmallImage = status.SmallImage != DiscordStatusImage.none;
 
 		DiscordRPCNode.Set("Details", status.Details ?? default);
@@ -27,6 +23,12 @@ public partial class DiscordController : Node
 		DiscordRPCNode.Set("SmallImage", hasSmallImage ? status.LargeImage.ToString() ?? default : "");
 		DiscordRPCNode.Set("SmallImageText", hasSmallImage ? status.SmallImageText ?? default : "");
 		
+		return this;
+	}
+
+	public DiscordController RefreshStatus()
+	{
+		SetStatus(pc.Place).RefreshRPC();
 		return this;
 	}
 
@@ -42,10 +44,10 @@ public partial class DiscordController : Node
 		await ToSignal(pc, Node.SignalName.Ready);
 
 		pc.PlaceChanged += () => {
-			SetStatus(pc.Place).RefreshRPC();
+			RefreshStatus();
 		};
 
-		SetStatus(pc.Place).RefreshRPC();
+		RefreshStatus();
 		GD.Print(IsWorking());
 	}
 

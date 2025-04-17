@@ -76,6 +76,11 @@ public partial class DebugCommandFunctions : GodotObject
 		await player.PlayDialogue(line);
 	}
 
+	public void set_place(string place) {
+		PlaceController pc = Game.Instance.GetNode<PlaceController>("%PlaceController");
+		pc.Place = PlaceController.Places[place];
+	}
+
 	public void fullbright(bool value) {
 		// Game.Instance.GameEnvironment = value ? GD.Load<Godot.Environment>("res://src/Resources/Skies/Fullbright.tres") : Game.Instance.DefaultGameEnvironment;
 		// Game.Instance.GetNode<DirectionalLight3D>("%Sun").ShadowEnabled = !value;
@@ -129,6 +134,25 @@ public static class DebugCommandList
 			],
 
 			Function = new Callable(funcs, DebugCommandFunctions.MethodName.loadroom)
+		}.AddTo(console);
+
+
+		#endregion
+		#region set_place
+
+
+		new DebugCommand {
+			Id = "set_place",
+			HelpText = "sets the place changing the discord rich presence",
+
+			Parameters = [
+				new DebugParameter {
+					Name = "place",
+					Type = DebugParameterType.String
+				}
+			],
+
+			Function = new Callable(funcs, DebugCommandFunctions.MethodName.set_place)
 		}.AddTo(console);
 
 

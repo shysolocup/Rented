@@ -11,17 +11,20 @@ public partial class PlaceController : Node
 {
 
 	[Signal] public delegate void PlaceChangedEventHandler();
+	[Signal] public delegate void EpochChangedEventHandler();
 
 	static public Dictionary<string, Place> Places = [];
 
 	static private Place _place = Place.Default;
 
 	[Export] public Place Place {
-		get { return _place; }
+		get => _place;
 		set {
 			if (value != _place) {
+				bool epochChanged = _place.Epoch != value.Epoch;
 				_place = value;
 				EmitSignal(SignalName.PlaceChanged);
+				if (epochChanged) EmitSignal(SignalName.EpochChanged);
 			}
 		}
 	}
@@ -30,7 +33,7 @@ public partial class PlaceController : Node
 	static private Color Transparent = new Color(1, 1, 1, 0);
 
 	public string Path {
-		get { return _path; }
+		get => _path;
 		set {
 			_path = value;
 			_Ready();

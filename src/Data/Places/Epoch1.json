@@ -3,6 +3,11 @@
 	"prefix": "e1",
 	"title": "Epoch One: gerber baby is dead",
 	"places": {
+		"start": {
+			"display": "",
+			"details": "",
+			"large_image": "mammoth"
+		},
 		"test": {
 			"display": "gerber baby's grave",
 			"details": "visiting gerber baby's grave",

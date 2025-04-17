@@ -25,7 +25,7 @@ public partial class RbxScript : Node
 	private bool _enabled = true;
 
 	[Export] public bool Enabled {
-		get { return _enabled; }
+		get => _enabled;
 		set { 
 			var old = _enabled;
 			_enabled = value; 
@@ -36,7 +36,7 @@ public partial class RbxScript : Node
 	public string _source { get; set; }
 
 	[Export(PropertyHint.File, "*.cs,.gd")] public string Source {
-		get { return _source; }
+		get => _source;
 		set {
 			var old = _source;
 			_source = value;

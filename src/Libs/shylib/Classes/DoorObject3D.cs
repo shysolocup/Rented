@@ -8,9 +8,7 @@ public partial class DoorObject3D : InteractObject3D
 {
     private bool _opened = false;
     [Export] public bool Opened {
-        get {
-            return _opened;
-        }
+        get => _opened;
 
         set {
             if (value != _opened) _opened = value;

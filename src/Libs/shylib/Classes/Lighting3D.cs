@@ -18,7 +18,7 @@ public partial class Lighting3D : Node3D
 	private PackedScene lighting = SceneCache["Default"];
 
 	[Export] public PackedScene Lighting {
-		get { return lighting; }
+		get => lighting;
 		set {
 			if (value != lighting) {
 				lighting = value;

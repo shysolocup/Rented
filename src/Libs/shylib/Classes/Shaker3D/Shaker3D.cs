@@ -14,9 +14,7 @@ public partial class Shaker3D : Node
 	private Shaker3DPreset _preset = Shaker3DPreset.Custom;
 
 	[Export] public Shaker3DPreset Preset {
-		get {
-			return _preset;
-		}
+		get => _preset;
 		set {
 			if (value != Shaker3DPreset.Custom) {
 				OverwriteInstanceFromPreset(value);
@@ -31,9 +29,7 @@ public partial class Shaker3D : Node
 
 	// when changed it'll set the Shaker3D property of the Shaker3DInstance to the parent
 	[Export] public Shaker3DInstance ShakeInstance {
-		get {
-			return _s3dinstance;
-		}
+		get => _s3dinstance;
 
 		set {
 			if (value != _s3dinstance) {
@@ -55,9 +51,7 @@ public partial class Shaker3D : Node
 
 
 	public bool Running {
-		get { 
-			return _running;
-		}
+		get => _running;
 		set {
 			if (value != _running) {
 				_running = value;

@@ -40,9 +40,7 @@ public partial class InteractObject3D : RigidBody3D
 
 
 	[Export] public bool Pressed {
-		get {
-			return _pressed;
-		}
+		get => _pressed;
 
 		set {
 			if (value != _pressed) {
@@ -54,9 +52,7 @@ public partial class InteractObject3D : RigidBody3D
 	}
 
 	[Export] public bool Hovering {
-		get {
-			return _hovering;
-		}
+		get => _hovering;
 
 		set {
 			if (value != _hovering) {

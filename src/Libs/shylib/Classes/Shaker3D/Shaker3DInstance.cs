@@ -48,9 +48,7 @@ public partial class Shaker3DInstance : Resource
 			else return _sustain;
 		}
 
-		set {
-			_sustain = value;
-		}
+		set => _sustain = value;
 	}
 
 

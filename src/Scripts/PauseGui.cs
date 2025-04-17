@@ -22,7 +22,7 @@ public partial class PauseGui : Control
 	}
 
 	public bool Paused {
-		get { return paused; }
+		get => paused;
 
 		set {
 			if (paused != value) {

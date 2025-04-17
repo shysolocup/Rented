@@ -19,6 +19,11 @@ public static class Extensions
 		}
 	}
 
+	public static Array<T> GetChildrenOfType<[MustBeVariant] T>(this Node self) where T : Node
+	{
+		return self.FindChildren("*", typeof(T).Name) as Array<T>;
+	}
+
 	public static void ClearChildren<T>(this Node self) where T : Node
 	{
 		foreach (Node child in self.GetChildren()) {

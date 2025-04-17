@@ -1,7 +1,7 @@
 {
 	"$schema": "../Schemas/Places.json",
 	"prefix": "menu",
-	"title": "In the menu",
+	"title": "In the menus",
 	"places": {
 		"default": {
 			"display": "gerber baby's grave",

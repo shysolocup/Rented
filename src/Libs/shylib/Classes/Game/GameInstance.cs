@@ -44,12 +44,8 @@ public partial class GameInstance : Node
 	/// Game gravity what more do you want me to say
 	/// </summary>
 	[Export] public float Gravity { 
-			get {
-				return (float)ProjectSettings.GetSetting("physics/3d/default_gravity");
-			} 
-			set {
-				ProjectSettings.SetSetting("physics/3d/default_gravity", value);
-			} 
+			get => (float)ProjectSettings.GetSetting("physics/3d/default_gravity");
+			set => ProjectSettings.SetSetting("physics/3d/default_gravity", value);
 		}
 
 	/// <summary>

@@ -15,7 +15,7 @@ public partial class DialogueData : Node
 	static private Color Transparent = new Color(1, 1, 1, 0);
 
 	public string Path {
-		get { return _path; }
+		get => _path;
 		set {
 			_path = value;
 			_Ready();

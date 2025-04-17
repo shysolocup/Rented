@@ -1,3 +1,5 @@
 public enum DiscordStatusImage {
-    placeholder = 1
+    none = 0,
+    placeholder = 1,
+    mammoth = 2
 }

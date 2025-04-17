@@ -1,6 +1,6 @@
-[gd_scene load_steps=65 format=3 uid="uid://s0ftqrddh5up"]
+[gd_scene load_steps=72 format=3 uid="uid://s0ftqrddh5up"]
 
-[ext_resource type="Script" uid="uid://cfoo1gxat5mv8" path="res://src/Libs/shylib/Classes/GameInstance.cs" id="1_doi2n"]
+[ext_resource type="Script" uid="uid://cfoo1gxat5mv8" path="res://src/Libs/shylib/Classes/Game/GameInstance.cs" id="1_doi2n"]
 [ext_resource type="Script" uid="uid://c1i8r8l2u4t3q" path="res://src/Libs/shylib/Classes/Player.cs" id="1_wpbw3"]
 [ext_resource type="Texture2D" uid="uid://buml50bofllu4" path="res://src/Ui/alarm clock.png" id="2_up28s"]
 [ext_resource type="Script" uid="uid://f680ovgo7k8o" path="res://src/Scripts/SaveIconSpinner.cs" id="3_35lay"]
@@ -21,7 +21,7 @@
 [ext_resource type="Material" uid="uid://djkfa7xtdg63i" path="res://src/Resources/Materials/DefaultHoverIcon.tres" id="17_743ng"]
 [ext_resource type="Material" uid="uid://bq8wyiwgdl28m" path="res://src/Resources/Materials/LockedIcon.tres" id="18_8i3or"]
 [ext_resource type="Shader" uid="uid://ceis0htp3v6r0" path="res://src/Resources/Shaders/text test.tres" id="18_p8ix8"]
-[ext_resource type="Script" uid="uid://csefxrb6ehpnb" path="res://src/Libs/shylib/Classes/DialogueData.cs" id="20_jipul"]
+[ext_resource type="Script" uid="uid://csefxrb6ehpnb" path="res://src/Libs/shylib/Classes/Dialogue/DialogueData.cs" id="20_jipul"]
 [ext_resource type="Script" uid="uid://bq8h5fsdfxg7c" path="res://src/Scripts/PauseGui.cs" id="20_ss4f7"]
 [ext_resource type="Texture2D" uid="uid://bmtapdmr10o7e" path="res://src/Images/Dialog/dialog_border.png" id="21_3ahso"]
 [ext_resource type="Texture2D" uid="uid://d01hk0epfwk0e" path="res://src/Images/Dialog/dialog_background.png" id="22_0m3r5"]
@@ -36,8 +36,12 @@
 [ext_resource type="FontFile" uid="uid://fj2b1x4fiorb" path="res://src/Fonts/timesbi.ttf" id="35_2udwj"]
 [ext_resource type="StyleBox" uid="uid://exqyscgxswgh" path="res://src/Resources/Ui/SettingButtonPress.tres" id="36_jnspx"]
 [ext_resource type="StyleBox" uid="uid://dljp1kxxxhaej" path="res://src/Resources/Ui/SettingButtonHover.tres" id="37_hxo8n"]
+[ext_resource type="Script" uid="uid://dnhwcgdk33ce1" path="res://src/Libs/shylib/Classes/Place/PlaceController.cs" id="38_4v06e"]
 [ext_resource type="StyleBox" uid="uid://c3kf7qgi5iwyi" path="res://src/Resources/Ui/SettingButton.tres" id="38_m1m7r"]
+[ext_resource type="Script" uid="uid://bhnf7u2p0is11" path="res://src/Libs/shylib/Classes/Place/PlaceEpoch.cs" id="39_hxo8n"]
+[ext_resource type="Script" uid="uid://0hgckmqbb3ja" path="res://src/Libs/shylib/Classes/Discord/DiscordStatus.cs" id="39_jnspx"]
 [ext_resource type="Script" uid="uid://cei6x6adiqlte" path="res://src/Libs/shylib/Classes/Lighting3D.cs" id="40_2udwj"]
+[ext_resource type="Script" uid="uid://btbivrdlisxa3" path="res://src/Libs/shylib/Classes/Place/Place.cs" id="40_hxo8n"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_h8oac"]
 
@@ -183,6 +187,28 @@ metadata/_custom_type_script = "uid://3mxc7rj1i0c8"
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gc7xl"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yc6y7"]
+
+[sub_resource type="Resource" id="Resource_hxo8n"]
+script = ExtResource("39_hxo8n")
+Title = "In the menu"
+Prefix = "menu"
+
+[sub_resource type="Resource" id="Resource_m1m7r"]
+script = ExtResource("39_jnspx")
+Details = "visiting gerber baby's grave"
+State = ""
+LargeImage = 2
+LargeImageText = "test"
+SmallImage = 2
+SmallImageText = "test 2"
+StartTimestamp = 0
+EndTimestamp = 0
+
+[sub_resource type="Resource" id="Resource_yc6y7"]
+script = ExtResource("40_hxo8n")
+Display = "gerber baby's grave"
+Status = SubResource("Resource_m1m7r")
+Epoch = SubResource("Resource_hxo8n")
 
 [node name="Game" type="Node"]
 script = ExtResource("1_doi2n")
@@ -520,10 +546,10 @@ size = Vector3(43.2186, 13.3463, 48.8563)
 material = ExtResource("6_ng2wt")
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="Root3D/Map/Building/Shell"]
-transform = Transform3D(0.948871, 0, 0, 0, 1, 0, 0, 0, 0.936166, 7.98064, 5.77119, -69.3721)
+transform = Transform3D(0.948871, 0, 0, 0, 1, 0, 0, 0, 0.936166, 7.98064, 5.77119, -69.2127)
 operation = 2
 use_collision = true
-size = Vector3(41.7513, 12.2498, 49.4955)
+size = Vector3(41.7513, 12.2498, 49.155)
 material = ExtResource("6_ng2wt")
 
 [node name="DoorHoleBack" type="CSGBox3D" parent="Root3D/Map/Building/Shell"]
@@ -1028,6 +1054,12 @@ unique_name_in_owner = true
 [node name="DiscordController" type="Node" parent="Dump"]
 unique_name_in_owner = true
 script = ExtResource("25_p8ix8")
+
+[node name="PlaceController" type="Node" parent="Dump"]
+unique_name_in_owner = true
+script = ExtResource("38_4v06e")
+Place = SubResource("Resource_yc6y7")
+metadata/_custom_type_script = "uid://dnhwcgdk33ce1"
 
 [node name="Settings" type="Node" parent="Dump"]
 unique_name_in_owner = true

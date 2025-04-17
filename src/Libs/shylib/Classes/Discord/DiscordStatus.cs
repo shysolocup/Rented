@@ -1,6 +1,8 @@
 using Godot;
 using System;
 
+#nullable enable
+
 [GlobalClass, Icon("uid://bhib8x7fhxxwd")]
 public partial class DiscordStatus : Resource
 {
@@ -12,11 +14,11 @@ public partial class DiscordStatus : Resource
     };
 
     [Export] public string Details = "lorem ipsum";
-    [Export] public string State = "not meant to see this";
+    [Export] public string? State;
     [Export] public DiscordStatusImage LargeImage = DiscordStatusImage.placeholder;
-    [Export] public string LargeImageText = "placeholder";
+    [Export] public string? LargeImageText;
     [Export] public DiscordStatusImage SmallImage = DiscordStatusImage.placeholder;
-    [Export] public string SmallImageText = "placeholder";
+    [Export] public string? SmallImageText;
     [Export] public int StartTimestamp;
     [Export] public int EndTimestamp;
 }

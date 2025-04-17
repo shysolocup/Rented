@@ -112,11 +112,11 @@ public partial class Lighting3D : Node3D
 		}
 	}
 
-	public override void _Ready()
+	public override async void _Ready()
 	{
-		Connect(SignalName.VisibilityChanged, new Callable(this, MethodName.OnVisibilityChanged));
-
 		base._Ready();
+		Connect(SignalName.VisibilityChanged, new Callable(this, MethodName.OnVisibilityChanged));
+		await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 		if (Visible) ResetApply();
 	}
 }

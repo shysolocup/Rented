@@ -1,19 +1,9 @@
 {
+	"$schema": "../Schemas/Dialogue.json",
 	"prefix": "convo",
     "format": 2,
     "scenes": {
-
-		"bob_1": [
-			["Bob", [
-				{
-					"text": "what's up kid?",
-					"buttons": [
-						["Blackwell", "bob_1_blackwell"]
-					]
-				}
-			]]
-		],
-
+		
 		"test": [
 			["Audrey", [
 				"googoo",

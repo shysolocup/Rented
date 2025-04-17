@@ -1,0 +1,41 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$id": "state_schema",
+    "title": "State Schema",
+    "description": "Json schema for discord status states and places",
+    "type": "object",
+    "required": [ "title", "prefix", "places" ],
+    "properties": {
+        "title": { "type": "string" },
+        "prefix": { "type": "string" },
+        "places": {
+            "type": "object",
+            "patternProperties": {
+                "^": { "$ref": "#/$defs/place" }
+            }
+        }
+    },
+    "$defs": {
+        "images": {
+            "type": "string",
+            "enum": [
+                "placeholder",
+                "mammoth"
+            ]
+        },
+
+        "place": {
+            "type": "object",
+            "required": [ "display", "details", "large_image" ],
+            "properties": {
+                "display": {"type": "string"},
+                "details": { "type": "string" },
+                "state": { "type": "string"},
+                "large_image": { "$ref": "#/$defs/images"},
+                "large_image_text": { "type": "string"},
+                "small_image": { "$ref": "#/$defs/images"},
+                "small_image_text": { "type": "string" }
+            }
+        }
+    }
+}

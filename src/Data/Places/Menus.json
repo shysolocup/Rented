@@ -1,0 +1,15 @@
+{
+	"$schema": "../Schemas/Places.json",
+	"prefix": "menu",
+	"title": "In the menu",
+	"places": {
+		"default": {
+			"display": "gerber baby's grave",
+			"details": "visiting gerber baby's grave",
+			"large_image": "mammoth",
+			"large_image_text": "test",
+			"small_image": "mammoth",
+			"small_image_text": "test 2"
+		}
+	}
+}

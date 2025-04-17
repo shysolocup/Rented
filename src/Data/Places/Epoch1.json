@@ -1,0 +1,12 @@
+{
+	"$schema": "../Schemas/Places.json",
+	"prefix": "e1",
+	"title": "Epoch One: gerber baby is dead",
+	"places": {
+		"test": {
+			"display": "gerber baby's grave",
+			"details": "visiting gerber baby's grave",
+			"large_image": "placeholder"
+		}
+	}
+}

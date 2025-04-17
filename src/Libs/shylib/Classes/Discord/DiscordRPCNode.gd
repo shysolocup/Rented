@@ -21,6 +21,7 @@ func RefreshRPC():
 	DiscordRPC.large_image = LargeImage
 	DiscordRPC.large_image_text = LargeImageText
 	DiscordRPC.small_image = SmallImage
+	DiscordRPC.small_image_text = SmallImageText
 	
 	NewTimestamp()
 	

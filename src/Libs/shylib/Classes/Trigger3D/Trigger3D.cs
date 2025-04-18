@@ -4,7 +4,7 @@ using System;
 using System.Text.RegularExpressions;
 
 [Tool]
-[GlobalClass]
+[GlobalClass, Icon("uid://dooue5vjaj4k")]
 public partial class Trigger3D : Area3D
 {
     [Signal] public delegate void TouchedEventHandler(Node node);

@@ -4,80 +4,103 @@ using System;
 using CoolGame;
 using System.Threading.Tasks;
 
-
+[Tool]
+[GlobalClass]
 public partial class Player : CharacterBody3D
 {
-
 	[ExportCategory("Player")]
+
+
+	#region Dynamic Vars
+	[ExportGroup("Dynamics")]
+
 	[Export(PropertyHint.Range, "1,35,1")] public float Speed = 10; // m/s
-
 	[Export(PropertyHint.Range, "1,35,1")] public float BaseWalkSpeed = 3; // m/s
-	
 	[Export(PropertyHint.Range, "1,35,1")] public float WalkSpeed = 3; // m/s
-	
-	[Export(PropertyHint.Range, "1,35,1")] public float SprintSpeed = 5; // m/s
-
 	[Export(PropertyHint.Range, "10,400,1")] public float Acceleration = 100; // m/s^2
-
 	[Export(PropertyHint.Range, "0.1,3.0,0.1")] public float JumpHeight = 0.5f; // m
-
-	[Export(PropertyHint.Range, "0.1,3.0,0.1,or_greater")] public float CameraSensitivity = 1;
-
-	[Export] public bool TabbedIn = true;
-	[Export] public bool Controllable = true;
-	[Export] public bool CameraRotationControllable = true;
-	[Export] public bool CameraPositionControllable = true;
-
-	[Export] public bool Jumping = false;
-	[Export] public bool Sprinting = false;
-	[Export] public bool Crouching = false;
-	[Export] public bool CanCrouch = true;
-	[Export] public bool CanSprint = true;
-	
-	[Export] public bool MouseCaptured = false;
 
 	private Vector2 MoveDirection; // Input direction for movement
 	private Vector2 LookDirection; // Input direction for look/aim
-
 	private Vector3 WalkVelocity; // Walking velocity 
 	private Vector3 GravityVelocity; // Gravity velocity 
 	private Vector3 JumpVelocity; // Jumping velocity
+	#endregion
+
+
+	#region Camera
+	[ExportGroup("Camera")]
+
+	[ExportToolButton("Reset Camera")] private Callable ResetCameraCall => Callable.From(ResetCamera);
+
+	private void ResetCamera() {
+		Camera = GetNode<Camera3D>("%PlayerCamera");
+
+		Camera.GlobalPosition = new Vector3(GlobalPosition.X, GlobalPosition.Y + CameraOffset, GlobalPosition.Z);
+		Camera.GlobalRotation = GlobalRotation;
+	}
 
 	[Export] public float BaseFov;
-	[Export] public float CrouchSpeed = 1f;
 
 	[Export] public float TiltRotation = 3;
 
 	private Camera3D Camera;
 
-	private Variant nullvar = new();
-	
-	public bool InDialog = false; 
+	[Export(PropertyHint.Range, "0.1,3.0,0.1,or_greater")] public float CameraSensitivity = 1;
 
-	[Export] public bool ActionCooldown = false;
-
-	[Export] public float SprintFovMod = 20;
-
-	[Export] public float CrouchFovMod = -20;
-	[Export] public float InteractFovMod = -15;
-
+	[Export] public bool CameraRotationControllable = true;
+	[Export] public bool CameraPositionControllable = true;
 	[Export] public bool Tilt = true;
-
-	public bool Dead = false;
-	
-	public RayCast3D Raycast;
-	public InteractObject3D Inter;
-
-	[Export] public bool Walking = false;
-	private bool WalkingEffecting = false;
 
 	private float DefaultCameraOffset = 0.4f;
 	private float CameraOffset;
-	private CollisionShape3D Collision;
-	private CollisionShape3D Collision2;
-	private MeshInstance3D Mesh;
 
-	public bool Freecam = false;
+	#endregion
+
+
+	#region Sprint Vars
+	[ExportGroup("Sprinting")]
+	
+	[Export(PropertyHint.Range, "1,35,1")] public float SprintSpeed = 5; // m/s
+	[Export] public float SprintFovMod = 20;
+	[Export] public bool Sprinting = false;
+	[Export] public bool CanSprint = true;
+
+	#endregion
+
+
+	#region Crouch Vars
+	[ExportGroup("Crouching")]
+	
+	[Export(PropertyHint.Range, "1,35,1")] public float CrouchSpeed = 1; // m/s
+	[Export] public float CrouchFovMod = -20;
+	[Export] public bool Crouching = false;
+	[Export] public bool CanCrouch = true;
+
+	#endregion
+
+
+	#region Switch Vars
+	[ExportGroup("Switches")]
+
+	[Export] public bool TabbedIn = true;
+	[Export] public bool Controllable = true;
+	[Export] public bool Jumping = false;
+	[Export] public bool InDialog = false; 
+	[Export] public bool MouseCaptured = false;
+	[Export] public bool ActionCooldown = false;
+	[Export] public bool Dead = false;
+	[Export] public bool Walking = false;
+	private bool WalkingEffecting = false;
+
+	#endregion
+
+
+	#region Freecam Vars	
+	[ExportGroup("Freecam")]
+
+	[Export] public bool Freecam = false;
+
 	private Transform3D FreecamOrigin = Transform3D.Identity;
 	private Vector2 FreecamMousePosition = Vector2.Zero;
 	private float FreecamTotalPitch = 0;
@@ -87,6 +110,23 @@ public partial class Player : CharacterBody3D
 	private float FreecamVelMultiplier = 4;
 	private float FreecamSpeed = 1.3f;
 	private float FreecamShiftMult = 2f;
+	#endregion
+
+
+	#region Interact Vars
+	[ExportGroup("Interactions")]
+
+	[Export] public float InteractFovMod = -15;
+	
+	public RayCast3D Raycast;
+	public InteractObject3D Inter;
+	#endregion
+
+
+	private Variant nullvar = new();
+	private CollisionShape3D Collision;
+	private CollisionShape3D Collision2;
+	private MeshInstance3D Mesh;
 
 
 	public void Die(int id = 0) 
@@ -107,7 +147,7 @@ public partial class Player : CharacterBody3D
 		CameraOffset = DefaultCameraOffset;
 
 		BaseFov = Camera.GetFov();
-		CaptureMouse();
+		if (!Engine.IsEditorHint()) CaptureMouse();
 
 		GD.Print(Get("camera"));
 
@@ -119,7 +159,7 @@ public partial class Player : CharacterBody3D
 
 	public override void _Notification(int what)
 	{
-
+		if (Engine.IsEditorHint()) return;
 		if (what == NotificationWMWindowFocusIn) {
 			TabbedIn = true;
 		}
@@ -133,6 +173,7 @@ public partial class Player : CharacterBody3D
 
 	public override void _PhysicsProcess(double delta)
 	{
+		if (Engine.IsEditorHint()) return;
 		// if (!controllable) return;
 		if (Freecam) return;
 		
@@ -164,6 +205,7 @@ public partial class Player : CharacterBody3D
 
 	public override async void _Process(double delta)
 	{
+		if (Engine.IsEditorHint()) return;
 		if (Freecam) {
 			UpdateFreecamMovement(delta);
 		}

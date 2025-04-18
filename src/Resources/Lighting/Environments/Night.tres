@@ -1,37 +1,39 @@
-[gd_resource type="Environment" load_steps=4 format=3 uid="uid://buyjdi7cmy3ta"]
+[gd_resource type="Environment" load_steps=3 format=3 uid="uid://buyjdi7cmy3ta"]
 
-[ext_resource type="Texture2D" uid="uid://dvo6mkgo6yiv7" path="res://src/Images/stars.png" id="1_0rncx"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rwo6p"]
-sky_top_color = Color(0.0119814, 0.000941551, 0.0476313, 1)
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0m3r5"]
+sky_top_color = Color(0, 0, 0, 1)
 sky_horizon_color = Color(0, 0, 0, 1)
-sky_curve = 0.321532
-sky_cover = ExtResource("1_0rncx")
-ground_bottom_color = Color(0.203549, 0.213715, 0.225317, 1)
-sun_angle_max = 0.0
-energy_multiplier = 0.0
+ground_horizon_color = Color(0, 0, 0, 1)
 
-[sub_resource type="Sky" id="Sky_u48bl"]
-sky_material = SubResource("ProceduralSkyMaterial_rwo6p")
+[sub_resource type="Sky" id="Sky_3ahso"]
+sky_material = SubResource("ProceduralSkyMaterial_0m3r5")
 
 [resource]
 background_mode = 2
-sky = SubResource("Sky_u48bl")
-ambient_light_source = 1
-tonemap_exposure = 0.3
+sky = SubResource("Sky_3ahso")
+tonemap_mode = 2
+tonemap_exposure = 0.91
+ssr_enabled = true
+ssao_enabled = true
+ssao_radius = 10.25
+ssao_intensity = 3.0
+ssao_power = 1.30583
+ssil_enabled = true
 sdfgi_enabled = true
 glow_enabled = true
-glow_bloom = 0.5
-fog_enabled = true
-fog_light_color = Color(0, 0, 0, 1)
+glow_bloom = 0.3
+fog_light_color = Color(0.00444801, 4.61416e-06, 0.0252958, 1)
 fog_light_energy = 0.0
-fog_sun_scatter = 0.5
-fog_density = 1.587
-fog_sky_affect = 0.865
+fog_sun_scatter = 0.23
+fog_density = 0.5355
+fog_sky_affect = 0.0
 volumetric_fog_enabled = true
-volumetric_fog_density = 0.318
-volumetric_fog_albedo = Color(0.101839, 0.0990796, 0.101189, 1)
-volumetric_fog_detail_spread = 0.5
+volumetric_fog_density = 0.6905
+volumetric_fog_albedo = Color(0, 0, 0, 1)
+volumetric_fog_emission = Color(0.00551144, 3.35336e-06, 0.0450361, 1)
+volumetric_fog_gi_inject = 2.8
+volumetric_fog_ambient_inject = 11.3
+volumetric_fog_sky_affect = 0.176
 adjustment_enabled = true
-adjustment_contrast = 1.05
-adjustment_saturation = 1.49
+adjustment_contrast = 1.11
+adjustment_saturation = 0.89

@@ -10,7 +10,7 @@ public partial class Crosshair3D : StaticBody3D
 	[Export] public StandardMaterial3D LockedIcon;
 	[Export] public float BaseDistance = 30;
 	[Export] public Camera3D Camera;
-	[Export] public string Delay;
+	[Export] public string Delay = "1/1.7";
 	
 	public float Distance = 0;
 
@@ -76,7 +76,7 @@ public partial class Crosshair3D : StaticBody3D
 		Origin += LeftVector * ShakeX;
 		Origin += UpVector * ShakeY;
 
-		Transform3D IconTransform = new Transform3D(LeftVector, UpVector, ForwardVector, Origin);
+		Transform3D IconTransform = new(LeftVector, UpVector, ForwardVector, Origin);
 
 		Icon.GlobalTransform = Icon.GlobalTransform.InterpolateWith(IconTransform, this.FactorDelta(_delay, delta));
 

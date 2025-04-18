@@ -1,24 +1,21 @@
 using Godot;
 using System;
 using Godot.Collections;
+using Appox;
 
 [Tool]
-[GlobalClass]
-public partial class MiniCallable : Resource
+[GlobalClass, Icon("uid://s25d7ed1h6jd")]
+public partial class MiniCallable(Variant parent) : Resource()
 {
-    static public Dictionary<string, Callable> CallsCache = new Dictionary<string, Callable>() {
-        ["test"] = Callable.From( () => {
-            
-        })
-    }
+    [Export] public string CallId { get; set; }
+    public Variant Parent { get; set; } = parent;
 
-    [ExportToolButton("Call")] public Callable CallButton => Callable.From(Call);
+    [ExportToolButton("Call")] public Callable CallButton => Callable.From(_call);
 
-    public Variant Call()
+    private void _call() => Call();
+
+    public Variant Call(Variant? args = null)
     {
-        var source = GD.Load(Source);
-
-
-        if (source is CSharpScript cs) cs.Call()
+        return MiniCallableCache.Cache[CallId].Call(Parent, (Variant)args);
     }
 }

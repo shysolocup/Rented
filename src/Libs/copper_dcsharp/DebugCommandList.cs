@@ -42,6 +42,11 @@ public partial class DebugCommandFunctions : GodotObject
 		}
 	}
 
+	public void goto_camera(string camera)
+	{
+		Game.Instance.GetNode("%Cameras").GetNode<Camera3D>(camera).MakeCurrent();
+	}
+
 	public bool mini_log_visible() 
 	{
 		var console = DebugConsole.GetConsole();
@@ -268,6 +273,25 @@ public static class DebugCommandList
 			],
 
 			Function = new Callable(funcs, DebugCommandFunctions.MethodName.pause)
+		}.AddTo(console);
+
+
+		#endregion
+		#region pause
+
+
+		new DebugCommand {
+			Id = "goto_camera",
+			HelpText = "switches to a camera",
+
+			Parameters = [
+				new DebugParameter {
+					Name = "camera",
+					Type = DebugParameterType.String
+				}
+			],
+
+			Function = new Callable(funcs, DebugCommandFunctions.MethodName.goto_camera)
 		}.AddTo(console);
 
 

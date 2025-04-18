@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bimbum2tm4kfp"
-path="res://.godot/imported/World3D.png-bb141c87b4b072cd432780711b0dca02.ctex"
+uid="uid://s25d7ed1h6jd"
+path="res://.godot/imported/MiniCallable.png-fe2ef951523fb146e7ca4550e077d291.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/Libs/shylib/Images/World3D.png"
-dest_files=["res://.godot/imported/World3D.png-bb141c87b4b072cd432780711b0dca02.ctex"]
+source_file="res://src/Libs/shylib/Images/MiniCallable.png"
+dest_files=["res://.godot/imported/MiniCallable.png-fe2ef951523fb146e7ca4550e077d291.ctex"]
 
 [params]
 

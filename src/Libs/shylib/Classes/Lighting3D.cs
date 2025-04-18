@@ -65,6 +65,9 @@ public partial class Lighting3D : Node3D
 			World = SceneWorld?.Duplicate<WorldEnvironment>();
 			Sun = SceneSun?.Duplicate<DirectionalLight3D>();
 
+			GD.Print($"Set World to {World}");
+			GD.Print($"Set Sun to {Sun}");
+
 			if (World is not null) AddChild(World);
 			if (Sun is not null) AddChild(Sun);
 		}

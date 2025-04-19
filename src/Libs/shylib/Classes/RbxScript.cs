@@ -9,18 +9,18 @@ public partial class RbxScript : Node
 	[Signal] public delegate void SourceChangedEventHandler(bool oldValue, bool newValue);
 
 	[ExportToolButton("Execute")] public Callable ExecuteCall => Callable.From(_execute);
-	private void _execute() { Execute(); }
+	private void _execute() => Execute();
 
-	public Variant Execute(params object[] args) {
-		return ((Script)ReloadSource()).CallDeferred("_Ready");
+	public void Execute(params object[] args) {
+		var reloaded = ReloadSource().Obj;
+		Node script = (Node)((reloaded is CSharpScript cs) ? cs.New() : (reloaded is GDScript gd) ? gd.New() : nullvar);
+		GetParent().AddChild(script);
+		script.QueueFree();
 	}
 
 	[ExportToolButton("Reload Source")] public Callable ReloadSourceCall => Callable.From(ReloadSource);
 
-	public Variant ReloadSource()
-	{
-		return GD.Load(Source);
-	}
+	public Variant ReloadSource() => GD.Load(Source);
 
 	private bool _enabled = true;
 
@@ -35,7 +35,7 @@ public partial class RbxScript : Node
 
 	public string _source { get; set; }
 
-	[Export(PropertyHint.File, "*.cs,.gd")] public string Source {
+	[Export(PropertyHint.File, "*.cs,*.gd")] public string Source {
 		get => _source;
 		set {
 			var old = _source;
@@ -45,7 +45,7 @@ public partial class RbxScript : Node
 	}
 
 	[Export] public Node SpawnedNode;
-	private Variant nullvar = new Variant();
+	private Variant nullvar = new();
 
 	[Export] public NodePath SpawnedNodePath;
 

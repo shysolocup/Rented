@@ -6,16 +6,27 @@ public partial class Arm : Node3D
 {
 	[Export] public float Distance = 0f;
 	[Export] public Camera3D Camera;
-	[Export] public string Delay = "1/7";
 
-	private float _delay = 0;
+
+	private string delay = "1/7";
+
+	[Export] public string Delay {
+		get => delay;
+		set {
+			delay = value;
+			string[] spl = Delay.Split("/");
+			FloatingDelay = float.Parse(spl[0]) / float.Parse(spl[1]);
+		}
+	}
+
+	private float FloatingDelay = 0;
 
 	public override void _Ready()
 	{
 		Delay ??= "1/1";
 
 		string[] spl = Delay.Split("/");
-		_delay = float.Parse(spl[0]) / float.Parse(spl[1]);
+		FloatingDelay = float.Parse(spl[0]) / float.Parse(spl[1]);
 
 		Camera ??= GetNode<Camera3D>("%PlayerCamera");
 	}
@@ -31,14 +42,16 @@ public partial class Arm : Node3D
 		Vector3 UpVector = CameraBasis.Y;
 
 		Origin += ForwardVector * -Distance;
-		Origin += LeftVector * -1;
-		Origin += UpVector * -1;
+		Origin += LeftVector * 0.3f;
+		Origin += UpVector * -1f;
+
+		Origin = GlobalTransform.Origin.Lerp(Origin, this.FactorDelta(1/2f, delta));
 
 		Basis ArmBasis = new(LeftVector, UpVector, ForwardVector);
-		ArmBasis = ArmBasis.Scaled(new Vector3(0.6f, 0.6f, 0.6f));
+		ArmBasis = ArmBasis.Scaled(new Vector3(0.8f, 0.8f, 0.8f));
 
 		Transform3D ArmTransform = new(ArmBasis, Origin);
 
-		GlobalTransform = ArmTransform; // GlobalTransform.InterpolateWith(ArmTransform, this.FactorDelta(_delay, delta));
+		GlobalTransform = GlobalTransform.InterpolateWith(ArmTransform, this.FactorDelta(FloatingDelay, delta));
 	}
 }

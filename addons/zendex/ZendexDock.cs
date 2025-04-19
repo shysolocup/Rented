@@ -1,10 +1,13 @@
 using Godot;
+using Godot.Collections;
 using System;
 
-public partial class ZendexUi : Control
+[GlobalClass]
+public partial class ZendexDock : Control
 {
 	private LineEdit Search;
 	private MenuButton AddLayer;
+	private EditorSelection Selection;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -19,6 +22,11 @@ public partial class ZendexUi : Control
 		GD.Print(Search);
 
 		Search.TextChanged += TextChanged;
+	}
+
+	public void SelectionChanged(Array<Node> selected)
+	{
+		GD.Print(selected);
 	}
 
 	private void TextChanged(string text) {

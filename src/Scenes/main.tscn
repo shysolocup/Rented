@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=4 uid="uid://s0ftqrddh5up"]
+[gd_scene load_steps=74 format=4 uid="uid://s0ftqrddh5up"]
 
 [ext_resource type="Script" uid="uid://cfoo1gxat5mv8" path="res://src/Libs/shylib/Classes/Game/GameInstance.cs" id="1_doi2n"]
 [ext_resource type="Script" uid="uid://c1i8r8l2u4t3q" path="res://src/Libs/shylib/Classes/Player.cs" id="1_wpbw3"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://5750qaowrba3" path="res://src/Libs/shylib/Classes/Crosshair3D.cs" id="5_0wov3"]
 [ext_resource type="Script" uid="uid://by7akciy48m6s" path="res://src/Scripts/Arm.cs" id="5_m1m7r"]
 [ext_resource type="Material" uid="uid://c308v38sitbye" path="res://src/Resources/Materials/placeholder_street.tres" id="6_ng2wt"]
+[ext_resource type="Texture2D" uid="uid://bptsvu72yepoj" path="res://src/Textures/flashlight_light.png" id="7_4v06e"]
 [ext_resource type="Texture2D" uid="uid://bh6vfh18uu0bn" path="res://src/Textures/placeholder.png" id="7_10fqn"]
 [ext_resource type="Script" uid="uid://dlirdm8ud4hs0" path="res://src/Scripts/InteractSnatchTest.cs" id="7_ng2wt"]
 [ext_resource type="PackedScene" uid="uid://ctqpfrq531m3y" path="res://src/Models/Packed/Buildings.tscn" id="7_yc6y7"]
@@ -21,6 +22,7 @@
 [ext_resource type="Material" uid="uid://ce0vtdxnqp031" path="res://src/Resources/Materials/DefaultIcon.tres" id="16_ss4f7"]
 [ext_resource type="Material" uid="uid://djkfa7xtdg63i" path="res://src/Resources/Materials/DefaultHoverIcon.tres" id="17_743ng"]
 [ext_resource type="Script" uid="uid://d1dwvl843g32v" path="res://src/Libs/shylib/Classes/Trigger3D/Trigger3D.cs" id="17_klal5"]
+[ext_resource type="Material" uid="uid://nykqrj146mgn" path="res://src/Resources/Shaders/StaticStripesTest.tres" id="18_4v06e"]
 [ext_resource type="Material" uid="uid://bq8wyiwgdl28m" path="res://src/Resources/Materials/LockedIcon.tres" id="18_8i3or"]
 [ext_resource type="Script" uid="uid://cge1tw0n2wjvm" path="res://src/Libs/shylib/Classes/RbxScript.cs" id="18_j6p0v"]
 [ext_resource type="Script" uid="uid://bq8h5fsdfxg7c" path="res://src/Scripts/PauseGui.cs" id="20_ss4f7"]
@@ -29,7 +31,6 @@
 [ext_resource type="Script" uid="uid://muq0ch483pvr" path="res://src/Libs/shylib/Classes/Discord/DiscordController.cs" id="25_p8ix8"]
 [ext_resource type="FontFile" uid="uid://fj2b1x4fiorb" path="res://src/Fonts/timesbi.ttf" id="35_2udwj"]
 [ext_resource type="StyleBox" uid="uid://exqyscgxswgh" path="res://src/Resources/Ui/SettingButtonPress.tres" id="36_jnspx"]
-[ext_resource type="PackedScene" uid="uid://8p7cp7bhft2a" path="res://src/Ui/Packed/ScreenShaders.tscn" id="37_74nv7"]
 [ext_resource type="StyleBox" uid="uid://dljp1kxxxhaej" path="res://src/Resources/Ui/SettingButtonHover.tres" id="37_hxo8n"]
 [ext_resource type="Script" uid="uid://dnhwcgdk33ce1" path="res://src/Libs/shylib/Classes/Place/PlaceController.cs" id="38_4v06e"]
 [ext_resource type="StyleBox" uid="uid://c3kf7qgi5iwyi" path="res://src/Resources/Ui/SettingButton.tres" id="38_m1m7r"]
@@ -247,6 +248,10 @@ shader_parameter/uv1_offset = Vector3(0, 0, 0)
 lightmap_size_hint = Vector2i(17, 14)
 material = SubResource("ShaderMaterial_4v06e")
 
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_jnspx"]
+lightmap_size_hint = Vector2i(17, 14)
+material = ExtResource("18_4v06e")
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_2sh0m"]
 size = Vector3(0.716797, 1, 1)
 
@@ -259,12 +264,12 @@ environment = SubResource("Environment_1fj5k")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yc6y7"]
 
-[sub_resource type="Resource" id="Resource_pxl8w"]
+[sub_resource type="Resource" id="Resource_4v06e"]
 script = ExtResource("39_hxo8n")
 Title = "In the menus"
 Prefix = "menu"
 
-[sub_resource type="Resource" id="Resource_4v06e"]
+[sub_resource type="Resource" id="Resource_2udwj"]
 script = ExtResource("39_jnspx")
 Details = "visiting gerber baby's grave"
 State = ""
@@ -275,11 +280,11 @@ SmallImageText = "test 2"
 StartTimestamp = 0
 EndTimestamp = 0
 
-[sub_resource type="Resource" id="Resource_2udwj"]
+[sub_resource type="Resource" id="Resource_jnspx"]
 script = ExtResource("40_hxo8n")
 Display = "gerber baby's grave"
-Status = SubResource("Resource_4v06e")
-Epoch = SubResource("Resource_pxl8w")
+Status = SubResource("Resource_2udwj")
+Epoch = SubResource("Resource_4v06e")
 
 [node name="Game" type="Node"]
 script = ExtResource("1_doi2n")
@@ -299,7 +304,7 @@ unique_name_in_owner = true
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 4.32012, 1.14733, -40.1963)
 input_ray_pickable = false
 script = ExtResource("1_wpbw3")
-BaseFov = 90.0
+BaseFov = 75.0
 
 [node name="Collision" type="CollisionShape3D" parent="Root3D/Player"]
 shape = SubResource("CapsuleShape3D_h8oac")
@@ -436,17 +441,33 @@ skeleton = NodePath("")
 [node name="Light" type="Node3D" parent="Root3D/Player/Arm/Armature/Skeleton3D/BoneAttachment3D/Flashlight"]
 transform = Transform3D(1, 2.07194e-11, -7.61818e-09, -2.71525e-10, 1, 0, -3.00953e-10, 0, 1, 0, 0, 0)
 
-[node name="SpotLight3D" type="SpotLight3D" parent="Root3D/Player/Arm/Armature/Skeleton3D/BoneAttachment3D/Flashlight/Light"]
+[node name="OuterLight" type="SpotLight3D" parent="Root3D/Player/Arm/Armature/Skeleton3D/BoneAttachment3D/Flashlight/Light"]
 transform = Transform3D(1, 3.00957e-10, -1.31553e-17, 0, -4.37114e-08, -1, -3.00957e-10, 1, -4.37114e-08, 0.0860596, 1.08215, 0.0612183)
 light_color = Color(0.992157, 0.968627, 0.662745, 1)
 light_energy = 4.265
-light_volumetric_fog_energy = 7.64
+light_volumetric_fog_energy = 16.0
+light_projector = ExtResource("7_4v06e")
 light_size = 3.415
-light_specular = 0.592
+light_specular = 5.645
 shadow_enabled = true
-spot_range = 4.687
+spot_range = 12.9375
 spot_attenuation = 2.25
-spot_angle = 71.49
+spot_angle = 47.7506
+spot_angle_attenuation = 0.0490365
+
+[node name="InnerLight" type="SpotLight3D" parent="Root3D/Player/Arm/Armature/Skeleton3D/BoneAttachment3D/Flashlight/Light"]
+transform = Transform3D(1, -2.73219e-09, 1.19428e-16, 0, -4.37114e-08, -1, 2.73219e-09, 1, -4.37114e-08, 0.0860596, 1.08215, 0.0612488)
+light_color = Color(0.992157, 0.968627, 0.662745, 1)
+light_energy = 4.265
+light_volumetric_fog_energy = 16.0
+light_projector = ExtResource("7_4v06e")
+light_size = 3.415
+light_specular = 5.645
+shadow_enabled = true
+spot_range = 22.9894
+spot_attenuation = 2.25
+spot_angle = 32.2024
+spot_angle_attenuation = 0.210224
 
 [node name="Cameras" type="Node3D" parent="Root3D"]
 unique_name_in_owner = true
@@ -456,7 +477,6 @@ unique_name_in_owner = true
 process_mode = 3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.32012, 1.54733, -40.1963)
 current = true
-fov = 90.0
 
 [node name="InteractRay" type="RayCast3D" parent="Root3D/Cameras/PlayerCamera"]
 unique_name_in_owner = true
@@ -854,6 +874,12 @@ cast_shadow = 0
 mesh = SubResource("CapsuleMesh_pxl8w")
 skeleton = NodePath("../Player")
 
+[node name="MockPlayer3" type="MeshInstance3D" parent="Root3D"]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 13.2185, 1.09401, -41.8677)
+cast_shadow = 0
+mesh = SubResource("CapsuleMesh_jnspx")
+skeleton = NodePath("../Player")
+
 [node name="Triggers" type="Node3D" parent="."]
 
 [node name="Trigger3D" type="Area3D" parent="Triggers"]
@@ -1048,14 +1074,12 @@ script = ExtResource("25_p8ix8")
 [node name="PlaceController" type="Node" parent="Dump"]
 unique_name_in_owner = true
 script = ExtResource("38_4v06e")
-Place = SubResource("Resource_2udwj")
+Place = SubResource("Resource_jnspx")
 metadata/_custom_type_script = "uid://dnhwcgdk33ce1"
 
 [node name="GameSettings" type="Node" parent="Dump"]
 unique_name_in_owner = true
 script = ExtResource("42_hxo8n")
 metadata/_custom_type_script = "uid://b4ohdvm04o5s5"
-
-[node name="ScreenShaders" parent="." instance=ExtResource("37_74nv7")]
 
 [editable path="Root3D/Map/Buildings"]

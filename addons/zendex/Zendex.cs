@@ -5,20 +5,20 @@ using Godot.Collections;
 using System;
 
 [Tool]
+[GlobalClass]
 public partial class Zendex : EditorPlugin
 {
     static readonly public string DockDir = "res://addons/zendex/ZendexDock.tscn";
     static readonly public string PluginDir = "res://addons/zendex/ZendexPlugin.tscn";
 
-    static private Control DockUi;
-    static private Control PluginUi;
+    static public Control DockUi;
+    static public Control PluginUi;
+    static private EditorSelection Selection;
 
     public void SetupDock() 
     {
         if (IsInstanceValid(DockUi) || DockUi != null) {
             RemoveControlFromDocks(DockUi);
-            DockUi.QueueFree();
-            DockUi = null;
         }
 
         DockUi = GD.Load<PackedScene>(DockDir).Instantiate<Control>();
@@ -35,8 +35,6 @@ public partial class Zendex : EditorPlugin
     {
         if (IsInstanceValid(PluginUi) || PluginUi != null) {
             RemoveControlFromBottomPanel(PluginUi);
-            PluginUi.QueueFree();
-            PluginUi = null;
         }
 
         PluginUi = GD.Load<PackedScene>(PluginDir).Instantiate<Control>();
@@ -44,27 +42,43 @@ public partial class Zendex : EditorPlugin
         PluginUi.GetNode("ReloadContainer").GetChild<Button>(0).Pressed += () => {
             SetupPlugin();
         };
+
+        PluginUi.GetNode("EntireContainer").GetChild(0).GetChild<Button>(1).Pressed += () => {
+            SetupDock();
+        };
         
-        AddControlToBottomPanel(DockUi, "Zendex");
+        AddControlToBottomPanel(PluginUi, "Zendex");
         SetupSettings();
+    }
+
+    public void Setup() 
+    {
+        SetupPlugin();
+        SetupDock();
+
+        Selection = EditorInterface.Singleton.GetSelection();
+
+        Selection.SelectionChanged += SelectionChanged;
     }
 
     public override void _EnterTree()
     {
         base._EnterTree();
-        SetupPlugin();
-        SetupDock();
+        Setup();
+    }
+
+    private void SelectionChanged() {
+        // GD.Print(DockUi);
+        // (DockUi as ZendexDock).SelectionChanged(Selection.GetSelectedNodes());
     }
 
     public override void _ExitTree()
     {
-        base._ExitTree();
         RemoveControlFromBottomPanel(PluginUi);
         RemoveControlFromDocks(DockUi);
-        PluginUi.QueueFree();
         PluginUi = null;
-        DockUi.QueueFree();
         DockUi = null;
+        base._ExitTree();
     }
 
     public override void _DisablePlugin()
@@ -72,10 +86,9 @@ public partial class Zendex : EditorPlugin
         base._DisablePlugin();
         RemoveControlFromBottomPanel(PluginUi);
         RemoveControlFromDocks(DockUi);
-        PluginUi.QueueFree();
         PluginUi = null;
-        DockUi.QueueFree();
         DockUi = null;
+        base._ExitTree();
     }
 
     private static readonly string SettingsPath = "docks/Zendex/";

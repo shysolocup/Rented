@@ -15,7 +15,7 @@ ruake/toggle_ruake_action="toggle_debug"
 [application]
 
 config/name="Rented"
-run/main_scene="res://src/Scenes/main.tscn"
+run/main_scene="res://src/Scenes/test.tscn"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 boot_splash/show_image=false
 config/icon="uid://bvo6qw6r6w6di"

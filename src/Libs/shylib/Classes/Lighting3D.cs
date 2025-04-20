@@ -9,6 +9,9 @@ using System.Linq;
 [GlobalClass, Icon("uid://dob8ycfdib6x8")]
 public partial class Lighting3D : Node3D
 {
+	[Signal] public delegate void LightingChangedEventHandler();
+	[Signal] public delegate void LightingDisabledEventHandler();
+
 	static public string SceneDir = "res://src/Resources/Lighting/Scenes";
 
 	static private Dictionary<string, PackedScene> SceneCache = new() {
@@ -27,6 +30,8 @@ public partial class Lighting3D : Node3D
 		}
 	}
 
+	[Export(PropertyHint.Enum, "None:1,EditorOnly:2,RuntimeOnly:3")] public int AutoVisibility = 1;
+
 	public Node CurrentLighting;
 	public WorldEnvironment SceneWorld;
 	public DirectionalLight3D SceneSun;
@@ -39,8 +44,8 @@ public partial class Lighting3D : Node3D
 
 	public Lighting3D DisposeLightings() 
 	{
-		World?.QueueFree(); 
-		Sun?.QueueFree(); 
+		World?.QueueFree();
+		Sun?.QueueFree();
 		World = null;
 		Sun = null;
 		return this;
@@ -70,6 +75,8 @@ public partial class Lighting3D : Node3D
 
 			if (World is not null) AddChild(World);
 			if (Sun is not null) AddChild(Sun);
+
+			EmitSignalLightingChanged();
 		}
 
 		return this;
@@ -113,6 +120,8 @@ public partial class Lighting3D : Node3D
 			World?.QueueFree();
 			World = null;
 		}
+
+		EmitSignalLightingDisabled();
 	}
 
 	public override async void _Ready()
@@ -120,6 +129,23 @@ public partial class Lighting3D : Node3D
 		base._Ready();
 		Connect(SignalName.VisibilityChanged, new Callable(this, MethodName.OnVisibilityChanged));
 		await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+
+		switch(AutoVisibility) {
+			case 2: { // editor only
+				if (Engine.IsEditorHint()) {
+					Visible = true;
+				}
+				break;
+			}
+
+			case 3: { // runtime only
+				if (!Engine.IsEditorHint()) {
+					Visible = true;
+				}
+				break;
+			}
+		}
+
 		if (Visible) ResetApply();
 	}
 }

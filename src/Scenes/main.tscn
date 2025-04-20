@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=4 uid="uid://s0ftqrddh5up"]
+[gd_scene load_steps=79 format=4 uid="uid://s0ftqrddh5up"]
 
 [ext_resource type="Script" uid="uid://cfoo1gxat5mv8" path="res://src/Libs/shylib/Classes/Game/GameInstance.cs" id="1_doi2n"]
 [ext_resource type="Script" uid="uid://c1i8r8l2u4t3q" path="res://src/Libs/shylib/Classes/Player.cs" id="1_wpbw3"]
@@ -22,9 +22,11 @@
 [ext_resource type="Material" uid="uid://ce0vtdxnqp031" path="res://src/Resources/Materials/DefaultIcon.tres" id="16_ss4f7"]
 [ext_resource type="Material" uid="uid://djkfa7xtdg63i" path="res://src/Resources/Materials/DefaultHoverIcon.tres" id="17_743ng"]
 [ext_resource type="Script" uid="uid://d1dwvl843g32v" path="res://src/Libs/shylib/Classes/Trigger3D/Trigger3D.cs" id="17_klal5"]
-[ext_resource type="Material" uid="uid://nykqrj146mgn" path="res://src/Resources/Shaders/StaticStripesTest.tres" id="18_4v06e"]
+[ext_resource type="Shader" uid="uid://bnlhhxe200g63" path="res://src/Resources/Shaders/StaticStripes.gdshader" id="18_2udwj"]
 [ext_resource type="Material" uid="uid://bq8wyiwgdl28m" path="res://src/Resources/Materials/LockedIcon.tres" id="18_8i3or"]
 [ext_resource type="Script" uid="uid://cge1tw0n2wjvm" path="res://src/Libs/shylib/Classes/RbxScript.cs" id="18_j6p0v"]
+[ext_resource type="Shader" uid="uid://d2tr4hehppenl" path="res://src/Resources/Shaders/Watercolor.gdshader" id="19_jnspx"]
+[ext_resource type="Texture2D" uid="uid://gw3im38j780" path="res://src/Images/References/20230930_072516.jpg" id="20_jnspx"]
 [ext_resource type="Script" uid="uid://bq8h5fsdfxg7c" path="res://src/Scripts/PauseGui.cs" id="20_ss4f7"]
 [ext_resource type="Texture2D" uid="uid://bmtapdmr10o7e" path="res://src/Images/Dialog/dialog_border.png" id="21_3ahso"]
 [ext_resource type="PackedScene" uid="uid://dvpi6uwtqfp8n" path="res://src/Ui/Packed/Dialogue.tscn" id="24_74nv7"]
@@ -248,9 +250,38 @@ shader_parameter/uv1_offset = Vector3(0, 0, 0)
 lightmap_size_hint = Vector2i(17, 14)
 material = SubResource("ShaderMaterial_4v06e")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hxo8n"]
+render_priority = 0
+shader = ExtResource("18_2udwj")
+shader_parameter/speed = 1.0
+shader_parameter/frequency = 1.0
+shader_parameter/warp_amount = 1.0
+
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_jnspx"]
 lightmap_size_hint = Vector2i(17, 14)
-material = ExtResource("18_4v06e")
+material = SubResource("ShaderMaterial_hxo8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m1m7r"]
+render_priority = 0
+shader = ExtResource("19_jnspx")
+shader_parameter/light_noise_scale = Vector2(1, 1)
+shader_parameter/light_noise_strength = 0.0
+shader_parameter/light_steps = 5
+shader_parameter/light_step_power = 2.0
+shader_parameter/light_offset = 0.0
+shader_parameter/light_multiplier = 1.0
+shader_parameter/albedo = ExtResource("20_jnspx")
+shader_parameter/albedo_noise_strength = Vector2(0, 0)
+shader_parameter/albedo_noise_scale = Vector2(1, 1)
+shader_parameter/saturation_multiplier = 1.0
+shader_parameter/desaturation_power = 10.0
+shader_parameter/enable_depth_scaling = true
+shader_parameter/depth_strength = 2.0
+shader_parameter/edge_strength = 1.0
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_yc6y7"]
+lightmap_size_hint = Vector2i(17, 14)
+material = SubResource("ShaderMaterial_m1m7r")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2sh0m"]
 size = Vector3(0.716797, 1, 1)
@@ -264,12 +295,12 @@ environment = SubResource("Environment_1fj5k")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yc6y7"]
 
-[sub_resource type="Resource" id="Resource_4v06e"]
+[sub_resource type="Resource" id="Resource_jnspx"]
 script = ExtResource("39_hxo8n")
 Title = "In the menus"
 Prefix = "menu"
 
-[sub_resource type="Resource" id="Resource_2udwj"]
+[sub_resource type="Resource" id="Resource_hxo8n"]
 script = ExtResource("39_jnspx")
 Details = "visiting gerber baby's grave"
 State = ""
@@ -280,11 +311,11 @@ SmallImageText = "test 2"
 StartTimestamp = 0
 EndTimestamp = 0
 
-[sub_resource type="Resource" id="Resource_jnspx"]
+[sub_resource type="Resource" id="Resource_m1m7r"]
 script = ExtResource("40_hxo8n")
 Display = "gerber baby's grave"
-Status = SubResource("Resource_2udwj")
-Epoch = SubResource("Resource_4v06e")
+Status = SubResource("Resource_hxo8n")
+Epoch = SubResource("Resource_jnspx")
 
 [node name="Game" type="Node"]
 script = ExtResource("1_doi2n")
@@ -880,6 +911,12 @@ cast_shadow = 0
 mesh = SubResource("CapsuleMesh_jnspx")
 skeleton = NodePath("../Player")
 
+[node name="MockPlayer4" type="MeshInstance3D" parent="Root3D"]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 5.41887, 1.26126, -42.1327)
+cast_shadow = 0
+mesh = SubResource("CapsuleMesh_yc6y7")
+skeleton = NodePath("../Player")
+
 [node name="Triggers" type="Node3D" parent="."]
 
 [node name="Trigger3D" type="Area3D" parent="Triggers"]
@@ -1074,7 +1111,7 @@ script = ExtResource("25_p8ix8")
 [node name="PlaceController" type="Node" parent="Dump"]
 unique_name_in_owner = true
 script = ExtResource("38_4v06e")
-Place = SubResource("Resource_jnspx")
+Place = SubResource("Resource_m1m7r")
 metadata/_custom_type_script = "uid://dnhwcgdk33ce1"
 
 [node name="GameSettings" type="Node" parent="Dump"]

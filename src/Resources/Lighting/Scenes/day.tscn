@@ -1,13 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://cc1nfhciujam1"]
+[gd_scene load_steps=6 format=3 uid="uid://cc1nfhciujam1"]
 
 [ext_resource type="Environment" uid="uid://dulupswejph0s" path="res://src/Resources/Lighting/Environments/Day.tres" id="1_c6ph3"]
 [ext_resource type="CameraAttributesPractical" uid="uid://bsm43ueft2wl4" path="res://src/Resources/Lighting/CameraEffects/CameraAttributesPractical.tres" id="2_d25s3"]
+[ext_resource type="Material" uid="uid://ca75ik5y2u4a2" path="res://src/Resources/Materials/david.tres" id="3_om7tq"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_d25s3"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_l8xi6"]
+material = ExtResource("3_om7tq")
 
 [node name="Node" type="Node"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(3.33449, 0, 0, 0, 1, 0, 0, 0, 3.48173, 0, 0, 0)
 mesh = SubResource("PlaneMesh_d25s3")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -17,3 +22,11 @@ camera_attributes = ExtResource("2_d25s3")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.601172, 0.0782242, 0.795283, 0.499898, -0.739615, 0.450634, 0.623453, 0.668468, 0.405531, 0, 0, 0)
 shadow_enabled = true
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.592153, 0.317469, 0)
+mesh = SubResource("BoxMesh_l8xi6")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.82141, 0, 0, 0, 1.426, 0, 0, 0, 0.5, 1.75404, 0.740487, 2.85763)
+mesh = SubResource("BoxMesh_l8xi6")

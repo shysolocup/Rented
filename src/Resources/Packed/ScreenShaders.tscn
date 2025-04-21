@@ -1,14 +1,16 @@
-[gd_scene load_steps=13 format=3 uid="uid://8p7cp7bhft2a"]
+[gd_scene load_steps=17 format=3 uid="uid://8p7cp7bhft2a"]
 
-[ext_resource type="Shader" uid="uid://cypr5o2uug1u6" path="res://src/Resources/Shaders/Rtx.gdshader" id="1_p8yce"]
-[ext_resource type="Shader" uid="uid://b5fdym4u87ljo" path="res://src/Resources/Shaders/Abberation.gdshader" id="2_lauhc"]
-[ext_resource type="Shader" uid="uid://3exxjjamcia5" path="res://src/Resources/Shaders/PaintMix.gdshader" id="3_8sgug"]
-[ext_resource type="Shader" uid="uid://cu5r7v72sqifi" path="res://src/Resources/Shaders/RetroPixel.gdshader" id="4_3oy4u"]
-[ext_resource type="Shader" uid="uid://bn0mey8pleolw" path="res://src/Resources/Shaders/Crt.gdshader" id="5_0ehnj"]
-[ext_resource type="Shader" uid="uid://ck3glividics0" path="res://src/Resources/Shaders/SSLF.gdshader" id="6_tvflw"]
+[ext_resource type="Shader" uid="uid://cypr5o2uug1u6" path="res://src/Resources/Shaders/Rtx.gdshader" id="1_p87um"]
+[ext_resource type="Shader" uid="uid://b5fdym4u87ljo" path="res://src/Resources/Shaders/Abberation.gdshader" id="2_foswk"]
+[ext_resource type="Shader" uid="uid://3exxjjamcia5" path="res://src/Resources/Shaders/PaintMix.gdshader" id="3_je2sr"]
+[ext_resource type="Shader" uid="uid://cu5r7v72sqifi" path="res://src/Resources/Shaders/RetroPixel.gdshader" id="4_5sfyb"]
+[ext_resource type="Shader" uid="uid://bn0mey8pleolw" path="res://src/Resources/Shaders/Crt.gdshader" id="5_7bmj5"]
+[ext_resource type="Shader" uid="uid://ck3glividics0" path="res://src/Resources/Shaders/SSLF.gdshader" id="6_cc7oj"]
+[ext_resource type="Shader" uid="uid://5lv30asv8c10" path="res://src/Resources/Shaders/Letterbox.gdshader" id="7_foswk"]
+[ext_resource type="Shader" uid="uid://r8v3vw8pm8ph" path="res://src/Resources/Shaders/Kuwahara.gdshader" id="8_je2sr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_klal5"]
-shader = ExtResource("1_p8yce")
+shader = ExtResource("1_p87um")
 shader_parameter/brightness = 1.0
 shader_parameter/contrast = 1.0
 shader_parameter/saturation = 1.0
@@ -52,14 +54,14 @@ shader_parameter/night_vision_color = Color(0, 1, 0, 1)
 shader_parameter/night_vision_noise = 0.3
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8sgug"]
-shader = ExtResource("2_lauhc")
+shader = ExtResource("2_foswk")
 shader_parameter/alpha = 0.3
 shader_parameter/scale = 0.0
 shader_parameter/border_mask = 2.0
 shader_parameter/strength = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lauhc"]
-shader = ExtResource("3_8sgug")
+shader = ExtResource("3_je2sr")
 shader_parameter/polar_coordinates = false
 shader_parameter/polar_center = Vector2(0.5, 0.5)
 shader_parameter/polar_zoom = 1.0
@@ -75,7 +77,7 @@ shader_parameter/spin_amount = 0.36
 shader_parameter/pixel_filter = 700.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3oy4u"]
-shader = ExtResource("4_3oy4u")
+shader = ExtResource("4_5sfyb")
 shader_parameter/shake = 0.015
 shader_parameter/noiseQuality = 250.0
 shader_parameter/noiseIntensity = 0.001
@@ -89,7 +91,7 @@ shader_parameter/overlay_color = Color(1, 1, 1, 10)
 shader_parameter/lens_distortion_strength = 0.05
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0ehnj"]
-shader = ExtResource("5_0ehnj")
+shader = ExtResource("5_7bmj5")
 shader_parameter/overlay = false
 shader_parameter/resolution = Vector2(640, 480)
 shader_parameter/brightness = 1.4
@@ -113,7 +115,7 @@ shader_parameter/vignette_intensity = 0.4
 shader_parameter/vignette_opacity = 0.5
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_win7u"]
-shader = ExtResource("6_tvflw")
+shader = ExtResource("6_cc7oj")
 shader_parameter/Blur = 2.5
 shader_parameter/FlareThreshold = 0.0
 shader_parameter/Thresholdsmoothness = 0.2
@@ -127,6 +129,15 @@ shader_parameter/visibility = 1.0
 shader_parameter/MinFlareIntensity = 0.0
 shader_parameter/MaxFlareIntensity = 1.0
 shader_parameter/RainbowIntensity = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_je2sr"]
+shader = ExtResource("7_foswk")
+shader_parameter/squishedness = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5sfyb"]
+shader = ExtResource("8_je2sr")
+shader_parameter/radius = 10
+shader_parameter/offset = Vector3(0, 0, 0)
 
 [node name="ScreenShaders" type="Control"]
 layout_mode = 3
@@ -220,6 +231,25 @@ mouse_filter = 2
 
 [node name="SSLF" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_win7u")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Letterbox" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_je2sr")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Kuwahara" type="ColorRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_5sfyb")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

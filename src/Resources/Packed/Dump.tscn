@@ -7,12 +7,12 @@
 [ext_resource type="Script" uid="uid://btbivrdlisxa3" path="res://src/Libs/shylib/Classes/Place/Place.cs" id="5_hmvli"]
 [ext_resource type="Script" uid="uid://b4ohdvm04o5s5" path="res://src/Libs/shylib/Classes/Game/GameSettings.cs" id="6_do8cd"]
 
-[sub_resource type="Resource" id="Resource_o0yik"]
+[sub_resource type="Resource" id="Resource_tdwco"]
 script = ExtResource("3_1761u")
 Title = "In the menus"
 Prefix = "menu"
 
-[sub_resource type="Resource" id="Resource_kn6yq"]
+[sub_resource type="Resource" id="Resource_k7tso"]
 script = ExtResource("4_tvero")
 Details = "visiting gerber baby's grave"
 State = ""
@@ -23,11 +23,11 @@ SmallImageText = "test 2"
 StartTimestamp = 0
 EndTimestamp = 0
 
-[sub_resource type="Resource" id="Resource_6e2i5"]
+[sub_resource type="Resource" id="Resource_1761u"]
 script = ExtResource("5_hmvli")
 Display = "gerber baby's grave"
-Status = SubResource("Resource_kn6yq")
-Epoch = SubResource("Resource_o0yik")
+Status = SubResource("Resource_k7tso")
+Epoch = SubResource("Resource_tdwco")
 
 [node name="Dump" type="Node"]
 
@@ -38,7 +38,7 @@ script = ExtResource("1_tdwco")
 [node name="PlaceController" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("2_k7tso")
-Place = SubResource("Resource_6e2i5")
+Place = SubResource("Resource_1761u")
 metadata/_custom_type_script = "uid://dnhwcgdk33ce1"
 
 [node name="GameSettings" type="Node" parent="."]

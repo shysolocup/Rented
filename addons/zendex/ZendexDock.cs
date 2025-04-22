@@ -2,14 +2,17 @@ using Godot;
 using Godot.Collections;
 using System;
 
+[Tool]
 [GlobalClass]
 public partial class ZendexDock : Control
 {
+	[Export] public Array<ZendexLayer> Layers = [];
+
 	private LineEdit Search;
 	private MenuButton AddLayer;
 	private EditorSelection Selection;
+	
 
-	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		var Top = GetChild(0).GetChild(0);
@@ -21,7 +24,7 @@ public partial class ZendexDock : Control
 		GD.Print(AddLayer);
 		GD.Print(Search);
 
-		Search.TextChanged += TextChanged;
+		Search.TextChanged += SearchChanged;
 	}
 
 	public void SelectionChanged(Array<Node> selected)
@@ -29,12 +32,12 @@ public partial class ZendexDock : Control
 		GD.Print(selected);
 	}
 
-	private void TextChanged(string text) {
+	private void SearchChanged(string text) {
 		
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		
 	}
 }

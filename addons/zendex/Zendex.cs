@@ -11,7 +11,7 @@ public partial class Zendex : EditorPlugin
     static readonly public string DockDir = "res://addons/zendex/ZendexDock.tscn";
     static readonly public string PluginDir = "res://addons/zendex/ZendexPlugin.tscn";
 
-    static public Control DockUi;
+    static public ZendexDock DockUi;
     static public Control PluginUi;
     static private EditorSelection Selection;
 
@@ -21,7 +21,7 @@ public partial class Zendex : EditorPlugin
             RemoveControlFromDocks(DockUi);
         }
 
-        DockUi = GD.Load<PackedScene>(DockDir).Instantiate<Control>();
+        DockUi = GD.Load<PackedScene>(DockDir).Instantiate<ZendexDock>();
 
         DockUi.GetNode("ReloadContainer").GetChild<Button>(0).Pressed += () => {
             SetupDock();
@@ -68,8 +68,7 @@ public partial class Zendex : EditorPlugin
     }
 
     private void SelectionChanged() {
-        // GD.Print(DockUi);
-        // (DockUi as ZendexDock).SelectionChanged(Selection.GetSelectedNodes());
+        DockUi.SelectionChanged(Selection.GetSelectedNodes());
     }
 
     public override void _ExitTree()

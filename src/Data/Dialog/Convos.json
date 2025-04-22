@@ -1,5 +1,4 @@
 {
-	"$schema": "../Schemas/Dialogue.json",
 	"prefix": "convo",
     "format": 2,
     "scenes": {

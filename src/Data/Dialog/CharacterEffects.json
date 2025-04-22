@@ -1,5 +1,4 @@
 {
-    "$schema": "../Schemas/Dialogue.json",
     "format": 3,
     "effects": [
         {

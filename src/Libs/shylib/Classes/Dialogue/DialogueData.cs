@@ -130,12 +130,13 @@ public partial class DialogueData : Node
 					#region Play Random
 					if (line.Randoms.Count > 0) {
 						int r = rand.Next(line.Randoms.Count);
-						await PlayByInstance(line.Randoms.ElementAtOrDefault(r), new(), inst);
+						Array<DialogueSequence> redir = line.Randoms.ElementAtOrDefault(r);
+						Task thread = PlayByInstance(redir, new(), inst);
+						thread.Wait();
+						GD.Print(redir, thread);
 						continue;
 					}
 					#endregion
-
-					await tree.CreateTimer(0.05f).Guh();
 
 					Task effect = FadeEffect(textlabel, line, token2);
 
@@ -145,8 +146,9 @@ public partial class DialogueData : Node
 					#region Play Redirect
 					if (line.Redirect != null) {
 						GD.Print('a');
-						await Play(line.Redirect, new(), inst);
-						await tree.CreateTimer(0.1f).Guh();
+						Task thread = Play(line.Redirect, new(), inst);
+						thread.Wait();
+						GD.Print(thread);
 					}
 					#endregion
 

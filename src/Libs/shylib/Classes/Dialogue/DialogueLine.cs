@@ -104,7 +104,7 @@ public partial class DialogueLine : Resource
 								line.Randoms.Add(DialogueSequence.EvalConvos((Array<Array<Variant>>)randomLine));
 								break;
 							}
-							case DialogueFormat.Interact: {
+							default: {
 								line.Randoms.Add(DialogueSequence.EvalInteracts((Array<Variant>)randomLine));
 								break;
 							}

@@ -1,5 +1,4 @@
 {
-	"$schema": "../Schemas/Dialogue.json",
 	"prefix": "interact",
     "format": 1,
     "scenes": {

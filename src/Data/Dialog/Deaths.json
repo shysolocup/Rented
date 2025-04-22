@@ -1,5 +1,4 @@
 {
-    "$schema": "../Schemas/Dialogue.json",
     "prefix": "death",
     "format": 1,
     "scenes": {

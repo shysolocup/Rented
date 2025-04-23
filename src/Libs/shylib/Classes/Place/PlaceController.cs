@@ -86,7 +86,7 @@ public partial class PlaceController : Node
 
 				state.Status = status;
 
-				Places.Add($"{epoch.Prefix}_{id}", state);
+				Places[$"{epoch.Prefix}_{id}"] = state;
 			}
 		}
 

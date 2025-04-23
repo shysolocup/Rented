@@ -11,9 +11,9 @@ public partial class Zendex : EditorPlugin
     static readonly public string DockDir = "res://addons/zendex/ZendexDock.tscn";
     static readonly public string PluginDir = "res://addons/zendex/ZendexPlugin.tscn";
 
-    static public ZendexDock DockUi;
-    static public Control PluginUi;
-    static private EditorSelection Selection;
+    public ZendexDock DockUi;
+    public Control PluginUi;
+    private EditorSelection Selection;
 
     public void SetupDock() 
     {
@@ -68,6 +68,7 @@ public partial class Zendex : EditorPlugin
     }
 
     private void SelectionChanged() {
+        if (Selection is null || DockUi is null) Setup();
         DockUi.SelectionChanged(Selection.GetSelectedNodes());
     }
 

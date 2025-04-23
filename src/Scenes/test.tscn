@@ -631,21 +631,22 @@ transform = Transform3D(527.247, 0, 0, 0, 1, 0, 0, 0, 694.333, 82.6671, -46.3386
 use_collision = true
 material = ExtResource("14_n8c8y")
 
-[node name="Triggers" type="Node3D" parent="."]
+[node name="Triggers" type="Node3D" parent="Root3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 82.6777, -45.8119, -6.55279)
 
-[node name="Trigger3D" type="Area3D" parent="Triggers"]
+[node name="Trigger3D" type="Area3D" parent="Root3D/Triggers"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -61.8141, 46.6006, -45.3492)
 script = ExtResource("17_klal5")
 TypeFilter = Array[String](["Player"])
 FilterType = 2
 metadata/_custom_type_script = "uid://d1dwvl843g32v"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Triggers/Trigger3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Root3D/Triggers/Trigger3D"]
 transform = Transform3D(8.15127, 0, 0, 0, 5.05737, 0, 0, 0, 6.79491, 0, 0, 0)
 shape = SubResource("BoxShape3D_2sh0m")
 debug_color = Color(1, 1, 0, 0.419608)
 
-[node name="RbxScript" type="Node" parent="Triggers/Trigger3D"]
+[node name="RbxScript" type="Node" parent="Root3D/Triggers/Trigger3D"]
 script = ExtResource("18_j6p0v")
 Source = "uid://nna6r5m6tbhw"
 SpawnedNodePath = NodePath("")

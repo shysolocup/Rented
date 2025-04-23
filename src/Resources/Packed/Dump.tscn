@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bg2s3j3jpsaqq"]
+[gd_scene load_steps=11 format=3 uid="uid://bg2s3j3jpsaqq"]
 
 [ext_resource type="Script" uid="uid://muq0ch483pvr" path="res://src/Libs/shylib/Classes/Discord/DiscordController.cs" id="1_tdwco"]
 [ext_resource type="Script" uid="uid://dnhwcgdk33ce1" path="res://src/Libs/shylib/Classes/Place/PlaceController.cs" id="2_k7tso"]
@@ -6,13 +6,14 @@
 [ext_resource type="Script" uid="uid://0hgckmqbb3ja" path="res://src/Libs/shylib/Classes/Discord/DiscordStatus.cs" id="4_tvero"]
 [ext_resource type="Script" uid="uid://btbivrdlisxa3" path="res://src/Libs/shylib/Classes/Place/Place.cs" id="5_hmvli"]
 [ext_resource type="Script" uid="uid://b4ohdvm04o5s5" path="res://src/Libs/shylib/Classes/Game/GameSettings.cs" id="6_do8cd"]
+[ext_resource type="PackedScene" uid="uid://8p7cp7bhft2a" path="res://src/Resources/Packed/ScreenShaders.tscn" id="7_k7tso"]
 
-[sub_resource type="Resource" id="Resource_tdwco"]
+[sub_resource type="Resource" id="Resource_k7tso"]
 script = ExtResource("3_1761u")
 Title = "In the menus"
 Prefix = "menu"
 
-[sub_resource type="Resource" id="Resource_k7tso"]
+[sub_resource type="Resource" id="Resource_1761u"]
 script = ExtResource("4_tvero")
 Details = "visiting gerber baby's grave"
 State = ""
@@ -23,11 +24,11 @@ SmallImageText = "test 2"
 StartTimestamp = 0
 EndTimestamp = 0
 
-[sub_resource type="Resource" id="Resource_1761u"]
+[sub_resource type="Resource" id="Resource_tvero"]
 script = ExtResource("5_hmvli")
 Display = "gerber baby's grave"
-Status = SubResource("Resource_k7tso")
-Epoch = SubResource("Resource_tdwco")
+Status = SubResource("Resource_1761u")
+Epoch = SubResource("Resource_k7tso")
 
 [node name="Dump" type="Node"]
 
@@ -38,10 +39,12 @@ script = ExtResource("1_tdwco")
 [node name="PlaceController" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("2_k7tso")
-Place = SubResource("Resource_1761u")
+Place = SubResource("Resource_tvero")
 metadata/_custom_type_script = "uid://dnhwcgdk33ce1"
 
 [node name="GameSettings" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("6_do8cd")
 metadata/_custom_type_script = "uid://b4ohdvm04o5s5"
+
+[node name="ScreenShaders" parent="." instance=ExtResource("7_k7tso")]

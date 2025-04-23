@@ -528,6 +528,23 @@ surface_material_override/0 = ExtResource("13_ss4f7")
 [node name="Node" type="Node" parent="Root3D/testcubes/test3"]
 script = ExtResource("7_ng2wt")
 
+[node name="test7" type="RigidBody3D" parent="Root3D/testcubes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.531609, 0.977314, -40.9868)
+freeze = true
+script = ExtResource("8_uf7b3")
+Line = "interact_david_bazookie"
+
+[node name="Collision" type="CollisionShape3D" parent="Root3D/testcubes/test7"]
+shape = SubResource("BoxShape3D_j1e05")
+
+[node name="Mesh" type="MeshInstance3D" parent="Root3D/testcubes/test7"]
+mesh = SubResource("BoxMesh_xknod")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("13_ss4f7")
+
+[node name="Node" type="Node" parent="Root3D/testcubes/test7"]
+script = ExtResource("7_ng2wt")
+
 [node name="test2" type="RigidBody3D" parent="Root3D/testcubes"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55775, 0.562328, 5.04772)
 freeze = true

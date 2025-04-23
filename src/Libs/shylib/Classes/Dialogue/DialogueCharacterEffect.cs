@@ -32,7 +32,7 @@ public partial class DialogueCharacterEffect : Resource
 				MatchCollection matches = Regex.Matches(original, string.Format(pattern, name));
 
 				foreach( Match match in matches) {
-					GD.Print(match.Groups[1].Value);
+					// GD.Print(match.Groups[1].Value);
 				}
 				
 				foreach (var (word, i) in split.Select((value, i) => ( value, i ))) {

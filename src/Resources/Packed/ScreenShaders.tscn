@@ -9,6 +9,10 @@
 [ext_resource type="Shader" uid="uid://5lv30asv8c10" path="res://src/Resources/Shaders/Letterbox.gdshader" id="7_foswk"]
 [ext_resource type="Shader" uid="uid://r8v3vw8pm8ph" path="res://src/Resources/Shaders/Kuwahara.gdshader" id="8_je2sr"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_je2sr"]
+shader = ExtResource("7_foswk")
+shader_parameter/squishedness = 0.0
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_klal5"]
 shader = ExtResource("1_p87um")
 shader_parameter/brightness = 1.0
@@ -25,22 +29,22 @@ shader_parameter/vignette_opacity = 0.5
 shader_parameter/vignette_roundness = 1.0
 shader_parameter/vignette_color = Color(0, 0, 0, 1)
 shader_parameter/film_grain = 0.03
-shader_parameter/film_grain_speed = 1.0
+shader_parameter/film_grain_speed = 3.11
 shader_parameter/chromatic_aberration = 0.5
 shader_parameter/enable_god_rays = true
-shader_parameter/god_rays_intensity = 0.1
+shader_parameter/god_rays_intensity = 0.2
 shader_parameter/light_position = Vector2(0.5, 0.5)
 shader_parameter/enable_lens_dirt = true
 shader_parameter/lens_dirt_intensity = 0.5
 shader_parameter/enable_color_grading = true
-shader_parameter/color_lut_mix = 0.8
+shader_parameter/color_lut_mix = 0.0
 shader_parameter/enable_dithering = true
 shader_parameter/dithering_intensity = 0.02
 shader_parameter/enable_scanlines = false
 shader_parameter/scanlines_opacity = 0.2
 shader_parameter/scanlines_width = 10.0
 shader_parameter/enable_sharpen = true
-shader_parameter/sharpen_intensity = 0.5
+shader_parameter/sharpen_intensity = 0.1
 shader_parameter/enable_color_blindness = false
 shader_parameter/color_blindness_type = 0
 shader_parameter/color_blindness_intensity = 1.0
@@ -123,20 +127,16 @@ shader_parameter/Flares = 3
 shader_parameter/FlareSpacing = 0.0
 shader_parameter/FlareDistance = 0.5
 shader_parameter/LensThickness = 1.0
-shader_parameter/Intensity = 5.0
+shader_parameter/Intensity = 0.1
 shader_parameter/Saturation_ = 5.0
-shader_parameter/visibility = 1.0
+shader_parameter/visibility = 0.2
 shader_parameter/MinFlareIntensity = 0.0
 shader_parameter/MaxFlareIntensity = 1.0
 shader_parameter/RainbowIntensity = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_je2sr"]
-shader = ExtResource("7_foswk")
-shader_parameter/squishedness = 0.0
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5sfyb"]
 shader = ExtResource("8_je2sr")
-shader_parameter/radius = 10
+shader_parameter/radius = 5
 shader_parameter/offset = Vector3(0, 0, 0)
 
 [node name="ScreenShaders" type="Control"]
@@ -148,9 +148,17 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
+[node name="Letterbox" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_je2sr")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
 [node name="Rtx" type="ColorRect" parent="."]
-visible = false
-z_index = 25
 material = SubResource("ShaderMaterial_klal5")
 layout_mode = 1
 anchors_preset = 15
@@ -168,6 +176,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="Abberation2"]
 layout_mode = 1
@@ -237,15 +246,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Letterbox" type="ColorRect" parent="."]
-material = SubResource("ShaderMaterial_je2sr")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+mouse_filter = 2
 
 [node name="Kuwahara" type="ColorRect" parent="."]
 visible = false
@@ -256,3 +257,4 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2

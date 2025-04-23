@@ -68,8 +68,6 @@ public partial class DialogueLine : Resource
 				#region LE Dict (Btns)
 				if (lineDict.ContainsKey("buttons")) {
 					foreach (Variant btnVar in (Array<Variant>)lineDict["buttons"]) {
-						GD.Print(btnVar);
-
 						if (btnVar.VariantType == Variant.Type.Array) {
 							var btn = (Array<string>)btnVar;
 

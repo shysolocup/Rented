@@ -30,6 +30,7 @@ public partial class ZendexDock : Control
 	public void SelectionChanged(Array<Node> selected)
 	{
 		GD.Print(selected);
+		AddLayer.Text = $"➕ {selected.Count} Nodes";
 	}
 
 	private void SearchChanged(string text) {

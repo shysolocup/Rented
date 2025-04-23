@@ -17,9 +17,11 @@ public partial class Zendex : EditorPlugin
 
     public void SetupDock() 
     {
-        if (IsInstanceValid(DockUi) || DockUi != null) {
+        if (IsInstanceValid(DockUi)) {
             RemoveControlFromDocks(DockUi);
+            DockUi.QueueFree();
         }
+        if (DockUi is not null) DockUi = null;
 
         DockUi = GD.Load<PackedScene>(DockDir).Instantiate<ZendexDock>();
 
@@ -28,14 +30,15 @@ public partial class Zendex : EditorPlugin
         };
         
         AddControlToDock(DockSlot.RightUl, DockUi);
-        SetupSettings();
     }
 
     public void SetupPlugin() 
     {
-        if (IsInstanceValid(PluginUi) || PluginUi != null) {
+        if (IsInstanceValid(PluginUi)) {
             RemoveControlFromBottomPanel(PluginUi);
+            PluginUi.QueueFree();
         }
+        if (PluginUi is not null) PluginUi = null;
 
         PluginUi = GD.Load<PackedScene>(PluginDir).Instantiate<Control>();
 
@@ -48,13 +51,14 @@ public partial class Zendex : EditorPlugin
         };
         
         AddControlToBottomPanel(PluginUi, "Zendex");
-        SetupSettings();
     }
 
     public void Setup() 
     {
+        if (!Engine.IsEditorHint()) return;
         SetupPlugin();
         SetupDock();
+        SetupSettings();
 
         Selection = EditorInterface.Singleton.GetSelection();
 
@@ -64,11 +68,12 @@ public partial class Zendex : EditorPlugin
     public override void _EnterTree()
     {
         base._EnterTree();
-        Setup();
+        if (Engine.IsEditorHint()) Setup();
     }
 
     private void SelectionChanged() {
-        if (Selection is null || DockUi is null) Setup();
+        if (!Engine.IsEditorHint()) return;
+        if (Selection is null || !IsInstanceValid(DockUi) || DockUi is null) Setup();
         DockUi.SelectionChanged(Selection.GetSelectedNodes());
     }
 
@@ -76,19 +81,28 @@ public partial class Zendex : EditorPlugin
     {
         RemoveControlFromBottomPanel(PluginUi);
         RemoveControlFromDocks(DockUi);
+
+        if (IsInstanceValid(DockUi)) DockUi.QueueFree();
+        if (IsInstanceValid(PluginUi)) PluginUi.QueueFree();
+
         PluginUi = null;
         DockUi = null;
+
         base._ExitTree();
     }
 
     public override void _DisablePlugin()
     {
         base._DisablePlugin();
+
         RemoveControlFromBottomPanel(PluginUi);
         RemoveControlFromDocks(DockUi);
+
+        if (IsInstanceValid(DockUi)) DockUi.QueueFree();
+        if (IsInstanceValid(PluginUi)) PluginUi.QueueFree();
+
         PluginUi = null;
         DockUi = null;
-        base._ExitTree();
     }
 
     private static readonly string SettingsPath = "docks/Zendex/";

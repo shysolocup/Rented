@@ -130,9 +130,9 @@ public partial class DialogueData : Node
 					#region Play Random
 					if (line.Randoms.Count > 0) {
 						int r = rand.Next(line.Randoms.Count);
-						Array<DialogueSequence> redir = line.Randoms.ElementAtOrDefault(r);
+						Array<DialogueSequence> redir = line.Randoms[r];
 						Task thread = PlayByInstance(redir, new(), inst);
-						thread.Wait();
+						await thread.WaitAsync(CancellationToken.None);
 						GD.Print(redir, thread);
 						continue;
 					}
@@ -147,7 +147,7 @@ public partial class DialogueData : Node
 					if (line.Redirect != null) {
 						GD.Print('a');
 						Task thread = Play(line.Redirect, new(), inst);
-						thread.Wait();
+						await thread.WaitAsync(CancellationToken.None);
 						GD.Print(thread);
 					}
 					#endregion

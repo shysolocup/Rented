@@ -33,7 +33,6 @@ public partial class Arm : Node3D
 
 	public override void _Process(double delta)
 	{
-		GD.Print(Camera);
 		if (Camera != null && IsInstanceValid(Camera)) {
 			Transform3D CameraGlobal = Camera.GlobalTransform;
 			Basis CameraBasis = CameraGlobal.Basis;

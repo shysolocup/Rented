@@ -276,8 +276,10 @@ public partial class Player : CharacterBody3D
 		CameraRotationControllable = false;
 		InDialog = true;
 		ReleaseMouse();
-			
-		DialogueData data = GetNode<DialogueData>("%DialogueData");
+		
+		DialogueData data = GetNode("/root/Game/Guis/DialogueGui").GetNode<DialogueData>("%DialogueData");
+
+		GD.Print(data);
 		
 		await data.Play(line);
 

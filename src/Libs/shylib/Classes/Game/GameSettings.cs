@@ -1,5 +1,4 @@
 using Godot;
-using Godot.Collections;
 
 [GlobalClass, Icon("uid://dwbnqewotd3wq")]
 public partial class GameSettings : Node

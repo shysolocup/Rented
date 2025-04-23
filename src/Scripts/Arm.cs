@@ -1,6 +1,4 @@
 using Godot;
-using System;
-using CoolGame;
 
 public partial class Arm : Node3D
 {

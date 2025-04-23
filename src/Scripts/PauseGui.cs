@@ -1,7 +1,4 @@
 using Godot;
-using System;
-using CoolGame;
-using System.Threading.Tasks;
 
 public partial class PauseGui : Control
 {

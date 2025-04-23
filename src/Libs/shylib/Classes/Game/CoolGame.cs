@@ -1,4 +1,3 @@
-using CoolGame;
 using Godot;
 using System;
 using System.Threading.Tasks;

@@ -1,7 +1,4 @@
 using Godot;
-using System;
-using Godot.Collections;
-using System.Threading.Tasks;
 
 [GlobalClass, Icon("uid://bhib8x7fhxxwd")]
 public partial class DiscordController : Node

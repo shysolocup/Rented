@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using Godot.Collections;
 
 [GlobalClass, Icon("uid://beseoxu7me3c0")]

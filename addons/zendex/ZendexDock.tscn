@@ -95,7 +95,7 @@ text = "➕"
 layout_mode = 2
 text = " 🗑️ "
 
-[node name="OptionButton" type="OptionButton" parent="EntireContainer/Bottom/ScrollContainer/LayersContainer/Default"]
+[node name="Tree" type="OptionButton" parent="EntireContainer/Bottom/ScrollContainer/LayersContainer/Default"]
 layout_mode = 2
 item_count = 2
 popup/item_0/text = "afasdfasdfasdfdf"

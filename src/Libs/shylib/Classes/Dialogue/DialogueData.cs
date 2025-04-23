@@ -1,10 +1,8 @@
 using Godot;
 using System;
 using Godot.Collections;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
-using System.Text.RegularExpressions;
 
 [Tool]
 [GlobalClass, Icon("uid://beseoxu7me3c0")]

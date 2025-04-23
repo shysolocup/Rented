@@ -1,8 +1,5 @@
 using Godot;
-using System;
 using Godot.Collections;
-using System.IO;
-using System.Linq;
 
 
 [Tool]

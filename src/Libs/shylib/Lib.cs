@@ -1,12 +1,11 @@
 using Godot;
 using Godot.Collections;
-using Godot.NativeInterop;
 using System;
-using System.Collections;
-using System.Linq;
 using System.Threading.Tasks;
 
-public partial class Lib : Node {}
+public partial class Lib : Node {
+
+}
 
 
 public static class Extensions

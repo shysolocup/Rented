@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 [GlobalClass, Icon("uid://e1srvp36hc7n")]
 public partial class InteractObject3D : RigidBody3D

@@ -1,5 +1,4 @@
 using Godot;
-using Godot.Collections;
 using System;
 using CoolGame;
 using System.Threading.Tasks;
@@ -28,7 +27,7 @@ public partial class Player : CharacterBody3D
 	#endregion
 
 
-	#region Camera
+	#region Camera Vars
 	[ExportGroup("Camera")]
 
 	[ExportToolButton("Reset Camera")] private Callable ResetCameraCall => Callable.From(ResetCamera);
@@ -47,6 +46,10 @@ public partial class Player : CharacterBody3D
 	private Camera3D Camera;
 
 	[Export(PropertyHint.Range, "0.1,3.0,0.1,or_greater")] public float CameraSensitivity = 1;
+
+	[Export] public float BobbleFrequency = 0.6f;
+	[Export] public float BobbleAmplifier = 0.08f;
+	private float BobbleTime = 0;
 
 	[Export] public bool CameraRotationControllable = true;
 	[Export] public bool CameraPositionControllable = true;
@@ -128,13 +131,14 @@ public partial class Player : CharacterBody3D
 	private CollisionShape3D Collision2;
 	private MeshInstance3D Mesh;
 
-
+	#region Die
 	public void Die(int id = 0) 
 	{
 		
 	}
+	#endregion
 	
-
+	#region Ready
 	public override void _Ready()
 	{	
 		Camera = GetNode<Camera3D>("%PlayerCamera");
@@ -156,7 +160,9 @@ public partial class Player : CharacterBody3D
 
 		// console = GetTree().
 	}
+	#endregion 
 
+	#region Notification
 	public override void _Notification(int what)
 	{
 		if (Engine.IsEditorHint()) return;
@@ -170,7 +176,9 @@ public partial class Player : CharacterBody3D
 			Sprinting = false;
 		}
 	}
+	#endregion
 
+	#region PhysicsProcess
 	public override void _PhysicsProcess(double delta)
 	{
 		if (Engine.IsEditorHint()) return;
@@ -183,7 +191,9 @@ public partial class Player : CharacterBody3D
 		Velocity = GetMove(d) + GetGravity(d) + GetJump(d);
 		MoveAndSlide();
 	}
+	#endregion
 
+	#region UpdateFreecam
 	public void UpdateFreecamMovement(double delta)
 	{
 		Vector2 V2Direction = Input.GetVector("MoveLeft", "MoveRight", "MoveForward", "MoveBack");
@@ -202,8 +212,10 @@ public partial class Player : CharacterBody3D
 		
 		Camera.Translate(FreecamVelocity * (float)delta * Speed);
 	}
+	#endregion
 
-	public override async void _Process(double delta)
+	#region Process
+	public override void _Process(double delta)
 	{
 		if (Engine.IsEditorHint()) return;
 		if (Freecam) {
@@ -232,8 +244,10 @@ public partial class Player : CharacterBody3D
 
 		if (Camera != null) {
 
+			BobbleTime += (float)(delta * Velocity.Length());
+
 			if (CameraPositionControllable && !Freecam) {
-				Camera.Position = new Vector3(Position.X, Position.Y + CameraOffset, Position.Z); 
+				Camera.Position = new Vector3(Position.X, Position.Y + CameraOffset, Position.Z) + HeadBobble(); 
 			}
 			if (!Freecam) Rotation = new Vector3(Rotation.X, Camera.Rotation.Y, Rotation.Z);
 
@@ -258,18 +272,12 @@ public partial class Player : CharacterBody3D
 			else if (Camera != null && Camera.RotationDegrees.Z != 0) {
 				TiltEffect(0, 1/12f, delta);
 			}
-
-
-			// walk effect
-			if (Walking) {
-				await WalkEffect(delta);
-			}
 		}
-
-		
 	}
+	#endregion
 
 
+	#region PlayDialogue
 	public async Task PlayDialogue(string line)
 	{
 		Controllable = false;
@@ -313,8 +321,9 @@ public partial class Player : CharacterBody3D
 			timer.Dispose();
 		};
 	}
+	#endregion
 
-
+	#region SnatchInteract
 	public async Task SnatchInteract(InteractObject3D obj) 
 	{
 		if (obj.Cooldown) {
@@ -331,8 +340,9 @@ public partial class Player : CharacterBody3D
 
 		obj.Cooldown = false;
 	}
+	#endregion
 
-
+	#region UnhandledInput
 	public override void _UnhandledInput(InputEvent @event)
 	{
 		if (@event is InputEventMouseMotion mouse && Input.MouseMode == Input.MouseModeEnum.Captured) {
@@ -381,19 +391,25 @@ public partial class Player : CharacterBody3D
 		}
 		// if (Input.IsActionJustPressed("Exit")) GetTree().Quit();
 	}
+	#endregion
 
+	#region CaptureMouse
 	public void CaptureMouse()
 	{
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 		MouseCaptured = true;
 	}
+	#endregion
 
+	#region ReleaseMouse
 	public void ReleaseMouse()
 	{
 		Input.MouseMode = Input.MouseModeEnum.Visible;
 		MouseCaptured = false;
 	}
+	#endregion
 
+	#region RotateCamera
 	private void RotateCamera(float sens_mod = 1.0f)
 	{
 		if (!CameraRotationControllable) return;
@@ -403,7 +419,9 @@ public partial class Player : CharacterBody3D
 
 		Camera.Rotation = new Vector3(x, Camera.Rotation.Y, Camera.Rotation.Z);
 	}
+	#endregion
 
+	#region JoypadControls
 	private void JoypadControls(float delta, float sens_mod = 10)
 	{
 		Vector2 joypad_dir = Input.GetVector("LookLeft", "LookRight", "LookUp", "LookDown");
@@ -415,7 +433,9 @@ public partial class Player : CharacterBody3D
 			LookDirection = Vector2.Zero;
 		}
 	}
+	#endregion
 
+	#region GetMove
 	private Vector3 GetMove(float delta)
 	{
 		if (!Controllable) return Vector3.Zero;
@@ -429,13 +449,17 @@ public partial class Player : CharacterBody3D
 		WalkVelocity = WalkVelocity.MoveToward(walk_dir * WalkSpeed * MoveDirection.Length(), Acceleration * delta);
 		return WalkVelocity;
 	}
+	#endregion
 
+	#region GetGravity
 	private Vector3 GetGravity(float delta)
 	{
 		GravityVelocity = IsOnFloor() ? Vector3.Zero : GravityVelocity.MoveToward(new Vector3(0, Velocity.Y - Game.Instance.Gravity, 0), Game.Instance.Gravity * delta);
 		return GravityVelocity;
 	}
+	#endregion
 
+	#region GetJump
 	private Vector3 GetJump(float delta)
 	{
 		if (Jumping) {
@@ -448,7 +472,9 @@ public partial class Player : CharacterBody3D
 		JumpVelocity = (!Controllable || IsOnFloor()) ? Vector3.Zero : JumpVelocity.MoveToward(Vector3.Zero, Game.Instance.Gravity * delta);
 		return JumpVelocity;
 	}
+	#endregion
 
+	#region SpeedEffect
 	private void SpeedEffect(float zoommod, float speed, float offset, bool collision2, float _t, double delta)
 	{
 		WalkSpeed = this.Twlerp(WalkSpeed, speed, _t, delta);
@@ -458,51 +484,26 @@ public partial class Player : CharacterBody3D
 		Collision.Disabled = collision2;
 		Collision2.Disabled = !collision2;
 	}
+	#endregion
 
+	#region TiltEffect
 	private void TiltEffect(float degrees, float _t, double delta)
 	{
 		float z = this.Twlerp(Camera.RotationDegrees.Z, degrees, _t, delta);
 		Camera.RotationDegrees = new Vector3(Camera.RotationDegrees.X, Camera.RotationDegrees.Y, z);
 	}
+	#endregion
 
-
-	/// <summary>
-	/// idk what to name it but this variable is responsible for the different walk effect stages
-	/// </summary>
-	private bool WalkerGuh = false;
-
-	public async Task WalkEffect(double delta)
+	#region HeadBobble
+	public Vector3 HeadBobble()
 	{
-		if (WalkingEffecting) return;
+		Vector3 BobPos = Vector3.Zero;
+		var Length = Mathf.Min(Velocity.Length(), 1);
 
-		WalkingEffecting = true;
+		BobPos.Y = Mathf.Sin(BobbleTime * BobbleFrequency) * BobbleAmplifier * Length;
+		BobPos.X = Mathf.Cos(BobbleTime * BobbleFrequency) * BobbleAmplifier * Length;
 
-		// FootstepShake.Set("shake_node", true);
-
-		/*Transform3D Global = Camera.GlobalTransform;
-		Vector3 Origin = Global.Origin;
-
-		Vector3 ForwardVector = Global.Basis.Z;
-		Vector3 LeftVector = Global.Basis.X;
-		Vector3 UpVector = Global.Basis.Y;
-
-		float X = (WalkerGuh ? -WalkSpeed : WalkSpeed)/10;
-		// float Y = WalkerGuh ? -5 : -WalkSpeed;
-
-		WalkerGuh = !WalkerGuh;
-
-		GD.Print($"X: {X}");
-		// GD.Print($"Y: {Y}");
-
-		Origin += LeftVector * X;
-		// Origin += UpVector * Y;
-
-		Transform3D Transform = new Transform3D(LeftVector, UpVector, ForwardVector, Origin);
-
-		Camera.GlobalTransform = Camera.GlobalTransform.InterpolateWith(Transform, this.FactorDelta(1/1.5f, delta));*/
-
-		await Task.Delay(200);
-
-		WalkingEffecting = false;
+		return BobPos;
 	}
+	#endregion
 }

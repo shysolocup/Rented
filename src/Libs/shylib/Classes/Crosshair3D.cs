@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using CoolGame;
 
 [GlobalClass, Icon("uid://ctfx6n3wqvqla")]

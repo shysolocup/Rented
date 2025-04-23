@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using CoolGame;
 
 public partial class SaveIconSpinner : Sprite2D

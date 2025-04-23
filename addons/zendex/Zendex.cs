@@ -2,7 +2,6 @@
 
 using Godot;
 using Godot.Collections;
-using System;
 
 [Tool]
 [GlobalClass]

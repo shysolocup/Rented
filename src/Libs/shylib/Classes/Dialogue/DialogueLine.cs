@@ -1,10 +1,6 @@
 using Godot;
-using System;
 using Godot.Collections;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Threading;
-using System.Text.RegularExpressions;
 
 [GlobalClass, Icon("uid://beseoxu7me3c0")]
 public partial class DialogueLine : Resource

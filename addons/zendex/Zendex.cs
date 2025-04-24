@@ -12,7 +12,6 @@ public partial class Zendex : EditorPlugin
 
     public ZendexDock DockUi;
     public Control PluginUi;
-    private EditorSelection Selection;
 
     public void SetupDock() 
     {
@@ -58,22 +57,12 @@ public partial class Zendex : EditorPlugin
         SetupPlugin();
         SetupDock();
         SetupSettings();
-
-        Selection = EditorInterface.Singleton.GetSelection();
-
-        Selection.SelectionChanged += SelectionChanged;
     }
 
     public override void _EnterTree()
     {
         base._EnterTree();
         if (Engine.IsEditorHint()) Setup();
-    }
-
-    private void SelectionChanged() {
-        if (!Engine.IsEditorHint()) return;
-        if (Selection is null || !IsInstanceValid(DockUi) || DockUi is null) Setup();
-        DockUi.SelectionChanged(Selection.GetSelectedNodes());
     }
 
     public override void _ExitTree()

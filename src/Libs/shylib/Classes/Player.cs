@@ -1,12 +1,24 @@
 using Godot;
+using Godot.Collections;
 using System;
 using CoolGame;
 using System.Threading.Tasks;
+using System.Threading;
 
 [Tool]
 [GlobalClass]
 public partial class Player : CharacterBody3D
 {
+
+	static public Task RunningDialogue;
+	static public CancellationTokenSource RunningDialogueToken;
+
+
+	[Signal] public delegate void StartDialogueEventHandler(Array<DialogueSequence> scene);
+
+	[Signal] public delegate void FinishDialogueEventHandler(Array<DialogueSequence> scene);
+
+
 	[ExportCategory("Player")]
 
 
@@ -288,15 +300,24 @@ public partial class Player : CharacterBody3D
 		DialogueData data = GetNode("/root/Game/Guis/DialogueGui").GetNode<DialogueData>("%DialogueData");
 
 		GD.Print(data);
+
+		using var tokenSource = new CancellationTokenSource();
+		RunningDialogueToken = tokenSource;
 		
-		await data.Play(line);
+		RunningDialogue = data.Play(line, tokenSource.Token);
+		await RunningDialogue.WaitAsync(tokenSource.Token);
+
+		RunningDialogue = null;
+		tokenSource.Dispose();
 
 		Controllable = true;
 		CameraRotationControllable = true;
 		InDialog = false;
 		CaptureMouse();
 	}
+	#endregion
 
+	#region SnatchCamera
 	public Func<Task> SnatchCamera(Transform3D origin)
 	{
 		Vector3 Direction = (origin.Origin - Camera.GlobalTransform.Origin).Normalized();
@@ -317,7 +338,7 @@ public partial class Player : CharacterBody3D
 			if (IsInstanceValid(tween) && tween.IsRunning()) tween.Stop();
 		
 			SceneTreeTimer timer = GetTree().CreateTimer(0.3f);
-			await ToSignal(timer, Timer.SignalName.Timeout);
+			await ToSignal(timer, Godot.Timer.SignalName.Timeout);
 			timer.Dispose();
 		};
 	}

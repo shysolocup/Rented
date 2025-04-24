@@ -9,8 +9,8 @@ using System.Threading;
 public partial class DialogueData : Node
 {
 	static private string _path = "res://src/Data/Dialog/";
-	static private Random rand = new Random();
-	static private Color Transparent = new Color(1, 1, 1, 0);
+	static private readonly Random rand = new();
+	static private Color Transparent = new(1, 1, 1, 0);
 
 	public string Path {
 		get => _path;
@@ -34,7 +34,11 @@ public partial class DialogueData : Node
 	private TextureRect Top;
 	private TextureRect Bottom;
 	private float id = 0;
-	[Signal] public delegate void FinishDialogEventHandler();
+
+	[Signal] public delegate void StartDialogueEventHandler(Array<DialogueSequence> scene);
+
+	[Signal] public delegate void FinishDialogueEventHandler(Array<DialogueSequence> scene);
+
 
 
 	public override void _EnterTree()
@@ -45,17 +49,17 @@ public partial class DialogueData : Node
 
 
 	#region FadeEffect
-	private async Task FadeEffect(RichTextLabel label, DialogueLine line, CancellationToken token, int speed = 30)
+	private async Task FadeEffect(RichTextLabel label, DialogueLine line, CancellationToken token)
 	{
 		string realText = DialogueCharacterEffect.Apply(line.Text);
 
 		for (int i = 0; i < line.Text.Length; i++) {
-			while (tree.Paused) await Task.Delay(5);
+			while (tree.Paused) await Task.Delay(5, token);
 			if (token.IsCancellationRequested) break;
 			
 			label.Text = string.Format(BaseText, i, i+1, realText); 
 
-			await Task.Delay(line.Speed);
+			await Task.Delay(line.Speed, token);
 		}
 
 		token.ThrowIfCancellationRequested();
@@ -64,7 +68,7 @@ public partial class DialogueData : Node
 
 
 	#region PlayByInstance
-	public async Task PlayByInstance(Array<DialogueSequence> sequences, CancellationToken token = new(), VBoxContainer inst = null) {
+	public async Task PlayByInstance(Array<DialogueSequence> scene, CancellationToken token = new(), VBoxContainer inst = null) {
 		bool recursive = inst != null;
 
 		Tween toptween = null; Tween bottomtween = null; Tween bgtween = null;
@@ -112,8 +116,14 @@ public partial class DialogueData : Node
 				DialogueContainer.MoveChild(inst, 1);
 			}
 
-			foreach ( DialogueSequence sequence in sequences) {
+			EmitSignalStartDialogue(scene);
+
+			foreach ( DialogueSequence sequence in scene) {
+				if (token.IsCancellationRequested) break;
+
 				foreach (DialogueLine line in sequence.Lines) {
+					if (token.IsCancellationRequested) break;
+
 					if (sequence.Character.Trim().Length > 0) {
 						chara.Text = DialogueCharacterEffect.Apply(string.Format(BaseCharacterText, sequence.Character));
 						chara.Show();
@@ -129,8 +139,8 @@ public partial class DialogueData : Node
 					if (line.Randoms.Count > 0) {
 						int r = rand.Next(line.Randoms.Count);
 						Array<DialogueSequence> redir = line.Randoms[r];
-						Task thread = PlayByInstance(redir, new(), inst);
-						await thread.WaitAsync(CancellationToken.None);
+						Task thread = PlayByInstance(redir, token, inst);
+						await thread.WaitAsync(token);
 						GD.Print(redir, thread);
 						continue;
 					}
@@ -144,8 +154,8 @@ public partial class DialogueData : Node
 					#region Play Redirect
 					if (line.Redirect != null) {
 						GD.Print('a');
-						Task thread = Play(line.Redirect, new(), inst);
-						await thread.WaitAsync(CancellationToken.None);
+						Task thread = Play(line.Redirect, token, inst);
+						await thread.WaitAsync(token);
 						GD.Print(thread);
 					}
 					#endregion
@@ -158,6 +168,8 @@ public partial class DialogueData : Node
 
 						
 						foreach (DialogueButton btnData in line.Buttons) {
+							if (token.IsCancellationRequested) break;
+
 							Button btn = BaseButton.Duplicate() as Button;
 							buttons.AddChild(btn);
 							btn.Modulate = Transparent;
@@ -194,7 +206,7 @@ public partial class DialogueData : Node
 								await ToSignal(buttontween, Tween.SignalName.Finished);
 
 								await tree.CreateTimer(0.1f).Guh();
-								await Play(btnData.RedirectLine, new(), inst);
+								await Play(btnData.RedirectLine, token, inst);
 
 								// hopefully will stop the loop when a button is pressed
 								done = true;
@@ -207,7 +219,10 @@ public partial class DialogueData : Node
 							.SetEase(Tween.EaseType.Out);
 						}
 
-						while (!done) { await Task.Delay(5); };
+						while (!done) { 
+							await Task.Delay(5);
+							if (token.IsCancellationRequested) break;
+						};
 					}
 					#endregion
 
@@ -219,10 +234,11 @@ public partial class DialogueData : Node
 							- game is paused
 							- line animation isn't done
 						*/
-						while (!Input.IsActionJustPressed("InteractDialog") || tree.Paused || (!line.Skippable && !effect.IsCompleted)) await Task.Delay(5);
+						while (!token.IsCancellationRequested && (!Input.IsActionJustPressed("InteractDialog") || tree.Paused || (!line.Skippable && !effect.IsCompleted))) await Task.Delay(5);
 						
 						elipses.Show();
 						tokenSource.Cancel();
+						tokenSource.Dispose();
 
 						await tree.CreateTimer(0.1f).Guh();
 					}
@@ -256,6 +272,10 @@ public partial class DialogueData : Node
 				inst.Free();
 			}
 		}
+
+		EmitSignalFinishDialogue(scene);
+
+		token.ThrowIfCancellationRequested();
 	}
 	#endregion
 

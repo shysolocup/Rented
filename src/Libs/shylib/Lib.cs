@@ -1,6 +1,8 @@
 using Godot;
 using Godot.Collections;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 public partial class Lib : Node {
@@ -10,6 +12,22 @@ public partial class Lib : Node {
 
 public static class Extensions
 {
+	public static Array<T> GetDescendants<[MustBeVariant] T>(this Node self) where T : Node
+	{
+		Array<T> descendants = [];
+
+		foreach (Node child in self.GetChildren()) {
+			if (child is T node) {
+				descendants.Add(node);
+                descendants += node.GetDescendants<T>();
+			}
+		}
+		
+		return descendants;
+	}
+	public static Array<Node> GetDescendants(this Node self) => self.GetDescendants<Node>();
+
+
 	public static void ClearChildren(this Node self)
 	{
 		foreach (Node child in self.GetChildren()) {
@@ -18,10 +36,9 @@ public static class Extensions
 		}
 	}
 
-	public static Array<T> GetChildrenOfType<[MustBeVariant] T>(this Node self) where T : Node
-	{
-		return self.FindChildren("*", typeof(T).Name) as Array<T>;
-	}
+
+	public static Array<T> GetChildrenOfType<[MustBeVariant] T>(this Node self) where T : Node => self.FindChildren("*", typeof(T).Name) as Array<T>;
+
 
 	public static void ClearChildren<T>(this Node self) where T : Node
 	{
@@ -44,10 +61,7 @@ public static class Extensions
 		self.Dispose();
 	}
 
-	public static T Duplicate<T>(this Node self) where T : Node
-	{
-		return self.Duplicate() as T;
-	}
+	public static T Duplicate<T>(this Node self) where T : Node => self.Duplicate() as T;
 
 	public static string ToHex(this Color self) {
 		(double r, double g, double b) = ( Mathf.Floor(self.R*255), Mathf.Floor(self.G*255), Mathf.Floor(self.B*255) );
@@ -80,10 +94,7 @@ public static class Extensions
 	}
 
 
-	public static float FactorDelta(this GodotObject self, float _t, double delta) 
-	{
-		return _t / ((1/(float)delta) / (float)Performance.GetMonitor(Performance.Monitor.TimeFps));
-	}
+	public static float FactorDelta(this GodotObject self, float _t, double delta) => _t / ((1/(float)delta) / (float)Performance.GetMonitor(Performance.Monitor.TimeFps));
 
 
 	/// <summary>
@@ -234,9 +245,7 @@ public static class Extensions
 		return self.GetNode<T>(nodeName);
 	}
 
-	public static async Task<Node> GetNodeAsync(this Node self, string nodeName) {
-		return await self.GetNodeAsync<Node>(nodeName);
-	}
+	public static async Task<Node> GetNodeAsync(this Node self, string nodeName) => await self.GetNodeAsync<Node>(nodeName);
 
 	public static async Task WaitUntilNodeReady(this Node self, string nodeName)
 	{

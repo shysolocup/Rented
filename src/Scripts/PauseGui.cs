@@ -4,6 +4,11 @@ public partial class PauseGui : Control
 {
 	private bool paused = false;
 
+	public Button ResumeButton;
+	public Button SkipButton;
+	public Button SettingsButton;
+	public Button QuitButton;
+
 	private Player Player;
 	/*private WorldEnvironment World;
 	private CameraAttributesPhysical weirdCameraEffects = GD.Load("res://src/Resources/Ui/PauseCameraAttributes.tres") as CameraAttributesPhysical;
@@ -50,6 +55,26 @@ public partial class PauseGui : Control
 		}
 	}
 
+	public void Resume()
+	{
+		Paused = false;
+	}
+
+	public void SkipCutscene()
+	{
+		Player.RunningDialogueToken.Cancel();
+	}
+
+	public void OpenSettings()
+	{
+
+	}
+
+	public void Quit()
+	{
+
+	}
+
 
 	public override void _Ready()
 	{
@@ -59,23 +84,18 @@ public partial class PauseGui : Control
 
 		VBoxContainer Container = GetChild<VBoxContainer>(0).GetChild<VBoxContainer>(1);
 
-		// Resume
-		Container.GetChild<Button>(0).Pressed += () => {
-			Paused = false;
-		};
+		ResumeButton = Container.GetChild<Button>(0);
+		SkipButton = Container.GetChild<Button>(1);
+		SettingsButton = Container.GetChild<Button>(2);
+		QuitButton = Container.GetChild<Button>(3);
 
-		// Settings
-		Container.GetChild<Button>(1).Pressed += () => {
+		ResumeButton.Pressed += Resume;
 
-		};
+		SkipButton.Pressed += SkipCutscene;
 		
-		// Skip Dialogue
-		Container.GetChild<Button>(2).Pressed += () => {
-			
-		};
+		SettingsButton.Pressed += OpenSettings;
 
-		// Quit
-		Container.GetChild<Button>(3).Pressed += () => {
+		QuitButton.GetChild<Button>(3).Pressed += () => {
 			GetTree().Quit();
 		};
 

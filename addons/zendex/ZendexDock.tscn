@@ -48,15 +48,73 @@ placeholder_text = "Search 🔎"
 clear_button_enabled = true
 caret_blink = true
 
-[node name="AddLayer" type="MenuButton" parent="EntireContainer/Top"]
+[node name="AddLayer" type="Button" parent="EntireContainer/Top"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
-text = "➕ "
-flat = false
+text = "➕ 1 Nodes to new layer"
 alignment = 0
+
+[node name="Popup" type="Popup" parent="EntireContainer/Top/AddLayer"]
+title = "Zendex"
+initial_position = 1
+size = Vector2i(200, 200)
+visible = true
+unresizable = false
+borderless = false
+always_on_top = true
+
+[node name="Container" type="VBoxContainer" parent="EntireContainer/Top/AddLayer/Popup"]
+offset_right = 68.0
+offset_bottom = 70.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="EntireContainer/Top/AddLayer/Popup/Container"]
+layout_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="EntireContainer/Top/AddLayer/Popup/Container"]
+layout_mode = 2
+
+[node name="LineEdit2" type="LineEdit" parent="EntireContainer/Top/AddLayer/Popup/Container"]
+layout_mode = 2
 
 [node name="Bottom" type="Control" parent="EntireContainer"]
 layout_mode = 2
+
+[node name="Base" type="VBoxContainer" parent="EntireContainer/Bottom"]
+visible = false
+layout_mode = 2
+offset_top = 95.0
+offset_right = 1128.0
+offset_bottom = 161.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="EntireContainer/Bottom/Base"]
+layout_mode = 2
+
+[node name="SpinBox" type="SpinBox" parent="EntireContainer/Bottom/Base/HBoxContainer"]
+layout_mode = 2
+allow_greater = true
+
+[node name="Title" type="LineEdit" parent="EntireContainer/Bottom/Base/HBoxContainer"]
+layout_mode = 2
+text = "Default"
+placeholder_text = "Defaults"
+expand_to_text_length = true
+clear_button_enabled = true
+
+[node name="Add" type="Button" parent="EntireContainer/Bottom/Base/HBoxContainer"]
+layout_mode = 2
+text = "➕"
+
+[node name="Delete" type="Button" parent="EntireContainer/Bottom/Base/HBoxContainer"]
+layout_mode = 2
+text = " 🗑️ "
+
+[node name="Tree" type="OptionButton" parent="EntireContainer/Bottom/Base"]
+layout_mode = 2
+item_count = 2
+popup/item_0/text = "afasdfasdfasdfdf"
+popup/item_0/id = 0
+popup/item_1/text = "dfasdfasdf"
+popup/item_1/id = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="EntireContainer/Bottom"]
 layout_mode = 2
@@ -69,39 +127,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 50
-
-[node name="Default" type="VBoxContainer" parent="EntireContainer/Bottom/ScrollContainer/LayersContainer"]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="EntireContainer/Bottom/ScrollContainer/LayersContainer/Default"]
-layout_mode = 2
-
-[node name="SpinBox" type="SpinBox" parent="EntireContainer/Bottom/ScrollContainer/LayersContainer/Default/HBoxContainer"]
-layout_mode = 2
-allow_greater = true
-
-[node name="Title" type="LineEdit" parent="EntireContainer/Bottom/ScrollContainer/LayersContainer/Default/HBoxContainer"]
-layout_mode = 2
-text = "Default"
-placeholder_text = "Defaults"
-expand_to_text_length = true
-clear_button_enabled = true
-
-[node name="Add" type="Button" parent="EntireContainer/Bottom/ScrollContainer/LayersContainer/Default/HBoxContainer"]
-layout_mode = 2
-text = "➕"
-
-[node name="Delete" type="Button" parent="EntireContainer/Bottom/ScrollContainer/LayersContainer/Default/HBoxContainer"]
-layout_mode = 2
-text = " 🗑️ "
-
-[node name="Tree" type="OptionButton" parent="EntireContainer/Bottom/ScrollContainer/LayersContainer/Default"]
-layout_mode = 2
-item_count = 2
-popup/item_0/text = "afasdfasdfasdfdf"
-popup/item_0/id = 0
-popup/item_1/text = "dfasdfasdf"
-popup/item_1/id = 1
 
 [node name="ReloadContainer" type="Control" parent="."]
 z_index = 1

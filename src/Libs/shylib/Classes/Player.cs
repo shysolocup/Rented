@@ -484,13 +484,28 @@ public partial class Player : CharacterBody3D
 	private Vector3 GetJump(float delta)
 	{
 		if (Jumping) {
-			JumpVelocity = IsOnFloor() ? new Vector3(0, Mathf.Sqrt(4 * JumpHeight * Game.Instance.Gravity), 0) : JumpVelocity;
+			JumpVelocity = IsOnFloor() 
+				? new Vector3(0, Mathf.Sqrt(4 * JumpHeight * Game.Instance.Gravity), 0) 
+				: JumpVelocity;
+
 			Jumping = false;
 
 			return JumpVelocity;
 		}
 
-		JumpVelocity = (!Controllable || IsOnFloor()) ? Vector3.Zero : JumpVelocity.MoveToward(Vector3.Zero, Game.Instance.Gravity * delta);
+		if (!Controllable || IsOnFloor()) JumpVelocity = Vector3.Zero;
+
+		else if (IsOnCeiling()) {
+			var guh = MoveAndCollide(JumpVelocity * delta);
+			if (guh != null) {
+				JumpVelocity = JumpVelocity.Bounce(guh.GetNormal()) / 5;
+			}
+		}
+		
+		else {
+			JumpVelocity = JumpVelocity.MoveToward(Vector3.Zero, Game.Instance.Gravity * delta);
+		}
+
 		return JumpVelocity;
 	}
 	#endregion

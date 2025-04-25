@@ -85,8 +85,12 @@ groups.forEach((group, gi) => {
     }
   });
 
+  let real = group.split("_");
+  real.shift();
+  real = real.join("_");
+
   v = {
-    header: `### [${group}](${treelink}) (group #${gi})`,
+    header: `### [${real}](${treelink}) (group #${gi})`,
     content: []
   }
 

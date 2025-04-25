@@ -47,6 +47,7 @@ let dir = `${repodir}.logs`;
 let logrefdir = `${repodir}.logref.md`;
 
 let groups = fs.readdirSync(dir);
+groups = groups.filter(file => !file.endsWith(".md"));
 
 let content = [
 
@@ -77,7 +78,7 @@ groups.forEach((group, gi) => {
   var v = content;
   
   versionnames.forEach((vn, i) => {
-    let subref = group.split("_")[0];
+    let subref = group.split("_")[1];
     if (subref == vn) {
       if (!versions[vn]) versions[vn] = { header: `## ${vn}`, subs: [] };
       vsubs = versions[vn].subs;

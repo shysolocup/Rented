@@ -4,6 +4,7 @@
       "Release",
       "Beta",
       "Alpha",
-      "Transition"
+      "PreAlpha",
+      "Init"
     ]
   }

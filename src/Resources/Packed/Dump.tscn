@@ -47,4 +47,7 @@ unique_name_in_owner = true
 script = ExtResource("6_do8cd")
 metadata/_custom_type_script = "uid://b4ohdvm04o5s5"
 
-[node name="ScreenShaders" parent="." instance=ExtResource("7_k7tso")]
+[node name="ShaderLayer" type="CanvasLayer" parent="."]
+layer = 3
+
+[node name="ScreenShaders" parent="ShaderLayer" instance=ExtResource("7_k7tso")]

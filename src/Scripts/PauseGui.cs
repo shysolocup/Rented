@@ -72,7 +72,7 @@ public partial class PauseGui : Control
 
 	public void Quit()
 	{
-
+		GetTree().Quit();
 	}
 
 
@@ -95,9 +95,7 @@ public partial class PauseGui : Control
 		
 		SettingsButton.Pressed += OpenSettings;
 
-		QuitButton.GetChild<Button>(3).Pressed += () => {
-			GetTree().Quit();
-		};
+		QuitButton.Pressed += Quit;
 
 	}
 

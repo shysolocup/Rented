@@ -25,8 +25,8 @@ public partial class InteractObject3D : RigidBody3D
 
 	public override void _Ready()
 	{
-		Crosshair = GetNode<Crosshair3D>("%Crosshair");
-		Player = GetNode<Player>("%Player");
+		Crosshair = GetNode<Crosshair3D>("/root/Game/%Crosshair");
+		Player = GetNode<Player>("/root/Game/%Player");
 	}
 
 

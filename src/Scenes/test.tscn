@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://s0ftqrddh5up"]
+[gd_scene load_steps=54 format=3 uid="uid://s0ftqrddh5up"]
 
 [ext_resource type="Script" uid="uid://cfoo1gxat5mv8" path="res://src/Libs/shylib/Classes/Game/GameInstance.cs" id="1_doi2n"]
 [ext_resource type="Texture2D" uid="uid://buml50bofllu4" path="res://src/Ui/alarm clock.png" id="2_up28s"]
@@ -6,11 +6,11 @@
 [ext_resource type="PackedScene" uid="uid://ne5pw4aniwnb" path="res://src/Resources/Packed/Player.tscn" id="3_m47wv"]
 [ext_resource type="Shader" uid="uid://cs7xs27v3w4nc" path="res://src/Resources/Shaders/NoiseDistortion.gdshader" id="4_pxl8w"]
 [ext_resource type="Script" uid="uid://5750qaowrba3" path="res://src/Libs/shylib/Classes/Crosshair3D.cs" id="5_0wov3"]
+[ext_resource type="PackedScene" uid="uid://c1eyea2y3khs1" path="res://src/Models/Packed/Outside.tscn" id="5_ax1kr"]
 [ext_resource type="Material" uid="uid://c308v38sitbye" path="res://src/Resources/Materials/placeholder_street.tres" id="6_ng2wt"]
 [ext_resource type="Texture2D" uid="uid://bh6vfh18uu0bn" path="res://src/Textures/placeholder.png" id="7_10fqn"]
 [ext_resource type="Script" uid="uid://dlirdm8ud4hs0" path="res://src/Scripts/InteractSnatchTest.cs" id="7_ng2wt"]
 [ext_resource type="PackedScene" uid="uid://ctqpfrq531m3y" path="res://src/Models/Packed/Buildings.tscn" id="7_yc6y7"]
-[ext_resource type="Texture2D" uid="uid://d1ae8ksha5166" path="res://src/Textures/placeholder_normal.png" id="8_jipul"]
 [ext_resource type="Script" uid="uid://g5yf73ygsftw" path="res://src/Libs/shylib/Classes/InteractObject3D.cs" id="8_uf7b3"]
 [ext_resource type="Shader" uid="uid://csra1tvugixyj" path="res://src/Resources/Shaders/test.tres" id="9_ng2wt"]
 [ext_resource type="AudioStream" uid="uid://nvube6beo7t" path="res://src/Sounds/its happening david bazookie.mp3" id="10_h8oac"]
@@ -34,90 +34,14 @@
 [ext_resource type="StyleBox" uid="uid://c3kf7qgi5iwyi" path="res://src/Resources/Ui/SettingButton.tres" id="38_m1m7r"]
 [ext_resource type="Script" uid="uid://cei6x6adiqlte" path="res://src/Libs/shylib/Classes/Lighting3D.cs" id="40_2udwj"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gc7xl"]
-cull_mode = 2
-albedo_color = Color(1, 0.419608, 1, 1)
-albedo_texture = ExtResource("7_10fqn")
-metallic_specular = 1.0
-normal_enabled = true
-normal_texture = ExtResource("8_jipul")
-rim_tint = 0.0
-clearcoat_roughness = 0.39
-anisotropy = -1.0
-heightmap_deep_parallax = true
-heightmap_min_layers = 1
-heightmap_max_layers = 49
-subsurf_scatter_strength = 0.09
-uv1_scale = Vector3(2, 2, 2)
-uv1_triplanar = true
-uv1_world_triplanar = true
-grow_amount = -2.45
-point_size = 128.0
-proximity_fade_distance = 55.75
-
-[sub_resource type="TextMesh" id="TextMesh_3ahso"]
-text = "parking lot"
+[sub_resource type="TextMesh" id="TextMesh_ng2wt"]
+text = "building"
 font_size = 127
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3ahso"]
 no_depth_test = true
 shading_mode = 0
 billboard_mode = 1
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n8c8y"]
-cull_mode = 2
-albedo_color = Color(0.130673, 0.725877, 0, 1)
-albedo_texture = ExtResource("7_10fqn")
-metallic_specular = 1.0
-normal_enabled = true
-normal_texture = ExtResource("8_jipul")
-rim_tint = 0.0
-clearcoat_roughness = 0.39
-anisotropy = -1.0
-heightmap_deep_parallax = true
-heightmap_min_layers = 1
-heightmap_max_layers = 49
-subsurf_scatter_strength = 0.09
-uv1_scale = Vector3(2, 2, 2)
-uv1_triplanar = true
-uv1_world_triplanar = true
-grow_amount = -2.45
-point_size = 128.0
-proximity_fade_distance = 55.75
-
-[sub_resource type="TextMesh" id="TextMesh_8nlug"]
-text = "grass"
-font_size = 127
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kp7xu"]
-cull_mode = 2
-albedo_color = Color(0.705882, 0.878431, 1, 1)
-albedo_texture = ExtResource("7_10fqn")
-metallic_specular = 1.0
-normal_enabled = true
-normal_texture = ExtResource("8_jipul")
-rim_tint = 0.0
-clearcoat_roughness = 0.39
-anisotropy = -1.0
-heightmap_deep_parallax = true
-heightmap_min_layers = 1
-heightmap_max_layers = 49
-subsurf_scatter_strength = 0.09
-uv1_scale = Vector3(2, 2, 2)
-uv1_triplanar = true
-uv1_world_triplanar = true
-grow_amount = -2.45
-point_size = 128.0
-proximity_fade_distance = 55.75
-
-[sub_resource type="TextMesh" id="TextMesh_10fqn"]
-text = "street
-"
-font_size = 127
-
-[sub_resource type="TextMesh" id="TextMesh_ng2wt"]
-text = "building"
-font_size = 127
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_j1e05"]
 
@@ -220,247 +144,107 @@ target_position = Vector3(0, 0, -1.7)
 [node name="Camera3D" type="Camera3D" parent="Root3D/Cameras"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.38885, 0.807018, -36.4534)
 
-[node name="ScriptDump" type="Node3D" parent="Root3D"]
+[node name="MapScene" type="Node3D" parent="Root3D"]
 
-[node name="Map" type="Node3D" parent="Root3D"]
+[node name="Map" type="Node3D" parent="Root3D/MapScene"]
 
-[node name="Buildings" parent="Root3D/Map" instance=ExtResource("7_yc6y7")]
+[node name="Buildings" parent="Root3D/MapScene/Map" instance=ExtResource("7_yc6y7")]
 
-[node name="Outside" type="Node3D" parent="Root3D/Map"]
+[node name="Outside" parent="Root3D/MapScene/Map" instance=ExtResource("5_ax1kr")]
 
-[node name="parking lot" type="Node3D" parent="Root3D/Map/Outside"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5804, -1.59785, 1.40003)
+[node name="Building" type="StaticBody3D" parent="Root3D/MapScene/Map"]
 
-[node name="CSGBox3D" type="CSGBox3D" parent="Root3D/Map/Outside/parking lot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.8939, -0.138489, -11.4646)
-use_collision = true
-size = Vector3(42.3818, 1.51916, 56.2784)
-material = SubResource("StandardMaterial3D_gc7xl")
-
-[node name="label" type="MeshInstance3D" parent="Root3D/Map/Outside/parking lot/CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.62792, 0)
-mesh = SubResource("TextMesh_3ahso")
-surface_material_override/0 = SubResource("StandardMaterial3D_3ahso")
-
-[node name="CSGBox3D2" type="CSGBox3D" parent="Root3D/Map/Outside/parking lot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.9923, -0.156689, -8.29472)
-use_collision = true
-size = Vector3(74.5686, 1.51916, 26.6316)
-material = SubResource("StandardMaterial3D_gc7xl")
-
-[node name="label" type="MeshInstance3D" parent="Root3D/Map/Outside/parking lot/CSGBox3D2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.62792, 0)
-mesh = SubResource("TextMesh_3ahso")
-surface_material_override/0 = SubResource("StandardMaterial3D_3ahso")
-
-[node name="grass patches" type="Node3D" parent="Root3D/Map/Outside"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5804, -1.59785, 1.40003)
-
-[node name="CSGBox3D3" type="CSGBox3D" parent="Root3D/Map/Outside/grass patches"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.8394, 0.377983, -59.0393)
-use_collision = true
-size = Vector3(29.1889, 2.33618, 30.8367)
-material = SubResource("StandardMaterial3D_n8c8y")
-
-[node name="label" type="MeshInstance3D" parent="Root3D/Map/Outside/grass patches/CSGBox3D3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.62792, 0)
-mesh = SubResource("TextMesh_8nlug")
-surface_material_override/0 = SubResource("StandardMaterial3D_3ahso")
-
-[node name="CSGBox3D4" type="CSGBox3D" parent="Root3D/Map/Outside/grass patches"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.31092, -0.315025, 50.7393)
-use_collision = true
-size = Vector3(64.1747, 2.33618, 80.6077)
-material = SubResource("StandardMaterial3D_n8c8y")
-
-[node name="label" type="MeshInstance3D" parent="Root3D/Map/Outside/grass patches/CSGBox3D4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.62792, 0)
-mesh = SubResource("TextMesh_8nlug")
-surface_material_override/0 = SubResource("StandardMaterial3D_3ahso")
-
-[node name="street" type="Node3D" parent="Root3D/Map/Outside"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5804, -1.9837, 1.40003)
-
-[node name="CSGBox3D4" type="CSGBox3D" parent="Root3D/Map/Outside/street"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.0269, -0.167652, 7.19167)
-use_collision = true
-size = Vector3(17.5351, 2.33618, 226.07)
-material = SubResource("StandardMaterial3D_kp7xu")
-
-[node name="label" type="MeshInstance3D" parent="Root3D/Map/Outside/street"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.0269, 4.29601, -34.8205)
-mesh = SubResource("TextMesh_10fqn")
-skeleton = NodePath("../CSGBox3D4")
-surface_material_override/0 = SubResource("StandardMaterial3D_3ahso")
-
-[node name="CSGBox3D5" type="CSGBox3D" parent="Root3D/Map/Outside/street"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -43.5526, -0.167652, -30.4313)
-use_collision = true
-size = Vector3(17.7607, 2.33618, 145.725)
-material = SubResource("StandardMaterial3D_kp7xu")
-
-[node name="CSGBox3D8" type="CSGBox3D" parent="Root3D/Map/Outside/street"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -7.33298, -0.167652, -114.663)
-use_collision = true
-size = Vector3(17.7607, 2.33618, 218.164)
-material = SubResource("StandardMaterial3D_kp7xu")
-
-[node name="CSGBox3D3" type="CSGBox3D" parent="Root3D/Map/Outside/street"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.4018, 0.456841, 44.6085)
-use_collision = true
-size = Vector3(6.21802, 2.08722, 133.248)
-material = ExtResource("6_ng2wt")
-
-[node name="CSGBox3D13" type="CSGBox3D" parent="Root3D/Map/Outside/street"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -54.3145, 0.462929, 44.8876)
-use_collision = true
-size = Vector3(6.21802, 2.0994, 132.69)
-material = ExtResource("6_ng2wt")
-
-[node name="CSGBox3D9" type="CSGBox3D" parent="Root3D/Map/Outside/street"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.4018, 0.515926, -72.7283)
-use_collision = true
-size = Vector3(6.21802, 2.08722, 67.4115)
-material = ExtResource("6_ng2wt")
-
-[node name="CSGBox3D15" type="CSGBox3D" parent="Root3D/Map/Outside/street"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.7652, 0.515926, -72.6121)
-use_collision = true
-size = Vector3(54.687, 2.08722, 67.179)
-material = ExtResource("6_ng2wt")
-
-[node name="CSGBox3D11" type="CSGBox3D" parent="Root3D/Map/Outside/street"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -61.1483, 0.456841, -69.7607)
-use_collision = true
-size = Vector3(23.5917, 2.08722, 45.5998)
-material = ExtResource("6_ng2wt")
-
-[node name="CSGBox3D7" type="CSGBox3D" parent="Root3D/Map/Outside/street"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 49.2535, 0.456841, 44.6085)
-use_collision = true
-size = Vector3(6.21802, 2.08722, 133.248)
-material = ExtResource("6_ng2wt")
-
-[node name="CSGBox3D6" type="CSGBox3D" parent="Root3D/Map/Outside/street"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -13.9954, 0.456841, 7.55914)
-use_collision = true
-size = Vector3(6.21802, 2.08722, 74.5803)
-material = ExtResource("6_ng2wt")
-
-[node name="CSGBox3D10" type="CSGBox3D" parent="Root3D/Map/Outside/street"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -35.4212, 0.585369, -65.4975)
-use_collision = true
-size = Vector3(52.9219, 2.08722, 117.432)
-material = ExtResource("6_ng2wt")
-
-[node name="CSGBox3D12" type="CSGBox3D" parent="Root3D/Map/Outside/street"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -35.4212, 0.533005, -99.1934)
-use_collision = true
-size = Vector3(14.4657, 2.08722, 117.432)
-material = ExtResource("6_ng2wt")
-
-[node name="CSGBox3D14" type="CSGBox3D" parent="Root3D/Map/Outside/street"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15.8598, 0.533005, -129.938)
-use_collision = true
-size = Vector3(14.4657, 2.08722, 156.555)
-material = ExtResource("6_ng2wt")
-
-[node name="sidewalk" type="Node3D" parent="Root3D/Map/Outside"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -24.2648)
-
-[node name="Building" type="StaticBody3D" parent="Root3D/Map"]
-
-[node name="Shell" type="CSGCombiner3D" parent="Root3D/Map/Building"]
+[node name="Shell" type="CSGCombiner3D" parent="Root3D/MapScene/Map/Building"]
 use_collision = true
 
-[node name="label" type="MeshInstance3D" parent="Root3D/Map/Building/Shell"]
+[node name="label" type="MeshInstance3D" parent="Root3D/MapScene/Map/Building/Shell"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.01875, 4.75792, -44.9927)
 mesh = SubResource("TextMesh_ng2wt")
 skeleton = NodePath("../CSGBox3D2")
 surface_material_override/0 = SubResource("StandardMaterial3D_3ahso")
 
-[node name="CSGBox3D2" type="CSGBox3D" parent="Root3D/Map/Building/Shell"]
+[node name="CSGBox3D2" type="CSGBox3D" parent="Root3D/MapScene/Map/Building/Shell"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.44241, 5.59462, -68.7137)
 use_collision = true
 size = Vector3(43.2186, 14.5033, 48.8563)
 material = ExtResource("6_ng2wt")
 
-[node name="CSGBox3D3" type="CSGBox3D" parent="Root3D/Map/Building/Shell"]
+[node name="CSGBox3D3" type="CSGBox3D" parent="Root3D/MapScene/Map/Building/Shell"]
 transform = Transform3D(0.948871, 0, 0, 0, 1, 0, 0, 0, 0.936166, 7.98064, 5.77119, -69.2127)
 operation = 2
 use_collision = true
 size = Vector3(41.7513, 12.2498, 49.155)
 material = ExtResource("6_ng2wt")
 
-[node name="DoorHoleBack" type="CSGBox3D" parent="Root3D/Map/Building/Shell"]
+[node name="DoorHoleBack" type="CSGBox3D" parent="Root3D/MapScene/Map/Building/Shell"]
 transform = Transform3D(0.948871, 0, 0, 0, 1, 0, 0, 0, 0.936166, 25.8682, 1.09681, -44.3035)
 operation = 2
 use_collision = true
 size = Vector3(4.03476, 3.28772, 7.26869)
 material = ExtResource("6_ng2wt")
 
-[node name="DoorHoleSide" type="CSGBox3D" parent="Root3D/Map/Building/Shell"]
+[node name="DoorHoleSide" type="CSGBox3D" parent="Root3D/MapScene/Map/Building/Shell"]
 transform = Transform3D(-4.14765e-08, 0, 0.936166, 0, 1, 0, -0.948871, 0, -4.09211e-08, 27.2104, 1.25251, -64.7363)
 operation = 2
 use_collision = true
 size = Vector3(4.03476, 3.28772, 7.26869)
 material = ExtResource("6_ng2wt")
 
-[node name="WindowHoleSide" type="CSGBox3D" parent="Root3D/Map/Building/Shell"]
+[node name="WindowHoleSide" type="CSGBox3D" parent="Root3D/MapScene/Map/Building/Shell"]
 transform = Transform3D(-4.14765e-08, 0, 0.936166, 0, 1, 0, -0.948871, 0, -4.09211e-08, 28.0248, 3.34245, -52.4737)
 operation = 2
 use_collision = true
 size = Vector3(9.19889, 4.76817, 7.26869)
 material = ExtResource("6_ng2wt")
 
-[node name="WindowHoleBack" type="CSGBox3D" parent="Root3D/Map/Building/Shell"]
+[node name="WindowHoleBack" type="CSGBox3D" parent="Root3D/MapScene/Map/Building/Shell"]
 transform = Transform3D(0.948871, 0, 0, 0, 1, 0, 0, 0, 0.936166, 17.1849, 3.14808, -46.4589)
 operation = 2
 use_collision = true
 size = Vector3(8.78416, 4.38799, 7.26869)
 material = ExtResource("6_ng2wt")
 
-[node name="DoorHoleFront" type="CSGBox3D" parent="Root3D/Map/Building/Shell"]
+[node name="DoorHoleFront" type="CSGBox3D" parent="Root3D/MapScene/Map/Building/Shell"]
 transform = Transform3D(0.948871, 0, 0, 0, 1, 0, 0, 0, 0.936166, 12.8165, 1.25251, -94.2579)
 operation = 2
 use_collision = true
 size = Vector3(4.03476, 3.28772, 7.26869)
 material = ExtResource("6_ng2wt")
 
-[node name="Dish" type="CSGCombiner3D" parent="Root3D/Map/Building"]
+[node name="Dish" type="CSGCombiner3D" parent="Root3D/MapScene/Map/Building"]
 use_collision = true
 
-[node name="CSGBox3D2" type="CSGBox3D" parent="Root3D/Map/Building/Dish"]
+[node name="CSGBox3D2" type="CSGBox3D" parent="Root3D/MapScene/Map/Building/Dish"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.6911, 6.02905, -58.9651)
 use_collision = true
 size = Vector3(28.7212, 13.1926, 1.32964)
 material = ExtResource("6_ng2wt")
 
-[node name="CSGBox3D3" type="CSGBox3D" parent="Root3D/Map/Building/Dish"]
+[node name="CSGBox3D3" type="CSGBox3D" parent="Root3D/MapScene/Map/Building/Dish"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.04777, 6.02905, -52.9469)
 use_collision = true
 size = Vector3(3.37349, 13.1926, 13.9825)
 material = ExtResource("6_ng2wt")
 
-[node name="CSGBox3D4" type="CSGBox3D" parent="Root3D/Map/Building/Dish"]
+[node name="CSGBox3D4" type="CSGBox3D" parent="Root3D/MapScene/Map/Building/Dish"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.4668, 10.6263, -51.498)
 use_collision = true
 size = Vector3(21.164, 3.99807, 11.0848)
 material = ExtResource("6_ng2wt")
 
-[node name="KitchenDoorHole" type="CSGBox3D" parent="Root3D/Map/Building/Dish"]
+[node name="KitchenDoorHole" type="CSGBox3D" parent="Root3D/MapScene/Map/Building/Dish"]
 transform = Transform3D(0.948871, 0, 0, 0, 1, 0, 0, 0, 0.936166, 25.6321, 1.48263, -60.5642)
 operation = 2
 use_collision = true
 size = Vector3(2.88701, 3.66937, 7.26869)
 material = ExtResource("6_ng2wt")
 
-[node name="CSGCombiner3D" type="CSGCombiner3D" parent="Root3D/Map/Building"]
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="Root3D/MapScene/Map/Building"]
 
-[node name="Ambient" type="Node3D" parent="Root3D"]
+[node name="Ambient" type="Node3D" parent="Root3D/MapScene"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.01644, 17.5536, 0)
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Root3D/Ambient"]
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Root3D/MapScene/Ambient"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.60103, -16.0247, 4.32475)
 stream = ExtResource("10_h8oac")
 attenuation_model = 2
@@ -468,7 +252,7 @@ autoplay = true
 max_distance = 4.0
 parameters/looping = true
 
-[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Root3D/Ambient"]
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Root3D/MapScene/Ambient"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.24936, -16.0247, 4.32475)
 stream = ExtResource("10_h8oac")
 attenuation_model = 2
@@ -476,7 +260,7 @@ autoplay = true
 max_distance = 4.0
 parameters/looping = true
 
-[node name="AudioStreamPlayer3D3" type="AudioStreamPlayer3D" parent="Root3D/Ambient"]
+[node name="AudioStreamPlayer3D3" type="AudioStreamPlayer3D" parent="Root3D/MapScene/Ambient"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.24936, -16.0247, -2.81763)
 stream = ExtResource("10_h8oac")
 attenuation_model = 2
@@ -484,7 +268,7 @@ autoplay = true
 max_distance = 4.0
 parameters/looping = true
 
-[node name="AudioStreamPlayer3D4" type="AudioStreamPlayer3D" parent="Root3D/Ambient"]
+[node name="AudioStreamPlayer3D4" type="AudioStreamPlayer3D" parent="Root3D/MapScene/Ambient"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.57504, -16.0247, -2.81763)
 stream = ExtResource("10_h8oac")
 attenuation_model = 2
@@ -492,196 +276,203 @@ autoplay = true
 max_distance = 4.0
 parameters/looping = true
 
-[node name="testcubes" type="Node3D" parent="Root3D"]
+[node name="testcubes" type="Node3D" parent="Root3D/MapScene"]
 
-[node name="test" type="RigidBody3D" parent="Root3D/testcubes"]
+[node name="test" type="RigidBody3D" parent="Root3D/MapScene/testcubes"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55775, 0.562328, 2.30029)
 freeze = true
 script = ExtResource("8_uf7b3")
 Line = "interact_david_bazookie"
 
-[node name="Collision" type="CollisionShape3D" parent="Root3D/testcubes/test"]
+[node name="Collision" type="CollisionShape3D" parent="Root3D/MapScene/testcubes/test"]
 shape = SubResource("BoxShape3D_j1e05")
 
-[node name="Mesh" type="MeshInstance3D" parent="Root3D/testcubes/test"]
+[node name="Mesh" type="MeshInstance3D" parent="Root3D/MapScene/testcubes/test"]
 mesh = SubResource("BoxMesh_xknod")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("13_ss4f7")
 
-[node name="Node" type="Node" parent="Root3D/testcubes/test"]
+[node name="Node" type="Node" parent="Root3D/MapScene/testcubes/test"]
 script = ExtResource("7_ng2wt")
 
-[node name="test3" type="RigidBody3D" parent="Root3D/testcubes"]
+[node name="test3" type="RigidBody3D" parent="Root3D/MapScene/testcubes"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.2149, 0.977314, -62.8863)
 freeze = true
 script = ExtResource("8_uf7b3")
 Line = "interact_david_bazookie"
 
-[node name="Collision" type="CollisionShape3D" parent="Root3D/testcubes/test3"]
+[node name="Collision" type="CollisionShape3D" parent="Root3D/MapScene/testcubes/test3"]
 shape = SubResource("BoxShape3D_j1e05")
 
-[node name="Mesh" type="MeshInstance3D" parent="Root3D/testcubes/test3"]
+[node name="Mesh" type="MeshInstance3D" parent="Root3D/MapScene/testcubes/test3"]
 mesh = SubResource("BoxMesh_xknod")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("13_ss4f7")
 
-[node name="Node" type="Node" parent="Root3D/testcubes/test3"]
+[node name="Node" type="Node" parent="Root3D/MapScene/testcubes/test3"]
 script = ExtResource("7_ng2wt")
 
-[node name="test7" type="RigidBody3D" parent="Root3D/testcubes"]
+[node name="test7" type="RigidBody3D" parent="Root3D/MapScene/testcubes"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.531609, 0.977314, -40.9868)
 freeze = true
 script = ExtResource("8_uf7b3")
 Line = "interact_david_bazookie"
 
-[node name="Collision" type="CollisionShape3D" parent="Root3D/testcubes/test7"]
+[node name="Collision" type="CollisionShape3D" parent="Root3D/MapScene/testcubes/test7"]
 shape = SubResource("BoxShape3D_j1e05")
 
-[node name="Mesh" type="MeshInstance3D" parent="Root3D/testcubes/test7"]
+[node name="Mesh" type="MeshInstance3D" parent="Root3D/MapScene/testcubes/test7"]
 mesh = SubResource("BoxMesh_xknod")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("13_ss4f7")
 
-[node name="Node" type="Node" parent="Root3D/testcubes/test7"]
+[node name="Node" type="Node" parent="Root3D/MapScene/testcubes/test7"]
 script = ExtResource("7_ng2wt")
 
-[node name="test2" type="RigidBody3D" parent="Root3D/testcubes"]
+[node name="test2" type="RigidBody3D" parent="Root3D/MapScene/testcubes"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55775, 0.562328, 5.04772)
 freeze = true
 script = ExtResource("8_uf7b3")
 Line = "convo_test"
 
-[node name="Collision" type="CollisionShape3D" parent="Root3D/testcubes/test2"]
+[node name="Collision" type="CollisionShape3D" parent="Root3D/MapScene/testcubes/test2"]
 shape = SubResource("BoxShape3D_j1e05")
 
-[node name="Mesh" type="MeshInstance3D" parent="Root3D/testcubes/test2"]
+[node name="Mesh" type="MeshInstance3D" parent="Root3D/MapScene/testcubes/test2"]
 mesh = SubResource("BoxMesh_xknod")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("13_ss4f7")
 
-[node name="Node" type="Node" parent="Root3D/testcubes/test2"]
+[node name="Node" type="Node" parent="Root3D/MapScene/testcubes/test2"]
 script = ExtResource("7_ng2wt")
 
-[node name="test5" type="RigidBody3D" parent="Root3D/testcubes"]
+[node name="test5" type="RigidBody3D" parent="Root3D/MapScene/testcubes"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55775, 0.562328, -0.148977)
 freeze = true
 script = ExtResource("8_uf7b3")
 Line = "death_hass_1"
 
-[node name="Collision" type="CollisionShape3D" parent="Root3D/testcubes/test5"]
+[node name="Collision" type="CollisionShape3D" parent="Root3D/MapScene/testcubes/test5"]
 shape = SubResource("BoxShape3D_j1e05")
 
-[node name="Mesh" type="MeshInstance3D" parent="Root3D/testcubes/test5"]
+[node name="Mesh" type="MeshInstance3D" parent="Root3D/MapScene/testcubes/test5"]
 mesh = SubResource("BoxMesh_xknod")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("13_ss4f7")
 
-[node name="Node" type="Node" parent="Root3D/testcubes/test5"]
+[node name="Node" type="Node" parent="Root3D/MapScene/testcubes/test5"]
 script = ExtResource("7_ng2wt")
 
-[node name="test6" type="RigidBody3D" parent="Root3D/testcubes"]
+[node name="test6" type="RigidBody3D" parent="Root3D/MapScene/testcubes"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55775, 0.562328, -2.86034)
 freeze = true
 script = ExtResource("8_uf7b3")
 Line = "convo_default"
 
-[node name="Collision" type="CollisionShape3D" parent="Root3D/testcubes/test6"]
+[node name="Collision" type="CollisionShape3D" parent="Root3D/MapScene/testcubes/test6"]
 shape = SubResource("BoxShape3D_j1e05")
 
-[node name="Mesh" type="MeshInstance3D" parent="Root3D/testcubes/test6"]
+[node name="Mesh" type="MeshInstance3D" parent="Root3D/MapScene/testcubes/test6"]
 mesh = SubResource("BoxMesh_xknod")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("13_ss4f7")
 
-[node name="Node" type="Node" parent="Root3D/testcubes/test6"]
+[node name="Node" type="Node" parent="Root3D/MapScene/testcubes/test6"]
 script = ExtResource("7_ng2wt")
 
-[node name="test4" type="StaticBody3D" parent="Root3D/testcubes"]
+[node name="test4" type="StaticBody3D" parent="Root3D/MapScene/testcubes"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.65005, 2.90059, -5.61089)
 
-[node name="Collision" type="CollisionShape3D" parent="Root3D/testcubes/test4"]
+[node name="Collision" type="CollisionShape3D" parent="Root3D/MapScene/testcubes/test4"]
 shape = SubResource("BoxShape3D_j1e05")
 
-[node name="Mesh" type="MeshInstance3D" parent="Root3D/testcubes/test4"]
+[node name="Mesh" type="MeshInstance3D" parent="Root3D/MapScene/testcubes/test4"]
 mesh = SubResource("BoxMesh_xknod")
 surface_material_override/0 = ExtResource("13_ss4f7")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Root3D/testcubes"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Root3D/MapScene/testcubes"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.95322, 1.80408, 0)
 mesh = SubResource("BoxMesh_jipul")
 skeleton = NodePath("")
 
-[node name="mockplayers" type="Node3D" parent="Root3D"]
+[node name="mockplayers" type="Node3D" parent="Root3D/MapScene"]
 
-[node name="MockPlayer" type="MeshInstance3D" parent="Root3D/mockplayers"]
+[node name="MockPlayer" type="MeshInstance3D" parent="Root3D/MapScene/mockplayers"]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 26.7163, 1.09401, -45.1054)
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_y0axr")
 skeleton = NodePath("../../root/@EditorNode@21301/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11482/@VSplitContainer@11134/@HSplitContainer@11136/@HSplitContainer@11138/@Control@11139/@SubViewportContainer@11140/@SubViewport@11141/Game/Root3D/Player")
 
-[node name="MockPlayer2" type="MeshInstance3D" parent="Root3D/mockplayers"]
+[node name="MockPlayer2" type="MeshInstance3D" parent="Root3D/MapScene/mockplayers"]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 9.7234, 1.09401, -41.8677)
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_pxl8w")
 skeleton = NodePath("../../root/@EditorNode@21301/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11482/@VSplitContainer@11134/@HSplitContainer@11136/@HSplitContainer@11138/@Control@11139/@SubViewportContainer@11140/@SubViewport@11141/Game/Root3D/Player")
 
-[node name="MockPlayer3" type="MeshInstance3D" parent="Root3D/mockplayers"]
+[node name="MockPlayer3" type="MeshInstance3D" parent="Root3D/MapScene/mockplayers"]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 13.2185, 1.09401, -41.8677)
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_jnspx")
 skeleton = NodePath("../../root/@EditorNode@21301/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11482/@VSplitContainer@11134/@HSplitContainer@11136/@HSplitContainer@11138/@Control@11139/@SubViewportContainer@11140/@SubViewport@11141/Game/Root3D/Player")
 
-[node name="MockPlayer5" type="MeshInstance3D" parent="Root3D/mockplayers"]
+[node name="MockPlayer5" type="MeshInstance3D" parent="Root3D/MapScene/mockplayers"]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 16.4462, 1.09401, -41.8677)
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_ax1kr")
 skeleton = NodePath("../../root/@EditorNode@21301/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11482/@VSplitContainer@11134/@HSplitContainer@11136/@HSplitContainer@11138/@Control@11139/@SubViewportContainer@11140/@SubViewport@11141/Game/Root3D/Player")
 
-[node name="MockPlayer4" type="MeshInstance3D" parent="Root3D/mockplayers"]
+[node name="MockPlayer4" type="MeshInstance3D" parent="Root3D/MapScene/mockplayers"]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 5.41887, 1.26126, -42.1327)
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_yc6y7")
 skeleton = NodePath("../../root/@EditorNode@21301/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11482/@VSplitContainer@11134/@HSplitContainer@11136/@HSplitContainer@11138/@Control@11139/@SubViewportContainer@11140/@SubViewport@11141/Game/Root3D/Player")
 
-[node name="Baseplate" type="CSGBox3D" parent="Root3D"]
-transform = Transform3D(527.247, 0, 0, 0, 1, 0, 0, 0, 694.333, 82.6671, -46.3386, -6.55556)
-use_collision = true
-material = ExtResource("14_n8c8y")
-
-[node name="Triggers" type="Node3D" parent="Root3D"]
+[node name="Triggers" type="Node3D" parent="Root3D/MapScene"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 82.6777, -45.8119, -6.55279)
 
-[node name="Trigger3D" type="Area3D" parent="Root3D/Triggers"]
+[node name="Trigger3D" type="Area3D" parent="Root3D/MapScene/Triggers"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -61.8141, 46.6006, -45.3492)
 script = ExtResource("17_klal5")
 TypeFilter = Array[String](["Player"])
 FilterType = 2
 metadata/_custom_type_script = "uid://d1dwvl843g32v"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Root3D/Triggers/Trigger3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Root3D/MapScene/Triggers/Trigger3D"]
 transform = Transform3D(8.15127, 0, 0, 0, 5.05737, 0, 0, 0, 6.79491, 0, 0, 0)
 shape = SubResource("BoxShape3D_2sh0m")
 debug_color = Color(1, 1, 0, 0.419608)
 
-[node name="RbxScript" type="Node" parent="Root3D/Triggers/Trigger3D"]
+[node name="RbxScript" type="Node" parent="Root3D/MapScene/Triggers/Trigger3D"]
 script = ExtResource("18_j6p0v")
 Source = "uid://nna6r5m6tbhw"
 SpawnedNodePath = NodePath("")
 metadata/_custom_type_script = "uid://cge1tw0n2wjvm"
 
-[node name="Rooms" type="Node" parent="."]
-unique_name_in_owner = true
+[node name="Baseplate" type="CSGBox3D" parent="Root3D"]
+transform = Transform3D(527.247, 0, 0, 0, 1, 0, 0, 0, 694.333, 82.6671, -46.3386, -6.55556)
+use_collision = true
+material = ExtResource("14_n8c8y")
 
-[node name="Guis" type="Node" parent="."]
+[node name="Root2D" type="Node2D" parent="."]
+
+[node name="Guis" type="Control" parent="."]
 unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="SaveGui" type="Control" parent="Guis"]
-layout_mode = 3
+layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 1112.0
+offset_top = 608.0
+offset_right = 1112.0
+offset_bottom = 608.0
 grow_horizontal = 0
 grow_vertical = 0
 mouse_filter = 2
@@ -692,7 +483,9 @@ scale = Vector2(0.64, 0.64)
 texture = ExtResource("2_up28s")
 script = ExtResource("3_35lay")
 
-[node name="CrosshairGui" type="Control" parent="Guis"]
+[node name="CrosshairLayer" type="CanvasLayer" parent="Guis"]
+
+[node name="CrosshairGui" type="Control" parent="Guis/CrosshairLayer"]
 top_level = true
 z_index = 1
 layout_mode = 3
@@ -703,7 +496,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="CrosshairContainer" type="SubViewportContainer" parent="Guis/CrosshairGui"]
+[node name="CrosshairContainer" type="SubViewportContainer" parent="Guis/CrosshairLayer/CrosshairGui"]
 modulate = Color(1, 1, 1, 0.156863)
 top_level = true
 layout_mode = 1
@@ -716,7 +509,7 @@ focus_mode = 0
 mouse_filter = 2
 stretch = true
 
-[node name="CrosshairViewport" type="SubViewport" parent="Guis/CrosshairGui/CrosshairContainer"]
+[node name="CrosshairViewport" type="SubViewport" parent="Guis/CrosshairLayer/CrosshairGui/CrosshairContainer"]
 own_world_3d = true
 world_3d = SubResource("World3D_wvpw1")
 transparent_bg = true
@@ -725,10 +518,10 @@ gui_disable_input = true
 size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
-[node name="ViewportCamera" type="Camera3D" parent="Guis/CrosshairGui/CrosshairContainer/CrosshairViewport"]
+[node name="ViewportCamera" type="Camera3D" parent="Guis/CrosshairLayer/CrosshairGui/CrosshairContainer/CrosshairViewport"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5, 0.781966, -3.22837)
 
-[node name="Crosshair" type="StaticBody3D" parent="Guis/CrosshairGui/CrosshairContainer/CrosshairViewport"]
+[node name="Crosshair" type="StaticBody3D" parent="Guis/CrosshairLayer/CrosshairGui/CrosshairContainer/CrosshairViewport"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.781966, -3.22837)
 input_ray_pickable = false
@@ -737,18 +530,23 @@ DefaultIcon = ExtResource("16_ss4f7")
 DefaultHoverIcon = ExtResource("17_743ng")
 LockedIcon = ExtResource("18_8i3or")
 
-[node name="Icon" type="MeshInstance3D" parent="Guis/CrosshairGui/CrosshairContainer/CrosshairViewport/Crosshair"]
+[node name="Icon" type="MeshInstance3D" parent="Guis/CrosshairLayer/CrosshairGui/CrosshairContainer/CrosshairViewport/Crosshair"]
 transform = Transform3D(0.047, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.781966, -3.22837)
 top_level = true
 cast_shadow = 0
 mesh = SubResource("BoxMesh_1dmmm")
 skeleton = NodePath("")
 
-[node name="OmniLight3D" type="OmniLight3D" parent="Guis/CrosshairGui/CrosshairContainer/CrosshairViewport/Crosshair"]
+[node name="OmniLight3D" type="OmniLight3D" parent="Guis/CrosshairLayer/CrosshairGui/CrosshairContainer/CrosshairViewport/Crosshair"]
 
-[node name="DialogueGui" parent="Guis" instance=ExtResource("24_74nv7")]
+[node name="DialogueLayer" type="CanvasLayer" parent="Guis"]
 
-[node name="PauseGui" type="Control" parent="Guis"]
+[node name="DialogueGui" parent="Guis/DialogueLayer" instance=ExtResource("24_74nv7")]
+
+[node name="PauseLayer" type="CanvasLayer" parent="Guis"]
+layer = 2
+
+[node name="PauseGui" type="Control" parent="Guis/PauseLayer"]
 unique_name_in_owner = true
 process_mode = 3
 layout_mode = 3
@@ -760,25 +558,25 @@ scale = Vector2(1.3, 1.3)
 mouse_filter = 2
 script = ExtResource("20_ss4f7")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Guis/PauseGui"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Guis/PauseLayer/PauseGui"]
 layout_mode = 1
 offset_left = 8.0
 offset_top = -265.0
 offset_right = 407.0
 offset_bottom = 3.0
 
-[node name="Top" type="TextureRect" parent="Guis/PauseGui/VBoxContainer"]
+[node name="Top" type="TextureRect" parent="Guis/PauseLayer/PauseGui/VBoxContainer"]
 layout_mode = 2
 texture = ExtResource("21_3ahso")
 stretch_mode = 3
 flip_h = true
 
-[node name="PauseContainer" type="VBoxContainer" parent="Guis/PauseGui/VBoxContainer"]
+[node name="PauseContainer" type="VBoxContainer" parent="Guis/PauseLayer/PauseGui/VBoxContainer"]
 z_index = 12
 layout_mode = 2
 alignment = 2
 
-[node name="Resume" type="Button" parent="Guis/PauseGui/VBoxContainer/PauseContainer"]
+[node name="Resume" type="Button" parent="Guis/PauseLayer/PauseGui/VBoxContainer/PauseContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("35_2udwj")
 theme_override_font_sizes/font_size = 25
@@ -790,7 +588,7 @@ theme_override_styles/normal = ExtResource("38_m1m7r")
 text = "Resume Game"
 alignment = 0
 
-[node name="SkipButton" type="Button" parent="Guis/PauseGui/VBoxContainer/PauseContainer"]
+[node name="SkipButton" type="Button" parent="Guis/PauseLayer/PauseGui/VBoxContainer/PauseContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("35_2udwj")
 theme_override_font_sizes/font_size = 25
@@ -802,7 +600,7 @@ theme_override_styles/normal = ExtResource("38_m1m7r")
 text = "Skip Cutscene"
 alignment = 0
 
-[node name="SettingsButton" type="Button" parent="Guis/PauseGui/VBoxContainer/PauseContainer"]
+[node name="SettingsButton" type="Button" parent="Guis/PauseLayer/PauseGui/VBoxContainer/PauseContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("35_2udwj")
 theme_override_font_sizes/font_size = 25
@@ -814,7 +612,7 @@ theme_override_styles/normal = ExtResource("38_m1m7r")
 text = "Settings"
 alignment = 0
 
-[node name="QuitButton" type="Button" parent="Guis/PauseGui/VBoxContainer/PauseContainer"]
+[node name="QuitButton" type="Button" parent="Guis/PauseLayer/PauseGui/VBoxContainer/PauseContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("35_2udwj")
 theme_override_font_sizes/font_size = 25
@@ -826,14 +624,18 @@ theme_override_styles/normal = ExtResource("38_m1m7r")
 text = "Die"
 alignment = 0
 
-[node name="Bottom" type="TextureRect" parent="Guis/PauseGui/VBoxContainer"]
+[node name="Bottom" type="TextureRect" parent="Guis/PauseLayer/PauseGui/VBoxContainer"]
 layout_mode = 2
 texture = ExtResource("21_3ahso")
 stretch_mode = 3
 flip_h = true
 flip_v = true
 
+[node name="Rooms" type="Node" parent="."]
+unique_name_in_owner = true
+
 [node name="Dump" parent="." instance=ExtResource("35_b80aw")]
 unique_name_in_owner = true
 
-[editable path="Root3D/Map/Buildings"]
+[editable path="Root3D/MapScene/Map/Buildings"]
+[editable path="Root3D/MapScene/Map/Outside"]

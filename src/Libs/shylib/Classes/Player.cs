@@ -47,7 +47,7 @@ public partial class Player : CharacterBody3D
 	private void ResetCamera() {
 		Camera = GetNode<Camera3D>("%PlayerCamera");
 
-		Camera.GlobalPosition = new Vector3(GlobalPosition.X, GlobalPosition.Y + CameraOffset, GlobalPosition.Z);
+		Camera.GlobalPosition = new Vector3(GlobalPosition.X, GlobalPosition.Y + DefaultCameraOffset, GlobalPosition.Z);
 		Camera.GlobalRotation = GlobalRotation;
 	}
 
@@ -67,7 +67,7 @@ public partial class Player : CharacterBody3D
 	[Export] public bool CameraPositionControllable = true;
 	[Export] public bool Tilt = true;
 
-	private float DefaultCameraOffset = 0.4f;
+	private float DefaultCameraOffset = 1f;
 	private float CameraOffset;
 
 	#endregion
@@ -142,6 +142,8 @@ public partial class Player : CharacterBody3D
 	private CollisionShape3D Collision;
 	private CollisionShape3D Collision2;
 	private MeshInstance3D Mesh;
+
+	private Vector3 Bobble = Vector3.Zero;
 
 	#region Die
 	public void Die(int id = 0) 
@@ -256,10 +258,11 @@ public partial class Player : CharacterBody3D
 
 		if (Camera != null) {
 
-			BobbleTime += (float)(delta * Velocity.Length());
+			BobbleTime = (Velocity.Length() > 0 && BobbleTime < 100) ? BobbleTime + (float)(delta * Velocity.Length()) * 2 : 0;
 
 			if (CameraPositionControllable && !Freecam) {
-				Camera.Position = new Vector3(Position.X, Position.Y + CameraOffset, Position.Z) + HeadBobble(); 
+				Bobble = this.Twlerp(Bobble, HeadBobble(), 1/15f, delta);
+				Camera.Position = new Vector3(Position.X, Position.Y + CameraOffset, Position.Z) + Bobble;
 			}
 			if (!Freecam) Rotation = new Vector3(Rotation.X, Camera.Rotation.Y, Rotation.Z);
 
@@ -495,8 +498,9 @@ public partial class Player : CharacterBody3D
 
 		if (!Controllable || IsOnFloor()) JumpVelocity = Vector3.Zero;
 
-		else if (IsOnCeiling()) {
-			var guh = MoveAndCollide(JumpVelocity * delta);
+		else if (IsOnCeiling() && JumpVelocity.Y > 0) {
+			using KinematicCollision3D guh = MoveAndCollide(JumpVelocity * delta);
+
 			if (guh != null) {
 				JumpVelocity = JumpVelocity.Bounce(guh.GetNormal()) / 5;
 			}
@@ -536,8 +540,9 @@ public partial class Player : CharacterBody3D
 		Vector3 BobPos = Vector3.Zero;
 		var Length = Mathf.Min(Velocity.Length(), 1);
 
-		BobPos.Y = Mathf.Sin(BobbleTime * BobbleFrequency) * BobbleAmplifier * Length;
+		BobPos.Y = Mathf.Sin(BobbleTime * BobbleFrequency) * BobbleAmplifier * Length / 1.5f;
 		BobPos.X = Mathf.Cos(BobbleTime * BobbleFrequency) * BobbleAmplifier * Length;
+		BobPos.Z = -Mathf.Cos(BobbleTime * BobbleFrequency) * BobbleAmplifier * Length;
 
 		return BobPos;
 	}

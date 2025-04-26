@@ -9,6 +9,7 @@ sky_material = SubResource("ProceduralSkyMaterial_fh51l")
 
 [sub_resource type="Environment" id="Environment_oxm2o"]
 background_mode = 2
+background_energy_multiplier = 0.7
 sky = SubResource("Sky_1gr1w")
 tonemap_mode = 2
 glow_enabled = true
@@ -22,6 +23,7 @@ environment = SubResource("Environment_oxm2o")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.601172, 0.0782242, 0.795283, 0.499898, -0.739615, 0.450634, 0.623453, 0.668468, 0.405531, 0, 0, 0)
+light_energy = 0.9
 shadow_enabled = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

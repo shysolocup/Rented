@@ -24,10 +24,7 @@ namespace Appox
 
 		public static string Minify(string jsonc)
 		{
-			string noBlockComments = BlockCommentGuh().Replace(jsonc, "");
-			string noLineComments = LineCommentGuh().Replace(noBlockComments, "");
-
-			return noLineComments;
+			return LineCommentGuh().Replace(BlockCommentGuh().Replace(jsonc, ""), "");
 		}
 
 

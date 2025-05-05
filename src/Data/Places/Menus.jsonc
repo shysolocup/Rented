@@ -1,3 +1,7 @@
+/*
+this covers mostly menu statuses and such
+*/
+
 {
 	"$schema": "../Schemas/Places.json",
 	"prefix": "menu",

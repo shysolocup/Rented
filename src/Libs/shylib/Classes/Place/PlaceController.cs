@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using Godot.Collections;
+using Appox;
 #nullable enable
 
 [Tool]
@@ -47,7 +48,7 @@ public partial class PlaceController : Node
 			using var fileData = FileAccess.Open(Path + file, FileAccess.ModeFlags.Read);
 
 			var fileContent = new Json();
-			fileContent.Parse(fileData.GetAsText());
+			fileContent.Parse(Jsonc.Minify(fileData.GetAsText()));
 			var content = (
 				Dictionary<string, Variant>
 			)fileContent.Data;

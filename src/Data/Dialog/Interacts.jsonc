@@ -2,7 +2,9 @@
 	"prefix": "interact",
     "format": 1,
     "scenes": {
-
+		"stuck": [
+			"It's lodged stuck."
+		],
 		"locked": [
 			"It's locked."
 		],
@@ -29,6 +31,9 @@
 			"if you don't mind could you report it",
 			"or don't if you want to be mean :("
 		],
+
+		// this just exists so that if someone using dev console plays a line that doesn't exist it doesn't break
+		// you're welcome
 		"nonexistent": [
 			"the line you tried to play dialogue doesn't exist",
 			"sorry :("

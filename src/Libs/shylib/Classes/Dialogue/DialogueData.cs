@@ -3,6 +3,7 @@ using System;
 using Godot.Collections;
 using System.Threading.Tasks;
 using System.Threading;
+using Appox;
 
 [Tool]
 [GlobalClass, Icon("uid://beseoxu7me3c0")]
@@ -297,14 +298,13 @@ public partial class DialogueData : Node
 	#region FetchDialogs
 	public Dictionary<string, Array<DialogueSequence>> FetchDialogs()
 	{
-
 		using var dialogueDir = DirAccess.Open(Path);
 
 		foreach (string file in dialogueDir.GetFiles()) {
 			using var fileData = FileAccess.Open(Path + file, FileAccess.ModeFlags.Read);
 
 			var fileContent = new Json();
-			fileContent.Parse(fileData.GetAsText());
+			fileContent.Parse(Jsonc.Minify(fileData.GetAsText()));
 			var content = (
 				Dictionary<string, Variant>
 			)fileContent.Data;

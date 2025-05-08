@@ -86,8 +86,16 @@ public partial class DebugCommandFunctions : GodotObject
 	}
 
 	public void fullbright(bool value) {
-		// Game.Instance.GameEnvironment = value ? GD.Load<Godot.Environment>("res://src/Resources/Skies/Fullbright.tres") : Game.Instance.DefaultGameEnvironment;
-		// Game.Instance.GetNode<DirectionalLight3D>("%Sun").ShadowEnabled = !value;
+		
+		Lighting3D lighting = Game.Instance?.Lighting;
+		if (lighting is null) return;
+
+		if (value) {
+			lighting.ResetApply(lighting.LoadFromScene("Fullbright"));
+		}
+		else {
+			lighting.ResetApply();
+		}
 	}
 
 	public void unlit(bool value) {
@@ -95,21 +103,32 @@ public partial class DebugCommandFunctions : GodotObject
 	}
 
 	public void loadroom(string room) {
-		Game.Instance.LoadRoom(room);
+		Game.Instance?.LoadRoom(room);
 	}
 
 	public void loadlighting(string scene) {
-		Game.Instance.Lighting?.LoadAndSetFromScene(scene);
+		Game.Instance?.Lighting?.LoadAndSetFromScene(scene);
 	}
 
 	public async void freecam(bool value) {
-		Player player = Game.Instance.GetNode<Player>("%Player");
+		Player player = Game.Instance?.GetNode<Player>("%Player");
+		
+		if (player is null) return;
+
 		await DebugConsole.HideConsole();
 		player.Freecam = value;
 	}
 
 	public void pause(bool value) {
 		Game.Instance.GetTree().Paused = value;
+	}
+
+	public void goto_marker(string marker) {
+		Player player = Game.Instance?.GetNode<Player>("%Player");
+		
+		if (player is null) return;
+
+		player.GlobalPosition = Game.Instance.GetNode<Marker3D>($"%Markers/{marker}").GlobalPosition;
 	}
 }
 
@@ -123,6 +142,25 @@ public static class DebugCommandList
 		var funcs = new DebugCommandFunctions();
 
 
+		#region goto_marker
+
+
+		new DebugCommand {
+			Id = "goto_marker",
+			HelpText = "sends the player's character to a marker",
+
+			Parameters = [
+				new DebugParameter {
+					Name = "name",
+					Type = DebugParameterType.String
+				}
+			],
+
+			Function = new Callable(funcs, DebugCommandFunctions.MethodName.goto_marker)
+		}.AddTo(console);
+
+
+		#endregion
 		#region loadroom
 
 

@@ -239,6 +239,7 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="SSLF" type="ColorRect" parent="."]
+visible = false
 material = SubResource("ShaderMaterial_win7u")
 layout_mode = 1
 anchors_preset = 15

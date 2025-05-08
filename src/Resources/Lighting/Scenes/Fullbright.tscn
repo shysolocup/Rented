@@ -1,19 +1,23 @@
-[gd_scene load_steps=3 format=3 uid="uid://cejnb3s3kaieb"]
+[gd_scene load_steps=4 format=3 uid="uid://bnecfyge6ev8j"]
 
-[ext_resource type="Environment" uid="uid://7y7m2l8m64o" path="res://src/Resources/Lighting/Environments/Default.tres" id="1_ha1pl"]
+[ext_resource type="Environment" uid="uid://b0wftn1qffo2t" path="res://src/Resources/Lighting/Environments/Fullbright.tres" id="1_r1vu1"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_pmq1f"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_r1vu1"]
 
 [node name="Node" type="Node"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = ExtResource("1_ha1pl")
+environment = ExtResource("1_r1vu1")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.601172, 0.0782242, 0.795283, 0.499898, -0.739615, 0.450634, 0.623453, 0.668468, 0.405531, 0, 0, 0)
-light_energy = 0.9
-shadow_enabled = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(4.20241, 0, 0, 0, 1, 0, 0, 0, 3.91537, 0, 0, 0)
 mesh = SubResource("PlaneMesh_pmq1f")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(4.20241, 0, 0, 0, 1, 0, 0, 0, 3.91537, 0, 1.297, 0)
+mesh = SubResource("BoxMesh_r1vu1")

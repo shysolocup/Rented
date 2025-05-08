@@ -1,0 +1,295 @@
+[gd_scene load_steps=27 format=3 uid="uid://s0ftqrddh5up"]
+
+[ext_resource type="Script" uid="uid://cfoo1gxat5mv8" path="res://src/Libs/shylib/Classes/Game/GameInstance.cs" id="1_k0mjx"]
+[ext_resource type="Script" uid="uid://cei6x6adiqlte" path="res://src/Libs/shylib/Classes/Lighting3D.cs" id="2_h8oac"]
+[ext_resource type="PackedScene" uid="uid://ne5pw4aniwnb" path="res://src/Resources/Packed/Player.tscn" id="3_ss4f7"]
+[ext_resource type="PackedScene" uid="uid://crynhy865gfw6" path="res://src/Resources/Packed/Maps/MapBlock.tscn" id="4_743ng"]
+[ext_resource type="Material" uid="uid://bljj4t730djb1" path="res://src/Resources/Materials/placeholder.tres" id="5_8i3or"]
+[ext_resource type="Script" uid="uid://d1dwvl843g32v" path="res://src/Libs/shylib/Classes/Trigger3D/Trigger3D.cs" id="6_p8ix8"]
+[ext_resource type="Script" uid="uid://cge1tw0n2wjvm" path="res://src/Libs/shylib/Classes/RbxScript.cs" id="7_0m3r5"]
+[ext_resource type="Texture2D" uid="uid://buml50bofllu4" path="res://src/Ui/alarm clock.png" id="8_3ahso"]
+[ext_resource type="Script" uid="uid://f680ovgo7k8o" path="res://src/Scripts/SaveIconSpinner.cs" id="9_ng2wt"]
+[ext_resource type="Script" uid="uid://5750qaowrba3" path="res://src/Libs/shylib/Classes/Crosshair3D.cs" id="10_10fqn"]
+[ext_resource type="Material" uid="uid://ce0vtdxnqp031" path="res://src/Resources/Materials/DefaultIcon.tres" id="11_jipul"]
+[ext_resource type="Material" uid="uid://djkfa7xtdg63i" path="res://src/Resources/Materials/DefaultHoverIcon.tres" id="12_gc7xl"]
+[ext_resource type="Material" uid="uid://bq8wyiwgdl28m" path="res://src/Resources/Materials/LockedIcon.tres" id="13_n8c8y"]
+[ext_resource type="PackedScene" uid="uid://dvpi6uwtqfp8n" path="res://src/Resources/Packed/Dialogue.tscn" id="14_8nlug"]
+[ext_resource type="Script" uid="uid://bq8h5fsdfxg7c" path="res://src/Scripts/PauseGui.cs" id="15_kp7xu"]
+[ext_resource type="Texture2D" uid="uid://bmtapdmr10o7e" path="res://src/Images/Dialog/dialog_border.png" id="16_07m1p"]
+[ext_resource type="FontFile" uid="uid://fj2b1x4fiorb" path="res://src/Fonts/timesbi.ttf" id="17_74nv7"]
+[ext_resource type="StyleBox" uid="uid://exqyscgxswgh" path="res://src/Resources/Ui/SettingButtonPress.tres" id="18_pxl8w"]
+[ext_resource type="StyleBox" uid="uid://dljp1kxxxhaej" path="res://src/Resources/Ui/SettingButtonHover.tres" id="19_4v06e"]
+[ext_resource type="StyleBox" uid="uid://c3kf7qgi5iwyi" path="res://src/Resources/Ui/SettingButton.tres" id="20_2udwj"]
+[ext_resource type="PackedScene" uid="uid://bg2s3j3jpsaqq" path="res://src/Resources/Packed/Dump.tscn" id="21_jnspx"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2sh0m"]
+size = Vector3(0.716797, 1, 1)
+
+[sub_resource type="Environment" id="Environment_1fj5k"]
+
+[sub_resource type="World3D" id="World3D_wvpw1"]
+environment = SubResource("Environment_1fj5k")
+
+[sub_resource type="BoxMesh" id="BoxMesh_1dmmm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yc6y7"]
+
+[node name="Game" type="Node"]
+script = ExtResource("1_k0mjx")
+
+[node name="Lighting3D" type="Node3D" parent="."]
+unique_name_in_owner = true
+process_mode = 3
+script = ExtResource("2_h8oac")
+metadata/_custom_type_script = "uid://cei6x6adiqlte"
+
+[node name="Root3D" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -82.6777, 45.8119, 6.55279)
+
+[node name="Player" parent="Root3D" instance=ExtResource("3_ss4f7")]
+unique_name_in_owner = true
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 4.32012, -44.5223, -40.1963)
+
+[node name="Cameras" type="Node3D" parent="Root3D"]
+unique_name_in_owner = true
+
+[node name="PlayerCamera" type="Camera3D" parent="Root3D/Cameras"]
+unique_name_in_owner = true
+process_mode = 3
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.32012, 1.54733, -40.1963)
+current = true
+
+[node name="InteractRay" type="RayCast3D" parent="Root3D/Cameras/PlayerCamera"]
+unique_name_in_owner = true
+target_position = Vector3(0, 0, -1.7)
+
+[node name="Camera3D" type="Camera3D" parent="Root3D/Cameras"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.38885, 0.807018, -36.4534)
+
+[node name="MapScene" parent="Root3D" instance=ExtResource("4_743ng")]
+
+[node name="Baseplate" type="CSGBox3D" parent="Root3D"]
+transform = Transform3D(527.247, 0, 0, 0, 1, 0, 0, 0, 694.333, 82.6671, -46.3386, -6.55556)
+use_collision = true
+material = ExtResource("5_8i3or")
+
+[node name="Markers" type="Node3D" parent="Root3D"]
+unique_name_in_owner = true
+
+[node name="Dish" type="Marker3D" parent="Root3D/Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.4775, 1.61127, -53.9838)
+gizmo_extents = 1.0
+
+[node name="Default" type="Marker3D" parent="Root3D/Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.34554, 2.05975, -40.2059)
+gizmo_extents = 1.0
+
+[node name="Kitchen" type="Marker3D" parent="Root3D/Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.6443, 1.61127, -65.1824)
+gizmo_extents = 1.0
+
+[node name="Triggers" type="Node3D" parent="Root3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 82.6777, -45.8119, -6.55279)
+
+[node name="Trigger3D" type="Area3D" parent="Root3D/Triggers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -61.8141, 46.6006, -45.3492)
+script = ExtResource("6_p8ix8")
+TypeFilter = Array[String](["Player"])
+FilterType = 2
+metadata/_custom_type_script = "uid://d1dwvl843g32v"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Root3D/Triggers/Trigger3D"]
+transform = Transform3D(8.15127, 0, 0, 0, 5.05737, 0, 0, 0, 6.79491, 0, 0, 0)
+shape = SubResource("BoxShape3D_2sh0m")
+debug_color = Color(1, 1, 0, 0.419608)
+
+[node name="RbxScript" type="Node" parent="Root3D/Triggers/Trigger3D"]
+script = ExtResource("7_0m3r5")
+Source = "uid://nna6r5m6tbhw"
+SpawnedNodePath = NodePath("")
+metadata/_custom_type_script = "uid://cge1tw0n2wjvm"
+
+[node name="Root2D" type="Node2D" parent="."]
+
+[node name="Guis" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SaveGui" type="Control" parent="Guis"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1112.0
+offset_top = 608.0
+offset_right = 1112.0
+offset_bottom = 608.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="SaveIcon" type="Sprite2D" parent="Guis/SaveGui"]
+position = Vector2(-42, -42)
+scale = Vector2(0.64, 0.64)
+texture = ExtResource("8_3ahso")
+script = ExtResource("9_ng2wt")
+
+[node name="CrosshairLayer" type="CanvasLayer" parent="Guis"]
+
+[node name="CrosshairGui" type="Control" parent="Guis/CrosshairLayer"]
+top_level = true
+z_index = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CrosshairContainer" type="SubViewportContainer" parent="Guis/CrosshairLayer/CrosshairGui"]
+modulate = Color(1, 1, 1, 0.156863)
+top_level = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+mouse_filter = 2
+stretch = true
+
+[node name="CrosshairViewport" type="SubViewport" parent="Guis/CrosshairLayer/CrosshairGui/CrosshairContainer"]
+own_world_3d = true
+world_3d = SubResource("World3D_wvpw1")
+transparent_bg = true
+handle_input_locally = false
+gui_disable_input = true
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="ViewportCamera" type="Camera3D" parent="Guis/CrosshairLayer/CrosshairGui/CrosshairContainer/CrosshairViewport"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5, 0.781966, -3.22837)
+
+[node name="Crosshair" type="StaticBody3D" parent="Guis/CrosshairLayer/CrosshairGui/CrosshairContainer/CrosshairViewport"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.781966, -3.22837)
+input_ray_pickable = false
+script = ExtResource("10_10fqn")
+DefaultIcon = ExtResource("11_jipul")
+DefaultHoverIcon = ExtResource("12_gc7xl")
+LockedIcon = ExtResource("13_n8c8y")
+
+[node name="Icon" type="MeshInstance3D" parent="Guis/CrosshairLayer/CrosshairGui/CrosshairContainer/CrosshairViewport/Crosshair"]
+transform = Transform3D(0.047, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.781966, -3.22837)
+top_level = true
+cast_shadow = 0
+mesh = SubResource("BoxMesh_1dmmm")
+skeleton = NodePath("")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Guis/CrosshairLayer/CrosshairGui/CrosshairContainer/CrosshairViewport/Crosshair"]
+
+[node name="DialogueLayer" type="CanvasLayer" parent="Guis"]
+
+[node name="DialogueGui" parent="Guis/DialogueLayer" instance=ExtResource("14_8nlug")]
+
+[node name="PauseLayer" type="CanvasLayer" parent="Guis"]
+layer = 2
+
+[node name="PauseGui" type="Control" parent="Guis/PauseLayer"]
+unique_name_in_owner = true
+process_mode = 3
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+grow_vertical = 0
+scale = Vector2(1.3, 1.3)
+mouse_filter = 2
+script = ExtResource("15_kp7xu")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Guis/PauseLayer/PauseGui"]
+layout_mode = 1
+offset_left = 8.0
+offset_top = -265.0
+offset_right = 407.0
+offset_bottom = 3.0
+
+[node name="Top" type="TextureRect" parent="Guis/PauseLayer/PauseGui/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("16_07m1p")
+stretch_mode = 3
+flip_h = true
+
+[node name="PauseContainer" type="VBoxContainer" parent="Guis/PauseLayer/PauseGui/VBoxContainer"]
+z_index = 12
+layout_mode = 2
+alignment = 2
+
+[node name="Resume" type="Button" parent="Guis/PauseLayer/PauseGui/VBoxContainer/PauseContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("17_74nv7")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yc6y7")
+theme_override_styles/hover_pressed = ExtResource("18_pxl8w")
+theme_override_styles/hover = ExtResource("19_4v06e")
+theme_override_styles/pressed = ExtResource("18_pxl8w")
+theme_override_styles/normal = ExtResource("20_2udwj")
+text = "Resume Game"
+alignment = 0
+
+[node name="SkipButton" type="Button" parent="Guis/PauseLayer/PauseGui/VBoxContainer/PauseContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("17_74nv7")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yc6y7")
+theme_override_styles/hover_pressed = ExtResource("18_pxl8w")
+theme_override_styles/hover = ExtResource("19_4v06e")
+theme_override_styles/pressed = ExtResource("18_pxl8w")
+theme_override_styles/normal = ExtResource("20_2udwj")
+text = "Skip Cutscene"
+alignment = 0
+
+[node name="SettingsButton" type="Button" parent="Guis/PauseLayer/PauseGui/VBoxContainer/PauseContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("17_74nv7")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yc6y7")
+theme_override_styles/hover_pressed = ExtResource("18_pxl8w")
+theme_override_styles/hover = ExtResource("19_4v06e")
+theme_override_styles/pressed = ExtResource("18_pxl8w")
+theme_override_styles/normal = ExtResource("20_2udwj")
+text = "Settings"
+alignment = 0
+
+[node name="QuitButton" type="Button" parent="Guis/PauseLayer/PauseGui/VBoxContainer/PauseContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("17_74nv7")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yc6y7")
+theme_override_styles/hover_pressed = ExtResource("18_pxl8w")
+theme_override_styles/hover = ExtResource("19_4v06e")
+theme_override_styles/pressed = ExtResource("18_pxl8w")
+theme_override_styles/normal = ExtResource("20_2udwj")
+text = "Die"
+alignment = 0
+
+[node name="Bottom" type="TextureRect" parent="Guis/PauseLayer/PauseGui/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("16_07m1p")
+stretch_mode = 3
+flip_h = true
+flip_v = true
+
+[node name="Rooms" type="Node" parent="."]
+unique_name_in_owner = true
+
+[node name="Dump" parent="." instance=ExtResource("21_jnspx")]
+unique_name_in_owner = true

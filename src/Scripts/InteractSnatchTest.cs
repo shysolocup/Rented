@@ -7,7 +7,7 @@ public partial class InteractSnatchTest : Node
 
 	public override void _Ready() {
 		obj = GetParent<InteractObject3D>();
-		player = GetNode<Player>("../%Player");
+		player = GetNode<Player>("/root/Game/%Player");
 
 		obj.HoverChanged += Hover;
 		obj.PressChanged += Press;

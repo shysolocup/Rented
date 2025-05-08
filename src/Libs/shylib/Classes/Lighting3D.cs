@@ -37,7 +37,7 @@ public partial class Lighting3D : Node3D
 	public DirectionalLight3D Sun;
 
 	[ExportToolButton("Reset / Apply")] 
-	public Callable ResetCall => Callable.From(ResetApply);
+	public Callable ResetCall => Callable.From(() => ResetApply());
 
 	public Lighting3D DisposeLightings() 
 	{
@@ -48,12 +48,14 @@ public partial class Lighting3D : Node3D
 		return this;
 	}
 
-	public Lighting3D ResetApply() 
+	public Lighting3D ResetApply(PackedScene lighting = null) 
 	{
 		if (Visible) {
+			lighting ??= Lighting;
+
 			this.ClearChildren();
 
-			Node CurrentLighting = Lighting.Instantiate();
+			using Node CurrentLighting = lighting.Instantiate();
 
 			SceneWorld?.QueueFree();
 			SceneSun?.QueueFree();
@@ -81,14 +83,14 @@ public partial class Lighting3D : Node3D
 
 	public PackedScene LoadFromScene(string scene) 
 	{
-		PackedScene ps = SceneCache.TryGetValue(scene, out PackedScene value) ? value : GD.Load<PackedScene>($"{SceneDir}/{scene}.tscn");
+		using PackedScene ps = SceneCache.TryGetValue(scene, out PackedScene value) ? value : GD.Load<PackedScene>($"{SceneDir}/{scene}.tscn");
 		if (!SceneCache.ContainsKey(scene)) SceneCache.Add(scene, ps);
 		return ps;
 	}
 
 	public Lighting3D LoadAndSetFromScene(string scene)
 	{
-		Lighting = LoadFromScene(scene);
+		using PackedScene Lighting = LoadFromScene(scene);
 		return this;
 	}
 
@@ -124,7 +126,7 @@ public partial class Lighting3D : Node3D
 	public override async void _Ready()
 	{
 		base._Ready();
-		Connect(SignalName.VisibilityChanged, new Callable(this, MethodName.OnVisibilityChanged));
+		_ = Connect(SignalName.VisibilityChanged, new Callable(this, MethodName.OnVisibilityChanged));
 		await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 
 		switch(AutoVisibility) {

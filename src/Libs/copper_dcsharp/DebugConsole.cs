@@ -73,7 +73,7 @@ public partial class DebugConsole : CanvasLayer
 		DebugCommandList.Init(this);
 	}
 
-	protected void _OnScrollbarChanged()
+	private void _OnScrollbarChanged()
 	{
 		LogField.ScrollVertical = (int)LogScrollBar.MaxValue;
 	}
@@ -184,51 +184,58 @@ public partial class DebugConsole : CanvasLayer
 
 		// Gather the first word of each hint, stripping the [url] wrappers
 		var hints = new Array<string>();
+
 		foreach(string hint in CommandHintsLabel.Text.Split("\n")) {
 			string buh = hint.Replace("url=", "");
-
 			hints.Add(buh);
 		}
 
 		/*
 		hints = hints.slice(0, -1)
+		
 		# Find the common prefix to all hints
 		var common_prefix = ""
+		
 		if not hints.is_empty():
 			for i in range(1000):
 				if not hints.all(func(h): return len(h) > i and h[i] == hints[0][i]):
 					break
 				common_prefix += hints[0][i]
+		
 		if not commandHintsLabel.visible or common_prefix == '':
 			return
+
 		if len(hints) == 1:
 			common_prefix += ' ' # Only one hint, so complete the whole word
+		
 		# Replace the last word, if any, with `common_prefix`
 		var r = RegEx.new()
+		
 		r.compile(r'(\w+)?$') # "Any non-whitespace characters until the end"
+		
 		var new_text = r.sub(commandField.text, common_prefix)
+		
 		commandField.text = new_text
 		commandField.caret_column = len(new_text)
+		
 		_on_command_field_text_changed(new_text)
 		*/
 
-		hints = hints.Slice(0, hints.Count);
-
-		// Find the common prefix to all hints
+		hints = hints[..];
 		var common_prefix = "";
 
-		if (hints.Count() > 0) {
+		if (hints.Count > 0) {
 			foreach(int i in GD.Range(1000)) {
-				if (!hints.All((string h) => h.Length > i && hints[0].Length > i && h[i] == hints[0][i])) break;
+				if (!hints.All(h => h.Length > i && hints[0].Length > i && h[i] == hints[0][i])) break;
 				common_prefix += hints[0][i];
 			}
 		}
 
-		if(!CommandHintsLabel.Visible || common_prefix == "") {
+		if (!CommandHintsLabel.Visible || common_prefix == "") {
 			return;
 		}
 
-		if(hints.Count == 1) {
+		if (hints.Count == 1) {
 			common_prefix += " ";
 			// Only one hint, so complete the whole word
 
@@ -248,14 +255,14 @@ public partial class DebugConsole : CanvasLayer
 		_OnCommandFieldTextChanged(new_text);
 	}
 
-	protected void _OnCommandFieldTextChanged(string new_text)
+	private void _OnCommandFieldTextChanged(string new_text)
 	{
 		var commandHints = new Array<string>();
 		var commandSplit = new Array<string>(new_text.Split(" "));
 		
 		var commandID = commandSplit[0];
 
-		if (Commands.Keys.Any( cmd => cmd == commandID)) {
+		if (commandSplit.Count > 0 && Commands.Keys.Any( cmd => cmd == commandID)) {
 			CommandHintsParent.Visible = true;
 			CommandHintsLabel.Visible = true;
 			CommandHintsPanel.Visible = true;
@@ -263,19 +270,19 @@ public partial class DebugConsole : CanvasLayer
 			
 			CommandHintsLabel.Text = "";
 
-
 			// Get parameters filled
 			var parameterCount = 0;
 			var readingString = false;
+			
 			foreach(string word in commandSplit) {
 
-				if (word.StartsWith("\"")) {
-					if(!readingString) parameterCount += 1;
-					if(word != "\"" && !word.EndsWith("\"")) readingString = true;
+				if (word.StartsWith('"')) {
+					if (!readingString) parameterCount += 1;
+					if (word != "\"" && !word.EndsWith('"')) readingString = true;
 					else if (word == "\"") readingString = !readingString;
 				}
 
-				else if (word.EndsWith("\"")) readingString = false;
+				else if (word.EndsWith('"')) readingString = false;
 				else if (!readingString) parameterCount += 1;
 			
 			}
@@ -286,12 +293,12 @@ public partial class DebugConsole : CanvasLayer
 
 			CommandHintHeaderLabel.Text = _GetParameterText(cmd, parameterCount);
 
-			if (parameterCount > cmd.Parameters.Count()) {
+			if (parameterCount < cmd.Parameters.Count) {
 				var options = cmd.Parameters[parameterCount].Options;
 
-				if (options.Count() > 0) {
+				if (options.Count > 0) {
 					foreach(string option in options) {
-						if (option.StartsWith(commandSplit[commandSplit.Count() - 1])) {
+						if (option.StartsWith(commandSplit[commandSplit.Count - 1])) {
 							CommandHintsLabel.Text += "[url]" + option + "[/url]\n";
 						}
 					}
@@ -299,54 +306,58 @@ public partial class DebugConsole : CanvasLayer
 			}
 		}
 
-		var sortedCommands = new Array<string>(Commands.Keys);
-		sortedCommands.Sort();
-
-		foreach(string command in sortedCommands)
-		{
-			if(command.Contains(commandID)) {
-				commandHints.Add(command);
-			}
-		}
-
-		CommandHintHeader.Visible = false;
-
-		if (commandHints.Count() > 0) {
-			CommandHintsParent.Visible = true;
-			CommandHintsLabel.Visible = true;
-			CommandHintsPanel.Visible = true;
-			CommandHintsLabel.Text = "";
-			
-			foreach(string commandId in commandHints) {
-				string parameters = "";
-
-				if (Commands.ContainsKey(commandId)) {
-					DebugCommand command = Commands[commandId];
-					parameters = _GetParameterText(command);
-				}
-				CommandHintsLabel.Text += $"[url={commandId}] {parameters}[/url]\n";
-			}
-		}
-
 		else {
-			CommandHintsParent.Visible = false;
-			CommandHintsLabel.Visible = false;
-			CommandHintsPanel.Visible = false;
+
+			var sortedCommands = new Array<string>(Commands.Keys);
+			sortedCommands.Sort();
+
+			foreach(string command in sortedCommands)
+			{
+				if (command.Contains(commandID)) {
+					commandHints.Add(command);
+				}
+			}
+
+			CommandHintHeader.Visible = false;
+
+			if (commandHints.Count > 0) {
+				CommandHintsParent.Visible = true;
+				CommandHintsLabel.Visible = true;
+				CommandHintsPanel.Visible = true;
+				CommandHintsLabel.Text = "";
+				
+				foreach(string commandId in commandHints) {
+					string parameters = "";
+
+					if (Commands.TryGetValue(commandId, out DebugCommand value)) {
+						DebugCommand command = value;
+						parameters = _GetParameterText(command);
+					}
+
+					CommandHintsLabel.Text += $"[url={commandId}] {parameters}[/url]\n";
+				}
+			}
+
+			else {
+				CommandHintsParent.Visible = false;
+				CommandHintsLabel.Visible = false;
+				CommandHintsPanel.Visible = false;
+			}
 		}
 
+		GD.Print(CommandHintsLabel.Text);
 		GD.Print(commandHints);
 	}
 
-	protected void _OnCommandHintsMetaClicked(string meta)
+	private void _OnCommandHintsMetaClicked(string meta)
 	{
-		var commandSplit = new Array<string>(CommandField.Text.Split(" "))
-        {
+		var commandSplit = new Array<string>(CommandField.Text.Split(" ")) {
             meta
         };
+
 		var newText = "";
 
-		foreach(string i in commandSplit)
-		{
+		foreach(string i in commandSplit) {
 			newText += i + " ";
 		}
 
@@ -362,7 +373,7 @@ public partial class DebugConsole : CanvasLayer
 	
 	# region Commands processing
 	
-	protected string _GetParameterText(DebugCommand command, int currentParameter =  - 1)
+	private string _GetParameterText(DebugCommand command, int currentParameter =  - 1)
 	{
 		var text = command.Id;
 		var isHeader = currentParameter < command.Parameters.Count && currentParameter >= 0;
@@ -370,12 +381,18 @@ public partial class DebugConsole : CanvasLayer
 		foreach (DebugParameter parameter in command.Parameters) {
 
 			if (isHeader && parameter.Name == command.Parameters[currentParameter].Name) {
-				string typename = parameter.Name;
-				text += " [b]<" + parameter.Name + ": " + parameter.Type.ToString() + ">[/b]";
+				text += $" [b]<{parameter.Name}: {parameter.Type.ToString()}>[/b]";
 			}
 			
 			else {
-				text += " <" + parameter.Name + ": " + parameter.Type.ToString() + ">";
+				text += $" <{parameter.Name}: {parameter.Type.ToString()}>";
+			}
+
+			if (!command.GetFunction.Equals(null)) {
+				var value = command.GetFunction.Call();
+				if (value.Obj is not null) {
+					text += $" === {(string)value}";
+				}
 			}
 		}
 		return text;
@@ -737,7 +754,7 @@ public partial class DebugConsole : CanvasLayer
 		GetConsole().PauseOnOpen = pause;
 	}
 
-	protected static void _UpdateLog()
+	private static void _UpdateLog()
 	{
 		var console = GetConsole();
 		var logText = "";

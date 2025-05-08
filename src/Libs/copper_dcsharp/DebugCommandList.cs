@@ -1,136 +1,10 @@
 using System.Linq;
 using Godot;
-using CoolGame;
 using Godot.Collections;
 
-public partial class DebugCommandFunctions : GodotObject 
-{
-
-	public void show_stats(bool value) 
-	{
-		var console = DebugConsole.GetConsole();
-		console.Stats.Visible = value;
-
-		GD.Print(console.Stats.Visible);
-	}
-
-	public bool stats_visible() 
-	{
-		var console = DebugConsole.GetConsole();
-		return console.Stats.Visible;
-	}
-
-	public void set_noise(float value)
-	{
-		Game.Instance.Noise = value;
-	}
-
-	public void clear()
-	{
-		DebugConsole.ClearLog();
-	}
-
-	public void show_mini_log(bool value) 
-	{
-		var console = DebugConsole.GetConsole();
-
-		console.ShowMiniLog = value;
-
-		if (!console.CommandField.Visible) {
-			console.MiniLog.Visible = true;
-		}
-	}
-
-	public void goto_camera(string camera)
-	{
-		Game.Instance.GetNode("%Cameras").GetNode<Camera3D>(camera).MakeCurrent();
-	}
-
-	public bool mini_log_visible() 
-	{
-		var console = DebugConsole.GetConsole();
-		return console.ShowMiniLog;
-	}
-
-	public void exec(string file)
-	{
-		DebugCommandList._Exec(file);
-	}
-
-	public void open_cfg_dir()
-	{
-		DebugCommandList._OpenCfgDir();
-	}
-
-	public void monitor(string monitor, bool value)
-	{
-		DebugConsole console = DebugConsole.GetConsole();
-		console.Monitors[monitor].Visible = value;
-	}
-
-	public void help(string command)
-	{
-		var helpText = DebugConsole.GetConsole().Commands[command].HelpText;
-		DebugConsole.Log($"{command} - { ((helpText != "") ? helpText : "There is no help available.") }");
-	}
-
-	public async void dialogue(string line) {
-		Player player = Game.Instance.GetNode<Player>("%Player");
-		await DebugConsole.HideConsole();
-		await player.PlayDialogue(line);
-	}
-
-	public void set_place(string place) {
-		PlaceController pc = Game.Instance.GetNode<PlaceController>("%PlaceController");
-		pc.Place = PlaceController.Places[place];
-	}
-
-	public void fullbright(bool value) {
-		
-		Lighting3D lighting = Game.Instance?.Lighting;
-		if (lighting is null) return;
-
-		if (value) {
-			lighting.ResetApply(lighting.LoadFromScene("Fullbright"));
-		}
-		else {
-			lighting.ResetApply();
-		}
-	}
-
-	public void unlit(bool value) {
-		Game.Instance.Lighting.Visible = !value;
-	}
-
-	public void loadroom(string room) {
-		Game.Instance?.LoadRoom(room);
-	}
-
-	public void loadlighting(string scene) {
-		Game.Instance?.Lighting?.LoadAndSetFromScene(scene);
-	}
-
-	public async void freecam(bool value) {
-		Player player = Game.Instance?.GetNode<Player>("%Player");
-		
-		if (player is null) return;
-
-		await DebugConsole.HideConsole();
-		player.Freecam = value;
-	}
-
-	public void pause(bool value) {
-		Game.Instance.GetTree().Paused = value;
-	}
-
-	public void goto_marker(string marker) {
-		Player player = Game.Instance?.GetNode<Player>("%Player");
-		
-		if (player is null) return;
-
-		player.GlobalPosition = Game.Instance.GetNode<Marker3D>($"%Markers/{marker}").GlobalPosition;
-	}
-}
+/// <summary>
+/// <see cref="DebugCommandFunctions"/>
+/// </summary>
 
 public static class DebugCommandList
 {
@@ -142,59 +16,43 @@ public static class DebugCommandList
 		var funcs = new DebugCommandFunctions();
 
 
-		#region goto_marker
+		#region act
 
 
 		new DebugCommand {
-			Id = "goto_marker",
-			HelpText = "sends the player's character to a marker",
+			Id = "act",
+			HelpText = 
+
+@"run a command from a list of quick lib actions
+eg:
+	- act camera Default
+	- act dialogue convo_test
+	- act light Day
+	- act marker Dish			
+",
 
 			Parameters = [
+				new DebugParameter {
+					Name = "type",
+					Type = DebugParameterType.Options,
+					Options = [
+						"camera",
+						"dialogue",
+						"place",
+						"room",
+						"light",
+						"marker"
+					]
+				},
+
 				new DebugParameter {
 					Name = "name",
-					Type = DebugParameterType.String
+					Type = DebugParameterType.String,
+					Required = true
 				}
 			],
 
-			Function = new Callable(funcs, DebugCommandFunctions.MethodName.goto_marker)
-		}.AddTo(console);
-
-
-		#endregion
-		#region loadroom
-
-
-		new DebugCommand {
-			Id = "loadroom",
-			HelpText = "Loads a room by string id",
-
-			Parameters = [
-				new DebugParameter {
-					Name = "name",
-					Type = DebugParameterType.String
-				}
-			],
-
-			Function = new Callable(funcs, DebugCommandFunctions.MethodName.loadroom)
-		}.AddTo(console);
-
-
-		#endregion
-		#region set_place
-
-
-		new DebugCommand {
-			Id = "set_place",
-			HelpText = "sets the place changing the discord rich presence",
-
-			Parameters = [
-				new DebugParameter {
-					Name = "place",
-					Type = DebugParameterType.String
-				}
-			],
-
-			Function = new Callable(funcs, DebugCommandFunctions.MethodName.set_place)
+			Function = new Callable(funcs, DebugCommandFunctions.MethodName.act)
 		}.AddTo(console);
 
 
@@ -213,8 +71,8 @@ public static class DebugCommandList
 				}
 			],
 
-			Function = new Callable(funcs, DebugCommandFunctions.MethodName.show_stats),
-			GetFunction = new Callable(funcs, DebugCommandFunctions.MethodName.stats_visible)
+			Function = new Callable(funcs, DebugCommandFunctions.MethodName.showstats),
+			GetFunction = new Callable(funcs, DebugCommandFunctions.MethodName.statsvisible)
 		}.AddTo(console);
 
 
@@ -257,25 +115,6 @@ public static class DebugCommandList
 
 
 		#endregion
-		#region loadlighting
-
-
-		new DebugCommand {
-			Id = "loadlighting",
-			HelpText = "Loads a lighting effect preset",
-
-			Parameters = [
-				new DebugParameter {
-					Name = "lighting",
-					Type = DebugParameterType.String
-				}
-			],
-
-			Function = new Callable(funcs, DebugCommandFunctions.MethodName.loadlighting)
-		}.AddTo(console);
-
-
-		#endregion
 		#region freecam
 
 
@@ -314,63 +153,6 @@ public static class DebugCommandList
 
 
 		#endregion
-		#region pause
-
-
-		new DebugCommand {
-			Id = "goto_camera",
-			HelpText = "switches to a camera",
-
-			Parameters = [
-				new DebugParameter {
-					Name = "camera",
-					Type = DebugParameterType.String
-				}
-			],
-
-			Function = new Callable(funcs, DebugCommandFunctions.MethodName.goto_camera)
-		}.AddTo(console);
-
-
-		#endregion
-		#region dialogue
-
-
-		new DebugCommand {
-			Id = "dialogue",
-			HelpText = "Display a dialogue sequence",
-
-			Parameters = [
-				new DebugParameter {
-					Name = "lines",
-					Type = DebugParameterType.String,
-				}
-			],
-
-			Function = new Callable(funcs, DebugCommandFunctions.MethodName.dialogue)
-		}.AddTo(console);
-
-
-		#endregion
-		#region set_noise
-
-
-		new DebugCommand {
-			Id = "set_noise",
-			HelpText = "Sets the player's \"Noise\" value.",
-
-			Parameters = [
-				new DebugParameter {
-					Name = "value",
-					Type = DebugParameterType.Float
-				}
-			],
-
-			Function = new Callable(funcs, DebugCommandFunctions.MethodName.set_noise),
-		}.AddTo(console);
-
-
-		#endregion
 		#region clear
 
 
@@ -388,11 +170,11 @@ public static class DebugCommandList
 
 
 		new DebugCommand {
-			Id = "mini_log",
+			Id = "minilog",
 			HelpText = "Toggles whether or not the mini log in the top right should be visible or not.",
 
-			Function = new Callable(funcs, DebugCommandFunctions.MethodName.show_mini_log),
-			GetFunction = new Callable(funcs, DebugCommandFunctions.MethodName.mini_log_visible),
+			Function = new Callable(funcs, DebugCommandFunctions.MethodName.minilog),
+			GetFunction = new Callable(funcs, DebugCommandFunctions.MethodName.minilogvisible),
 
 			Parameters = [
 				new DebugParameter {
@@ -425,7 +207,7 @@ public static class DebugCommandList
 			Id = "cfg",
 			HelpText = "Opens the directory where cfg files are put, if it exists.",
 
-			Function = new Callable(funcs, DebugCommandFunctions.MethodName.open_cfg_dir),
+			Function = new Callable(funcs, DebugCommandFunctions.MethodName.opencfgdir),
 		}.AddTo(console);
 
 		

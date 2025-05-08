@@ -4,17 +4,36 @@ using CoolGame;
 public static class DebugMonitorList
 {
 
+	private static float fps() => (float)Mathf.Snapped(Performance.GetMonitor(Performance.Monitor.TimeProcess), 0.001);
+
+    private static float process() => (float)Mathf.Snapped(Performance.GetMonitor(Performance.Monitor.TimeProcess), 0.001);
+
+	private static float physics_process() => (float)Mathf.Snapped(Performance.GetMonitor(Performance.Monitor.TimePhysicsProcess), 0.001);
+	
+	private static float nav_process() => (float)Mathf.Snapped(Performance.GetMonitor(Performance.Monitor.TimeNavigationProcess), 0.001);
+
+	private static float static_memory() => (float)Mathf.Snapped(Performance.GetMonitor(Performance.Monitor.MemoryStatic), 0.001);
+
+	private static float max_static_memory() => (float)Mathf.Snapped(Performance.GetMonitor(Performance.Monitor.MemoryStaticMax), 0.001);
+	
+	private static float objects() => (float)Performance.GetMonitor(Performance.Monitor.ObjectCount);
+
+	private static float nodes() => (float)Performance.GetMonitor(Performance.Monitor.ObjectNodeCount);
+
+	private static float noise() => Game.Instance.Noise;
+
+
 	public static async void Init(DebugConsole console)
 	{
+
+
         #region fps
 
 		new DebugMonitor {
 			Id = "fps",
 			DisplayName = "FPS",
 
-			ValueCall = Callable.From( () => {
-                return (float)Performance.GetMonitor(Performance.Monitor.TimeFps);
-            })
+			ValueCall = Callable.From(fps)
 		}.AddTo(console);
 
 
@@ -26,9 +45,7 @@ public static class DebugMonitorList
 			Id = "process",
 			DisplayName = "Process",
 
-			ValueCall = Callable.From( () => {
-                return (float)Mathf.Snapped(Performance.GetMonitor(Performance.Monitor.TimeProcess), 0.001);
-            })
+			ValueCall = Callable.From(process)
 		}.AddTo(console);
 
 
@@ -40,9 +57,7 @@ public static class DebugMonitorList
 			Id = "physics_process",
 			DisplayName = "Physics Process",
 
-			ValueCall = Callable.From( () => {
-                return (float)Mathf.Snapped(Godot.Performance.GetMonitor(Godot.Performance.Monitor.TimePhysicsProcess), 0.001);
-            })
+			ValueCall = Callable.From(physics_process)
 		}.AddTo(console);
 
 
@@ -54,9 +69,7 @@ public static class DebugMonitorList
 			Id = "navigation_process",
 			DisplayName = "Navigation Process",
 
-			ValueCall = Callable.From( () => {
-                return (float)Mathf.Snapped(Godot.Performance.GetMonitor(Godot.Performance.Monitor.TimeNavigationProcess), 0.001);
-            })
+			ValueCall = Callable.From(nav_process)
 		}.AddTo(console);
 
 
@@ -68,9 +81,7 @@ public static class DebugMonitorList
 			Id = "static_memory",
 			DisplayName = "Static Memory",
 
-			ValueCall = Callable.From( () => {
-                return (float)Mathf.Snapped(Performance.GetMonitor(Performance.Monitor.MemoryStatic), 0.001);
-            })
+			ValueCall = Callable.From(static_memory)
 		}.AddTo(console);
 
 
@@ -82,9 +93,7 @@ public static class DebugMonitorList
 			Id = "static_memory_max",
 			DisplayName = "Max Static Memory",
 
-			ValueCall = Callable.From( () => {
-                return (float)Mathf.Snapped(Performance.GetMonitor(Performance.Monitor.MemoryStaticMax), 0.001);
-            })
+			ValueCall = Callable.From(max_static_memory)
 		}.AddTo(console);
 
 		
@@ -96,9 +105,7 @@ public static class DebugMonitorList
 			Id = "objects",
 			DisplayName = "Objects",
 
-			ValueCall = Callable.From( () => {
-                return (float)Performance.GetMonitor(Performance.Monitor.ObjectCount);
-            })
+			ValueCall = Callable.From(objects)
 		}.AddTo(console);
 
 
@@ -110,9 +117,7 @@ public static class DebugMonitorList
 			Id = "nodes",
 			DisplayName = "Nodes",
 
-			ValueCall = Callable.From( () => {
-                return (float)Performance.GetMonitor(Performance.Monitor.ObjectNodeCount);
-            })
+			ValueCall = Callable.From(nodes)
 		}.AddTo(console);
 
 
@@ -127,9 +132,7 @@ public static class DebugMonitorList
 			Id = "noise",
 			DisplayName = "Noise",
 
-			ValueCall = Callable.From( () => {
-                return Game.Instance.Noise;
-            })
+			ValueCall = Callable.From(noise)
 		}.AddTo(console);
 
 

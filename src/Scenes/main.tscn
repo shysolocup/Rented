@@ -57,7 +57,7 @@ unique_name_in_owner = true
 [node name="PlayerCamera" type="Camera3D" parent="Root3D/Cameras"]
 unique_name_in_owner = true
 process_mode = 3
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.32012, 1.54733, -40.1963)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.32012, -43.5223, -40.1963)
 current = true
 
 [node name="InteractRay" type="RayCast3D" parent="Root3D/Cameras/PlayerCamera"]

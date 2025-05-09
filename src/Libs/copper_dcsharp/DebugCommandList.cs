@@ -42,7 +42,8 @@ eg:
 						"room",
 						"light",
 						"marker"
-					]
+					],
+					Required = true
 				},
 
 				new DebugParameter {
@@ -67,7 +68,8 @@ eg:
 			Parameters = [
 				new DebugParameter {
 					Name = "show",
-					Type = DebugParameterType.Bool
+					Type = DebugParameterType.Bool,
+					Required = true
 				}
 			],
 
@@ -87,7 +89,8 @@ eg:
 			Parameters = [
 				new DebugParameter {
 					Name = "value",
-					Type = DebugParameterType.Bool
+					Type = DebugParameterType.Bool,
+					Required = true
 				}
 			],
 
@@ -106,7 +109,8 @@ eg:
 			Parameters = [
 				new DebugParameter {
 					Name = "value",
-					Type = DebugParameterType.Bool
+					Type = DebugParameterType.Bool,
+					Required = true
 				}
 			],
 
@@ -125,7 +129,8 @@ eg:
 			Parameters = [
 				new DebugParameter {
 					Name = "value",
-					Type = DebugParameterType.Bool
+					Type = DebugParameterType.Bool,
+					Required = true
 				}
 			],
 
@@ -144,7 +149,8 @@ eg:
 			Parameters = [
 				new DebugParameter {
 					Name = "value",
-					Type = DebugParameterType.Bool
+					Type = DebugParameterType.Bool,
+					Required = true
 				}
 			],
 
@@ -179,7 +185,8 @@ eg:
 			Parameters = [
 				new DebugParameter {
 					Name = "value",
-					Type = DebugParameterType.Bool
+					Type = DebugParameterType.Bool,
+					Required = true
 				}
 			],
 
@@ -226,12 +233,14 @@ eg:
 				new DebugParameter {
 					Name = "monitor",
 					Type = DebugParameterType.Options,
-					Options = monitors
+					Options = monitors,
+					Required = true
 				},
 
 				new DebugParameter {
 					Name = "value",
-					Type = DebugParameterType.Bool
+					Type = DebugParameterType.Bool,
+					Required = true
 				}
 			],
 
@@ -255,7 +264,8 @@ eg:
 				new DebugParameter {
 					Name = "command",
 					Type = DebugParameterType.Options,
-					Options = commands
+					Options = commands,
+					Required = true
 				}
 			],
 
@@ -279,7 +289,7 @@ eg:
 			while (true) {
 				var file = dir.GetNext();
 				if (file == "") break;
-				else if (!file.StartsWith(".")) files.Add(file);
+				else if (!file.StartsWith('.')) files.Add(file);
 			}
 
 			dir.ListDirEnd();

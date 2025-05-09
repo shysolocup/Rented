@@ -258,11 +258,11 @@ public partial class Player : CharacterBody3D
 
 		if (Camera != null) {
 
-			BobbleTime = (Velocity.Length() > 0 && BobbleTime < 100) ? BobbleTime + (float)(delta * Velocity.Length()) * 2 : 0;
+			BobbleTime = (Velocity.Length() > 0 && BobbleTime < 100) ? BobbleTime + (float)(delta * Velocity.Length()) * 3 : 0;
 
 			if (CameraPositionControllable && !Freecam) {
 				Bobble = this.Twlerp(Bobble, HeadBobble(), 1/15f, delta);
-				Camera.Position = new Vector3(Position.X, Position.Y + CameraOffset, Position.Z) + Bobble;
+				Camera.Position = Camera.Position.Lerp(new Vector3(Position.X, Position.Y + CameraOffset, Position.Z) + Bobble + (JumpVelocity/40), Mathf.Sin(15 * (float)delta));
 			}
 			if (!Freecam) Rotation = new Vector3(Rotation.X, Camera.Rotation.Y, Rotation.Z);
 
@@ -499,7 +499,7 @@ public partial class Player : CharacterBody3D
 		if (!Controllable || IsOnFloor()) JumpVelocity = Vector3.Zero;
 
 		else if (IsOnCeiling() && JumpVelocity.Y > 0) {
-			using KinematicCollision3D guh = MoveAndCollide(JumpVelocity * delta);
+			KinematicCollision3D guh = MoveAndCollide(JumpVelocity * delta);
 
 			if (guh != null) {
 				JumpVelocity = JumpVelocity.Bounce(guh.GetNormal()) / 5;
@@ -540,9 +540,9 @@ public partial class Player : CharacterBody3D
 		Vector3 BobPos = Vector3.Zero;
 		var Length = Mathf.Min(Velocity.Length(), 1);
 
-		BobPos.Y = Mathf.Sin(BobbleTime * BobbleFrequency) * BobbleAmplifier * Length / 1.5f;
+		BobPos.Y = Mathf.Sin(BobbleTime * BobbleFrequency) * BobbleAmplifier * Length;
 		BobPos.X = Mathf.Cos(BobbleTime * BobbleFrequency) * BobbleAmplifier * Length;
-		BobPos.Z = -Mathf.Cos(BobbleTime * BobbleFrequency) * BobbleAmplifier * Length;
+		BobPos.Z = Mathf.Cos(BobbleTime * BobbleFrequency) * BobbleAmplifier * Length * GD.RandRange(-1, 1);
 
 		return BobPos;
 	}

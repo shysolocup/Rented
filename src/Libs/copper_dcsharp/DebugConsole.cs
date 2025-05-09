@@ -19,7 +19,7 @@ public partial class DebugConsole : CanvasLayer
 	public bool ShowMiniLog = false;
 	public bool ShowNoise = false;
 
-	public LineEdit CommandField;
+	static public LineEdit CommandField;
 	public Control ConsolePanel;
 
 	public Control CommandHintsPanel;
@@ -127,7 +127,7 @@ public partial class DebugConsole : CanvasLayer
 			if (History.Count > 0 && CurrentHistory != -1) {
 				if(CurrentHistory > 0) CurrentHistory -= 1;
 
-				CommandField.Text = (string)History[CurrentHistory];
+				CommandField.Text = History[CurrentHistory];
 
 				await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 				
@@ -140,7 +140,7 @@ public partial class DebugConsole : CanvasLayer
 			if (History.Count > 0 && CurrentHistory < History.Count - 1) {
 				CurrentHistory += 1;
 				
-				CommandField.Text = (string)History[CurrentHistory];
+				CommandField.Text = History[CurrentHistory];
 				
 				await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 				
@@ -190,37 +190,6 @@ public partial class DebugConsole : CanvasLayer
 			hints.Add(buh);
 		}
 
-		/*
-		hints = hints.slice(0, -1)
-		
-		# Find the common prefix to all hints
-		var common_prefix = ""
-		
-		if not hints.is_empty():
-			for i in range(1000):
-				if not hints.all(func(h): return len(h) > i and h[i] == hints[0][i]):
-					break
-				common_prefix += hints[0][i]
-		
-		if not commandHintsLabel.visible or common_prefix == '':
-			return
-
-		if len(hints) == 1:
-			common_prefix += ' ' # Only one hint, so complete the whole word
-		
-		# Replace the last word, if any, with `common_prefix`
-		var r = RegEx.new()
-		
-		r.compile(r'(\w+)?$') # "Any non-whitespace characters until the end"
-		
-		var new_text = r.sub(commandField.text, common_prefix)
-		
-		commandField.text = new_text
-		commandField.caret_column = len(new_text)
-		
-		_on_command_field_text_changed(new_text)
-		*/
-
 		hints = hints[..];
 		var common_prefix = "";
 
@@ -237,8 +206,6 @@ public partial class DebugConsole : CanvasLayer
 
 		if (hints.Count == 1) {
 			common_prefix += " ";
-			// Only one hint, so complete the whole word
-
 		}
 		
 		// Replace the last word, if any, with `common_prefix`
@@ -293,10 +260,12 @@ public partial class DebugConsole : CanvasLayer
 
 			CommandHintHeaderLabel.Text = _GetParameterText(cmd, parameterCount);
 
-			if (parameterCount < cmd.Parameters.Count) {
+			GD.Print($"paramCount: {parameterCount}\ntrueParamCount: {cmd.Parameters.Count}");
+	
+			if (parameterCount < cmd.Parameters.Count && parameterCount >= 0) {
 				var options = cmd.Parameters[parameterCount].Options;
 
-				if (options.Count > 0) {
+				if (options.Count >= 0) {
 					foreach(string option in options) {
 						if (option.StartsWith(commandSplit[commandSplit.Count - 1])) {
 							CommandHintsLabel.Text += "[url]" + option + "[/url]\n";
@@ -344,16 +313,13 @@ public partial class DebugConsole : CanvasLayer
 				CommandHintsPanel.Visible = false;
 			}
 		}
-
-		GD.Print(CommandHintsLabel.Text);
-		GD.Print(commandHints);
 	}
 
 	private void _OnCommandHintsMetaClicked(string meta)
 	{
 		var commandSplit = new Array<string>(CommandField.Text.Split(" ")) {
-            meta
-        };
+			meta
+		};
 
 		var newText = "";
 
@@ -381,15 +347,15 @@ public partial class DebugConsole : CanvasLayer
 		foreach (DebugParameter parameter in command.Parameters) {
 
 			if (isHeader && parameter.Name == command.Parameters[currentParameter].Name) {
-				text += $" [b]<{parameter.Name}: {parameter.Type.ToString()}>[/b]";
+				text += $" [b]<{parameter.Name}: {parameter.Type}>[/b]";
 			}
 			
 			else {
-				text += $" <{parameter.Name}: {parameter.Type.ToString()}>";
+				text += $" <{parameter.Name}: {parameter.Type}>";
 			}
 
-			if (!command.GetFunction.Equals(null)) {
-				var value = command.GetFunction.Call();
+			if (command.GetFunction is not null && command.GetFunction is Callable c) {
+				var value = c.Call();
 				if (value.Obj is not null) {
 					text += $" === {(string)value}";
 				}
@@ -401,6 +367,7 @@ public partial class DebugConsole : CanvasLayer
 	public static void LogTypeError(DebugParameter parameter)
 	{
 		LogError($"TypeError: Parameter \"{parameter.Name}\" should be a [{parameter.Type}], but an incorrect value was passed.");
+		return;
 	}
 
 	public Dictionary<bool, Array<string>> BoolOptions = new Dictionary<bool, Array<string>> {
@@ -439,20 +406,14 @@ public partial class DebugConsole : CanvasLayer
 
 		var required = commandData.Parameters.Where( p => p.Required );
 
-		if (commandData.Parameters.Count < currentParameter) {
+		if (currentParameter > commandData.Parameters.Count) {
 			LogError($"ParamError: Command \"{commandData.Id}\" requires {commandData.Parameters.Count} parameters, but too many were given.");
-			return ;
+			return;
 		}
 
 		// Iterates through split list
 		foreach (int i in GD.Range(commandSplit.Length)) {
-			if(i == 0) {
-				continue;
-			}
-			
-			else if (commandSplit[i] == "") {
-				continue;
-			}
+			if (i == 0 || (i != 0 && commandSplit[i] == "")) continue;
 
 			var currentParameterObj = commandData.Parameters[currentParameter];
 
@@ -575,6 +536,8 @@ public partial class DebugConsole : CanvasLayer
 			}
 		}
 
+		GD.Print(currentParameter);
+
 
 		// Checks if all parameters are entered
 		if (currentParameter < required.Count()) {
@@ -594,7 +557,7 @@ public partial class DebugConsole : CanvasLayer
 			return;
 		}
 
-		GD.Print((object)expression.Execute(this.GetBlank<Godot.Collections.Array>(), commandData.Function.Target));
+		GD.Print(expression.Execute(this.GetBlank<Godot.Collections.Array>(), commandData.Function.Target));
 
 
 		# endregion
@@ -622,7 +585,6 @@ public partial class DebugConsole : CanvasLayer
 		GetConsole().ConsoleLog.Add("[color=red]" + message + "[/color]");
 		_UpdateLog();
 
-
 		// Print to Godot output
 		GD.PrintErr(message);
 	}
@@ -631,72 +593,12 @@ public partial class DebugConsole : CanvasLayer
 	{
 		GetConsole().ConsoleLog.Clear();
 		_UpdateLog();
-
-
-		# endregion
-
-	}
-	
-	/*# region Creating commands
-	
-	public static void AddCommand(String id, Callable function, GodotObject functionInstance, Array parameters = new Array{}, String helpText = "", Godot.Variant getFunction = null)
-	{
-		GetConsole().Commands[id] = DebugCommand.New(id, function, functionInstance, parameters, helpText, getFunction);
 	}
 
-	public static void AddCommandSetvar(String id, Callable function, Godot.Object functionInstance, DebugCommand.ParameterType type, String helpText = "", Godot.Variant getFunction = null)
-	{
-		GetConsole().Commands[id] = DebugCommand.New(id, function, functionInstance, new Array{
-							DebugCommand.Parameter.New("value", type), 
-							}, helpText, getFunction);
-	}
-
-	public static void AddCommandObj(Godot.DebugCommand command)
-	{
-		GetConsole().Commands[command.Id] = command;
-
-
-		# endregion
-
-	}# region Removing commands
-	public static bool RemoveCommand(String id)
-	{
-		return GetConsole().Commands.Erase(id);
-	}
-
-	public static void RemoveCommands(Array<String> ids)
-	{
-		foreach(String id in ids)
-		{
-			RemoveCommand(id);
-
-
-			# endregion
-
-		}
-	}
-	*/
-
-	# region Monitors
-	
-	/*public static void AddMonitor(string id, string displayName, bool visible = true)
-	{
-		if(id.Contains(" "))
-		{
-			DebugConsole.LogError("Monitor id \"" + id + "\"" + "needs to be a single word.");
-			return ;
-		}
-		else if(GetConsole().Monitors.Keys().Contains(id))
-		{
-
-		}
-		else
-		{
-			GetConsole().Monitors[id] = Monitor.New(id, displayName, null, Visible);
-		}
-	}*/
-
+	# endregion
 	# region Console managing
+
+	
 	public static DebugConsole GetConsole()
 	{
 		return (Engine.GetMainLoop() as SceneTree).Root.GetNode("/root/debug_console") as DebugConsole;
@@ -765,6 +667,8 @@ public partial class DebugConsole : CanvasLayer
 
 		console.LogField.GetNode<RichTextLabel>("MarginContainer/Log Content").Text = logText;
 		console.MiniLog.GetNode<RichTextLabel>("MarginContainer/Log Content").Text = "[right]" + logText;
+
+		CommandField.GrabFocus();
 	}
 
 
@@ -773,8 +677,4 @@ public partial class DebugConsole : CanvasLayer
 	{
 		DirAccess.MakeDirAbsolute("user://cfg");
 	}
-
-
-	//var file = FileAccess.open("user://cfg/autoexec.cfg", FileAccess.WRITE)
-	#endregion
 }

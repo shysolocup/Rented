@@ -9,7 +9,7 @@ public partial class DebugCommand : GodotObject
 	public string HelpText;
 
 	public Callable Function;
-	public Callable GetFunction;
+	public Callable? GetFunction;
 
 	public void AddTo(DebugConsole console) {
 		console.Commands.Add(Id, this);

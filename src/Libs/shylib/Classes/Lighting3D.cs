@@ -53,29 +53,32 @@ public partial class Lighting3D : Node3D
 		if (Visible) {
 			lighting ??= Lighting;
 
-			this.ClearChildren();
+			if (IsInstanceValid(lighting)) {
 
-			using Node CurrentLighting = lighting.Instantiate();
+				this.ClearChildren();
 
-			SceneWorld?.QueueFree();
-			SceneSun?.QueueFree();
-			
-			SceneWorld = null;
-			SceneSun = null;
+				using Node CurrentLighting = lighting.Instantiate();
 
-			SceneWorld = CurrentLighting.FindChild<WorldEnvironment>("T");
-			SceneSun = CurrentLighting.FindChild<DirectionalLight3D>("T");
+				SceneWorld?.QueueFree();
+				SceneSun?.QueueFree();
+				
+				SceneWorld = null;
+				SceneSun = null;
 
-			World = SceneWorld?.Duplicate<WorldEnvironment>();
-			Sun = SceneSun?.Duplicate<DirectionalLight3D>();
+				SceneWorld = CurrentLighting.FindChild<WorldEnvironment>("T");
+				SceneSun = CurrentLighting.FindChild<DirectionalLight3D>("T");
 
-			GD.Print($"Set World to {World}");
-			GD.Print($"Set Sun to {Sun}");
+				World = SceneWorld?.Duplicate<WorldEnvironment>();
+				Sun = SceneSun?.Duplicate<DirectionalLight3D>();
 
-			if (World is not null) AddChild(World);
-			if (Sun is not null) AddChild(Sun);
+				GD.Print($"Set World to {World}");
+				GD.Print($"Set Sun to {Sun}");
 
-			EmitSignalLightingChanged();
+				if (World is not null) AddChild(World);
+				if (Sun is not null) AddChild(Sun);
+
+				EmitSignalLightingChanged();
+			}
 		}
 
 		return this;
@@ -83,14 +86,22 @@ public partial class Lighting3D : Node3D
 
 	public PackedScene LoadFromScene(string scene) 
 	{
-		using PackedScene ps = SceneCache.TryGetValue(scene, out PackedScene value) ? value : GD.Load<PackedScene>($"{SceneDir}/{scene}.tscn");
-		if (!SceneCache.ContainsKey(scene)) SceneCache.Add(scene, ps);
-		return ps;
+		if (ResourceLoader.Exists($"{SceneDir}/{scene}.tscn")) {
+			PackedScene ps = SceneCache.TryGetValue(scene, out PackedScene value) ? value : GD.Load<PackedScene>($"{SceneDir}/{scene}.tscn");
+			if (!SceneCache.ContainsKey(scene)) SceneCache.Add(scene, ps);
+			return ps;
+		}
+		else {
+			DebugConsole.LogError($"LightingError: cannot find or failed to load scene \"{SceneDir}/{scene}.tscn\"");
+			return null;
+		}
 	}
 
 	public Lighting3D LoadAndSetFromScene(string scene)
 	{
-		using PackedScene Lighting = LoadFromScene(scene);
+		if (LoadFromScene(scene) is PackedScene packed) {
+			Lighting = packed;
+		}
 		return this;
 	}
 

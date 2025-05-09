@@ -5,6 +5,10 @@ public partial class Arm : Node3D
 	[Export] public float Distance = 0f;
 	[Export] public Camera3D Camera;
 
+	[Export] public float PosSpeed = 2;
+	[Export] public float RotSpeed = 3;
+	[Export] public Vector3 Offset = new(0.3f, -1.1f, 0);
+
 
 	private string delay = "1/7";
 
@@ -29,29 +33,17 @@ public partial class Arm : Node3D
 		Camera ??= GetNode<Camera3D>("../%PlayerCamera");
 	}
 
-	public override void _Process(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
 		if (Camera != null && IsInstanceValid(Camera)) {
-			Transform3D CameraGlobal = Camera.GlobalTransform;
-			Basis CameraBasis = CameraGlobal.Basis;
-			Vector3 Origin = CameraGlobal.Origin;
+			var TargetPos = Camera.GlobalTransform.Origin + Camera.GlobalTransform.Basis * Offset;
 
-			Vector3 ForwardVector = CameraBasis.Z;
-			Vector3 LeftVector = CameraBasis.X;
-			Vector3 UpVector = CameraBasis.Y;
+			Quaternion TargetQuat = Camera.GlobalTransform.Basis.GetRotationQuaternion();
+			Quaternion CurrentQuat = GlobalTransform.Basis.GetRotationQuaternion();
+			Quaternion NewQuat = CurrentQuat.Slerp(TargetQuat, RotSpeed * (float)delta);
 
-			Origin += ForwardVector * -Distance;
-			Origin += LeftVector * 0.3f;
-			Origin += UpVector * -1f;
+			GlobalTransform = new Transform3D(new Basis(NewQuat), GlobalTransform.Origin.Lerp(TargetPos, PosSpeed * (float)delta));
 
-			Origin = GlobalTransform.Origin.Lerp(Origin, this.FactorDelta(1/2f, delta));
-
-			Basis ArmBasis = new(LeftVector, UpVector, ForwardVector);
-			ArmBasis = ArmBasis.Scaled(new Vector3(0.8f, 0.8f, 0.8f));
-
-			Transform3D ArmTransform = new(ArmBasis, Origin);
-
-			GlobalTransform = GlobalTransform.InterpolateWith(ArmTransform, this.FactorDelta(FloatingDelay, delta));	
 		}
 	}
 }

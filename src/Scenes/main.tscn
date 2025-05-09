@@ -68,6 +68,7 @@ target_position = Vector3(0, 0, -1.7)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.38885, 0.807018, -36.4534)
 
 [node name="MapScene" parent="Root3D" instance=ExtResource("4_743ng")]
+unique_name_in_owner = true
 
 [node name="Baseplate" type="CSGBox3D" parent="Root3D"]
 transform = Transform3D(527.247, 0, 0, 0, 1, 0, 0, 0, 694.333, 82.6671, -46.3386, -6.55556)

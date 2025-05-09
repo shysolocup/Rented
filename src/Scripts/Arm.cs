@@ -5,7 +5,7 @@ public partial class Arm : Node3D
 	[Export] public float Distance = 0f;
 	[Export] public Camera3D Camera;
 
-	[Export] public float PosSpeed = 1;
+	[Export] public float PosSpeed = 3;
 	[Export] public float RotSpeed = 5;
 	[Export] public Vector3 Offset = new(0.3f, -1.1f, 0);
 

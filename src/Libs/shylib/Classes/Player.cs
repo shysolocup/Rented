@@ -77,7 +77,7 @@ public partial class Player : CharacterBody3D
 	[ExportGroup("Sprinting")]
 	
 	[Export(PropertyHint.Range, "1,35,1")] public float SprintSpeed = 5; // m/s
-	[Export] public float SprintFovMod = 20;
+	[Export] public float SprintFovMod = 5;
 	[Export] public bool Sprinting = false;
 	[Export] public bool CanSprint = true;
 
@@ -262,7 +262,7 @@ public partial class Player : CharacterBody3D
 
 			if (CameraPositionControllable && !Freecam) {
 				Bobble = this.Twlerp(Bobble, HeadBobble(), 1/15f, delta);
-				Camera.Position = Camera.Position.Lerp(new Vector3(Position.X, Position.Y + CameraOffset, Position.Z) + Bobble + (JumpVelocity/40), Mathf.Sin(15 * (float)delta));
+				Camera.Position = Camera.Position.Lerp(new Vector3(Position.X, Position.Y + CameraOffset, Position.Z) + Bobble + (JumpVelocity/40), 17 * (float)delta);
 			}
 			if (!Freecam) Rotation = new Vector3(Rotation.X, Camera.Rotation.Y, Rotation.Z);
 

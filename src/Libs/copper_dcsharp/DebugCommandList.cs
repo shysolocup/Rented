@@ -16,6 +16,56 @@ public static class DebugCommandList
 		var funcs = new DebugCommandFunctions();
 
 
+		#region tpcamto
+
+
+		new DebugCommand {
+			Id = "tpcamto",
+			HelpText = 
+@"teleports the player camera to an object in the scene
+eg:
+	- tpto %Player
+	- tpto %Markers/Dish
+",
+
+			Parameters = [
+				new DebugParameter {
+					Name = "nodename",
+					Type = DebugParameterType.String,
+					Required = true
+				}
+			],
+
+			Function = new Callable(funcs, DebugCommandFunctions.MethodName.tpcamto)
+		}.AddTo(console);
+
+
+		#endregion
+				#region tpcamto
+
+
+		new DebugCommand {
+			Id = "tpcharto",
+			HelpText = 
+@"teleports the player character to an object in the scene
+eg:
+	- tpto %PlayerCamera
+	- tpto %Markers/Dish
+",
+
+			Parameters = [
+				new DebugParameter {
+					Name = "nodename",
+					Type = DebugParameterType.String,
+					Required = true
+				}
+			],
+
+			Function = new Callable(funcs, DebugCommandFunctions.MethodName.tpcharto)
+		}.AddTo(console);
+
+
+		#endregion
 		#region act
 
 

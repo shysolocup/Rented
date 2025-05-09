@@ -103,6 +103,7 @@ transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 4.32012, 1.14733, -40.1
 input_ray_pickable = false
 script = ExtResource("1_wueuk")
 BaseFov = 75.0
+SprintFovMod = 20.0
 
 [node name="Collision" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_h8oac")

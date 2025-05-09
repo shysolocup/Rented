@@ -7,7 +7,28 @@ using CoolGame;
 
 public partial class DebugCommandFunctions : GodotObject 
 {
+	#region tpcamto
 
+	public void tpcamto(string nodename) {
+		Camera3D a = Game.Instance.GetNode<Camera3D>("/root/Game/%PlayerCamera");
+		Node3D b = Game.Instance.GetNode<Node3D>($"/root/Game/{nodename}");
+
+		a.Position = b.Position;
+		a.Rotation = b.Rotation;
+	}
+
+	#endregion
+	#region tpcharto
+
+	public void tpcharto(string nodename) {
+		Player a = Game.Instance.GetNode<Player>("/root/Game/%Player");
+		Node3D b = Game.Instance.GetNode<Node3D>($"/root/Game/{nodename}");
+
+		a.Position = b.Position;
+		a.Rotation = b.Rotation;
+	}
+
+	#endregion
 	#region showstats
 
 

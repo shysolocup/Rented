@@ -9,10 +9,10 @@ public partial class Lighting3D : Node3D
 	[Signal] public delegate void LightingChangedEventHandler();
 	[Signal] public delegate void LightingDisabledEventHandler();
 
-	static public string SceneDir = "res://src/Resources/Lighting/Scenes";
+	static public string SceneDir = "res://src/Resources/Lighting/Packed";
 
 	static private Dictionary<string, PackedScene> SceneCache = new() {
-		["Default"] = GD.Load<PackedScene>($"{SceneDir}/Default.tscn")
+		["Default"] = ResourceLoader.Load<PackedScene>($"{SceneDir}/Default.tscn", "", ResourceLoader.CacheMode.Replace)
 	};
 
 	private PackedScene lighting = SceneCache["Default"];
@@ -84,11 +84,11 @@ public partial class Lighting3D : Node3D
 		return this;
 	}
 
-	public PackedScene LoadFromScene(string scene) 
+	public static PackedScene LoadFromScene(string scene, bool useCache = true) 
 	{
 		if (ResourceLoader.Exists($"{SceneDir}/{scene}.tscn")) {
-			PackedScene ps = SceneCache.TryGetValue(scene, out PackedScene value) ? value : GD.Load<PackedScene>($"{SceneDir}/{scene}.tscn");
-			if (!SceneCache.ContainsKey(scene)) SceneCache.Add(scene, ps);
+			PackedScene ps = (useCache && SceneCache.TryGetValue(scene, out PackedScene value)) ? value : ResourceLoader.Load<PackedScene>($"{SceneDir}/{scene}.tscn", "", ResourceLoader.CacheMode.Replace);
+			if (!SceneCache.ContainsKey(scene) || !useCache) SceneCache[scene] = ps;
 			return ps;
 		}
 		else {
@@ -97,9 +97,9 @@ public partial class Lighting3D : Node3D
 		}
 	}
 
-	public Lighting3D LoadAndSetFromScene(string scene)
+	public Lighting3D LoadAndSetFromScene(string scene, bool useCache = true)
 	{
-		if (LoadFromScene(scene) is PackedScene packed) {
+		if (LoadFromScene(scene, useCache) is PackedScene packed) {
 			Lighting = packed;
 		}
 		return this;

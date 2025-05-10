@@ -300,7 +300,7 @@ public partial class Player : CharacterBody3D
 		InDialog = true;
 		ReleaseMouse();
 		
-		DialogueData data = GetNode("/root/Game/Guis/DialogueLayer/DialogueGui").GetNode<DialogueData>("%DialogueData");
+		DialogueData data = this.GetGameNode("Guis/DialogueLayer/DialogueGui").GetNode<DialogueData>("%DialogueData");
 
 		GD.Print(data);
 

@@ -7,11 +7,18 @@ using CoolGame;
 
 public partial class DebugCommandFunctions : GodotObject 
 {
+	#region shader
+
+	public void shader(string name, bool value) {
+		Game.Instance.GetGameNode<ColorRect>($"%ScreenShaders/{name}").Visible = value;
+	}
+
+	#endregion
 	#region tpcamto
 
 	public void tpcamto(string nodename) {
-		Camera3D a = Game.Instance.GetNode<Camera3D>("/root/Game/%PlayerCamera");
-		Node3D b = Game.Instance.GetNode<Node3D>($"/root/Game/{nodename}");
+		Camera3D a = Game.Instance.GetGameNode<Camera3D>("%PlayerCamera");
+		Node3D b = Game.Instance.GetGameNode<Node3D>(nodename);
 
 		a.Position = b.Position;
 		a.Rotation = b.Rotation;
@@ -21,8 +28,8 @@ public partial class DebugCommandFunctions : GodotObject
 	#region tpcharto
 
 	public void tpcharto(string nodename) {
-		Player a = Game.Instance.GetNode<Player>("/root/Game/%Player");
-		Node3D b = Game.Instance.GetNode<Node3D>($"/root/Game/{nodename}");
+		Player a = Game.Instance.GetGameNode<Player>("%Player");
+		Node3D b = Game.Instance.GetGameNode<Node3D>(nodename);
 
 		a.Position = b.Position;
 		a.Rotation = b.Rotation;
@@ -83,17 +90,17 @@ public partial class DebugCommandFunctions : GodotObject
 
 	public async void act(string type, string name) {
 		if (type == "camera") {
-			Game.Instance.GetNode("%Cameras").GetNode<Camera3D>( (name == "Default") ? "PlayerCamera" : name).MakeCurrent();
+			Game.Instance.GetGameNode("%Cameras").GetNode<Camera3D>( (name == "Default") ? "PlayerCamera" : name).MakeCurrent();
 		}
 
 		else if (type == "dialogue") {
-			Player player = Game.Instance.GetNode<Player>("%Player");
+			Player player = Game.Instance.GetGameNode<Player>("%Player");
 			await DebugConsole.HideConsole();
 			await player.PlayDialogue(name);
 		}
 
 		else if (type == "place") {
-			PlaceController pc = Game.Instance.GetNode<PlaceController>("%PlaceController");
+			PlaceController pc = Game.Instance.GetGameNode<PlaceController>("%PlaceController");
 			pc.Place = PlaceController.Places[name];
 		}
 
@@ -106,11 +113,15 @@ public partial class DebugCommandFunctions : GodotObject
 		}
 
 		else if (type == "marker") {
-			Player player = Game.Instance?.GetNode<Player>("%Player");
+			Player player = Game.Instance?.GetGameNode<Player>("%Player");
 		
 			if (player is null) return;
 
-			player.GlobalPosition = Game.Instance.GetNode<Marker3D>($"%Markers/{name}").GlobalPosition;
+			player.GlobalPosition = Game.Instance.GetGameNode<Marker3D>($"%Markers/{name}").GlobalPosition;
+		}
+
+		else if (type == "map") {
+			Game.Instance.GetGameNode("%Map");
 		}
 	}
 
@@ -164,7 +175,7 @@ public partial class DebugCommandFunctions : GodotObject
 		if (lighting is null) return;
 
 		if (value) {
-			lighting.ResetApply(lighting.LoadFromScene("Fullbright"));
+			lighting.ResetApply(Lighting3D.LoadFromScene("Fullbright"));
 		}
 		else {
 			lighting.ResetApply();
@@ -176,7 +187,10 @@ public partial class DebugCommandFunctions : GodotObject
 	#region unlit
 
 
-	public void unlit(bool value) => Game.Instance.Lighting.Visible = !value;
+	public void unlit(bool value) {
+		Game.Instance.GetNode<Control>("/root/Game/Dump/%ScreenShaders").Visible = value;
+		Game.Instance.Lighting.Visible = !value;
+	}
 
 
 	#endregion

@@ -1,25 +1,25 @@
-[gd_scene load_steps=5 format=3 uid="uid://bbbvccldeg3hr"]
+[gd_scene load_steps=5 format=3 uid="uid://dn35nr2nmwf5y"]
 
-[ext_resource type="Environment" uid="uid://buyjdi7cmy3ta" path="res://src/Resources/Lighting/Environments/Night.tres" id="1_jh4by"]
-[ext_resource type="CameraAttributesPractical" uid="uid://bsm43ueft2wl4" path="res://src/Resources/Lighting/CameraEffects/CameraAttributesPractical.tres" id="2_1xw2u"]
+[ext_resource type="Environment" uid="uid://buyjdi7cmy3ta" path="res://src/Resources/Lighting/Environments/Night.tres" id="1_vo88x"]
+[ext_resource type="CameraAttributesPractical" uid="uid://bsm43ueft2wl4" path="res://src/Resources/Lighting/CameraEffects/CameraAttributesPractical.tres" id="2_tsbun"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_pmq1f"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_vo88x"]
 
-[node name="Node" type="Node"]
+[node name="Night" type="Node"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = ExtResource("1_jh4by")
-camera_attributes = ExtResource("2_1xw2u")
+environment = ExtResource("1_vo88x")
+camera_attributes = ExtResource("2_tsbun")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.601172, 0.0782243, 0.795282, 0.499898, -0.739615, 0.450634, 0.623453, 0.668468, 0.405532, 0, 0, 0)
-visible = false
 light_color = Color(0.136826, 0.136826, 0.136826, 1)
 light_energy = 2.931
 light_specular = 0.356
 shadow_enabled = true
+shadow_blur = 3.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(4.20241, 0, 0, 0, 1, 0, 0, 0, 3.91537, 0, 0, 0)

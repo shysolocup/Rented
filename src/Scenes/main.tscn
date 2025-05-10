@@ -67,7 +67,7 @@ target_position = Vector3(0, 0, -1.7)
 [node name="Camera3D" type="Camera3D" parent="Root3D/Cameras"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.38885, 0.807018, -36.4534)
 
-[node name="MapScene" parent="Root3D" instance=ExtResource("4_743ng")]
+[node name="Map" parent="Root3D" instance=ExtResource("4_743ng")]
 unique_name_in_owner = true
 
 [node name="Baseplate" type="CSGBox3D" parent="Root3D"]
@@ -86,8 +86,24 @@ gizmo_extents = 1.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.34554, 2.05975, -40.2059)
 gizmo_extents = 1.0
 
+[node name="Fog" type="Marker3D" parent="Root3D/Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.2952, 2.05975, -65.1512)
+gizmo_extents = 1.0
+
+[node name="ParkingLot" type="Marker3D" parent="Root3D/Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.40881, 2.05975, 3.54878)
+gizmo_extents = 1.0
+
 [node name="Kitchen" type="Marker3D" parent="Root3D/Markers"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.6443, 1.61127, -65.1824)
+gizmo_extents = 1.0
+
+[node name="Main" type="Marker3D" parent="Root3D/Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.263, 2.00742, -83.7679)
+gizmo_extents = 1.0
+
+[node name="Office" type="Marker3D" parent="Root3D/Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.47628, 2.36523, -62.5075)
 gizmo_extents = 1.0
 
 [node name="Triggers" type="Node3D" parent="Root3D"]

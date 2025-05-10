@@ -1,11 +1,12 @@
-[gd_scene load_steps=40 format=3 uid="uid://crynhy865gfw6"]
+[gd_scene load_steps=38 format=3 uid="uid://crynhy865gfw6"]
 
 [ext_resource type="PackedScene" uid="uid://ctqpfrq531m3y" path="res://src/Models/Packed/Buildings.tscn" id="1_fldds"]
 [ext_resource type="PackedScene" uid="uid://c1eyea2y3khs1" path="res://src/Models/Packed/Outside.tscn" id="2_50gqt"]
-[ext_resource type="Material" uid="uid://c308v38sitbye" path="res://src/Resources/Materials/placeholder_street.tres" id="3_meo4h"]
+[ext_resource type="PackedScene" uid="uid://jqojvdkor4nu" path="res://src/Models/Packed/MainBuilding.tscn" id="3_won10"]
 [ext_resource type="AudioStream" uid="uid://nvube6beo7t" path="res://src/Sounds/its happening david bazookie.mp3" id="4_mfryb"]
 [ext_resource type="Script" uid="uid://g5yf73ygsftw" path="res://src/Libs/shylib/Classes/InteractObject3D.cs" id="5_2s16w"]
 [ext_resource type="Shader" uid="uid://17hm1p5b17nd" path="res://src/Resources/Shaders/WatercolorPlane.gdshader" id="5_f684b"]
+[ext_resource type="Texture2D" uid="uid://c2s51i7cpbmdw" path="res://src/Textures/watercolor1.png" id="5_t1g6d"]
 [ext_resource type="Material" uid="uid://ca75ik5y2u4a2" path="res://src/Resources/Materials/david.tres" id="6_2xqgk"]
 [ext_resource type="Texture2D" uid="uid://4votccrw7wyl" path="res://src/Textures/watercolor4.png" id="6_r0cio"]
 [ext_resource type="Texture2D" uid="uid://cks0soccg2jbn" path="res://src/Textures/watercolor2.png" id="6_won10"]
@@ -18,23 +19,11 @@
 [ext_resource type="Shader" uid="uid://mk71m2dpxk4y" path="res://src/Resources/Shaders/SquashAndStretch.gdshader" id="13_7miyc"]
 [ext_resource type="Material" uid="uid://h3xhycht6a3o" path="res://src/Resources/Shaders/watercolor test.tres" id="14_hiiea"]
 
-[sub_resource type="TextMesh" id="TextMesh_ng2wt"]
-text = "building"
-font_size = 127
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3ahso"]
-no_depth_test = true
-shading_mode = 0
-billboard_mode = 1
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_f684b"]
-load_path = "res://.godot/imported/watercolor1.png-826f8d1e9da0f35ed7f05e0ee25920f0.s3tc.ctex"
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_won10"]
 render_priority = 0
 shader = ExtResource("5_f684b")
 shader_parameter/albedo = Color(0.847059, 0.588235, 0.835294, 0.470588)
-shader_parameter/texture_albedo = SubResource("CompressedTexture2D_f684b")
+shader_parameter/texture_albedo = ExtResource("5_t1g6d")
 shader_parameter/proximity_fade_distance = 15.0
 shader_parameter/distance_fade_min = 0.0
 shader_parameter/distance_fade_max = 25.0
@@ -54,7 +43,7 @@ material = SubResource("ShaderMaterial_won10")
 render_priority = 0
 shader = ExtResource("5_f684b")
 shader_parameter/albedo = Color(0.848837, 0.590006, 0.836128, 0.470588)
-shader_parameter/texture_albedo = ExtResource("6_r0cio")
+shader_parameter/texture_albedo = ExtResource("6_won10")
 shader_parameter/proximity_fade_distance = 15.0
 shader_parameter/distance_fade_min = 0.0
 shader_parameter/distance_fade_max = 25.0
@@ -73,7 +62,7 @@ material = SubResource("ShaderMaterial_r0cio")
 render_priority = 0
 shader = ExtResource("5_f684b")
 shader_parameter/albedo = Color(0.848837, 0.590006, 0.836128, 0.470588)
-shader_parameter/texture_albedo = ExtResource("6_won10")
+shader_parameter/texture_albedo = ExtResource("6_r0cio")
 shader_parameter/proximity_fade_distance = 15.0
 shader_parameter/distance_fade_min = 0.0
 shader_parameter/distance_fade_max = 25.0
@@ -147,137 +136,48 @@ material = ExtResource("14_hiiea")
 
 [node name="MapBlock" type="Node3D"]
 
-[node name="Map" type="Node3D" parent="."]
+[node name="Build" type="Node3D" parent="."]
 
-[node name="Buildings" parent="Map" instance=ExtResource("1_fldds")]
+[node name="Buildings" parent="Build" instance=ExtResource("1_fldds")]
 
-[node name="Outside" parent="Map" instance=ExtResource("2_50gqt")]
+[node name="Outside" parent="Build" instance=ExtResource("2_50gqt")]
 
-[node name="Building" type="StaticBody3D" parent="Map"]
-
-[node name="Shell" type="CSGCombiner3D" parent="Map/Building"]
-use_collision = true
-
-[node name="label" type="MeshInstance3D" parent="Map/Building/Shell"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.01875, 4.75792, -44.9927)
-mesh = SubResource("TextMesh_ng2wt")
-skeleton = NodePath("../CSGBox3D2")
-surface_material_override/0 = SubResource("StandardMaterial3D_3ahso")
-
-[node name="CSGBox3D2" type="CSGBox3D" parent="Map/Building/Shell"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.44241, 5.59462, -69.1968)
-use_collision = true
-size = Vector3(43.2186, 14.5033, 47.8902)
-material = ExtResource("3_meo4h")
-
-[node name="CSGBox3D3" type="CSGBox3D" parent="Map/Building/Shell"]
-transform = Transform3D(0.948871, 0, 0, 0, 1, 0, 0, 0, 0.936166, 7.98064, 5.77119, -69.2127)
-operation = 2
-use_collision = true
-size = Vector3(41.7513, 12.2498, 49.155)
-material = ExtResource("3_meo4h")
-
-[node name="DoorHoleBack" type="CSGBox3D" parent="Map/Building/Shell"]
-transform = Transform3D(0.948871, 0, 0, 0, 1, 0, 0, 0, 0.936166, 25.8682, 1.09681, -44.3035)
-operation = 2
-use_collision = true
-size = Vector3(4.03476, 3.28772, 7.26869)
-material = ExtResource("3_meo4h")
-
-[node name="DoorHoleSide" type="CSGBox3D" parent="Map/Building/Shell"]
-transform = Transform3D(-4.14765e-08, 0, 0.936166, 0, 1, 0, -0.948871, 0, -4.09211e-08, 28.5012, 1.25251, -63.9183)
-operation = 2
-use_collision = true
-size = Vector3(2.31057, 3.28772, 3.38272)
-material = ExtResource("3_meo4h")
-
-[node name="WindowHoleSide" type="CSGBox3D" parent="Map/Building/Shell"]
-transform = Transform3D(-4.14765e-08, 0, 0.936166, 0, 1, 0, -0.948871, 0, -4.09211e-08, 28.0248, 3.34245, -52.4737)
-operation = 2
-use_collision = true
-size = Vector3(9.19889, 4.76817, 7.26869)
-material = ExtResource("3_meo4h")
-
-[node name="WindowHoleBack" type="CSGBox3D" parent="Map/Building/Shell"]
-transform = Transform3D(0.948871, 0, 0, 0, 1, 0, 0, 0, 0.936166, 17.1849, 3.14808, -46.4589)
-operation = 2
-use_collision = true
-size = Vector3(8.78416, 4.38799, 7.26869)
-material = ExtResource("3_meo4h")
-
-[node name="DoorHoleFront" type="CSGBox3D" parent="Map/Building/Shell"]
-transform = Transform3D(0.948871, 0, 0, 0, 1, 0, 0, 0, 0.936166, 12.8165, 1.25251, -94.2579)
-operation = 2
-use_collision = true
-size = Vector3(4.03476, 3.28772, 7.26869)
-material = ExtResource("3_meo4h")
-
-[node name="Dish" type="CSGCombiner3D" parent="Map/Building"]
-use_collision = true
-
-[node name="CSGBox3D2" type="CSGBox3D" parent="Map/Building/Dish"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.24878, 6.02905, -58.9651)
-use_collision = true
-size = Vector3(41.6058, 13.1926, 1.32964)
-material = ExtResource("3_meo4h")
-
-[node name="CSGBox3D3" type="CSGBox3D" parent="Map/Building/Dish"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.2805, 6.02905, -59.6469)
-use_collision = true
-size = Vector3(1.83897, 13.1926, 27.3824)
-material = ExtResource("3_meo4h")
-
-[node name="CSGBox3D4" type="CSGBox3D" parent="Map/Building/Dish"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.4668, 10.6263, -51.498)
-use_collision = true
-size = Vector3(21.164, 3.99807, 11.0848)
-material = ExtResource("3_meo4h")
-
-[node name="KitchenDoorHole" type="CSGBox3D" parent="Map/Building/Dish"]
-transform = Transform3D(0.948871, 0, 0, 0, 1, 0, 0, 0, 0.936166, 25.6321, 1.48263, -60.5642)
-operation = 2
-use_collision = true
-size = Vector3(2.88701, 3.66937, 7.26869)
-material = ExtResource("3_meo4h")
-
-[node name="DoorHoleSide2" type="CSGBox3D" parent="Map/Building/Dish"]
-transform = Transform3D(-4.14765e-08, 0, 0.936166, 0, 1, 0, -0.948871, 0, -4.09211e-08, 7.59989, 1.25251, -64.6707)
-operation = 2
-use_collision = true
-size = Vector3(4.03476, 3.28772, 7.26869)
-material = ExtResource("3_meo4h")
-
-[node name="Kitchen" type="CSGCombiner3D" parent="Map/Building"]
-
-[node name="CSGBox3D5" type="CSGBox3D" parent="Map/Building/Kitchen"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.3599, 6.02905, -73.6225)
-use_collision = true
-size = Vector3(23.9977, 13.1926, 1.24523)
-material = ExtResource("3_meo4h")
-
-[node name="DoorHoleSide3" type="CSGBox3D" parent="Map/Building/Kitchen"]
-transform = Transform3D(0.948871, 0, 0, 0, 1, 0, 0, 0, 0.936166, 20.123, 1.25251, -73.3421)
-operation = 2
-use_collision = true
-size = Vector3(4.03476, 3.28772, 3.30313)
-material = ExtResource("3_meo4h")
+[node name="Building" parent="Build" instance=ExtResource("3_won10")]
 
 [node name="Watercolors" type="Node3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Watercolors"]
-transform = Transform3D(-0.319702, -0.624255, 22.0513, 26.1494, -0.0170865, 5.08811e-09, 0.355827, 0.694792, 19.8126, 85.1058, 9.62285, -55.0079)
+transform = Transform3D(-0.415111, -0.810552, 14.7312, 26.1494, -0.0170865, -2.88126e-08, 0.237708, 0.464151, 25.7253, 92.1248, 9.62285, -55.0079)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_t1g6d")
+skeleton = NodePath("../../Ambient")
+
+[node name="MeshInstance3D13" type="MeshInstance3D" parent="Watercolors"]
+transform = Transform3D(-6.10893, -0.874845, 7.75693, -8.48266, -0.166901, -27.5373, 23.9739, -0.281979, -7.76693, 92.1248, 3.94274, -40.2464)
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_t1g6d")
 skeleton = NodePath("../../Ambient")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Watercolors"]
-transform = Transform3D(-0.255645, -0.499175, 25.056, 26.1494, -0.0170865, -3.07636e-08, 0.404312, 0.789464, 15.8428, 63.4349, 17.5144, -75.838)
+transform = Transform3D(-0.351549, -0.686439, 20.1037, 26.1494, -0.0170865, 1.46528e-08, 0.3244, 0.633428, 21.7862, 57.3116, 17.5144, -77.87)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_4ekwl")
+skeleton = NodePath("../../Ambient")
+
+[node name="MeshInstance3D11" type="MeshInstance3D" parent="Watercolors"]
+transform = Transform3D(-0.255645, -0.499175, 25.056, 26.1494, -0.0170865, -3.07636e-08, 0.404312, 0.789464, 15.8428, 76.3353, 17.5144, -75.838)
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_4ekwl")
 skeleton = NodePath("../../Ambient")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="Watercolors"]
 transform = Transform3D(-0.1309, -0.0965189, 73.5777, 53.9636, -0.0133152, -5.86895e-08, 0.978442, 0.721454, 9.84351, 37.1074, 10.0347, -123.227)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_4cnaq")
+skeleton = NodePath("../../Ambient")
+
+[node name="MeshInstance3D12" type="MeshInstance3D" parent="Watercolors"]
+transform = Transform3D(18.7826, -0.31107, 61.9443, 50.5913, 0.104166, -23.5799, 0.881404, 0.649903, 33.4285, 64.9267, -3.79377, -111.589)
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_4cnaq")
 skeleton = NodePath("../../Ambient")
@@ -510,5 +410,11 @@ cast_shadow = 0
 mesh = SubResource("CapsuleMesh_yc6y7")
 skeleton = NodePath("../../root/@EditorNode@21301/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11482/@VSplitContainer@11134/@HSplitContainer@11136/@HSplitContainer@11138/@Control@11139/@SubViewportContainer@11140/@SubViewport@11141/Game/Root3D/Player")
 
-[editable path="Map/Buildings"]
-[editable path="Map/Outside"]
+[node name="MockPlayer6" type="MeshInstance3D" parent="mockplayers"]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 15.4927, 1.14528, -39.6651)
+cast_shadow = 0
+mesh = SubResource("CapsuleMesh_yc6y7")
+skeleton = NodePath("../../root/@EditorNode@21301/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11482/@VSplitContainer@11134/@HSplitContainer@11136/@HSplitContainer@11138/@Control@11139/@SubViewportContainer@11140/@SubViewport@11141/Game/Root3D/Player")
+
+[editable path="Build/Buildings"]
+[editable path="Build/Outside"]

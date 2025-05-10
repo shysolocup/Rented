@@ -260,18 +260,22 @@ public partial class DebugConsole : CanvasLayer
 
 			CommandHintHeaderLabel.Text = _GetParameterText(cmd, parameterCount);
 
-			GD.Print($"paramCount: {parameterCount}\ntrueParamCount: {cmd.Parameters.Count}");
+			// GD.Print($"paramCount: {parameterCount}\ntrueParamCount: {cmd.Parameters.Count}");
 	
 			if (parameterCount < cmd.Parameters.Count && parameterCount >= 0) {
-				var options = cmd.Parameters[parameterCount].Options;
+				var parameter = cmd.Parameters[parameterCount];
+				var options = parameter.Options;
 
 				if (options.Count >= 0) {
 					foreach(string option in options) {
 						if (option.StartsWith(commandSplit[commandSplit.Count - 1])) {
-							CommandHintsLabel.Text += "[url]" + option + "[/url]\n";
+							CommandHintsLabel.Text += $"[url]{option}[/url]\n";
 						}
 					}
 				}
+			}
+			else if (parameterCount == -1) {
+				CommandHintsLabel.Text += cmd.HelpText;
 			}
 		}
 
@@ -297,10 +301,12 @@ public partial class DebugConsole : CanvasLayer
 				
 				foreach(string commandId in commandHints) {
 					string parameters = "";
+					string description = "No description";
 
 					if (Commands.TryGetValue(commandId, out DebugCommand value)) {
 						DebugCommand command = value;
 						parameters = _GetParameterText(command);
+						description = command.HelpText;
 					}
 
 					CommandHintsLabel.Text += $"[url={commandId}] {parameters}[/url]\n";
@@ -536,7 +542,7 @@ public partial class DebugConsole : CanvasLayer
 			}
 		}
 
-		GD.Print(currentParameter);
+		// GD.Print(currentParameter);
 
 
 		// Checks if all parameters are entered
@@ -547,7 +553,7 @@ public partial class DebugConsole : CanvasLayer
 
 		commandFunction += ")";
 
-		GD.Print(commandFunction);
+		// GD.Print(commandFunction);
 
 		var expression = new Expression();
 		var error = expression.Parse(commandFunction);
@@ -566,16 +572,17 @@ public partial class DebugConsole : CanvasLayer
 	
 	# region Logging
 	
-	public static void Log(string message)
+	public static void Log(params object[] messages)
 	{
+		foreach (object message in messages) {
+			// Add to log
+			GetConsole().ConsoleLog.Add(message.ToString());
+			_UpdateLog();
 
-		// Add to log
-		GetConsole().ConsoleLog.Add(message);
-		_UpdateLog();
 
-
-		// Print to Godot output
-		GD.Print(message);
+			// Print to Godot output
+			GD.Print(message);
+		}
 	}
 
 	public static void LogError(string message)

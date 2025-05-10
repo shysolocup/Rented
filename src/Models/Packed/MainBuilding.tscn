@@ -1,0 +1,177 @@
+[gd_scene load_steps=8 format=3 uid="uid://jqojvdkor4nu"]
+
+[ext_resource type="Material" uid="uid://c308v38sitbye" path="res://src/Resources/Materials/placeholder_street.tres" id="1_ah4uc"]
+[ext_resource type="Texture2D" uid="uid://dbaibnpudn7ji" path="res://src/Images/References/20230708_182525_2.jpg" id="2_r5bse"]
+[ext_resource type="Script" uid="uid://byo3viy2e5d7t" path="res://src/Libs/shylib/Classes/Image3D.cs" id="3_2w1ch"]
+
+[sub_resource type="TextMesh" id="TextMesh_ng2wt"]
+text = "building"
+font_size = 127
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3ahso"]
+no_depth_test = true
+shading_mode = 0
+billboard_mode = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ah4uc"]
+transparency = 1
+albedo_texture = ExtResource("2_r5bse")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_e0jsf"]
+material = SubResource("StandardMaterial3D_ah4uc")
+
+[node name="Building" type="StaticBody3D"]
+
+[node name="Shell" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="label" type="MeshInstance3D" parent="Shell"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.01875, 4.75792, -44.9927)
+mesh = SubResource("TextMesh_ng2wt")
+skeleton = NodePath("../CSGBox3D2")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ahso")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Shell"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.44241, 5.59462, -69.1968)
+use_collision = true
+size = Vector3(43.2186, 14.5033, 47.8902)
+material = ExtResource("1_ah4uc")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Shell"]
+transform = Transform3D(0.948871, 0, 0, 0, 1, 0, 0, 0, 0.936166, 7.98064, 5.77119, -69.2127)
+operation = 2
+use_collision = true
+size = Vector3(41.7513, 12.2498, 49.155)
+material = ExtResource("1_ah4uc")
+
+[node name="DoorHoleBack" type="CSGBox3D" parent="Shell"]
+transform = Transform3D(0.948871, 0, 0, 0, 1.21847, 0, 0, 0, 0.936166, 25.8682, 1.52588, -44.3035)
+operation = 2
+use_collision = true
+size = Vector3(4.03476, 3.28772, 7.26869)
+material = ExtResource("1_ah4uc")
+
+[node name="DoorHoleSide" type="CSGBox3D" parent="Shell"]
+transform = Transform3D(-4.14765e-08, 0, 0.936166, 0, 1.21847, 0, -0.948871, 0, -4.09211e-08, 28.5012, 1.7156, -63.9183)
+operation = 2
+use_collision = true
+size = Vector3(2.31057, 3.28772, 3.38272)
+material = ExtResource("1_ah4uc")
+
+[node name="WindowHoleSide" type="CSGBox3D" parent="Shell"]
+transform = Transform3D(-4.14765e-08, 0, 0.936166, 0, 1.21847, 0, -0.948871, 0, -4.09211e-08, 28.0248, 4.26213, -52.4737)
+operation = 2
+use_collision = true
+size = Vector3(9.19889, 4.76817, 7.26869)
+material = ExtResource("1_ah4uc")
+
+[node name="WindowHoleBack" type="CSGBox3D" parent="Shell"]
+transform = Transform3D(0.948871, 0, 0, 0, 1.21847, 0, 0, 0, 0.936166, 17.1849, 4.0253, -46.4589)
+operation = 2
+use_collision = true
+size = Vector3(8.78416, 4.38799, 7.26869)
+material = ExtResource("1_ah4uc")
+
+[node name="DoorHoleFront" type="CSGBox3D" parent="Shell"]
+transform = Transform3D(0.948871, 0, 0, 0, 1.21847, 0, 0, 0, 0.936166, 16.493, 1.7156, -94.2579)
+operation = 2
+use_collision = true
+size = Vector3(4.03476, 3.28772, 7.26869)
+material = ExtResource("1_ah4uc")
+
+[node name="Dish" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Dish"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.8909, 6.02905, -58.9651)
+use_collision = true
+size = Vector3(28.3217, 13.1926, 1.32964)
+material = ExtResource("1_ah4uc")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Dish"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.2805, 6.02905, -52.6845)
+use_collision = true
+size = Vector3(1.83897, 13.1926, 13.4577)
+material = ExtResource("1_ah4uc")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Dish"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.4668, 10.6263, -51.498)
+use_collision = true
+size = Vector3(21.164, 3.99807, 11.0848)
+material = ExtResource("1_ah4uc")
+
+[node name="KitchenDoorHole" type="CSGBox3D" parent="Dish"]
+transform = Transform3D(0.948871, 0, 0, 0, 1.21847, 0, 0, 0, 0.936166, 25.1536, 1.99599, -60.5642)
+operation = 2
+use_collision = true
+size = Vector3(2.88701, 3.66937, 7.26869)
+material = ExtResource("1_ah4uc")
+
+[node name="Kitchen" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Kitchen"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.8922, 6.02905, -75.3253)
+use_collision = true
+size = Vector3(19.5995, 13.1926, 1.24523)
+material = ExtResource("1_ah4uc")
+
+[node name="DoorHoleSide3" type="CSGBox3D" parent="Kitchen"]
+transform = Transform3D(0.948871, 0, 0, 0, 1.21847, 0, 0, 0, 0.936166, 20.123, 1.7156, -75.0449)
+operation = 2
+use_collision = true
+size = Vector3(4.03476, 3.28772, 3.30313)
+material = ExtResource("1_ah4uc")
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="Kitchen"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.99954, 6.02905, -67.0635)
+use_collision = true
+size = Vector3(1.83897, 13.1926, 15.8263)
+material = ExtResource("1_ah4uc")
+
+[node name="DoorHoleSide2" type="CSGBox3D" parent="Kitchen"]
+transform = Transform3D(-4.14765e-08, 0, 0.936166, 0, 1.21847, 0, -0.948871, 0, -4.09211e-08, 9.87476, 1.7156, -65.6942)
+operation = 2
+use_collision = true
+size = Vector3(4.03476, 3.28772, 5.51761)
+material = ExtResource("1_ah4uc")
+
+[node name="MainArea" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="Office" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Office"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.26503, 6.02905, -69.2303)
+use_collision = true
+size = Vector3(1.83897, 13.1926, 46.5491)
+material = ExtResource("1_ah4uc")
+
+[node name="DoorHoleSide4" type="CSGBox3D" parent="Office"]
+transform = Transform3D(-4.14765e-08, 0, 0.936166, 0, 1.21847, 0, -0.948871, 0, -4.09211e-08, 1.00124, 1.7156, -66.3113)
+operation = 2
+use_collision = true
+size = Vector3(2.67314, 3.28772, 5.51761)
+material = ExtResource("1_ah4uc")
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="Office"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.69472, 6.02905, -59.3227)
+use_collision = true
+size = Vector3(13.035, 13.1926, 1.32964)
+material = ExtResource("1_ah4uc")
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="Office"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.69472, 6.02905, -70.6292)
+use_collision = true
+size = Vector3(13.035, 13.1926, 1.32964)
+material = ExtResource("1_ah4uc")
+
+[node name="Image3D" type="MeshInstance3D" parent="Office"]
+transform = Transform3D(-0.325184, -0.962583, 6.73213e-08, 0, -4.37114e-08, -1.6, 1.1551, -0.270987, 1.89523e-08, -1.29586, 2.34776, -62.2755)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_e0jsf")
+script = ExtResource("3_2w1ch")
+Source = ExtResource("2_r5bse")
+ImageScale = 0.2
+metadata/_custom_type_script = "uid://byo3viy2e5d7t"

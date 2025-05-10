@@ -1,0 +1,47 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://cxa7fufggslr6"]
+
+[ext_resource type="Shader" uid="uid://cypr5o2uug1u6" path="res://src/Resources/Shaders/Rtx.gdshader" id="1_4lyir"]
+
+[resource]
+shader = ExtResource("1_4lyir")
+shader_parameter/brightness = 0.75
+shader_parameter/contrast = 1.0
+shader_parameter/saturation = 1.0
+shader_parameter/gamma = 1.0
+shader_parameter/bloom_intensity = 0.2
+shader_parameter/bloom_threshold = 0.6
+shader_parameter/bloom_blur = 2.0
+shader_parameter/tint_color = Color(1, 0.97, 0.9, 1)
+shader_parameter/tint_strength = 0.2
+shader_parameter/vignette_intensity = 0.2
+shader_parameter/vignette_opacity = 0.5
+shader_parameter/vignette_roundness = 1.0
+shader_parameter/vignette_color = Color(0, 0, 0, 1)
+shader_parameter/film_grain = 0.03
+shader_parameter/film_grain_speed = 3.11
+shader_parameter/chromatic_aberration = 0.5
+shader_parameter/enable_god_rays = true
+shader_parameter/god_rays_intensity = 0.2
+shader_parameter/light_position = Vector2(0.5, 0.5)
+shader_parameter/enable_lens_dirt = true
+shader_parameter/lens_dirt_intensity = 0.5
+shader_parameter/enable_color_grading = true
+shader_parameter/color_lut_mix = 0.0
+shader_parameter/enable_dithering = true
+shader_parameter/dithering_intensity = 0.02
+shader_parameter/enable_scanlines = false
+shader_parameter/scanlines_opacity = 0.2
+shader_parameter/scanlines_width = 10.0
+shader_parameter/enable_sharpen = true
+shader_parameter/sharpen_intensity = 0.1
+shader_parameter/enable_color_blindness = false
+shader_parameter/color_blindness_type = 0
+shader_parameter/color_blindness_intensity = 1.0
+shader_parameter/enable_pixelate = false
+shader_parameter/pixelate_amount = 64.0
+shader_parameter/enable_edge_detection = false
+shader_parameter/edge_detection_intensity = 1.0
+shader_parameter/edge_detection_color = Color(0, 0, 0, 1)
+shader_parameter/enable_night_vision = false
+shader_parameter/night_vision_color = Color(0, 1, 0, 1)
+shader_parameter/night_vision_noise = 0.3

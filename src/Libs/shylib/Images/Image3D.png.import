@@ -2,19 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dx2se60wr4kw6"
-path="res://.godot/imported/flashlight_3.png-de26c1ba31f7e2329d244dfbabb5f3e6.ctex"
+uid="uid://ck61ilinbabbn"
+path="res://.godot/imported/Image3D.png-b8717edd17ed5f9ce081225986126335.ctex"
 metadata={
 "vram_texture": false
-}
-generator_parameters={
-"md5": "ffd2b026e6dcc2b43b7e2c576394a2ac"
 }
 
 [deps]
 
-source_file="res://src/Models/flashlight_3.png"
-dest_files=["res://.godot/imported/flashlight_3.png-de26c1ba31f7e2329d244dfbabb5f3e6.ctex"]
+source_file="res://src/Libs/shylib/Images/Image3D.png"
+dest_files=["res://.godot/imported/Image3D.png-b8717edd17ed5f9ce081225986126335.ctex"]
 
 [params]
 
@@ -24,7 +21,7 @@ compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""

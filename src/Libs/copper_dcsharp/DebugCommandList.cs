@@ -15,7 +15,32 @@ public static class DebugCommandList
 		
 		var funcs = new DebugCommandFunctions();
 
+		#region shader
 
+
+		new DebugCommand {
+			Id = "shader",
+			HelpText = "Toggles if a shader is visible",
+
+			Parameters = [
+				new DebugParameter {
+					Name = "name",
+					Type = DebugParameterType.String,
+					Required = true
+				},
+
+				new DebugParameter {
+					Name = "value",
+					Type = DebugParameterType.Bool,
+					Required = true
+				}
+			],
+
+			Function = new Callable(funcs, DebugCommandFunctions.MethodName.shader)
+		}.AddTo(console);
+
+
+		#endregion
 		#region tpcamto
 
 
@@ -272,7 +297,7 @@ eg:
 		#region monitor
 
 
-		var monitors = new Array<string>(console.Monitors.Keys);
+		var monitors = new Array<string>(console.Monitors.Keys) { "all" };
 
 
 		new DebugCommand {

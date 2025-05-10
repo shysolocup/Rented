@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=4 uid="uid://vvrb04p3te8v"]
 
 [ext_resource type="Texture2D" uid="uid://bptsvu72yepoj" path="res://src/Textures/flashlight_light.png" id="1_nomil"]
-[ext_resource type="Texture2D" uid="uid://igv3g27kd8bi" path="res://src/Models/flashlight_0.png" id="1_s18kh"]
-[ext_resource type="Texture2D" uid="uid://ermbip62io3x" path="res://src/Models/flashlight_1.png" id="2_3tljh"]
-[ext_resource type="Texture2D" uid="uid://cqbd3a0j1ab6v" path="res://src/Models/flashlight_2.png" id="3_wimyg"]
+[ext_resource type="Texture2D" uid="uid://igv3g27kd8bi" path="res://src/Textures/flashlight_0.png" id="1_s18kh"]
+[ext_resource type="Texture2D" uid="uid://ermbip62io3x" path="res://src/Textures/flashlight_1.png" id="2_3tljh"]
+[ext_resource type="Texture2D" uid="uid://cqbd3a0j1ab6v" path="res://src/Textures/flashlight_2.png" id="3_wimyg"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k5c4b"]
 resource_name = "None"

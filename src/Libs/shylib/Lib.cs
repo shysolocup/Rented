@@ -12,6 +12,13 @@ public partial class Lib : Node {
 
 public static class Extensions
 {
+	public static T GetGameNode<T>(this Node self, NodePath nodePath)  where T : Node
+	{
+		return self.GetNode<T>($"/root/Game/{nodePath}");
+	}
+	public static Node GetGameNode(this Node self, NodePath nodePath) => self.GetGameNode<Node>(nodePath);
+
+
 	public static Array<T> GetDescendants<[MustBeVariant] T>(this Node self) where T : Node
 	{
 		Array<T> descendants = [];
@@ -19,7 +26,7 @@ public static class Extensions
 		foreach (Node child in self.GetChildren()) {
 			if (child is T node) {
 				descendants.Add(node);
-                descendants += node.GetDescendants<T>();
+				descendants += node.GetDescendants<T>();
 			}
 		}
 		

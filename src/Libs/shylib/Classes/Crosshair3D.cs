@@ -28,7 +28,7 @@ public partial class Crosshair3D : StaticBody3D
 		string[] spl = Delay.Split("/");
 		_delay = float.Parse(spl[0]) / float.Parse(spl[1]);
 
-		Camera ??= GetNode<Camera3D>("/root/Game/%PlayerCamera");
+		Camera ??= this.GetGameNode<Camera3D>("%PlayerCamera");
 		Icon = GetNode<MeshInstance3D>("./Icon");
 		ViewportCamera = GetNodeOrNull<Camera3D>("../ViewportCamera");
 		CrosshairContainer = GetParent().GetParent<SubViewportContainer>();

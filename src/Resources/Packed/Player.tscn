@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dcthcg547baj0" path="res://src/Images/david bazookie.png" id="2_fovfp"]
 [ext_resource type="Script" uid="uid://by7akciy48m6s" path="res://src/Scripts/Arm.cs" id="2_off7u"]
 [ext_resource type="Material" uid="uid://bljj4t730djb1" path="res://src/Resources/Materials/placeholder.tres" id="3_fovfp"]
-[ext_resource type="PackedScene" uid="uid://vvrb04p3te8v" path="res://src/Resources/Packed/Flashlight.tscn" id="5_off7u"]
+[ext_resource type="PackedScene" uid="uid://vvrb04p3te8v" path="res://src/Models/Packed/Flashlight.tscn" id="5_off7u"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_h8oac"]
 

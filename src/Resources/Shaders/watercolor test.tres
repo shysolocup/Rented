@@ -1,22 +1,3 @@
-[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://h3xhycht6a3o"]
-
-[ext_resource type="Shader" uid="uid://d2tr4hehppenl" path="res://src/Resources/Shaders/Watercolor.gdshader" id="1_vkb0j"]
-[ext_resource type="Texture2D" uid="uid://gw3im38j780" path="res://src/Images/References/20230930_072516.jpg" id="2_yfqxr"]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://h3xhycht6a3o"]
 
 [resource]
-render_priority = 0
-shader = ExtResource("1_vkb0j")
-shader_parameter/light_noise_scale = Vector2(1, 1)
-shader_parameter/light_noise_strength = 0.0
-shader_parameter/light_steps = 5
-shader_parameter/light_step_power = 2.0
-shader_parameter/light_offset = 0.0
-shader_parameter/light_multiplier = 1.0
-shader_parameter/albedo = ExtResource("2_yfqxr")
-shader_parameter/albedo_noise_strength = Vector2(0, 0)
-shader_parameter/albedo_noise_scale = Vector2(1, 1)
-shader_parameter/saturation_multiplier = 1.0
-shader_parameter/desaturation_power = 10.0
-shader_parameter/enable_depth_scaling = true
-shader_parameter/depth_strength = 2.0
-shader_parameter/edge_strength = 1.0

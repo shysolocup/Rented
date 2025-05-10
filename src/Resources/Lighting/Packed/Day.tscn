@@ -9,7 +9,7 @@
 [sub_resource type="BoxMesh" id="BoxMesh_l8xi6"]
 material = ExtResource("3_om7tq")
 
-[node name="Node" type="Node"]
+[node name="Day" type="Node"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(3.33449, 0, 0, 0, 1, 0, 0, 0, 3.48173, 0, 0, 0)
@@ -21,7 +21,10 @@ camera_attributes = ExtResource("2_d25s3")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.601172, 0.0782242, 0.795283, 0.499898, -0.739615, 0.450634, 0.623453, 0.668468, 0.405531, 0, 0, 0)
+light_angular_distance = 1.0
 shadow_enabled = true
+shadow_blur = 1.636
+directional_shadow_split_1 = 0.061
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.592153, 0.317469, 0)

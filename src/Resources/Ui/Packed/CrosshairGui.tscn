@@ -1,0 +1,57 @@
+[gd_scene load_steps=8 format=3 uid="uid://vi335e6p4bg0"]
+
+[ext_resource type="Script" uid="uid://5750qaowrba3" path="res://src/Libs/shylib/Classes/Crosshair3D.cs" id="1_5kwyv"]
+[ext_resource type="Material" uid="uid://ce0vtdxnqp031" path="res://src/Resources/Materials/DefaultIcon.tres" id="2_rr03y"]
+[ext_resource type="Material" uid="uid://djkfa7xtdg63i" path="res://src/Resources/Materials/DefaultHoverIcon.tres" id="3_vv1w7"]
+[ext_resource type="Material" uid="uid://bq8wyiwgdl28m" path="res://src/Resources/Materials/LockedIcon.tres" id="4_m8jmx"]
+
+[sub_resource type="Environment" id="Environment_1fj5k"]
+
+[sub_resource type="World3D" id="World3D_wvpw1"]
+environment = SubResource("Environment_1fj5k")
+
+[sub_resource type="BoxMesh" id="BoxMesh_1dmmm"]
+
+[node name="CrosshairGui" type="CanvasLayer"]
+
+[node name="CrosshairContainer" type="SubViewportContainer" parent="."]
+modulate = Color(1, 1, 1, 0.156863)
+top_level = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+mouse_filter = 2
+stretch = true
+
+[node name="CrosshairViewport" type="SubViewport" parent="CrosshairContainer"]
+own_world_3d = true
+world_3d = SubResource("World3D_wvpw1")
+transparent_bg = true
+handle_input_locally = false
+gui_disable_input = true
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="ViewportCamera" type="Camera3D" parent="CrosshairContainer/CrosshairViewport"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5, 0.781966, -3.22837)
+
+[node name="Crosshair" type="StaticBody3D" parent="CrosshairContainer/CrosshairViewport"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.781966, -3.22837)
+input_ray_pickable = false
+script = ExtResource("1_5kwyv")
+DefaultIcon = ExtResource("2_rr03y")
+DefaultHoverIcon = ExtResource("3_vv1w7")
+LockedIcon = ExtResource("4_m8jmx")
+
+[node name="Icon" type="MeshInstance3D" parent="CrosshairContainer/CrosshairViewport/Crosshair"]
+transform = Transform3D(0.047, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.781966, -3.22837)
+top_level = true
+cast_shadow = 0
+mesh = SubResource("BoxMesh_1dmmm")
+skeleton = NodePath("")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="CrosshairContainer/CrosshairViewport/Crosshair"]

@@ -1,12 +1,28 @@
+using System.Threading.Tasks;
 using Godot;
 
-public partial class InteractSnatchTest : Node
+[GlobalClass, Icon("uid://b2fdc8cj70qou")]
+public partial class ItemObject3D : InteractObject3D
 {
-	public TalkerObject3D obj;
+
+    private Player Player;
+
+    public override void _Ready() {
+        base._Ready();
+    }
+    
+    public override void _PressChanged()
+    {
+        base._PressChanged();
+    }
+}
+
+/*
+public InteractObject3D obj;
 	public Player player;
 
 	public override void _Ready() {
-		obj = GetParent<TalkerObject3D>();
+		obj = GetParent<InteractObject3D>();
 		player = this.GetGameNode<Player>("%Player");
 
 		obj.HoverChanged += Hover;
@@ -29,4 +45,4 @@ public partial class InteractSnatchTest : Node
 			await player.SnatchInteract(obj);
 		}
 	}
-}
+    */

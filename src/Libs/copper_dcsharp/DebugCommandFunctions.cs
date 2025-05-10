@@ -121,7 +121,7 @@ public partial class DebugCommandFunctions : GodotObject
 		}
 
 		else if (type == "map") {
-			Game.Instance.GetGameNode("%Map");
+			Game.Instance?.Map.LoadAndSetFromScene(name).ResetApply();
 		}
 	}
 

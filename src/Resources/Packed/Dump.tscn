@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://0hgckmqbb3ja" path="res://src/Libs/shylib/Classes/Discord/DiscordStatus.cs" id="4_tvero"]
 [ext_resource type="Script" uid="uid://btbivrdlisxa3" path="res://src/Libs/shylib/Classes/Place/Place.cs" id="5_hmvli"]
 [ext_resource type="Script" uid="uid://b4ohdvm04o5s5" path="res://src/Libs/shylib/Classes/Game/GameSettings.cs" id="6_do8cd"]
-[ext_resource type="PackedScene" uid="uid://8p7cp7bhft2a" path="res://src/Resources/Packed/ScreenShaders.tscn" id="7_k7tso"]
+[ext_resource type="PackedScene" uid="uid://8p7cp7bhft2a" path="res://src/Resources/Shaders/Packed/ScreenShaders.tscn" id="7_k7tso"]
 
 [sub_resource type="Resource" id="Resource_k7tso"]
 script = ExtResource("3_1761u")

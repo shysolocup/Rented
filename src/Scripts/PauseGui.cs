@@ -79,8 +79,8 @@ public partial class PauseGui : Control
 	public override void _Ready()
 	{
 		Hide();
-		Player = GetNode<Player>("%Player");
-		// World = GetNode<WorldEnvironment>("%World");
+		Player = this.GetGameNode<Player>("%Player");
+		// World = this.GetGameNode<WorldEnvironment>("%World");
 
 		VBoxContainer Container = GetChild<VBoxContainer>(0).GetChild<VBoxContainer>(1);
 

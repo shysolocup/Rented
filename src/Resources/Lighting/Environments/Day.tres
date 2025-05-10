@@ -15,6 +15,7 @@ ssr_enabled = true
 ssao_enabled = true
 ssao_radius = 10.25
 ssao_intensity = 8.48
+ssil_radius = 1.05
 sdfgi_enabled = true
 sdfgi_use_occlusion = true
 glow_enabled = true

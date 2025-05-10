@@ -1,0 +1,98 @@
+[gd_scene load_steps=8 format=3 uid="uid://dlade7y0ilag6"]
+
+[ext_resource type="Script" uid="uid://bq8h5fsdfxg7c" path="res://src/Scripts/PauseGui.cs" id="1_vv17i"]
+[ext_resource type="Texture2D" uid="uid://bmtapdmr10o7e" path="res://src/Images/Dialog/dialog_border.png" id="2_d8h3k"]
+[ext_resource type="FontFile" uid="uid://fj2b1x4fiorb" path="res://src/Fonts/timesbi.ttf" id="3_4u38r"]
+[ext_resource type="StyleBox" uid="uid://exqyscgxswgh" path="res://src/Resources/Ui/SettingButtonPress.tres" id="4_0aeuh"]
+[ext_resource type="StyleBox" uid="uid://dljp1kxxxhaej" path="res://src/Resources/Ui/SettingButtonHover.tres" id="5_cvfns"]
+[ext_resource type="StyleBox" uid="uid://c3kf7qgi5iwyi" path="res://src/Resources/Ui/SettingButton.tres" id="6_dmmki"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yc6y7"]
+
+[node name="PauseLayer" type="CanvasLayer"]
+layer = 2
+
+[node name="PauseGui" type="Control" parent="."]
+unique_name_in_owner = true
+process_mode = 3
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+grow_vertical = 0
+scale = Vector2(1.3, 1.3)
+mouse_filter = 2
+script = ExtResource("1_vv17i")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseGui"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = -265.0
+offset_right = 409.0
+offset_bottom = 3.0
+
+[node name="Top" type="TextureRect" parent="PauseGui/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_d8h3k")
+stretch_mode = 3
+flip_h = true
+
+[node name="PauseContainer" type="VBoxContainer" parent="PauseGui/VBoxContainer"]
+z_index = 12
+layout_mode = 2
+alignment = 2
+
+[node name="Resume" type="Button" parent="PauseGui/VBoxContainer/PauseContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_4u38r")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yc6y7")
+theme_override_styles/hover_pressed = ExtResource("4_0aeuh")
+theme_override_styles/hover = ExtResource("5_cvfns")
+theme_override_styles/pressed = ExtResource("4_0aeuh")
+theme_override_styles/normal = ExtResource("6_dmmki")
+text = "Resume Game"
+alignment = 0
+
+[node name="SkipButton" type="Button" parent="PauseGui/VBoxContainer/PauseContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_4u38r")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yc6y7")
+theme_override_styles/hover_pressed = ExtResource("4_0aeuh")
+theme_override_styles/hover = ExtResource("5_cvfns")
+theme_override_styles/pressed = ExtResource("4_0aeuh")
+theme_override_styles/normal = ExtResource("6_dmmki")
+text = "Skip Cutscene"
+alignment = 0
+
+[node name="SettingsButton" type="Button" parent="PauseGui/VBoxContainer/PauseContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_4u38r")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yc6y7")
+theme_override_styles/hover_pressed = ExtResource("4_0aeuh")
+theme_override_styles/hover = ExtResource("5_cvfns")
+theme_override_styles/pressed = ExtResource("4_0aeuh")
+theme_override_styles/normal = ExtResource("6_dmmki")
+text = "Settings"
+alignment = 0
+
+[node name="QuitButton" type="Button" parent="PauseGui/VBoxContainer/PauseContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_4u38r")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yc6y7")
+theme_override_styles/hover_pressed = ExtResource("4_0aeuh")
+theme_override_styles/hover = ExtResource("5_cvfns")
+theme_override_styles/pressed = ExtResource("4_0aeuh")
+theme_override_styles/normal = ExtResource("6_dmmki")
+text = "Die"
+alignment = 0
+
+[node name="Bottom" type="TextureRect" parent="PauseGui/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_d8h3k")
+stretch_mode = 3
+flip_h = true
+flip_v = true

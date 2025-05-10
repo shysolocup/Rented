@@ -4,7 +4,7 @@ using System;
 using System.Threading.Tasks;
 using Godot.Collections;
 
-
+[Tool]
 [GlobalClass, Icon("uid://boo8iw5pvoaa8")]
 public partial class GameInstance : Node
 {
@@ -25,7 +25,15 @@ public partial class GameInstance : Node
 
 	[Export] public Godot.Environment DefaultGameEnvironment { get; set; }*/
 
+	[ExportToolButton("Reset VFX")] public Callable ResetVFX => Callable.From( () => {
+		Lighting ??= GetNode<Lighting3D>("%Lighting3D");
+		Map ??= GetNode<MapController>("%Map");
+		Lighting.ResetApply();
+		Map.ResetApply();
+	});
+
 	public Lighting3D Lighting;
+	public MapController Map;
 
 	public Player Player;
 
@@ -178,6 +186,7 @@ public partial class GameInstance : Node
 	{
 		Game.Instance = this;
 		Lighting = GetNode<Lighting3D>("%Lighting3D");
+		Map = GetNode<MapController>("%Map");
 		Player = GetNode<Player>("%Player");
 
 		Game.SaveTemplate = Game.ReadJson("res://src/Data/SaveTemplate.json");
@@ -194,7 +203,7 @@ public partial class GameInstance : Node
 
 		{
 			string textcheck = savedata.GetAsText();
-			string[] toBeRemoved = { " ", "{", "}", "\n", "\t" };
+			string[] toBeRemoved = [" ", "{", "}", "\n", "\t"];
 
 			foreach (string remover in toBeRemoved) {
 				textcheck = textcheck.Replace(remover, "");

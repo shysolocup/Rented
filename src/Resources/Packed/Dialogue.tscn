@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://csefxrb6ehpnb" path="res://src/Libs/shylib/Classes/Dialogue/DialogueData.cs" id="1_j8xi1"]
 [ext_resource type="Texture2D" uid="uid://bmtapdmr10o7e" path="res://src/Images/Dialog/dialog_border.png" id="2_7badv"]
-[ext_resource type="Shader" uid="uid://ceis0htp3v6r0" path="res://src/Resources/Shaders/text test.tres" id="3_03byj"]
+[ext_resource type="Shader" uid="uid://ceis0htp3v6r0" path="res://src/Shaders/text test.tres" id="3_03byj"]
 [ext_resource type="FontFile" uid="uid://djugwc4dfi8yc" path="res://src/Fonts/timesi.ttf" id="4_kr11k"]
 [ext_resource type="Script" uid="uid://c7txcaajl83ve" path="res://src/Scripts/RichTextEffects/Ghost.gd" id="5_kl0wn"]
 [ext_resource type="Script" uid="uid://3mxc7rj1i0c8" path="res://src/Scripts/RichTextEffects/Matrix.gd" id="6_y8kcc"]

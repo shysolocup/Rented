@@ -1,12 +1,12 @@
 [gd_scene load_steps=14 format=3 uid="uid://8p7cp7bhft2a"]
 
-[ext_resource type="Shader" uid="uid://b5fdym4u87ljo" path="res://src/Resources/Shaders/Abberation.gdshader" id="2_foswk"]
+[ext_resource type="Shader" uid="uid://b5fdym4u87ljo" path="res://src/Shaders/Abberation.gdshader" id="2_foswk"]
 [ext_resource type="Material" uid="uid://cxa7fufggslr6" path="res://src/Resources/Lighting/ScreenShaders.tres" id="2_je2sr"]
-[ext_resource type="Shader" uid="uid://3exxjjamcia5" path="res://src/Resources/Shaders/PaintMix.gdshader" id="3_je2sr"]
-[ext_resource type="Shader" uid="uid://cu5r7v72sqifi" path="res://src/Resources/Shaders/RetroPixel.gdshader" id="4_5sfyb"]
-[ext_resource type="Shader" uid="uid://bn0mey8pleolw" path="res://src/Resources/Shaders/Crt.gdshader" id="5_7bmj5"]
-[ext_resource type="Shader" uid="uid://ck3glividics0" path="res://src/Resources/Shaders/SSLF.gdshader" id="6_cc7oj"]
-[ext_resource type="Shader" uid="uid://5lv30asv8c10" path="res://src/Resources/Shaders/Letterbox.gdshader" id="7_foswk"]
+[ext_resource type="Shader" uid="uid://3exxjjamcia5" path="res://src/Shaders/PaintMix.gdshader" id="3_je2sr"]
+[ext_resource type="Shader" uid="uid://cu5r7v72sqifi" path="res://src/Shaders/RetroPixel.gdshader" id="4_5sfyb"]
+[ext_resource type="Shader" uid="uid://bn0mey8pleolw" path="res://src/Shaders/Crt.gdshader" id="5_7bmj5"]
+[ext_resource type="Shader" uid="uid://ck3glividics0" path="res://src/Shaders/SSLF.gdshader" id="6_cc7oj"]
+[ext_resource type="Shader" uid="uid://5lv30asv8c10" path="res://src/Shaders/Letterbox.gdshader" id="7_foswk"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_je2sr"]
 shader = ExtResource("7_foswk")

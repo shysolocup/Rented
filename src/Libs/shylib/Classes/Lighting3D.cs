@@ -1,7 +1,5 @@
 using Godot;
 using Godot.Collections;
-
-
 [Tool]
 [GlobalClass, Icon("uid://dob8ycfdib6x8")]
 public partial class Lighting3D : Node3D
@@ -9,10 +7,10 @@ public partial class Lighting3D : Node3D
 	[Signal] public delegate void LightingChangedEventHandler();
 	[Signal] public delegate void LightingDisabledEventHandler();
 
-	static public string SceneDir = "res://src/Resources/Lighting/Packed";
+	static private readonly string SceneDir = "res://src/Resources/Lighting/Packed";
 
-	static private Dictionary<string, PackedScene> SceneCache = new() {
-		["Default"] = ResourceLoader.Load<PackedScene>($"{SceneDir}/Default.tscn", "", ResourceLoader.CacheMode.Replace)
+	private static Dictionary<string, PackedScene> SceneCache = new() {
+		["Default"] = LoadFromScene("Default")
 	};
 
 	private PackedScene lighting = SceneCache["Default"];
@@ -59,6 +57,11 @@ public partial class Lighting3D : Node3D
 
 				using Node CurrentLighting = lighting.Instantiate();
 
+				if (CurrentLighting is null || !IsInstanceValid(CurrentLighting)) {
+					DebugConsole.LogError($"LightingError: failed to instantiate lighting scene \"{lighting.ResourcePath}\"");
+					return this;
+				}
+
 				SceneWorld?.QueueFree();
 				SceneSun?.QueueFree();
 				
@@ -71,13 +74,20 @@ public partial class Lighting3D : Node3D
 				World = SceneWorld?.Duplicate<WorldEnvironment>();
 				Sun = SceneSun?.Duplicate<DirectionalLight3D>();
 
-				GD.Print($"Set World to {World}");
-				GD.Print($"Set Sun to {Sun}");
+				if (World is not null && IsInstanceValid(World)) {
+					GD.Print($"Set World to {World}");
+					AddChild(World);
+				}
 
-				if (World is not null) AddChild(World);
-				if (Sun is not null) AddChild(Sun);
+				if (Sun is not null && IsInstanceValid(Sun)) {
+					GD.Print($"Set Sun to {Sun}");
+					AddChild(Sun);
+				}
 
 				EmitSignalLightingChanged();
+			}
+			else {
+				DebugConsole.LogError($"LightingError: invalid lighting scene \"{lighting.ResourcePath}\"");
 			}
 		}
 

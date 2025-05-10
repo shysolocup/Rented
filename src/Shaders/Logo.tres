@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://bjw4br41r8htu"]
 
-[ext_resource type="Shader" uid="uid://duitonfhsxomy" path="res://src/Resources/Shaders/Logo.gdshader" id="1_kwy8f"]
+[ext_resource type="Shader" uid="uid://duitonfhsxomy" path="res://src/Shaders/Logo.gdshader" id="1_kwy8f"]
 [ext_resource type="Texture2D" uid="uid://bfxb1q5gjta07" path="res://src/Images/rented_black.png" id="2_fbk3n"]
 
 [resource]

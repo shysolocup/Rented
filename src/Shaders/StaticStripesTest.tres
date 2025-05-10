@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://nykqrj146mgn"]
 
-[ext_resource type="Shader" uid="uid://bnlhhxe200g63" path="res://src/Resources/Shaders/StaticStripes.gdshader" id="1_igwt2"]
+[ext_resource type="Shader" uid="uid://bnlhhxe200g63" path="res://src/Shaders/StaticStripes.gdshader" id="1_igwt2"]
 
 [resource]
 render_priority = 0

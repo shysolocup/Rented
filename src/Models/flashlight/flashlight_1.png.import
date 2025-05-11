@@ -2,24 +2,17 @@
 
 importer="texture"
 type="CompressedTexture2D"
-<<<<<<< HEAD
-uid="uid://bcba76vlg1b46"
-=======
-uid="uid://bopo0n2wipgr1"
->>>>>>> guh
-path.s3tc="res://.godot/imported/flashlight_1.png-20123992c3dfd7c01210cf3c64f3b788.s3tc.ctex"
+uid="uid://b30nfg8um7dgx"
+path.s3tc="res://.godot/imported/flashlight_1.png-64f240910868329f37e95d1787dd530e.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
-generator_parameters={
-"md5": "ca3987c01bfe1ae392fdf3cf94e3c34b"
-}
 
 [deps]
 
-source_file="res://src/Models/flashlight_1.png"
-dest_files=["res://.godot/imported/flashlight_1.png-20123992c3dfd7c01210cf3c64f3b788.s3tc.ctex"]
+source_file="res://src/Models/flashlight/flashlight_1.png"
+dest_files=["res://.godot/imported/flashlight_1.png-64f240910868329f37e95d1787dd530e.s3tc.ctex"]
 
 [params]
 
@@ -32,7 +25,7 @@ compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=8
-roughness/src_normal="res://src/Models/flashlight_2.png"
+roughness/src_normal="res://src/Models/flashlight/flashlight_2.png"
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false

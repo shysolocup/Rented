@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Godot;
 
 [GlobalClass, Icon("uid://b2fdc8cj70qou")]

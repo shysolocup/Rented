@@ -26,7 +26,7 @@ public partial class MapController : Node3D
 		}
 	}
 
-    public Node Map;
+	public Node Map;
 
 	[ExportToolButton("Reset / Apply")] 
 	public Callable ResetCall => Callable.From(() => ResetApply());
@@ -40,28 +40,28 @@ public partial class MapController : Node3D
 
 	public MapController ResetApply(PackedScene map = null) 
 	{
-        map ??= MapScene;
+		map ??= MapScene;
 
-        if (IsInstanceValid(map)) {
+		if (IsInstanceValid(map)) {
 
-            DisposeMap();
+			DisposeMap();
 
-            Map = map.Instantiate();
+			Map = map.Instantiate();
 
-            if (Map is not null && IsInstanceValid(Map)) {
-                GD.Print($"Set Map to {Map}");
+			if (Map is not null && IsInstanceValid(Map)) {
+				GD.Print($"Set Map to {Map}");
 
-                AddChild(Map);
+				AddChild(Map);
 
-                EmitSignalMapChanged();
-            }
-            else {
-                DebugConsole.LogError($"MapError: failed to instantiate map scene \"{map.ResourcePath}\"");
-            }
-        }
-        else {
-            DebugConsole.LogError($"MapError: invalid map scene \"{map.ResourcePath}\"");
-        }
+				EmitSignalMapChanged();
+			}
+			else {
+				DebugConsole.LogError($"MapError: failed to instantiate map scene \"{map.ResourcePath}\"");
+			}
+		}
+		else {
+			DebugConsole.LogError($"MapError: invalid map scene \"{map.ResourcePath}\"");
+		}
 
 		return this;
 	}
@@ -103,6 +103,6 @@ public partial class MapController : Node3D
 	{
 		base._Ready();
 		await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
-        ResetApply();
+		ResetApply();
 	}
 }

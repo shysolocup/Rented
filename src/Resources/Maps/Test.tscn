@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://crynhy865gfw6"]
+[gd_scene load_steps=42 format=3 uid="uid://crynhy865gfw6"]
 
 [ext_resource type="PackedScene" uid="uid://ctqpfrq531m3y" path="res://src/Models/Packed/Buildings.tscn" id="1_fldds"]
 [ext_resource type="PackedScene" uid="uid://c1eyea2y3khs1" path="res://src/Models/Packed/Outside.tscn" id="2_50gqt"]
@@ -17,6 +17,8 @@
 [ext_resource type="Shader" uid="uid://bnlhhxe200g63" path="res://src/Resources/Shaders/StaticStripes.gdshader" id="12_jhq5s"]
 [ext_resource type="Shader" uid="uid://mk71m2dpxk4y" path="res://src/Resources/Shaders/SquashAndStretch.gdshader" id="13_7miyc"]
 [ext_resource type="Material" uid="uid://h3xhycht6a3o" path="res://src/Resources/Shaders/watercolor test.tres" id="14_hiiea"]
+[ext_resource type="Script" uid="uid://bqc3s878xgn1t" path="res://src/Libs/shylib/Classes/ItemObject3D.cs" id="18_rdakc"]
+[ext_resource type="PackedScene" uid="uid://vvrb04p3te8v" path="res://src/Models/Packed/Flashlight.tscn" id="19_bbrq3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_won10"]
 render_priority = 0
@@ -151,6 +153,8 @@ material = SubResource("ShaderMaterial_m47wv")
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_yc6y7"]
 lightmap_size_hint = Vector2i(17, 14)
 material = ExtResource("14_hiiea")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rdakc"]
 
 [node name="MapBlock" type="Node3D"]
 
@@ -415,3 +419,16 @@ transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 15.4927, 1.14528, -39.6
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_yc6y7")
 skeleton = NodePath("../../root/@EditorNode@21301/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11482/@VSplitContainer@11134/@HSplitContainer@11136/@HSplitContainer@11138/@Control@11139/@SubViewportContainer@11140/@SubViewport@11141/Game/Root3D/Player")
+
+[node name="ItemObject3D" type="RigidBody3D" parent="."]
+transform = Transform3D(0.0423116, -0.999104, 0, 0.999104, 0.0423116, 0, 0, 0, 1, 18.4971, 0.946862, -40.8645)
+script = ExtResource("18_rdakc")
+AutoCooldown = false
+metadata/_custom_type_script = "uid://bqc3s878xgn1t"
+
+[node name="Flashlight" parent="ItemObject3D" instance=ExtResource("19_bbrq3")]
+transform = Transform3D(0.2, -9.31323e-10, 1.11022e-16, -9.31323e-10, -0.2, 3.01992e-08, 0, -3.01992e-08, -0.2, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ItemObject3D"]
+transform = Transform3D(0.713579, 2.42144e-07, 0, -1.35973e-07, 1.44256, 0, 0, 0, 0.784762, 0, 0, 0)
+shape = SubResource("BoxShape3D_rdakc")

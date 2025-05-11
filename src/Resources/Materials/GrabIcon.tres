@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://ivdjd8ibadn6"]
+
+[ext_resource type="Texture2D" uid="uid://b66tomji47qvw" path="res://src/Ui/cursor_grab.png" id="1_huwa8"]
+
+[resource]
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+albedo_texture = ExtResource("1_huwa8")
+albedo_texture_force_srgb = true
+uv1_scale = Vector3(3, 2, 3)

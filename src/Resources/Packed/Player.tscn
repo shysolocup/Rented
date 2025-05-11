@@ -99,7 +99,7 @@ bind/11/bone = -1
 bind/11/pose = Transform3D(-0.891323, 3.49112, -0.31648, -3.37997, -0.942494, -0.877493, -0.929427, 0.0795043, 3.49462, -6.87499, -6.82497, -1.28286)
 
 [node name="Player" type="CharacterBody3D"]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 4.32012, 1.14733, -40.1963)
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
 input_ray_pickable = false
 script = ExtResource("1_wueuk")
 BaseFov = 75.0

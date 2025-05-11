@@ -10,16 +10,9 @@ using System.Threading;
 public partial class Player : CharacterBody3D
 {
 
-	static public Task RunningDialogue;
-	static public CancellationTokenSource RunningDialogueToken;
-
-
-	[Signal] public delegate void StartDialogueEventHandler(Array<DialogueSequence> scene);
-
-	[Signal] public delegate void FinishDialogueEventHandler(Array<DialogueSequence> scene);
-
-
 	[ExportCategory("Player")]
+
+	[Export] public Inventory Inventory;
 
 
 	#region Dynamic Vars
@@ -147,6 +140,13 @@ public partial class Player : CharacterBody3D
 
 	private Vector3 Bobble = Vector3.Zero;
 
+	static public Task RunningDialogue;
+	static public CancellationTokenSource RunningDialogueToken;
+
+	[Signal] public delegate void StartDialogueEventHandler(Array<DialogueSequence> scene);
+
+	[Signal] public delegate void FinishDialogueEventHandler(Array<DialogueSequence> scene);
+
 	#region Die
 	public void Die(int id = 0) 
 	{
@@ -157,6 +157,7 @@ public partial class Player : CharacterBody3D
 	#region Ready
 	public override void _Ready()
 	{	
+		Inventory = this.GetGameNode<Inventory>("%Inventory");
 		Camera = GetNode<Camera3D>("%PlayerCamera");
 		Raycast = Camera.GetChild<RayCast3D>(0);
 

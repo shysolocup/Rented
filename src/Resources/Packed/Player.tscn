@@ -227,9 +227,9 @@ skin = SubResource("Skin_0xas6")
 surface_material_override/0 = ExtResource("3_fovfp")
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="Arm/Armature/Skeleton3D"]
-transform = Transform3D(-0.754064, -0.575477, 0.316565, -0.488157, 0.168595, -0.856317, 0.439419, -0.800251, -0.408054, 1.52014, -1.1414, -2.46098)
+transform = Transform3D(-0.754064, -0.575477, 0.316565, -0.488157, 0.168595, -0.856317, 0.439419, -0.800252, -0.408055, 1.52014, -1.1414, -2.46098)
 bone_name = "Bone.003.R"
 bone_idx = 2
 
 [node name="Flashlight" parent="Arm/Armature/Skeleton3D/BoneAttachment3D" instance=ExtResource("5_off7u")]
-transform = Transform3D(0.430216, 0.197971, -0.160381, 0.235102, -0.429761, 0.100164, -0.0981918, -0.161595, -0.462866, 0.00990295, 1.3445, 0.177498)
+transform = Transform3D(0.430216, 0.197971, -0.160381, 0.235102, -0.429761, 0.100164, -0.0981918, -0.161595, -0.462866, -0.0828166, 1.5524, 0.334581)

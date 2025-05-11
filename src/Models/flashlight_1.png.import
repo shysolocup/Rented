@@ -2,7 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
+<<<<<<< HEAD
 uid="uid://bcba76vlg1b46"
+=======
+uid="uid://bopo0n2wipgr1"
+>>>>>>> guh
 path.s3tc="res://.godot/imported/flashlight_1.png-20123992c3dfd7c01210cf3c64f3b788.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],

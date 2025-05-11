@@ -133,6 +133,8 @@ public partial class Player : CharacterBody3D
 
 	[Export] public float InteractFovMod = -15;
 	
+	private Transform3D? CameraSubject;
+	
 	public RayCast3D Raycast;
 	public InteractObject3D Inter;
 	#endregion
@@ -244,8 +246,7 @@ public partial class Player : CharacterBody3D
 				Inter = null;
 			}
 
-			if (result.GetType() == typeof(InteractObject3D)) {
-				InteractObject3D collider = (InteractObject3D)result;
+			if (result is InteractObject3D collider) {
 				Inter = collider;
 				collider.Hovering = true;
 			}
@@ -263,6 +264,9 @@ public partial class Player : CharacterBody3D
 			if (CameraPositionControllable && !Freecam) {
 				Bobble = this.Twlerp(Bobble, HeadBobble(), 1/15f, delta);
 				Camera.Position = Camera.Position.Lerp(new Vector3(Position.X, Position.Y + CameraOffset, Position.Z) + Bobble + (JumpVelocity/40), 17 * (float)delta);
+			}
+			if (!CameraRotationControllable && CameraSubject is Transform3D origin) {
+				SnatchCamera(origin, delta);
 			}
 			if (!Freecam) Rotation = new Vector3(Rotation.X, Camera.Rotation.Y, Rotation.Z);
 
@@ -300,7 +304,7 @@ public partial class Player : CharacterBody3D
 		InDialog = true;
 		ReleaseMouse();
 		
-		DialogueData data = this.GetGameNode("Guis/DialogueLayer/DialogueGui").GetNode<DialogueData>("%DialogueData");
+		DialogueData data = this.GetGameNode("Guis/DialogueGui").GetNode<DialogueData>("%DialogueData");
 
 		GD.Print(data);
 
@@ -321,46 +325,32 @@ public partial class Player : CharacterBody3D
 	#endregion
 
 	#region SnatchCamera
-	public Func<Task> SnatchCamera(Transform3D origin)
+	public void SnatchCamera(Transform3D origin, double delta)
 	{
 		Vector3 Direction = (origin.Origin - Camera.GlobalTransform.Origin).Normalized();
 		Basis TargetBasis = Basis.LookingAt(Direction, Vector3.Up);
-		Vector3 TargetRotation = TargetBasis.GetEuler();
-
-		float time = (origin.Basis.GetEuler() - Camera.GlobalRotation).Length() / 1.3f;
-
-		GD.Print(TargetRotation, Camera.GlobalRotation);
-
-		Tween tween = CreateTween();
-		tween.Finished += () => tween.Dispose();
-		tween.SetTrans(Tween.TransitionType.Quad).SetEase(Tween.EaseType.Out);
-		tween.TweenProperty(Camera, "global_rotation", TargetRotation, time);
-		tween.Play();
-
-		return async () => {
-			if (IsInstanceValid(tween) && tween.IsRunning()) tween.Stop();
-		
-			SceneTreeTimer timer = GetTree().CreateTimer(0.3f);
-			await ToSignal(timer, Godot.Timer.SignalName.Timeout);
-			timer.Dispose();
-		};
+		Camera.GlobalRotation = Camera.GlobalRotation.Lerp(TargetBasis.GetEuler(), this.FactorDelta(1/5f, delta));
 	}
 	#endregion
 
 	#region SnatchInteract
-	public async Task SnatchInteract(InteractObject3D obj) 
+	public async Task SnatchInteract(TalkerObject3D obj) 
 	{
+		GD.Print(obj.Cooldown);
+
 		if (obj.Cooldown) {
 			obj.Cooldown = false; return;
 		}
 
 		obj.Cooldown = true;
 
-		Func<Task> fin = SnatchCamera(obj.GlobalTransform);
+		CameraSubject = obj.GlobalTransform;
 
 		await PlayDialogue(obj.Line);
 
-		await fin();
+		CameraSubject = null;
+
+		await GetTree().CreateTimer(0.5f).Guh();
 
 		obj.Cooldown = false;
 	}

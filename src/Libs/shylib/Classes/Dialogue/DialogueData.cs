@@ -68,32 +68,35 @@ public partial class DialogueData : Node
 	#endregion
 
 
+	private float alpha = 0;
+	private float factor = 1/20f;
+
+	private Color HandleColor(Color c, double delta)
+	{
+		return new Color(c, this.Twlerp(c.A, alpha, factor, delta));
+	}
+
+	#region _Process
+	public override void _Process(double delta)
+	{
+		if (Engine.IsEditorHint()) return;
+		if (alpha != Top.Modulate.A) {
+			Top.Modulate = HandleColor(Top.Modulate, delta);
+			Bottom.Modulate = HandleColor(Bottom.Modulate, delta);
+			Background.Modulate = HandleColor(Background.Modulate, delta);
+		}
+
+		base._Process(delta);
+	}
+	#endregion
+
+
 	#region PlayByInstance
 	public async Task PlayByInstance(Array<DialogueSequence> scene, CancellationToken token = new(), VBoxContainer inst = null) {
 		bool recursive = inst != null;
 
-		Tween toptween = null; Tween bottomtween = null; Tween bgtween = null;
-
 		if (!Engine.IsEditorHint()) {
-			if (MathF.Round(Top.Modulate.A) < 1 ) {
-				toptween = CreateTween();
-				toptween.Finished += () => toptween.Dispose();
-				toptween.TweenProperty(Top, "modulate:a", 1, 1.3f)
-				.SetTrans(Tween.TransitionType.Quad)
-				.SetEase(Tween.EaseType.Out);
-
-				bottomtween = CreateTween();
-				bottomtween.Finished += () => bottomtween.Dispose();
-				bottomtween.TweenProperty(Bottom, "modulate:a", 1, 1.3f)
-				.SetTrans(Tween.TransitionType.Quad)
-				.SetEase(Tween.EaseType.Out);
-
-				bgtween = CreateTween();
-				bgtween.Finished += () => bgtween.Dispose();
-				bgtween.TweenProperty(Background, "modulate:a", 1, 1.3f)
-				.SetTrans(Tween.TransitionType.Quad)
-				.SetEase(Tween.EaseType.Out);
-			}
+			alpha = 1;
 			
 			inst ??= Base.Duplicate() as VBoxContainer;
 			inst.Show();
@@ -123,6 +126,10 @@ public partial class DialogueData : Node
 				if (token.IsCancellationRequested) break;
 
 				foreach (DialogueLine line in sequence.Lines) {
+
+					await ToSignal(tree, SceneTree.SignalName.ProcessFrame);
+					await ToSignal(tree, SceneTree.SignalName.ProcessFrame);
+
 					if (token.IsCancellationRequested) break;
 
 					if (sequence.Character.Trim().Length > 0) {
@@ -133,8 +140,6 @@ public partial class DialogueData : Node
 
 					using var tokenSource = new CancellationTokenSource();
 					var token2 = tokenSource.Token;
-
-					await ToSignal(tree, SceneTree.SignalName.ProcessFrame);
 
 					#region Play Random
 					if (line.Randoms.Count > 0) {
@@ -247,29 +252,8 @@ public partial class DialogueData : Node
 				}
 			}
 
-			if (toptween != null && IsInstanceValid(toptween) && toptween.IsRunning()) toptween.Stop();
-			if (bottomtween != null && IsInstanceValid(bottomtween) && bottomtween.IsRunning()) bottomtween.Stop();
-			if (bgtween != null && IsInstanceValid(bgtween) && bgtween.IsRunning()) bgtween.Stop();
-
 			if (!recursive) {
-				toptween = CreateTween();
-				toptween.Finished += () => toptween.Dispose();
-				toptween.TweenProperty(Top, "modulate:a", 0, 1)
-				.SetTrans(Tween.TransitionType.Quad)
-				.SetEase(Tween.EaseType.Out);
-
-				bottomtween = CreateTween();
-				bottomtween.Finished += () => bottomtween.Dispose();
-				bottomtween.TweenProperty(Bottom, "modulate:a", 0, 1)
-				.SetTrans(Tween.TransitionType.Quad)
-				.SetEase(Tween.EaseType.Out);
-
-				bgtween = CreateTween();
-				bgtween.Finished += () => bgtween.Dispose();
-				bgtween.TweenProperty(Background, "modulate:a", 0, 1)
-				.SetTrans(Tween.TransitionType.Quad)
-				.SetEase(Tween.EaseType.Out);
-				
+				alpha = 0;
 				inst.Free();
 			}
 		}

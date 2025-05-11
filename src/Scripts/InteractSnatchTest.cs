@@ -2,11 +2,11 @@ using Godot;
 
 public partial class InteractSnatchTest : Node
 {
-	public InteractObject3D obj;
+	public TalkerObject3D obj;
 	public Player player;
 
 	public override void _Ready() {
-		obj = GetParent<InteractObject3D>();
+		obj = GetParent<TalkerObject3D>();
 		player = this.GetGameNode<Player>("%Player");
 
 		obj.HoverChanged += Hover;

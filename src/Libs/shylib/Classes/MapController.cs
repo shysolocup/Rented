@@ -3,7 +3,11 @@ using Godot.Collections;
 
 
 [Tool]
+<<<<<<< HEAD
 [GlobalClass, Icon("uid://dob8ycfdib6x8")]
+=======
+[GlobalClass, Icon("uid://bu4xjum6vtr11")]
+>>>>>>> guh
 public partial class MapController : Node3D
 {
 	[Signal] public delegate void MapChangedEventHandler();
@@ -11,7 +15,11 @@ public partial class MapController : Node3D
 	static private readonly string SceneDir = "res://src/Resources/Maps";
 
 	private static Dictionary<string, PackedScene> SceneCache = new() {
+<<<<<<< HEAD
 		["Test"] = LoadFromScene("Test")
+=======
+		["Test"] = ResourceLoader.Load<PackedScene>($"{SceneDir}/Test.tscn", "", ResourceLoader.CacheMode.Replace)
+>>>>>>> guh
 	};
 
 	private PackedScene mapScene = SceneCache["Test"];
@@ -26,7 +34,11 @@ public partial class MapController : Node3D
 		}
 	}
 
+<<<<<<< HEAD
     public Node Map;
+=======
+	public Node Map;
+>>>>>>> guh
 
 	[ExportToolButton("Reset / Apply")] 
 	public Callable ResetCall => Callable.From(() => ResetApply());
@@ -40,6 +52,7 @@ public partial class MapController : Node3D
 
 	public MapController ResetApply(PackedScene map = null) 
 	{
+<<<<<<< HEAD
         map ??= MapScene;
 
         if (IsInstanceValid(map)) {
@@ -62,6 +75,30 @@ public partial class MapController : Node3D
         else {
             DebugConsole.LogError($"MapError: invalid map scene \"{map.ResourcePath}\"");
         }
+=======
+		map ??= MapScene;
+
+		if (IsInstanceValid(map)) {
+
+			DisposeMap();
+
+			Map = map.Instantiate();
+
+			if (Map is not null && IsInstanceValid(Map)) {
+				GD.Print($"Set Map to {Map}");
+
+				AddChild(Map);
+
+				EmitSignalMapChanged();
+			}
+			else {
+				DebugConsole.LogError($"MapError: failed to instantiate map scene \"{map.ResourcePath}\"");
+			}
+		}
+		else {
+			DebugConsole.LogError($"MapError: invalid map scene \"{map.ResourcePath}\"");
+		}
+>>>>>>> guh
 
 		return this;
 	}
@@ -103,6 +140,12 @@ public partial class MapController : Node3D
 	{
 		base._Ready();
 		await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+<<<<<<< HEAD
         ResetApply();
 	}
 }
+=======
+		ResetApply();
+	}
+}
+>>>>>>> guh

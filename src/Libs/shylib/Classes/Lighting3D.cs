@@ -10,7 +10,11 @@ public partial class Lighting3D : Node3D
 	static private readonly string SceneDir = "res://src/Resources/Lighting/Packed";
 
 	private static Dictionary<string, PackedScene> SceneCache = new() {
+<<<<<<< HEAD
 		["Default"] = LoadFromScene("Default")
+=======
+		["Default"] = ResourceLoader.Load<PackedScene>($"{SceneDir}/Default.tscn", "", ResourceLoader.CacheMode.Replace)
+>>>>>>> guh
 	};
 
 	private PackedScene lighting = SceneCache["Default"];

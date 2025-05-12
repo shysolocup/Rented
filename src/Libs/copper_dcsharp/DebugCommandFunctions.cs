@@ -99,10 +99,10 @@ public partial class DebugCommandFunctions : GodotObject
 			await player.PlayDialogue(name);
 		}
 
-		else if (type == "place") {
+		/*else if (type == "place") {
 			PlaceController pc = Game.Instance.GetGameNode<PlaceController>("%PlaceController");
 			pc.Place = PlaceController.Places[name];
-		}
+		}*/
 
 		else if (type == "room") {
 			Game.Instance?.LoadRoom(name);

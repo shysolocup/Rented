@@ -1,3 +1,4 @@
+/*
 using Godot;
 
 [GlobalClass, Icon("uid://bhib8x7fhxxwd")]
@@ -5,7 +6,7 @@ public partial class DiscordController : Node
 {
 
 	static public Node DiscordRPCNode;
-	private PlaceController pc;
+	// private PlaceController pc;
 
 	public DiscordController SetStatus(Place place)
 	{
@@ -63,3 +64,4 @@ public partial class DiscordController : Node
 		DiscordRPCNode.Call("NewTimestamp");
 	}
 }
+*/

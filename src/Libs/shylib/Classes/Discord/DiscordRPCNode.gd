@@ -1,3 +1,4 @@
+'''
 class_name DiscordRPCNode
 extends Node
 
@@ -33,3 +34,4 @@ func RefreshRPC():
 func NewTimestamp():
 	StartTimestamp = int(Time.get_unix_time_from_system())
 	EndTimestamp = int(Time.get_unix_time_from_system()) + 3600
+'''

@@ -188,7 +188,7 @@ public partial class DebugCommandFunctions : GodotObject
 
 
 	public void unlit(bool value) {
-		Game.Instance.GetNode<Control>("/root/Game/Dump/%ScreenShaders").Visible = value;
+		// Game.Instance.GetNode<Control>("/root/Game/Dump/%ScreenShaders").Visible = value;
 		Game.Instance.Lighting.Visible = !value;
 	}
 

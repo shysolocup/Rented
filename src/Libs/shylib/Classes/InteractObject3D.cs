@@ -3,6 +3,7 @@ using Godot;
 [GlobalClass, Icon("uid://e1srvp36hc7n")]
 public partial class InteractObject3D : RigidBody3D
 {
+	[Export] public float Distance = 1.7f;
 	[Export] public bool Enabled = true;
 	[Export] public bool Locked = false;
 	[Export] public StandardMaterial3D HoverIcon;

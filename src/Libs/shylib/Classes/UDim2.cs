@@ -7,18 +7,20 @@ public partial class UDim2 : Resource
     [Export] public Vector2 X = Vector2.Zero;
     [Export] public Vector2 Y = Vector2.Zero;
 
+
     public static UDim2 operator + (UDim2 a, dynamic b) => new(a.X + b.X, a.Y + b.Y);
     public static UDim2 operator * (UDim2 a, dynamic b) => new(a.X * b.X, a.Y * b.Y);
     public static UDim2 operator / (UDim2 a, dynamic b) => new(a.X / b.X, a.Y / b.Y);
     public static UDim2 operator ^ (UDim2 a, dynamic b) => new(a.X ^ b.X, a.Y ^ b.Y);
     public static UDim2 operator % (UDim2 a, dynamic b) => new(a.X % b.X, a.Y % b.Y);
 
-    static public UDim2 Zero 
-    {
-        get => new(0, 0, 0, 0);
-    }
+
+    static public UDim2 Zero { get => new(0, 0, 0, 0); }
+    static public UDim2 DefaultSize { get => new(0, 200, 0, 200); }
+
 
     public UDim2 Lerp(UDim2 to, float weight) => new(X.Lerp(to.X, weight), Y.Lerp(to.Y, weight));
+
 
     public UDim2() : base() {}
 

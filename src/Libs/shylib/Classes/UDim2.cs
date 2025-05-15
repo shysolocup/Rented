@@ -1,6 +1,6 @@
 using Godot;
 
-[GlobalClass]
+[GlobalClass, Icon("uid://bwcxp8wfwv51d")]
 public partial class UDim2 : Resource
 {
 

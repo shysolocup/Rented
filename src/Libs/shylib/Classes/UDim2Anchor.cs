@@ -3,7 +3,7 @@ using Godot;
 // DisplayServer.WindowGetSize();
 
 [Tool]
-[GlobalClass]
+[GlobalClass, Icon("uid://cb7frf5mruesy")]
 public partial class UDim2Anchor : Node
 {
     [Export] public UDim2 Size = UDim2.Zero;

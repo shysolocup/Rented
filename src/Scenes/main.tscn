@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://s0ftqrddh5up"]
+[gd_scene load_steps=17 format=3 uid="uid://s0ftqrddh5up"]
 
 [ext_resource type="Script" uid="uid://cfoo1gxat5mv8" path="res://src/Libs/shylib/Classes/Game/GameInstance.cs" id="1_k0mjx"]
 [ext_resource type="Script" uid="uid://cei6x6adiqlte" path="res://src/Libs/shylib/Classes/Lighting3D.cs" id="2_h8oac"]
@@ -9,9 +9,7 @@
 [ext_resource type="Script" uid="uid://d1dwvl843g32v" path="res://src/Libs/shylib/Classes/Trigger3D/Trigger3D.cs" id="6_p8ix8"]
 [ext_resource type="Script" uid="uid://cge1tw0n2wjvm" path="res://src/Libs/shylib/Classes/RbxScript.cs" id="7_0m3r5"]
 [ext_resource type="Texture2D" uid="uid://buml50bofllu4" path="res://src/Ui/alarm clock.png" id="8_3ahso"]
-[ext_resource type="Script" uid="uid://dtpolrhuqeka3" path="res://src/Libs/shylib/Classes/UDim2Anchor.cs" id="9_7mk6u"]
 [ext_resource type="Script" uid="uid://f680ovgo7k8o" path="res://src/Scripts/SaveIconSpinner.cs" id="9_ng2wt"]
-[ext_resource type="Script" uid="uid://x5sibww5ixpw" path="res://src/Libs/shylib/Classes/UDim2.cs" id="10_e2xy3"]
 [ext_resource type="PackedScene" uid="uid://vi335e6p4bg0" path="res://src/Resources/Ui/Packed/CrosshairGui.tscn" id="10_timk5"]
 [ext_resource type="PackedScene" uid="uid://dlade7y0ilag6" path="res://src/Resources/Ui/Packed/PauseGui.tscn" id="14_7mk6u"]
 [ext_resource type="PackedScene" uid="uid://dvpi6uwtqfp8n" path="res://src/Resources/Ui/Packed/DialogueGui.tscn" id="14_8nlug"]
@@ -20,11 +18,6 @@
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2sh0m"]
 size = Vector3(0.716797, 1, 1)
-
-[sub_resource type="Resource" id="Resource_e2xy3"]
-script = ExtResource("10_e2xy3")
-X = Vector2(0, 0)
-Y = Vector2(0, 0)
 
 [node name="Game" type="Node"]
 script = ExtResource("1_k0mjx")
@@ -126,11 +119,6 @@ Source = "uid://nna6r5m6tbhw"
 SpawnedNodePath = NodePath("")
 metadata/_custom_type_script = "uid://cge1tw0n2wjvm"
 
-[node name="UDim2Anchor" type="Node" parent="Root3D/Triggers"]
-script = ExtResource("9_7mk6u")
-Size = SubResource("Resource_e2xy3")
-metadata/_custom_type_script = "uid://dtpolrhuqeka3"
-
 [node name="Root2D" type="Node2D" parent="."]
 
 [node name="Guis" type="Control" parent="."]
@@ -142,6 +130,7 @@ offset_bottom = 40.0
 
 [node name="SaveGui" type="Control" parent="Guis"]
 layout_mode = 1
+anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0

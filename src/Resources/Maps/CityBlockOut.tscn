@@ -157,6 +157,7 @@ material = ExtResource("17_rucnt")
 [sub_resource type="BoxShape3D" id="BoxShape3D_rdakc"]
 
 [node name="MapBlock" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.81981, 0, 1.04959)
 
 [node name="Build" type="Node3D" parent="."]
 
@@ -366,48 +367,46 @@ mesh = SubResource("BoxMesh_xknod")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("10_ivhxa")
 
-[node name="test7" type="StaticBody3D" parent="testcubes"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.65005, 2.90059, -5.61089)
-
 [node name="MeshInstance3D" type="MeshInstance3D" parent="testcubes"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.95322, 1.80408, 0)
 mesh = SubResource("BoxMesh_jipul")
 skeleton = NodePath("")
 
 [node name="mockplayers" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.105161, 0.366011)
 
 [node name="MockPlayer" type="MeshInstance3D" parent="mockplayers"]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 28.3349, 1.14528, -44.0052)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.3431, 1.14528, -44.0023)
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_y0axr")
 skeleton = NodePath("../../root/@EditorNode@21301/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11482/@VSplitContainer@11134/@HSplitContainer@11136/@HSplitContainer@11138/@Control@11139/@SubViewportContainer@11140/@SubViewport@11141/Game/Root3D/Player")
 
 [node name="MockPlayer2" type="MeshInstance3D" parent="mockplayers"]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 9.7234, 1.14528, -41.8677)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.73163, 1.14528, -41.8648)
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_pxl8w")
 skeleton = NodePath("../../root/@EditorNode@21301/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11482/@VSplitContainer@11134/@HSplitContainer@11136/@HSplitContainer@11138/@Control@11139/@SubViewportContainer@11140/@SubViewport@11141/Game/Root3D/Player")
 
 [node name="MockPlayer3" type="MeshInstance3D" parent="mockplayers"]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 13.2185, 1.14528, -41.8677)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.2267, 1.14528, -41.8648)
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_jnspx")
 skeleton = NodePath("../../root/@EditorNode@21301/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11482/@VSplitContainer@11134/@HSplitContainer@11136/@HSplitContainer@11138/@Control@11139/@SubViewportContainer@11140/@SubViewport@11141/Game/Root3D/Player")
 
 [node name="MockPlayer5" type="MeshInstance3D" parent="mockplayers"]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 16.4462, 1.14528, -41.8677)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.4544, 1.14528, -41.8648)
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_ax1kr")
 skeleton = NodePath("../../root/@EditorNode@21301/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11482/@VSplitContainer@11134/@HSplitContainer@11136/@HSplitContainer@11138/@Control@11139/@SubViewportContainer@11140/@SubViewport@11141/Game/Root3D/Player")
 
 [node name="MockPlayer4" type="MeshInstance3D" parent="mockplayers"]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 5.41887, 1.14528, -42.1327)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.4271, 1.14528, -42.1299)
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_yc6y7")
 skeleton = NodePath("../../root/@EditorNode@21301/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11482/@VSplitContainer@11134/@HSplitContainer@11136/@HSplitContainer@11138/@Control@11139/@SubViewportContainer@11140/@SubViewport@11141/Game/Root3D/Player")
 
 [node name="MockPlayer6" type="MeshInstance3D" parent="mockplayers"]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 15.4927, 1.14528, -39.6651)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.5009, 1.14528, -39.6623)
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_yc6y7")
 skeleton = NodePath("../../root/@EditorNode@21301/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11482/@VSplitContainer@11134/@HSplitContainer@11136/@HSplitContainer@11138/@Control@11139/@SubViewportContainer@11140/@SubViewport@11141/Game/Root3D/Player")
@@ -422,5 +421,5 @@ metadata/_custom_type_script = "uid://bqc3s878xgn1t"
 transform = Transform3D(0.2, -9.31323e-10, 1.11022e-16, -9.31323e-10, -0.2, 3.01992e-08, 0, -3.01992e-08, -0.2, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ItemObject3D"]
-transform = Transform3D(0.713579, 2.42144e-07, 0, -1.35973e-07, 1.44256, 0, 0, 0, 0.784762, 0, 0, 0)
+transform = Transform3D(0.713579, 2.23517e-07, 4.43692e-16, -1.35973e-07, 1.44256, 1.87901e-17, 3.26955e-19, 0, 0.784762, 0, 0, 0)
 shape = SubResource("BoxShape3D_rdakc")

@@ -122,6 +122,7 @@ custom_effects = [SubResource("RichTextEffect_gc7xl"), SubResource("RichTextEffe
 layout_mode = 2
 texture = ExtResource("2_7badv")
 stretch_mode = 2
+flip_h = true
 flip_v = true
 
 [node name="Background" type="TextureRect" parent="Dialogue"]

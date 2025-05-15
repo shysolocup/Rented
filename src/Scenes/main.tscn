@@ -82,7 +82,7 @@ material = ExtResource("5_8i3or")
 
 [node name="Markers" type="Node3D" parent="Root3D"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 84.1022, 3.22074, -7.61471)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 85.2569, 3.22074, -5.94942)
 
 [node name="Dish" type="Marker3D" parent="Root3D/Markers"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.4775, 1.82917, -51.6094)
@@ -101,23 +101,23 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.40881, 2.05975, 3.54878)
 gizmo_extents = 1.0
 
 [node name="Kitchen" type="Marker3D" parent="Root3D/Markers"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.6443, 1.61127, -65.1824)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.7814, 1.61127, -67.0853)
 gizmo_extents = 1.0
 
 [node name="Main" type="Marker3D" parent="Root3D/Markers"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.263, 2.00742, -83.7679)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.54038, 2.00742, -84.2667)
 gizmo_extents = 1.0
 
 [node name="Office" type="Marker3D" parent="Root3D/Markers"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.47628, 2.36523, -62.5075)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.9055, 2.09148, -66.0815)
 gizmo_extents = 1.0
 
 [node name="AudreyRoom" type="Marker3D" parent="Root3D/Markers"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8842, 2.36523, 0.0648789)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.05759, 0)
 gizmo_extents = 1.0
 
 [node name="Gubby" type="Marker3D" parent="Root3D/Markers"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -96.3168, 65.6693, -86.0832)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -81.3585, 65.6693, -80.4604)
 gizmo_extents = 1.0
 
 [node name="Triggers" type="Node3D" parent="Root3D"]
@@ -141,17 +141,19 @@ Source = "uid://nna6r5m6tbhw"
 SpawnedNodePath = NodePath("")
 metadata/_custom_type_script = "uid://cge1tw0n2wjvm"
 
-[node name="TalkerObject3D" type="RigidBody3D" parent="Root3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.1219, 68.2358, -97.6259)
+[node name="Gubby" type="RigidBody3D" parent="Root3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.04178, 68.2358, -80.7722)
+freeze = true
 script = ExtResource("9_w0vrg")
 Line = "interact_gubby"
+AutoCooldown = false
 metadata/_custom_type_script = "uid://bps104hjuxax7"
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Root3D/TalkerObject3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Root3D/Gubby"]
 mesh = SubResource("PlaneMesh_isqvi")
 skeleton = NodePath("../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Root3D/TalkerObject3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Root3D/Gubby"]
 shape = SubResource("BoxShape3D_isqvi")
 
 [node name="Root2D" type="Node2D" parent="."]

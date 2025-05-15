@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://s0ftqrddh5up"]
+[gd_scene load_steps=23 format=3 uid="uid://s0ftqrddh5up"]
 
 [ext_resource type="Script" uid="uid://cfoo1gxat5mv8" path="res://src/Libs/shylib/Classes/Game/GameInstance.cs" id="1_k0mjx"]
 [ext_resource type="Script" uid="uid://cei6x6adiqlte" path="res://src/Libs/shylib/Classes/Lighting3D.cs" id="2_h8oac"]
@@ -10,7 +10,10 @@
 [ext_resource type="Script" uid="uid://cge1tw0n2wjvm" path="res://src/Libs/shylib/Classes/RbxScript.cs" id="7_0m3r5"]
 [ext_resource type="Texture2D" uid="uid://buml50bofllu4" path="res://src/Ui/alarm clock.png" id="8_3ahso"]
 [ext_resource type="Script" uid="uid://f680ovgo7k8o" path="res://src/Scripts/SaveIconSpinner.cs" id="9_ng2wt"]
+[ext_resource type="Script" uid="uid://bps104hjuxax7" path="res://src/Libs/shylib/Classes/TalkerObject3D.cs" id="9_w0vrg"]
+[ext_resource type="Texture2D" uid="uid://leopdc2ne6l3" path="res://src/Textures/gubby.png" id="10_e2xy3"]
 [ext_resource type="PackedScene" uid="uid://vi335e6p4bg0" path="res://src/Resources/Ui/Packed/CrosshairGui.tscn" id="10_timk5"]
+[ext_resource type="PackedScene" uid="uid://b3rd60c50tk6u" path="res://src/Resources/Ui/Packed/ViewportModel.tscn" id="12_e2xy3"]
 [ext_resource type="PackedScene" uid="uid://dlade7y0ilag6" path="res://src/Resources/Ui/Packed/PauseGui.tscn" id="14_7mk6u"]
 [ext_resource type="PackedScene" uid="uid://dvpi6uwtqfp8n" path="res://src/Resources/Ui/Packed/DialogueGui.tscn" id="14_8nlug"]
 [ext_resource type="Script" uid="uid://c8e2vfc8iq64g" path="res://src/Libs/shylib/Classes/Items/Inventory.cs" id="15_wf0w2"]
@@ -18,6 +21,17 @@
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2sh0m"]
 size = Vector3(0.716797, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w0vrg"]
+transparency = 1
+albedo_texture = ExtResource("10_e2xy3")
+billboard_mode = 1
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_isqvi"]
+material = SubResource("StandardMaterial3D_w0vrg")
+orientation = 2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_isqvi"]
 
 [node name="Game" type="Node"]
 script = ExtResource("1_k0mjx")
@@ -98,6 +112,14 @@ gizmo_extents = 1.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.47628, 2.36523, -62.5075)
 gizmo_extents = 1.0
 
+[node name="AudreyRoom" type="Marker3D" parent="Root3D/Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8842, 2.36523, 0.0648789)
+gizmo_extents = 1.0
+
+[node name="Gubby" type="Marker3D" parent="Root3D/Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -96.3168, 65.6693, -86.0832)
+gizmo_extents = 1.0
+
 [node name="Triggers" type="Node3D" parent="Root3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 166.192, -41.172, -13.6964)
 
@@ -119,6 +141,19 @@ Source = "uid://nna6r5m6tbhw"
 SpawnedNodePath = NodePath("")
 metadata/_custom_type_script = "uid://cge1tw0n2wjvm"
 
+[node name="TalkerObject3D" type="RigidBody3D" parent="Root3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.1219, 68.2358, -97.6259)
+script = ExtResource("9_w0vrg")
+Line = "interact_gubby"
+metadata/_custom_type_script = "uid://bps104hjuxax7"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Root3D/TalkerObject3D"]
+mesh = SubResource("PlaneMesh_isqvi")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Root3D/TalkerObject3D"]
+shape = SubResource("BoxShape3D_isqvi")
+
 [node name="Root2D" type="Node2D" parent="."]
 
 [node name="Guis" type="Control" parent="."]
@@ -127,6 +162,8 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="ViewportModel" parent="Guis" instance=ExtResource("12_e2xy3")]
 
 [node name="SaveGui" type="Control" parent="Guis"]
 layout_mode = 1
@@ -161,4 +198,5 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 
 [node name="Inventory" type="Node" parent="."]
+unique_name_in_owner = true
 script = ExtResource("15_wf0w2")

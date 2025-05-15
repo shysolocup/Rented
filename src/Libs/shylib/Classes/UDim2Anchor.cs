@@ -7,6 +7,35 @@ using Godot;
 public partial class UDim2Anchor : Node
 {
 
+    [ExportGroup("Operations")]
+
+    [Export] public bool Canvas { 
+        get => canvas; 
+        set {
+            canvas = value;
+            Update(); 
+        }
+    }
+    [Export] public bool AnchorSize {
+        get => anchorSize; 
+        set {
+            anchorSize = value;
+            Update(); 
+        }
+    }
+    [Export] public bool AnchorPosition {
+        get => anchorPos; 
+        set {
+            anchorPos = value;
+            Update(); 
+        }
+    }
+    [ExportToolButton("Update")] public Callable UpdateCall => Callable.From(Update);
+    private bool canvas = false;
+    private bool anchorSize = false;
+    private bool anchorPos = false;
+
+
     [ExportGroup("Dynamics")]
 
     [Export] public UDim2 Size { 
@@ -34,24 +63,17 @@ public partial class UDim2Anchor : Node
     private UDim2 pos = UDim2.Zero;
     private Vector2 anchor = new(0.5f, 0.5f);
 
+    public void guh<T>() where T : Control
+    {
 
-    [ExportGroup("Operations")]
-
-    [Export] public bool Canvas { 
-        get => canvas; 
-        set {
-            canvas = value;
-            Update(); 
-        }
     }
-    [ExportToolButton("Update")] public Callable UpdateCall => Callable.From(Update);
-    private bool canvas = false;
-
 
     public void Update()
     {
-        if (GetParent() is Control me) {
-            Vector2 basis = me.GetParentAreaSize(); // probably works
+        Vector2 basis;
+
+        if (GetParent() is Control c) {
+            basis = Canvas ? DisplayServer.WindowGetSize() : c.GetParentAreaSize(); // probably works
         }
     }
 }

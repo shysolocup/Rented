@@ -15,10 +15,44 @@ public static class DebugCommandList
 		
 		var funcs = new DebugCommandFunctions();
 
-		#region shader
+
+		#region tp
 
 
 		new DebugCommand {
+			Id = "tp",
+			HelpText = "Tps to a place in world space",
+
+			Parameters = [
+				new DebugParameter {
+					Name = "X",
+					Type = DebugParameterType.Float,
+					Required = true
+				},
+
+				new DebugParameter {
+					Name = "Y",
+					Type = DebugParameterType.Float,
+					Required = true
+				},
+
+				new DebugParameter {
+					Name = "Z",
+					Type = DebugParameterType.Float,
+					Required = true
+				}
+			],
+
+			Function = new Callable(funcs, DebugCommandFunctions.MethodName.tp)
+		}.AddTo(console);
+
+
+		#endregion
+		#region shader
+
+
+		new DebugCommand
+		{
 			Id = "shader",
 			HelpText = "Toggles if a shader is visible",
 
@@ -116,15 +150,17 @@ eg:
 						"place",
 						"room",
 						"light",
-						"marker"
+						"marker",
+						"map"
 					],
 					Required = true
 				},
 
 				new DebugParameter {
 					Name = "name",
-					Type = DebugParameterType.String,
-					Required = true
+					Type = DebugParameterType.Options,
+					Required = true,
+					CallOptions = new Callable(funcs, DebugCommandFunctions.MethodName.actoptions)
 				}
 			],
 
@@ -282,10 +318,32 @@ eg:
 
 
 		#endregion
-		#region cfg
+		#region setnoise
 
 
 		new DebugCommand {
+			Id = "setnoise",
+			HelpText = "Sets the noise value",
+
+			Parameters = [
+				new DebugParameter {
+					Name = "value",
+					Type = DebugParameterType.Int,
+					Required = true
+				}
+			],
+
+			Function = new Callable(funcs, DebugCommandFunctions.MethodName.setnoise),
+
+		}.AddTo(console);
+
+
+		#endregion
+		#region cfg
+
+
+		new DebugCommand
+		{
 			Id = "cfg",
 			HelpText = "Opens the directory where cfg files are put, if it exists.",
 

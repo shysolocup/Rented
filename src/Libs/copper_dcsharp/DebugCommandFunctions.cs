@@ -1,5 +1,7 @@
 using Godot;
 using CoolGame;
+using Godot.Collections;
+using System.Linq;
 
 /// <summary>
 /// <see cref="DebugCommandList"/>
@@ -7,9 +9,19 @@ using CoolGame;
 
 public partial class DebugCommandFunctions : GodotObject 
 {
+	#region tp
+
+	public void tp(float x, float y, float z)
+	{
+		Player player = Game.Instance.GetGameNode<Player>("%Player");
+		player.GlobalPosition = new Vector3(x, y, z);
+	}
+
+	#endregion
 	#region shader
 
-	public void shader(string name, bool value) {
+	public void shader(string name, bool value)
+	{
 		Game.Instance.GetGameNode<ColorRect>($"%ScreenShaders/{name}").Visible = value;
 	}
 
@@ -86,14 +98,66 @@ public partial class DebugCommandFunctions : GodotObject
 
 
 	#endregion
-	#region act
+	#region actoptions
 
-	public async void act(string type, string name) {
-		if (type == "camera") {
-			Game.Instance.GetGameNode("%Cameras").GetNode<Camera3D>( (name == "Default") ? "PlayerCamera" : name).MakeCurrent();
+
+	public Array<string> actoptions(Array<string> opts)
+	{
+		string type = opts[1];
+
+		if (type == "camera")
+		{
+			return [.. Game.Instance.GetGameNode("%Cameras").GetChildren().Select(child => child.Name), "Default"];
 		}
 
-		else if (type == "dialogue") {
+		else if (type == "dialogue")
+		{
+			return [.. DialogueData.Scenes.Keys];
+		}
+
+		/*else if (type == "place") {
+			PlaceController pc = Game.Instance.GetGameNode<PlaceController>("%PlaceController");
+			pc.Place = PlaceController.Places[name];
+		}*/
+
+		/*else if (type == "room")
+		{
+
+		}*/
+
+		else if (type == "light")
+		{
+			using var dir = DirAccess.Open(Lighting3D.SceneDir);
+			return [.. dir.GetFiles().Select(file => file.Replace(".tscn", ""))];
+		}
+
+		else if (type == "marker")
+		{
+			return [.. Game.Instance.GetGameNode("%Markers").GetChildren().Select(child => child.Name)];
+		}
+
+		else if (type == "map")
+		{
+			using var dir = DirAccess.Open(MapController.SceneDir);
+			return [.. dir.GetFiles().Select(file => file.Replace(".tscn", ""))];
+		}
+
+		return [];
+	}
+
+
+	#endregion
+	#region act
+
+	public async void act(string type, string name)
+	{
+		if (type == "camera")
+		{
+			Game.Instance.GetGameNode("%Cameras").GetNode<Camera3D>((name == "Default") ? "PlayerCamera" : name).MakeCurrent();
+		}
+
+		else if (type == "dialogue")
+		{
 			Player player = Game.Instance.GetGameNode<Player>("%Player");
 			await DebugConsole.HideConsole();
 			await player.PlayDialogue(name);
@@ -104,23 +168,27 @@ public partial class DebugCommandFunctions : GodotObject
 			pc.Place = PlaceController.Places[name];
 		}*/
 
-		else if (type == "room") {
+		else if (type == "room")
+		{
 			Game.Instance?.LoadRoom(name);
 		}
 
-		else if (type == "light") {
+		else if (type == "light")
+		{
 			Game.Instance?.Lighting.LoadAndSetFromScene(name).ResetApply();
 		}
 
-		else if (type == "marker") {
+		else if (type == "marker")
+		{
 			Player player = Game.Instance?.GetGameNode<Player>("%Player");
-		
+
 			if (player is null) return;
 
 			player.GlobalPosition = Game.Instance.GetGameNode<Marker3D>($"%Markers/{name}").GlobalPosition;
 		}
 
-		else if (type == "map") {
+		else if (type == "map")
+		{
 			Game.Instance?.Map.LoadAndSetFromScene(name).ResetApply();
 		}
 	}
@@ -204,6 +272,15 @@ public partial class DebugCommandFunctions : GodotObject
 
 		await DebugConsole.HideConsole();
 		player.Freecam = value;
+	}
+
+
+	#endregion freecam
+	#region setnoise
+
+
+	public void setnoise(int value) {
+		Game.Instance.Noise = value;
 	}
 
 

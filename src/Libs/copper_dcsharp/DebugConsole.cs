@@ -261,20 +261,37 @@ public partial class DebugConsole : CanvasLayer
 			CommandHintHeaderLabel.Text = _GetParameterText(cmd, parameterCount);
 
 			// GD.Print($"paramCount: {parameterCount}\ntrueParamCount: {cmd.Parameters.Count}");
-	
-			if (parameterCount < cmd.Parameters.Count && parameterCount >= 0) {
+			
+
+			if (parameterCount < cmd.Parameters.Count && parameterCount >= 0)
+			{
 				var parameter = cmd.Parameters[parameterCount];
 				var options = parameter.Options;
 
-				if (options.Count >= 0) {
-					foreach(string option in options) {
-						if (option.StartsWith(commandSplit[commandSplit.Count - 1])) {
+				if (options.Count >= 0)
+				{
+					foreach (string option in options)
+					{
+						if (option.StartsWith(commandSplit[^1]))
+						{
+							CommandHintsLabel.Text += $"[url]{option}[/url]\n";
+						}
+					}
+				}
+
+				if (parameter.CallOptions is Callable call)
+				{
+					foreach (string option in (Array<string>)call.Call(commandSplit))
+					{
+						if (option.StartsWith(commandSplit[^1]))
+						{
 							CommandHintsLabel.Text += $"[url]{option}[/url]\n";
 						}
 					}
 				}
 			}
-			else if (parameterCount == -1) {
+			else if (parameterCount == -1)
+			{
 				CommandHintsLabel.Text += cmd.HelpText;
 			}
 		}
@@ -509,24 +526,28 @@ public partial class DebugConsole : CanvasLayer
 			}
 
 			// Options parameter
-			else if(currentParameterObj.Type == DebugParameterType.Options) {
-				if (currentParameterObj.CallOptions.Method != null) {
-					var value = (Array<string>)currentParameterObj.CallOptions.Call(commandSplit);
-					
-					if (value == null) {
+			else if (currentParameterObj.Type == DebugParameterType.Options) {
+				var tempOptions = currentParameterObj.Options;
+
+				if (currentParameterObj.CallOptions is Callable call)
+				{
+					var value = (Array<string>)call.Call(commandSplit);
+
+					if (value == null)
+					{
 						LogError("ParamError: Callable Parameter \"" + currentParameterObj.Name + "\" should have a return value.");
 						return;
 					}
 
-					currentParameterObj.Options = value;
+					tempOptions = value;
 				}
 
-				if (currentParameterObj.Options.Count == 0) {
+				if (tempOptions.Count == 0) {
 					LogError("ParamError: Parameter \"" + currentParameterObj.Name + "\" is meant to have options, but none were set.");
 					return;
 				}
 
-				if (!currentParameterObj.Options.Contains(commandSplit[i])) {
+				if (!tempOptions.Contains(commandSplit[i])) {
 					LogError($"ParamError: \"{commandSplit[i]}\" is not a valid option for parameter \"{currentParameterObj.Name}\".");
 					return;
 				}

@@ -8,13 +8,6 @@ public partial class UDim2 : Resource
     [Export] public Vector2 Y = Vector2.Zero;
 
 
-    public static UDim2 operator + (UDim2 a, dynamic b) => new(a.X + b.X, a.Y + b.Y);
-    public static UDim2 operator * (UDim2 a, dynamic b) => new(a.X * b.X, a.Y * b.Y);
-    public static UDim2 operator / (UDim2 a, dynamic b) => new(a.X / b.X, a.Y / b.Y);
-    public static UDim2 operator ^ (UDim2 a, dynamic b) => new(a.X ^ b.X, a.Y ^ b.Y);
-    public static UDim2 operator % (UDim2 a, dynamic b) => new(a.X % b.X, a.Y % b.Y);
-
-
     static public UDim2 Zero { get => new(0, 0, 0, 0); }
     static public UDim2 DefaultSize { get => new(0, 200, 0, 200); }
 
@@ -38,4 +31,23 @@ public partial class UDim2 : Resource
 
     static public UDim2 FromScale(float xScale, float yScale) => new(xScale, 0, yScale, 0);
     static public UDim2 FromOffset(float xOffset, float yOffset) => new(0, xOffset, 0, yOffset);
+
+
+    public static UDim2 operator + (UDim2 a, dynamic b) => new(a.X + b.X, a.Y + b.Y);
+    public static UDim2 operator * (UDim2 a, dynamic b) => new(a.X * b.X, a.Y * b.Y);
+    public static UDim2 operator / (UDim2 a, dynamic b) => new(a.X / b.X, a.Y / b.Y);
+    public static UDim2 operator ^ (UDim2 a, dynamic b) => new(a.X ^ b.X, a.Y ^ b.Y);
+    public static UDim2 operator % (UDim2 a, dynamic b) => new(a.X % b.X, a.Y % b.Y);
+    public static bool operator == (UDim2 a, dynamic b) => a.X == b.X && a.Y == b.Y;
+    public static bool operator != (UDim2 a, dynamic b) => a.X != b.X && a.Y != b.Y;
+
+
+    public override bool Equals(object obj)
+    {
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj is null) return false;
+        throw new System.NotImplementedException();
+    }
+
+    public override int GetHashCode() => throw new System.NotImplementedException();
 }

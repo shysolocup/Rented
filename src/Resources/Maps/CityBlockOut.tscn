@@ -1,30 +1,30 @@
 [gd_scene load_steps=42 format=3 uid="uid://crynhy865gfw6"]
 
-[ext_resource type="PackedScene" uid="uid://ctqpfrq531m3y" path="res://src/Models/Packed/Buildings.tscn" id="1_y6tjj"]
-[ext_resource type="PackedScene" uid="uid://c1eyea2y3khs1" path="res://src/Models/Packed/Outside.tscn" id="2_rdakc"]
-[ext_resource type="PackedScene" uid="uid://jqojvdkor4nu" path="res://src/Models/Packed/MainBuilding.tscn" id="3_bbrq3"]
-[ext_resource type="Shader" uid="uid://17hm1p5b17nd" path="res://src/Shaders/WatercolorPlane.gdshader" id="5_f684b"]
-[ext_resource type="Texture2D" uid="uid://c2s51i7cpbmdw" path="res://src/Textures/watercolor1.png" id="5_t1g6d"]
-[ext_resource type="Texture2D" uid="uid://cks0soccg2jbn" path="res://src/Textures/watercolor2.png" id="6_d8tvc"]
-[ext_resource type="Texture2D" uid="uid://4votccrw7wyl" path="res://src/Textures/watercolor4.png" id="7_a78a6"]
-[ext_resource type="AudioStream" uid="uid://nvube6beo7t" path="res://src/Sounds/its happening david bazookie.mp3" id="8_7x5xs"]
-[ext_resource type="Script" uid="uid://bps104hjuxax7" path="res://src/Libs/shylib/Classes/TalkerObject3D.cs" id="9_y6tjj"]
-[ext_resource type="Material" uid="uid://ca75ik5y2u4a2" path="res://src/Resources/Materials/david.tres" id="10_d2yfw"]
-[ext_resource type="Shader" uid="uid://csra1tvugixyj" path="res://src/Shaders/test.tres" id="12_kxn82"]
-[ext_resource type="Material" uid="uid://bljj4t730djb1" path="res://src/Resources/Materials/placeholder.tres" id="13_km8vm"]
-[ext_resource type="Shader" uid="uid://cs7xs27v3w4nc" path="res://src/Shaders/NoiseDistortion.gdshader" id="14_f7dug"]
-[ext_resource type="Texture2D" uid="uid://bh6vfh18uu0bn" path="res://src/Textures/placeholder.png" id="15_c86v8"]
-[ext_resource type="Shader" uid="uid://bnlhhxe200g63" path="res://src/Shaders/StaticStripes.gdshader" id="16_u3fkd"]
-[ext_resource type="Shader" uid="uid://mk71m2dpxk4y" path="res://src/Shaders/SquashAndStretch.gdshader" id="17_4075w"]
-[ext_resource type="Material" uid="uid://h3xhycht6a3o" path="res://src/Shaders/watercolor test.tres" id="18_dvccm"]
-[ext_resource type="Script" uid="uid://bqc3s878xgn1t" path="res://src/Libs/shylib/Classes/ItemObject3D.cs" id="18_rdakc"]
-[ext_resource type="PackedScene" uid="uid://vvrb04p3te8v" path="res://src/Models/Packed/Flashlight.tscn" id="19_bbrq3"]
+[ext_resource type="PackedScene" uid="uid://ctqpfrq531m3y" path="res://src/Models/Packed/Buildings.tscn" id="1_i5rif"]
+[ext_resource type="PackedScene" uid="uid://c1eyea2y3khs1" path="res://src/Models/Packed/Outside.tscn" id="2_e2s5l"]
+[ext_resource type="PackedScene" uid="uid://jqojvdkor4nu" path="res://src/Models/Packed/MainBuilding.tscn" id="3_r246b"]
+[ext_resource type="Shader" uid="uid://17hm1p5b17nd" path="res://src/Shaders/WatercolorPlane.gdshader" id="4_hm7qk"]
+[ext_resource type="Texture2D" uid="uid://c2s51i7cpbmdw" path="res://src/Textures/watercolor1.png" id="5_y3lgk"]
+[ext_resource type="Texture2D" uid="uid://cks0soccg2jbn" path="res://src/Textures/watercolor2.png" id="6_k6xs8"]
+[ext_resource type="Texture2D" uid="uid://4votccrw7wyl" path="res://src/Textures/watercolor4.png" id="7_kjqer"]
+[ext_resource type="AudioStream" uid="uid://nvube6beo7t" path="res://src/Sounds/its happening david bazookie.mp3" id="8_8lsa2"]
+[ext_resource type="Script" uid="uid://bps104hjuxax7" path="res://src/Libs/shylib/Classes/TalkerObject3D.cs" id="9_yl88r"]
+[ext_resource type="Material" uid="uid://ca75ik5y2u4a2" path="res://src/Resources/Materials/david.tres" id="10_ivhxa"]
+[ext_resource type="Shader" uid="uid://csra1tvugixyj" path="res://src/Shaders/test.tres" id="11_mslbd"]
+[ext_resource type="Material" uid="uid://bljj4t730djb1" path="res://src/Resources/Materials/placeholder.tres" id="12_hrop5"]
+[ext_resource type="Shader" uid="uid://cs7xs27v3w4nc" path="res://src/Shaders/NoiseDistortion.gdshader" id="13_ajvnf"]
+[ext_resource type="Texture2D" uid="uid://bh6vfh18uu0bn" path="res://src/Textures/placeholder.png" id="14_p0j8l"]
+[ext_resource type="Shader" uid="uid://bnlhhxe200g63" path="res://src/Shaders/StaticStripes.gdshader" id="15_rjd0a"]
+[ext_resource type="Shader" uid="uid://mk71m2dpxk4y" path="res://src/Shaders/SquashAndStretch.gdshader" id="16_qphwy"]
+[ext_resource type="Material" uid="uid://h3xhycht6a3o" path="res://src/Shaders/watercolor test.tres" id="17_rucnt"]
+[ext_resource type="Script" uid="uid://bqc3s878xgn1t" path="res://src/Libs/shylib/Classes/ItemObject3D.cs" id="18_1qb22"]
+[ext_resource type="PackedScene" uid="uid://vvrb04p3te8v" path="res://src/Models/Packed/Flashlight.tscn" id="19_edthe"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_won10"]
 render_priority = 0
-shader = ExtResource("5_f684b")
+shader = ExtResource("4_hm7qk")
 shader_parameter/albedo = Color(0.847059, 0.588235, 0.835294, 0.470588)
-shader_parameter/texture_albedo = ExtResource("5_t1g6d")
+shader_parameter/texture_albedo = ExtResource("5_y3lgk")
 shader_parameter/proximity_fade_distance = 15.0
 shader_parameter/distance_fade_min = 0.0
 shader_parameter/distance_fade_max = 25.0
@@ -42,9 +42,9 @@ material = SubResource("ShaderMaterial_won10")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_r0cio"]
 render_priority = 0
-shader = ExtResource("5_f684b")
+shader = ExtResource("4_hm7qk")
 shader_parameter/albedo = Color(0.848837, 0.590006, 0.836128, 0.470588)
-shader_parameter/texture_albedo = ExtResource("6_d8tvc")
+shader_parameter/texture_albedo = ExtResource("6_k6xs8")
 shader_parameter/proximity_fade_distance = 15.0
 shader_parameter/distance_fade_min = 0.0
 shader_parameter/distance_fade_max = 25.0
@@ -61,9 +61,9 @@ material = SubResource("ShaderMaterial_r0cio")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_t1g6d"]
 render_priority = 0
-shader = ExtResource("5_f684b")
+shader = ExtResource("4_hm7qk")
 shader_parameter/albedo = Color(0.848837, 0.590006, 0.836128, 0.470588)
-shader_parameter/texture_albedo = ExtResource("7_a78a6")
+shader_parameter/texture_albedo = ExtResource("7_kjqer")
 shader_parameter/proximity_fade_distance = 15.0
 shader_parameter/distance_fade_min = 0.0
 shader_parameter/distance_fade_max = 25.0
@@ -80,9 +80,9 @@ material = SubResource("ShaderMaterial_t1g6d")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_y6tjj"]
 render_priority = 0
-shader = ExtResource("5_f684b")
+shader = ExtResource("4_hm7qk")
 shader_parameter/albedo = Color(0.848837, 0.590006, 0.836128, 0.470588)
-shader_parameter/texture_albedo = ExtResource("5_t1g6d")
+shader_parameter/texture_albedo = ExtResource("5_y3lgk")
 shader_parameter/proximity_fade_distance = 15.0
 shader_parameter/distance_fade_min = 0.0
 shader_parameter/distance_fade_max = 25.0
@@ -103,7 +103,7 @@ material = SubResource("ShaderMaterial_y6tjj")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_10fqn"]
 render_priority = 0
-shader = ExtResource("12_kxn82")
+shader = ExtResource("11_mslbd")
 
 [sub_resource type="BoxMesh" id="BoxMesh_jipul"]
 material = SubResource("ShaderMaterial_10fqn")
@@ -114,10 +114,10 @@ material = SubResource("ShaderMaterial_10fqn")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4v06e"]
 render_priority = 0
-next_pass = ExtResource("13_km8vm")
-shader = ExtResource("14_f7dug")
+next_pass = ExtResource("12_hrop5")
+shader = ExtResource("13_ajvnf")
 shader_parameter/alpha = 1.0
-shader_parameter/albedo_texture = ExtResource("15_c86v8")
+shader_parameter/albedo_texture = ExtResource("14_p0j8l")
 shader_parameter/noise_texture = SubResource("CurveTexture_4v06e")
 shader_parameter/speed = 0.5
 shader_parameter/distortion = 0.3
@@ -130,7 +130,7 @@ material = SubResource("ShaderMaterial_4v06e")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hxo8n"]
 render_priority = 0
-shader = ExtResource("16_u3fkd")
+shader = ExtResource("15_rjd0a")
 shader_parameter/speed = 1.0
 shader_parameter/frequency = 1.0
 shader_parameter/warp_amount = 1.0
@@ -141,7 +141,7 @@ material = SubResource("ShaderMaterial_hxo8n")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m47wv"]
 render_priority = 0
-shader = ExtResource("17_4075w")
+shader = ExtResource("16_qphwy")
 shader_parameter/direction = Vector2(-0.1, 1.3)
 shader_parameter/squash = 2.0
 shader_parameter/offset = 0.5
@@ -152,7 +152,7 @@ material = SubResource("ShaderMaterial_m47wv")
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_yc6y7"]
 lightmap_size_hint = Vector2i(17, 14)
-material = ExtResource("18_dvccm")
+material = ExtResource("17_rucnt")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rdakc"]
 
@@ -160,11 +160,11 @@ material = ExtResource("18_dvccm")
 
 [node name="Build" type="Node3D" parent="."]
 
-[node name="Buildings" parent="Build" instance=ExtResource("1_y6tjj")]
+[node name="Buildings" parent="Build" instance=ExtResource("1_i5rif")]
 
-[node name="Outside" parent="Build" instance=ExtResource("2_rdakc")]
+[node name="Outside" parent="Build" instance=ExtResource("2_e2s5l")]
 
-[node name="Building" parent="Build" instance=ExtResource("3_bbrq3")]
+[node name="Building" parent="Build" instance=ExtResource("3_r246b")]
 
 [node name="Watercolors" type="Node3D" parent="."]
 
@@ -251,7 +251,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.01644, 17.5536, 0)
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Ambient"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.60103, -16.0247, 4.32475)
-stream = ExtResource("8_7x5xs")
+stream = ExtResource("8_8lsa2")
 attenuation_model = 2
 autoplay = true
 max_distance = 4.0
@@ -259,7 +259,7 @@ parameters/looping = true
 
 [node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Ambient"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.24936, -16.0247, 4.32475)
-stream = ExtResource("8_7x5xs")
+stream = ExtResource("8_8lsa2")
 attenuation_model = 2
 autoplay = true
 max_distance = 4.0
@@ -267,7 +267,7 @@ parameters/looping = true
 
 [node name="AudioStreamPlayer3D3" type="AudioStreamPlayer3D" parent="Ambient"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.24936, -16.0247, -2.81763)
-stream = ExtResource("8_7x5xs")
+stream = ExtResource("8_8lsa2")
 attenuation_model = 2
 autoplay = true
 max_distance = 4.0
@@ -275,7 +275,7 @@ parameters/looping = true
 
 [node name="AudioStreamPlayer3D4" type="AudioStreamPlayer3D" parent="Ambient"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.57504, -16.0247, -2.81763)
-stream = ExtResource("8_7x5xs")
+stream = ExtResource("8_8lsa2")
 attenuation_model = 2
 autoplay = true
 max_distance = 4.0
@@ -286,7 +286,7 @@ parameters/looping = true
 [node name="test1" type="RigidBody3D" parent="testcubes"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55775, 0.562328, 5.04772)
 freeze = true
-script = ExtResource("9_y6tjj")
+script = ExtResource("9_yl88r")
 AutoCooldown = false
 
 [node name="Collision" type="CollisionShape3D" parent="testcubes/test1"]
@@ -294,12 +294,12 @@ shape = SubResource("BoxShape3D_j1e05")
 
 [node name="Mesh" type="MeshInstance3D" parent="testcubes/test1"]
 mesh = SubResource("BoxMesh_xknod")
-surface_material_override/0 = ExtResource("10_d2yfw")
+surface_material_override/0 = ExtResource("10_ivhxa")
 
 [node name="test2" type="RigidBody3D" parent="testcubes"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55775, 0.562328, 2.30029)
 freeze = true
-script = ExtResource("9_y6tjj")
+script = ExtResource("9_yl88r")
 AutoCooldown = false
 
 [node name="Collision" type="CollisionShape3D" parent="testcubes/test2"]
@@ -308,12 +308,12 @@ shape = SubResource("BoxShape3D_j1e05")
 [node name="Mesh" type="MeshInstance3D" parent="testcubes/test2"]
 mesh = SubResource("BoxMesh_xknod")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("10_d2yfw")
+surface_material_override/0 = ExtResource("10_ivhxa")
 
 [node name="test3" type="RigidBody3D" parent="testcubes"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55775, 0.562328, -0.148977)
 freeze = true
-script = ExtResource("9_y6tjj")
+script = ExtResource("9_yl88r")
 AutoCooldown = false
 
 [node name="Collision" type="CollisionShape3D" parent="testcubes/test3"]
@@ -322,12 +322,12 @@ shape = SubResource("BoxShape3D_j1e05")
 [node name="Mesh" type="MeshInstance3D" parent="testcubes/test3"]
 mesh = SubResource("BoxMesh_xknod")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("10_d2yfw")
+surface_material_override/0 = ExtResource("10_ivhxa")
 
 [node name="test4" type="RigidBody3D" parent="testcubes"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55775, 0.562328, -2.86034)
 freeze = true
-script = ExtResource("9_y6tjj")
+script = ExtResource("9_yl88r")
 AutoCooldown = false
 
 [node name="Collision" type="CollisionShape3D" parent="testcubes/test4"]
@@ -336,12 +336,12 @@ shape = SubResource("BoxShape3D_j1e05")
 [node name="Mesh" type="MeshInstance3D" parent="testcubes/test4"]
 mesh = SubResource("BoxMesh_xknod")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("10_d2yfw")
+surface_material_override/0 = ExtResource("10_ivhxa")
 
 [node name="test5" type="RigidBody3D" parent="testcubes"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.531609, 0.977314, -40.9868)
 freeze = true
-script = ExtResource("9_y6tjj")
+script = ExtResource("9_yl88r")
 AutoCooldown = false
 
 [node name="Collision" type="CollisionShape3D" parent="testcubes/test5"]
@@ -350,12 +350,12 @@ shape = SubResource("BoxShape3D_j1e05")
 [node name="Mesh" type="MeshInstance3D" parent="testcubes/test5"]
 mesh = SubResource("BoxMesh_xknod")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("10_d2yfw")
+surface_material_override/0 = ExtResource("10_ivhxa")
 
 [node name="test6" type="RigidBody3D" parent="testcubes"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.2149, 0.977314, -62.8863)
 freeze = true
-script = ExtResource("9_y6tjj")
+script = ExtResource("9_yl88r")
 AutoCooldown = false
 
 [node name="Collision" type="CollisionShape3D" parent="testcubes/test6"]
@@ -364,7 +364,7 @@ shape = SubResource("BoxShape3D_j1e05")
 [node name="Mesh" type="MeshInstance3D" parent="testcubes/test6"]
 mesh = SubResource("BoxMesh_xknod")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("10_d2yfw")
+surface_material_override/0 = ExtResource("10_ivhxa")
 
 [node name="test7" type="StaticBody3D" parent="testcubes"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.65005, 2.90059, -5.61089)
@@ -414,11 +414,11 @@ skeleton = NodePath("../../root/@EditorNode@21301/@Panel@14/@VBoxContainer@15/Do
 
 [node name="ItemObject3D" type="RigidBody3D" parent="."]
 transform = Transform3D(0.0423116, -0.999104, 0, 0.999104, 0.0423116, 0, 0, 0, 1, 18.4971, 0.946862, -40.8645)
-script = ExtResource("18_rdakc")
+script = ExtResource("18_1qb22")
 AutoCooldown = false
 metadata/_custom_type_script = "uid://bqc3s878xgn1t"
 
-[node name="Flashlight" parent="ItemObject3D" instance=ExtResource("19_bbrq3")]
+[node name="Flashlight" parent="ItemObject3D" instance=ExtResource("19_edthe")]
 transform = Transform3D(0.2, -9.31323e-10, 1.11022e-16, -9.31323e-10, -0.2, 3.01992e-08, 0, -3.01992e-08, -0.2, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ItemObject3D"]

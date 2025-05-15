@@ -7,9 +7,9 @@ public partial class Lighting3D : Node3D
 	[Signal] public delegate void LightingChangedEventHandler();
 	[Signal] public delegate void LightingDisabledEventHandler();
 
-	static private readonly string SceneDir = "res://src/Resources/Lighting/Packed";
+	static public readonly string SceneDir = "res://src/Resources/Lighting/Packed";
 
-	private static Dictionary<string, PackedScene> SceneCache = new() {
+	public static Dictionary<string, PackedScene> SceneCache = new() {
 		["Default"] = ResourceLoader.Load<PackedScene>($"{SceneDir}/Default.tscn", "", ResourceLoader.CacheMode.Replace)
 	};
 

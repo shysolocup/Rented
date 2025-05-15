@@ -8,5 +8,5 @@ public partial class DebugParameter : GodotObject
 	public bool Required = true;
 	public DebugParameterType Type;
 	public Array<string> Options = [];
-	public Callable CallOptions;
+	public Callable? CallOptions;
 }

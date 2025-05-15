@@ -12,7 +12,7 @@ public partial class Player : CharacterBody3D
 
 	[ExportCategory("Player")]
 
-	[Export] public Inventory Inventory;
+	static public Inventory Inventory;
 
 
 	#region Dynamic Vars
@@ -330,7 +330,7 @@ public partial class Player : CharacterBody3D
 	{
 		Vector3 Direction = (origin.Origin - Camera.GlobalTransform.Origin).Normalized();
 		Basis TargetBasis = Basis.LookingAt(Direction, Vector3.Up);
-		Camera.GlobalRotation = Camera.GlobalRotation.Lerp(TargetBasis.GetEuler(), this.FactorDelta(1/5f, delta));
+		Camera.GlobalRotation = Camera.GlobalRotation.Lerp(TargetBasis.GetEuler(), this.FactorDelta(1/10f, delta));
 	}
 	#endregion
 

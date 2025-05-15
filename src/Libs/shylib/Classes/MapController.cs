@@ -8,13 +8,13 @@ public partial class MapController : Node3D
 {
 	[Signal] public delegate void MapChangedEventHandler();
 
-	static private readonly string SceneDir = "res://src/Resources/Maps";
+	static public readonly string SceneDir = "res://src/Resources/Maps";
 
-	private static Dictionary<string, PackedScene> SceneCache = new() {
-		["Test"] = ResourceLoader.Load<PackedScene>($"{SceneDir}/Test.tscn", "", ResourceLoader.CacheMode.Replace)
+	public static Dictionary<string, PackedScene> SceneCache = new() {
+		["CityBlockOut"] = ResourceLoader.Load<PackedScene>($"{SceneDir}/CityBlockOut.tscn", "", ResourceLoader.CacheMode.Replace)
 	};
 
-	private PackedScene mapScene = SceneCache["Test"];
+	private PackedScene mapScene = SceneCache["CityBlockOut"];
 
 	[Export] public PackedScene MapScene {
 		get => mapScene;
@@ -33,8 +33,10 @@ public partial class MapController : Node3D
 
 	public MapController DisposeMap() 
 	{
-		Map?.QueueFree();
+		foreach (Node child in GetChildren()) if (IsInstanceValid(child)) child?.QueueFree();
+		if (IsInstanceValid(Map)) Map?.QueueFree();
 		Map = null;
+
 		return this;
 	}
 

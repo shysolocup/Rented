@@ -10,7 +10,9 @@
 [sub_resource type="World3D" id="World3D_wvpw1"]
 environment = SubResource("Environment_1fj5k")
 
-[sub_resource type="BoxMesh" id="BoxMesh_1dmmm"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_5kwyv"]
+size = Vector2(0.8, 0.8)
+orientation = 2
 
 [node name="CrosshairGui" type="CanvasLayer"]
 
@@ -51,7 +53,7 @@ LockedIcon = ExtResource("4_m8jmx")
 transform = Transform3D(0.047, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.781966, -3.22837)
 top_level = true
 cast_shadow = 0
-mesh = SubResource("BoxMesh_1dmmm")
+mesh = SubResource("PlaneMesh_5kwyv")
 skeleton = NodePath("")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="CrosshairContainer/CrosshairViewport/Crosshair"]

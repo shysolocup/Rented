@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://c3xsky1fajb6g"]
+
+[ext_resource type="Material" uid="uid://bljj4t730djb1" path="res://src/Resources/Materials/placeholder.tres" id="1_xx1ke"]
+
+[node name="HouseBlockOut" type="Node3D"]
+
+[node name="a_bedroom" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="a_bedroom"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.98059, 0)
+size = Vector3(20, 10, 20)
+material = ExtResource("1_xx1ke")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="a_bedroom"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.98059, 0)
+operation = 2
+size = Vector3(19, 9, 19)
+material = ExtResource("1_xx1ke")

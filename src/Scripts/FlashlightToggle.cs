@@ -35,7 +35,7 @@ public partial class FlashlightToggle : MeshInstance3D
 		if (lights.Visible) {
 			foreach (SpotLight3D light in lights.GetChildren().Cast<SpotLight3D>())
 			{
-				light.LightEnergy = this.Twlerp(light.LightEnergy, light.LightEnergy * EnergyMult, 1 / 1.5f, delta) - GD.Randf();
+				light.LightEnergy = this.Twlerp(light.LightEnergy, light.LightEnergy * EnergyMult, 1 / 1.5f, delta); // - GD.Randf();
 			}
 		}
 	}

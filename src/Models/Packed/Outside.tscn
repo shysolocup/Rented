@@ -213,15 +213,15 @@ size = Vector3(52.9219, 2.08722, 117.432)
 material = ExtResource("3_65mo4")
 
 [node name="CSGBox3D12" type="CSGBox3D" parent="street"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -35.4212, 0.533005, -99.1934)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -46.5569, 0.533005, -99.1934)
 use_collision = true
-size = Vector3(14.4657, 2.08722, 117.432)
+size = Vector3(14.4657, 2.08722, 139.703)
 material = ExtResource("3_65mo4")
 
 [node name="CSGBox3D14" type="CSGBox3D" parent="street"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15.8598, 0.533005, -129.938)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.329, 0.533005, -181.189)
 use_collision = true
-size = Vector3(14.4657, 2.08722, 156.555)
+size = Vector3(116.967, 2.08722, 234.942)
 material = ExtResource("3_65mo4")
 
 [node name="sidewalk" type="Node3D" parent="."]

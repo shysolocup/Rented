@@ -88,7 +88,7 @@ public partial class DebugConsole : CanvasLayer
 				if (monitor.Visible) {
 					monitor.Update();
 
-					if((object)monitor.Value == null) monitor.Value = "unset";
+					if(monitor.Value.Obj is null) monitor.Value = "unset";
 					else monitor.Value = (string)monitor.Value;
 
 					Stats.Text += monitor.DisplayName + ": " + monitor.Value + "\n";
@@ -101,66 +101,80 @@ public partial class DebugConsole : CanvasLayer
 	{
 
 		// Open debug
-		if (!ConsolePanel.Visible && @event.IsActionPressed("toggle_debug")) {
+		if (!ConsolePanel.Visible && @event.IsActionPressed("toggle_debug"))
+		{
 			ShowConsole();
 			_OnCommandFieldTextChanged(CommandField.Text);
 
 			// This is stupid but it works
 			await ToSignal(GetTree().CreateTimer(0.02), Timer.SignalName.Timeout);
+			
 			CommandField.GrabFocus();
 		}
 
 		// Close debug
-		else if (ConsolePanel.Visible && @event.IsActionPressed("ui_cancel")) {
+		else if (ConsolePanel.Visible && @event.IsActionPressed("ui_cancel"))
+		{
 			await HideConsole(ShowStats, ShowMiniLog);
 		}
 
 		// Enter command
-		else if (ConsolePanel.Visible && @event.IsActionPressed("ui_text_submit") && CommandField.Text.Length > 0) {
+		else if (ConsolePanel.Visible && @event.IsActionPressed("ui_text_submit") && CommandField.Text.Length > 0)
+		{
 			Log("> " + CommandField.Text);
 			ProcessCommand(CommandField.Text);
 			CommandField.Clear();
+
+			await ToSignal(GetTree().CreateTimer(0.02), Timer.SignalName.Timeout);
+
+			CommandField.GrabFocus();
 		}
 
 		// Back in history
-		else if (ConsolePanel.Visible && @event.IsActionPressed("ui_up")) {
-			if (History.Count > 0 && CurrentHistory != -1) {
-				if(CurrentHistory > 0) CurrentHistory -= 1;
+		else if (ConsolePanel.Visible && @event.IsActionPressed("ui_up"))
+		{
+			if (History.Count > 0 && CurrentHistory != -1)
+			{
+				if (CurrentHistory > 0) CurrentHistory -= 1;
 
 				CommandField.Text = History[CurrentHistory];
 
 				await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
-				
+
 				CommandField.SetCaretColumn(CommandField.Text.Length);
 			}
 		}
 
 		// Forward in history
-		else if (ConsolePanel.Visible && @event.IsActionPressed("ui_down")) {
-			if (History.Count > 0 && CurrentHistory < History.Count - 1) {
+		else if (ConsolePanel.Visible && @event.IsActionPressed("ui_down"))
+		{
+			if (History.Count > 0 && CurrentHistory < History.Count - 1)
+			{
 				CurrentHistory += 1;
-				
+
 				CommandField.Text = History[CurrentHistory];
-				
+
 				await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
-				
+
 				CommandField.SetCaretColumn(CommandField.Text.Length);
 			}
 
-			else if (CurrentHistory == History.Count - 1) {
-				
+			else if (CurrentHistory == History.Count - 1)
+			{
+
 				CommandField.Text = "";
-				
+
 				CurrentHistory = History.Count;
-				
+
 				await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
-				
+
 				CommandField.SetCaretColumn(CommandField.Text.Length);
 			}
 		}
 
 		// Tab completion
-		else if (ConsolePanel.Visible && _IsTabPress(@event)) {
+		else if (ConsolePanel.Visible && _IsTabPress(@event))
+		{
 			_AttemptAutocompletion();
 		}
 
@@ -636,8 +650,8 @@ public partial class DebugConsole : CanvasLayer
 	{
 		var console = GetConsole();
 		console.ConsolePanel.Visible = false;
-		console.Stats.Visible = console.ShowStats;
-		console.MiniLog.Visible = console.ShowMiniLog;
+		console.Stats.Visible = showStats;
+		console.MiniLog.Visible = showMiniLog;
 
 		await console.ToSignal(console.GetTree().CreateTimer(0.01), Timer.SignalName.Timeout);
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://crynhy865gfw6"]
+[gd_scene load_steps=46 format=3 uid="uid://crynhy865gfw6"]
 
 [ext_resource type="PackedScene" uid="uid://ctqpfrq531m3y" path="res://src/Models/Packed/Buildings.tscn" id="1_i5rif"]
 [ext_resource type="PackedScene" uid="uid://c1eyea2y3khs1" path="res://src/Models/Packed/Outside.tscn" id="2_e2s5l"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://cks0soccg2jbn" path="res://src/Textures/watercolor2.png" id="6_k6xs8"]
 [ext_resource type="Texture2D" uid="uid://4votccrw7wyl" path="res://src/Textures/watercolor4.png" id="7_kjqer"]
 [ext_resource type="AudioStream" uid="uid://nvube6beo7t" path="res://src/Sounds/its happening david bazookie.mp3" id="8_8lsa2"]
+[ext_resource type="Texture2D" uid="uid://cpt0pvtp54ivv" path="res://src/Textures/watercolor3.png" id="8_r246b"]
 [ext_resource type="Script" uid="uid://bps104hjuxax7" path="res://src/Libs/shylib/Classes/TalkerObject3D.cs" id="9_yl88r"]
 [ext_resource type="Material" uid="uid://ca75ik5y2u4a2" path="res://src/Resources/Materials/david.tres" id="10_ivhxa"]
 [ext_resource type="Shader" uid="uid://csra1tvugixyj" path="res://src/Shaders/test.tres" id="11_mslbd"]
@@ -17,10 +18,11 @@
 [ext_resource type="Shader" uid="uid://bnlhhxe200g63" path="res://src/Shaders/StaticStripes.gdshader" id="15_rjd0a"]
 [ext_resource type="Shader" uid="uid://mk71m2dpxk4y" path="res://src/Shaders/SquashAndStretch.gdshader" id="16_qphwy"]
 [ext_resource type="Material" uid="uid://h3xhycht6a3o" path="res://src/Shaders/watercolor test.tres" id="17_rucnt"]
-[ext_resource type="Script" uid="uid://bqc3s878xgn1t" path="res://src/Libs/shylib/Classes/ItemObject3D.cs" id="18_1qb22"]
-[ext_resource type="PackedScene" uid="uid://vvrb04p3te8v" path="res://src/Models/Packed/Flashlight.tscn" id="19_edthe"]
+[ext_resource type="NoiseTexture3D" uid="uid://ca863v1blexjd" path="res://src/Resources/Ui/TrippyColorCorrection.tres" id="20_e2s5l"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_won10"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_5i3io"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xoo7l"]
 render_priority = 0
 shader = ExtResource("4_hm7qk")
 shader_parameter/albedo = Color(0.847059, 0.588235, 0.835294, 0.470588)
@@ -36,33 +38,10 @@ shader_parameter/uv1_scale = Vector3(1, 1, 1)
 shader_parameter/uv1_offset = Vector3(0, 0, 0)
 shader_parameter/uv2_offset = Vector3(0, 0, 0)
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_t1g6d"]
-lightmap_size_hint = Vector2i(12, 12)
-material = SubResource("ShaderMaterial_won10")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_r0cio"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i5rif"]
 render_priority = 0
 shader = ExtResource("4_hm7qk")
-shader_parameter/albedo = Color(0.848837, 0.590006, 0.836128, 0.470588)
-shader_parameter/texture_albedo = ExtResource("6_k6xs8")
-shader_parameter/proximity_fade_distance = 15.0
-shader_parameter/distance_fade_min = 0.0
-shader_parameter/distance_fade_max = 25.0
-shader_parameter/roughness = 1.0
-shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
-shader_parameter/specular = 0.5
-shader_parameter/metallic = 0.0
-shader_parameter/uv1_scale = Vector3(1, 1, 1)
-shader_parameter/uv1_offset = Vector3(0, 0, 0)
-shader_parameter/uv2_offset = Vector3(0, 0, 0)
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_4ekwl"]
-material = SubResource("ShaderMaterial_r0cio")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_t1g6d"]
-render_priority = 0
-shader = ExtResource("4_hm7qk")
-shader_parameter/albedo = Color(0.848837, 0.590006, 0.836128, 0.470588)
+shader_parameter/albedo = Color(0.847059, 0.588235, 0.835294, 0.470588)
 shader_parameter/texture_albedo = ExtResource("7_kjqer")
 shader_parameter/proximity_fade_distance = 15.0
 shader_parameter/distance_fade_min = 0.0
@@ -75,13 +54,42 @@ shader_parameter/uv1_scale = Vector3(1, 1, 1)
 shader_parameter/uv1_offset = Vector3(0, 0, 0)
 shader_parameter/uv2_offset = Vector3(0, 0, 0)
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_4cnaq"]
-material = SubResource("ShaderMaterial_t1g6d")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_y6tjj"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r246b"]
 render_priority = 0
 shader = ExtResource("4_hm7qk")
-shader_parameter/albedo = Color(0.848837, 0.590006, 0.836128, 0.470588)
+shader_parameter/albedo = Color(0.847059, 0.588235, 0.835294, 0.470588)
+shader_parameter/texture_albedo = ExtResource("7_kjqer")
+shader_parameter/proximity_fade_distance = 15.0
+shader_parameter/distance_fade_min = 0.0
+shader_parameter/distance_fade_max = 25.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e2s5l"]
+render_priority = 0
+shader = ExtResource("4_hm7qk")
+shader_parameter/albedo = Color(0.847059, 0.588235, 0.835294, 0.470588)
+shader_parameter/texture_albedo = ExtResource("6_k6xs8")
+shader_parameter/proximity_fade_distance = 15.0
+shader_parameter/distance_fade_min = 0.0
+shader_parameter/distance_fade_max = 25.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hm7qk"]
+render_priority = 0
+shader = ExtResource("4_hm7qk")
+shader_parameter/albedo = Color(0.847059, 0.588235, 0.835294, 0.470588)
 shader_parameter/texture_albedo = ExtResource("5_y3lgk")
 shader_parameter/proximity_fade_distance = 15.0
 shader_parameter/distance_fade_min = 0.0
@@ -94,8 +102,101 @@ shader_parameter/uv1_scale = Vector3(1, 1, 1)
 shader_parameter/uv1_offset = Vector3(0, 0, 0)
 shader_parameter/uv2_offset = Vector3(0, 0, 0)
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_rdakc"]
-material = SubResource("ShaderMaterial_y6tjj")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y3lgk"]
+render_priority = 0
+shader = ExtResource("4_hm7qk")
+shader_parameter/albedo = Color(0.847059, 0.588235, 0.835294, 0.470588)
+shader_parameter/texture_albedo = ExtResource("5_y3lgk")
+shader_parameter/proximity_fade_distance = 15.0
+shader_parameter/distance_fade_min = 0.0
+shader_parameter/distance_fade_max = 25.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k6xs8"]
+render_priority = 0
+shader = ExtResource("4_hm7qk")
+shader_parameter/albedo = Color(0.847059, 0.588235, 0.835294, 0.470588)
+shader_parameter/texture_albedo = ExtResource("6_k6xs8")
+shader_parameter/proximity_fade_distance = 15.0
+shader_parameter/distance_fade_min = 0.0
+shader_parameter/distance_fade_max = 25.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8lsa2"]
+render_priority = 0
+shader = ExtResource("4_hm7qk")
+shader_parameter/albedo = Color(0.847059, 0.588235, 0.835294, 0.470588)
+shader_parameter/texture_albedo = ExtResource("7_kjqer")
+shader_parameter/proximity_fade_distance = 15.0
+shader_parameter/distance_fade_min = 0.0
+shader_parameter/distance_fade_max = 25.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kjqer"]
+render_priority = 0
+shader = ExtResource("4_hm7qk")
+shader_parameter/albedo = Color(0.847059, 0.588235, 0.835294, 0.470588)
+shader_parameter/texture_albedo = ExtResource("7_kjqer")
+shader_parameter/proximity_fade_distance = 15.0
+shader_parameter/distance_fade_min = 0.0
+shader_parameter/distance_fade_max = 25.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yl88r"]
+render_priority = 0
+shader = ExtResource("4_hm7qk")
+shader_parameter/albedo = Color(0.847059, 0.588235, 0.835294, 0.470588)
+shader_parameter/texture_albedo = ExtResource("6_k6xs8")
+shader_parameter/proximity_fade_distance = 15.0
+shader_parameter/distance_fade_min = 0.0
+shader_parameter/distance_fade_max = 25.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ivhxa"]
+render_priority = 0
+shader = ExtResource("4_hm7qk")
+shader_parameter/albedo = Color(0.847059, 0.588235, 0.835294, 0.470588)
+shader_parameter/texture_albedo = ExtResource("8_r246b")
+shader_parameter/proximity_fade_distance = 15.0
+shader_parameter/distance_fade_min = 0.0
+shader_parameter/distance_fade_max = 25.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_j1e05"]
 
@@ -154,7 +255,12 @@ material = SubResource("ShaderMaterial_m47wv")
 lightmap_size_hint = Vector2i(17, 14)
 material = ExtResource("17_rucnt")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_rdakc"]
+[sub_resource type="FogMaterial" id="FogMaterial_i5rif"]
+density = 5.0
+albedo = Color(1, 0.790893, 0.756161, 1)
+emission = Color(0.0768358, 0.0768358, 0.0768358, 1)
+edge_fade = 14.42
+density_texture = ExtResource("20_e2s5l")
 
 [node name="MapBlock" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.81981, 0, 1.04959)
@@ -170,82 +276,158 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.81981, 0, 1.04959)
 [node name="Watercolors" type="Node3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Watercolors"]
-transform = Transform3D(-0.415111, -0.810552, 14.7312, 26.1494, -0.0170865, -2.88126e-08, 0.237708, 0.464151, 25.7253, 92.1248, 9.62285, -55.0079)
+transform = Transform3D(-0.415111, -0.810552, 14.7312, 26.1494, -0.0170865, -6.13486e-07, 0.237708, 0.464151, 25.7253, 92.1248, 9.62285, -55.0079)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_t1g6d")
+mesh = SubResource("PlaneMesh_5i3io")
 skeleton = NodePath("../../Ambient")
+surface_material_override/0 = SubResource("ShaderMaterial_xoo7l")
 
 [node name="MeshInstance3D13" type="MeshInstance3D" parent="Watercolors"]
-transform = Transform3D(-6.10893, -0.874845, 7.75693, -8.48266, -0.166901, -27.5373, 23.9739, -0.281979, -7.76693, 92.1248, 3.94274, -40.2464)
+transform = Transform3D(-9.62748, -0.722746, 6.46841, -13.3684, -0.137884, -22.963, 37.7821, -0.232955, -6.47673, 92.1248, 3.94274, -40.2464)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_t1g6d")
+mesh = SubResource("PlaneMesh_5i3io")
 skeleton = NodePath("../../Ambient")
+surface_material_override/0 = SubResource("ShaderMaterial_i5rif")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Watercolors"]
-transform = Transform3D(-0.351549, -0.686439, 20.1037, 26.1494, -0.0170865, 1.46528e-08, 0.3244, 0.633428, 21.7862, 57.3116, 17.5144, -77.87)
+transform = Transform3D(-0.351549, -0.686439, 20.1037, 26.1494, -0.0170865, 2.17431e-07, 0.3244, 0.633428, 21.7862, 57.3116, 17.5144, -77.87)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_4ekwl")
+mesh = SubResource("PlaneMesh_5i3io")
 skeleton = NodePath("../../Ambient")
+surface_material_override/0 = SubResource("ShaderMaterial_xoo7l")
 
 [node name="MeshInstance3D11" type="MeshInstance3D" parent="Watercolors"]
-transform = Transform3D(-0.255645, -0.499175, 25.056, 26.1494, -0.0170865, -3.07636e-08, 0.404312, 0.789464, 15.8428, 76.3353, 17.5144, -75.838)
+transform = Transform3D(-0.19888, -0.501203, 25.056, 20.343, -0.0171559, 1.10225e-07, 0.314536, 0.792671, 15.8428, 76.3353, 17.5144, -75.838)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_4ekwl")
+mesh = SubResource("PlaneMesh_5i3io")
 skeleton = NodePath("../../Ambient")
+surface_material_override/0 = SubResource("ShaderMaterial_r246b")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="Watercolors"]
-transform = Transform3D(-0.1309, -0.0965189, 73.5777, 53.9636, -0.0133152, -5.86895e-08, 0.978442, 0.721454, 9.84351, 37.1074, 10.0347, -123.227)
+transform = Transform3D(-0.1309, -0.0965189, 73.5777, 53.9636, -0.0133152, 3.48663e-07, 0.978442, 0.721454, 9.84351, 37.1074, 10.0347, -123.227)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_4cnaq")
+mesh = SubResource("PlaneMesh_5i3io")
 skeleton = NodePath("../../Ambient")
+surface_material_override/0 = SubResource("ShaderMaterial_e2s5l")
 
 [node name="MeshInstance3D12" type="MeshInstance3D" parent="Watercolors"]
-transform = Transform3D(18.7826, -0.31107, 61.9443, 50.5913, 0.104166, -23.5799, 0.881404, 0.649903, 33.4285, 64.9267, -3.79377, -111.589)
+transform = Transform3D(18.7826, -0.31107, 61.9443, 50.5913, 0.104166, -23.5799, 0.881404, 0.649903, 33.4284, 64.9267, -3.79377, -111.589)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_4cnaq")
+mesh = SubResource("PlaneMesh_5i3io")
 skeleton = NodePath("../../Ambient")
+surface_material_override/0 = SubResource("ShaderMaterial_xoo7l")
 
 [node name="MeshInstance3D4" type="MeshInstance3D" parent="Watercolors"]
-transform = Transform3D(0.211976, 0.200369, 28.9536, 26.15, -0.0153402, -0.139068, 0.39314, 0.912326, -6.36125, 27.4755, 9.47636, -138.227)
+transform = Transform3D(0.211976, 0.200369, 28.9536, 26.15, -0.0153402, -0.139067, 0.39314, 0.912326, -6.36125, 27.4755, 9.47636, -138.227)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_t1g6d")
+mesh = SubResource("PlaneMesh_5i3io")
 skeleton = NodePath("../../Ambient")
+surface_material_override/0 = SubResource("ShaderMaterial_xoo7l")
 
 [node name="MeshInstance3D5" type="MeshInstance3D" parent="Watercolors"]
 transform = Transform3D(-21.4382, 0.382302, 38.2402, 41.6062, 0.180397, 19.9811, 0.661092, 1.04411, -17.454, 10.3581, 12.6359, -128.796)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_4ekwl")
+mesh = SubResource("PlaneMesh_5i3io")
 skeleton = NodePath("../../Ambient")
+surface_material_override/0 = SubResource("ShaderMaterial_hm7qk")
 
 [node name="MeshInstance3D6" type="MeshInstance3D" parent="Watercolors"]
-transform = Transform3D(0.662873, 1.08889, 32.0406, 37.8854, -0.0290151, -0.2303, 0.367909, 1.02593, -34.0133, -16.5518, 21.5644, -110.949)
+transform = Transform3D(0.662873, 1.08889, 32.0406, 37.8854, -0.029015, -0.2303, 0.367909, 1.02593, -34.0133, -16.5518, 21.5644, -110.949)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_4cnaq")
+mesh = SubResource("PlaneMesh_5i3io")
 skeleton = NodePath("../../Ambient")
+surface_material_override/0 = SubResource("ShaderMaterial_y3lgk")
 
 [node name="MeshInstance3D8" type="MeshInstance3D" parent="Watercolors"]
-transform = Transform3D(0.371635, 0.725659, 18.6647, 26.1494, -0.0170865, -1.84152e-08, 0.30118, 0.588089, -23.0309, -72.3993, 16.3391, -48.54)
+transform = Transform3D(0.371635, 0.725659, 18.6647, 26.1494, -0.0170865, -5.38056e-07, 0.30118, 0.588089, -23.0309, -72.3993, 16.3391, -48.54)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_4ekwl")
+mesh = SubResource("PlaneMesh_5i3io")
 skeleton = NodePath("../../Ambient")
+surface_material_override/0 = SubResource("ShaderMaterial_xoo7l")
 
 [node name="MeshInstance3D7" type="MeshInstance3D" parent="Watercolors"]
-transform = Transform3D(0.669251, 1.04643, -10.054, 37.2822, -0.0195072, -5.07613e-08, -0.13129, -0.205282, -51.2502, -83.7198, 14.1917, -39.7675)
+transform = Transform3D(-11.2733, 0.95965, -16.4342, 35.515, 0.318222, -3.23489, 1.42275, -0.339621, -49.4684, -83.7198, 22.3143, -39.7675)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_t1g6d")
+mesh = SubResource("PlaneMesh_5i3io")
 skeleton = NodePath("../../Ambient")
+surface_material_override/0 = SubResource("ShaderMaterial_k6xs8")
 
 [node name="MeshInstance3D9" type="MeshInstance3D" parent="Watercolors"]
-transform = Transform3D(0.33577, 0.65563, -21.1142, 26.1494, -0.0170865, -2.68316e-08, -0.340706, -0.665266, -20.8083, -70.5491, 1.9345, -18.385)
+transform = Transform3D(0.33577, 0.65563, -21.1142, 26.1494, -0.0170865, -8.19753e-07, -0.340706, -0.665266, -20.8083, -70.5491, 1.9345, -18.385)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_4cnaq")
+mesh = SubResource("PlaneMesh_5i3io")
 skeleton = NodePath("../../Ambient")
+surface_material_override/0 = SubResource("ShaderMaterial_xoo7l")
 
 [node name="MeshInstance3D10" type="MeshInstance3D" parent="Watercolors"]
-transform = Transform3D(0.54895, 0.474971, 34.5043, 43.5403, -0.0126066, 3.96917e-08, 0.5771, 0.499326, -32.8212, -43.7497, 31.4314, -76.6272)
+transform = Transform3D(24.7419, 0.387186, 28.6379, 35.8315, -0.275397, -19.2461, 0.5771, 0.499326, -32.8213, -52.6386, 24.4794, -81.0699)
 cast_shadow = 0
-mesh = SubResource("PlaneMesh_rdakc")
+mesh = SubResource("PlaneMesh_5i3io")
 skeleton = NodePath("../../Ambient")
+surface_material_override/0 = SubResource("ShaderMaterial_xoo7l")
+
+[node name="MeshInstance3D18" type="MeshInstance3D" parent="Watercolors"]
+transform = Transform3D(25.5278, -0.0737457, 4.81437, 28.6812, 0.0233807, -28.4508, 28.6943, 0.0422376, 24.1548, 64.6611, 25.5345, -154.534)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_5i3io")
+skeleton = NodePath("../../Ambient")
+surface_material_override/0 = SubResource("ShaderMaterial_8lsa2")
+
+[node name="MeshInstance3D15" type="MeshInstance3D" parent="Watercolors"]
+transform = Transform3D(46.0025, -0.0151614, 17.1785, 17.5036, 0.0368974, -45.6476, 0.481844, 0.107136, 18.152, -55.3768, 47.9366, -139.406)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_5i3io")
+skeleton = NodePath("../../Ambient")
+surface_material_override/0 = SubResource("ShaderMaterial_kjqer")
+
+[node name="MeshInstance3D19" type="MeshInstance3D" parent="Watercolors"]
+transform = Transform3D(-29.8254, 0.126311, -2.44298, 24.5733, 0.0173793, -65.4598, -59.5557, -0.0560857, -25.7859, -159.049, 47.9366, -79.771)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_5i3io")
+skeleton = NodePath("../../Ambient")
+surface_material_override/0 = SubResource("ShaderMaterial_kjqer")
+
+[node name="MeshInstance3D20" type="MeshInstance3D" parent="Watercolors"]
+transform = Transform3D(40.1826, 0.106234, 22.036, 24.5733, 0.0173793, -65.4598, -53.1206, 0.0883993, -13.6124, -159.049, 47.9366, -129.206)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_5i3io")
+skeleton = NodePath("../../Ambient")
+surface_material_override/0 = SubResource("ShaderMaterial_yl88r")
+
+[node name="MeshInstance3D21" type="MeshInstance3D" parent="Watercolors"]
+transform = Transform3D(157.281, 0.0884817, 1.31856, 4.46816, -0.0032596, -72.3377, -67.5932, 0.20567, -1.71372, -101.156, 44.463, -191.242)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_5i3io")
+skeleton = NodePath("../../Ambient")
+surface_material_override/0 = SubResource("ShaderMaterial_ivhxa")
+
+[node name="MeshInstance3D22" type="MeshInstance3D" parent="Watercolors"]
+transform = Transform3D(148.195, -0.112009, 2.16202, 4.46816, -0.0032596, -72.3377, 85.698, 0.193864, 0.0328801, 113.463, 44.463, -191.242)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_5i3io")
+skeleton = NodePath("../../Ambient")
+surface_material_override/0 = SubResource("ShaderMaterial_ivhxa")
+
+[node name="MeshInstance3D16" type="MeshInstance3D" parent="Watercolors"]
+transform = Transform3D(53.078, -0.186115, 47.9263, 17.681, 0.6582, 7.73199, -35.0842, 0.0501372, 76.4031, -25.4169, 33.8094, -89.2852)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_5i3io")
+skeleton = NodePath("../../Ambient")
+surface_material_override/0 = SubResource("ShaderMaterial_kjqer")
+
+[node name="MeshInstance3D23" type="MeshInstance3D" parent="Watercolors"]
+transform = Transform3D(-21.4999, 0.121221, -84.0808, 17.731, 0.657869, 8.00305, 59.8679, -0.151307, -32.5655, -25.4169, 33.8094, -23.1974)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_5i3io")
+skeleton = NodePath("../../Ambient")
+surface_material_override/0 = SubResource("ShaderMaterial_kjqer")
+
+[node name="MeshInstance3D17" type="MeshInstance3D" parent="Watercolors"]
+transform = Transform3D(-23.4757, 0.0454017, -103.325, 12.9724, 0.640655, 1.7819, 70.6973, -0.102479, -34.6371, -25.4169, 27.2126, -89.2852)
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_5i3io")
+skeleton = NodePath("../../Ambient")
+surface_material_override/0 = SubResource("ShaderMaterial_kjqer")
 
 [node name="Ambient" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.01644, 17.5536, 0)
@@ -411,15 +593,7 @@ cast_shadow = 0
 mesh = SubResource("CapsuleMesh_yc6y7")
 skeleton = NodePath("../../root/@EditorNode@21301/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11482/@VSplitContainer@11134/@HSplitContainer@11136/@HSplitContainer@11138/@Control@11139/@SubViewportContainer@11140/@SubViewport@11141/Game/Root3D/Player")
 
-[node name="ItemObject3D" type="RigidBody3D" parent="."]
-transform = Transform3D(0.0423116, -0.999104, 0, 0.999104, 0.0423116, 0, 0, 0, 1, 18.4971, 0.946862, -40.8645)
-script = ExtResource("18_1qb22")
-AutoCooldown = false
-metadata/_custom_type_script = "uid://bqc3s878xgn1t"
-
-[node name="Flashlight" parent="ItemObject3D" instance=ExtResource("19_edthe")]
-transform = Transform3D(0.2, -9.31323e-10, 1.11022e-16, -9.31323e-10, -0.2, 3.01992e-08, 0, -3.01992e-08, -0.2, 0, 0, 0)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ItemObject3D"]
-transform = Transform3D(0.713579, 2.23517e-07, 4.43692e-16, -1.35973e-07, 1.44256, 1.87901e-17, 3.26955e-19, 0, 0.784762, 0, 0, 0)
-shape = SubResource("BoxShape3D_rdakc")
+[node name="FogVolume" type="FogVolume" parent="."]
+transform = Transform3D(14.8916, 0, 0, 0, 1, 0, 0, 0, 2.61453, -32.0219, 76.739, -26.551)
+size = Vector3(24.1376, 125.967, 138.844)
+material = SubResource("FogMaterial_i5rif")

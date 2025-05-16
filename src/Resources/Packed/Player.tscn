@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://ne5pw4aniwnb"]
+[gd_scene load_steps=10 format=3 uid="uid://ne5pw4aniwnb"]
 
 [ext_resource type="Script" uid="uid://c1i8r8l2u4t3q" path="res://src/Libs/shylib/Classes/Player.cs" id="1_wueuk"]
 [ext_resource type="Texture2D" uid="uid://dcthcg547baj0" path="res://src/Images/david bazookie.png" id="2_fovfp"]
+[ext_resource type="PackedScene" uid="uid://dgt7kay55jnvl" path="res://src/Resources/Packed/Arm.tscn" id="3_48v6w"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_h8oac"]
 
@@ -58,3 +59,5 @@ randomness = 1.0
 collision_base_size = 0.0
 process_material = SubResource("ParticleProcessMaterial_n8c8y")
 draw_pass_1 = SubResource("PlaneMesh_kp7xu")
+
+[node name="Arm" parent="." instance=ExtResource("3_48v6w")]

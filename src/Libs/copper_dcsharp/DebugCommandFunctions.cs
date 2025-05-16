@@ -33,7 +33,6 @@ public partial class DebugCommandFunctions : GodotObject
 		Node3D b = Game.Instance.GetGameNode<Node3D>(nodename);
 
 		a.Position = b.Position;
-		a.Rotation = b.Rotation;
 	}
 
 	#endregion
@@ -44,7 +43,6 @@ public partial class DebugCommandFunctions : GodotObject
 		Node3D b = Game.Instance.GetGameNode<Node3D>(nodename);
 
 		a.Position = b.Position;
-		a.Rotation = b.Rotation;
 	}
 
 	#endregion

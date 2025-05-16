@@ -235,7 +235,9 @@ public partial class Player : CharacterBody3D
 	public override void _Process(double delta)
 	{
 		if (Engine.IsEditorHint()) return;
-		if (Freecam) {
+		
+		if (Freecam)
+		{
 			UpdateFreecamMovement(delta);
 		}
 
@@ -247,7 +249,7 @@ public partial class Player : CharacterBody3D
 				Inter = null;
 			}
 
-			if (result is InteractObject3D collider) {
+			if (result is InteractObject3D collider && GlobalPosition.DistanceTo(collider.GlobalPosition) <= collider.Distance) {
 				Inter = collider;
 				collider.Hovering = true;
 			}

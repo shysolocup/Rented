@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://bg2s3j3jpsaqq"]
+[gd_scene load_steps=3 format=3 uid="uid://bg2s3j3jpsaqq"]
 
 [ext_resource type="Script" uid="uid://muq0ch483pvr" path="res://src/Libs/shylib/Classes/Discord/DiscordController.cs" id="1_tdwco"]
-[ext_resource type="Script" uid="uid://b4ohdvm04o5s5" path="res://src/Libs/shylib/Classes/Game/GameSettings.cs" id="6_do8cd"]
 [ext_resource type="PackedScene" uid="uid://8p7cp7bhft2a" path="res://src/Resources/Shaders/Packed/ScreenShaders.tscn" id="7_k7tso"]
 
 [node name="Dump" type="Node"]
@@ -9,11 +8,6 @@
 [node name="DiscordController" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("1_tdwco")
-
-[node name="GameSettings" type="Node" parent="."]
-unique_name_in_owner = true
-script = ExtResource("6_do8cd")
-metadata/_custom_type_script = "uid://b4ohdvm04o5s5"
 
 [node name="ScreenShaders" parent="." instance=ExtResource("7_k7tso")]
 unique_name_in_owner = true

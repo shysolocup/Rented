@@ -84,9 +84,9 @@ material = ExtResource("1_ah4uc")
 use_collision = true
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="Dish"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.8909, 6.02905, -58.9651)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.4455, 5.22368, -58.9651)
 use_collision = true
-size = Vector3(28.3217, 13.1926, 1.32964)
+size = Vector3(23.2125, 14.8033, 1.32964)
 material = ExtResource("1_ah4uc")
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="Dish"]
@@ -96,9 +96,9 @@ size = Vector3(1.83897, 13.1926, 13.4577)
 material = ExtResource("1_ah4uc")
 
 [node name="CSGBox3D4" type="CSGBox3D" parent="Dish"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.4668, 10.6263, -51.498)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.4668, 10.6263, -52.5194)
 use_collision = true
-size = Vector3(21.164, 3.99807, 11.0848)
+size = Vector3(21.164, 3.99807, 13.1276)
 material = ExtResource("1_ah4uc")
 
 [node name="KitchenDoorHole" type="CSGBox3D" parent="Dish"]
@@ -112,9 +112,9 @@ material = ExtResource("1_ah4uc")
 use_collision = true
 
 [node name="CSGBox3D5" type="CSGBox3D" parent="Kitchen"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.8922, 6.02905, -75.3253)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.033, 6.02905, -75.3253)
 use_collision = true
-size = Vector3(19.5995, 13.1926, 1.24523)
+size = Vector3(23.3178, 13.1926, 1.24523)
 material = ExtResource("1_ah4uc")
 
 [node name="DoorHoleSide3" type="CSGBox3D" parent="Kitchen"]
@@ -125,13 +125,13 @@ size = Vector3(4.03476, 3.28772, 3.30313)
 material = ExtResource("1_ah4uc")
 
 [node name="CSGBox3D6" type="CSGBox3D" parent="Kitchen"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.99954, 6.02905, -67.0635)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.27227, 6.02905, -66.8584)
 use_collision = true
 size = Vector3(1.83897, 13.1926, 15.8263)
 material = ExtResource("1_ah4uc")
 
 [node name="DoorHoleSide2" type="CSGBox3D" parent="Kitchen"]
-transform = Transform3D(-4.14765e-08, 0, 0.936166, 0, 1.21847, 0, -0.948871, 0, -4.09211e-08, 9.87476, 1.7156, -65.6942)
+transform = Transform3D(-4.14765e-08, 0, 0.936166, 0, 1.21847, 0, -0.948871, 0, -4.09211e-08, 6.14749, 1.7156, -65.4891)
 operation = 2
 use_collision = true
 size = Vector3(4.03476, 3.28772, 5.51761)
@@ -140,7 +140,14 @@ material = ExtResource("1_ah4uc")
 [node name="MainArea" type="CSGCombiner3D" parent="."]
 use_collision = true
 
+[node name="CSGBox3D2" type="CSGBox3D" parent="MainArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.92126, 5.22368, -52.772)
+use_collision = true
+size = Vector3(9.5158, 14.8033, 13.7158)
+material = ExtResource("1_ah4uc")
+
 [node name="Office" type="CSGCombiner3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.29401, 0, 0)
 use_collision = true
 
 [node name="CSGBox3D5" type="CSGBox3D" parent="Office"]
@@ -157,15 +164,15 @@ size = Vector3(2.67314, 3.28772, 5.51761)
 material = ExtResource("1_ah4uc")
 
 [node name="CSGBox3D6" type="CSGBox3D" parent="Office"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.69472, 6.02905, -59.3227)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.42157, 6.02905, -59.3227)
 use_collision = true
-size = Vector3(13.035, 13.1926, 1.32964)
+size = Vector3(10.4887, 13.1926, 1.32964)
 material = ExtResource("1_ah4uc")
 
 [node name="CSGBox3D7" type="CSGBox3D" parent="Office"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.69472, 6.02905, -70.6292)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.39105, 6.02905, -70.6292)
 use_collision = true
-size = Vector3(13.035, 13.1926, 1.32964)
+size = Vector3(10.4277, 13.1926, 1.32964)
 material = ExtResource("1_ah4uc")
 
 [node name="Image3D" type="MeshInstance3D" parent="Office"]

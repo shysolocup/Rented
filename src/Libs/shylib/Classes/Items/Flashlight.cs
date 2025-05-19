@@ -1,15 +1,20 @@
 using Godot;
 
 [Tool]
-[GlobalClass]
+[GlobalClass, Icon("uid://b4blw6r8ym2hk")]
 public partial class Flashlight : Item 
 {
     static private bool broken = false;
+    static private bool on = false;
 
-    static public bool On = false;
+    [Export] public bool On
+    {
+        get => !broken && on;
+        set => on = value;
+    }
 
     // will play an animation for the flashlight breaking and fixing
-    static public bool Broken {
+    [Export] public bool Broken {
         get => broken;
         set {
             if (value) On = false;

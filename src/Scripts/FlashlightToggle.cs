@@ -8,15 +8,17 @@ public partial class FlashlightToggle : MeshInstance3D
 
 	[Export]
 	public float EnergyMult = 1;
+	public float Energy;
+	public Flashlight flashlight;
 
 	[Export]
 	public bool On
 	{
-		get => !Flashlight.Broken && Flashlight.On;
+		get => !flashlight.Broken && flashlight.On;
 		set
 		{
-			Flashlight.On = value;
-			lights.Visible = value;
+			flashlight.On = value;
+			lights.Visible = flashlight.On;
 		}
 	}
 
@@ -25,17 +27,29 @@ public partial class FlashlightToggle : MeshInstance3D
 		base._Ready();
 
 		lights = GetChild<Node3D>(0);
+
+		flashlight = this.GetGameNode<Flashlight>("%Inventory/Flashlight");
+
+		flashlight.On = lights.Visible;
+		Energy = lights.GetChild<Light3D>(0).LightEnergy;
 	}
 
 	public override void _Process(double delta)
 	{
 		base._Process(delta);
 
-		if (lights.Visible) {
-			foreach (SpotLight3D light in lights.GetChildren().Cast<SpotLight3D>())
+		if (lights.Visible)
+		{
+			foreach (Light3D light in lights.GetChildren().Cast<Light3D>())
 			{
-				light.LightEnergy = this.Twlerp(light.LightEnergy, light.LightEnergy * EnergyMult, 1 / 1.5f, delta); // - GD.Randf();
-				light.LightEnergy -= GD.Randf();
+				float guh = Energy * EnergyMult;
+
+				light.LightEnergy = this.Twlerp(
+					light.LightEnergy,
+					Mathf.Clamp(light.LightEnergy - GD.RandRange(-1, 1), guh - 1, guh + 1),
+					1/1.5f,
+					delta
+				);
 			}
 		}
 	}
@@ -45,8 +59,9 @@ public partial class FlashlightToggle : MeshInstance3D
 	{
 		base._Input(@event);
 
-		if (Input.IsActionJustPressed("FlashlightToggle"))
+		if (@event is InputEventKey action && action.IsActionPressed("FlashlightToggle"))
 		{
+			GD.Print(@event.GetType());
 			On ^= true;
 		}
 	}

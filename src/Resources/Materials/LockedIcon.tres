@@ -1,6 +1,6 @@
 [gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://bq8wyiwgdl28m"]
 
-[ext_resource type="Texture2D" uid="uid://c0clhbw8kl6ln" path="res://src/Ui/lockedCursor.png" id="1_2y620"]
+[ext_resource type="Texture2D" uid="uid://c0clhbw8kl6ln" path="res://src/Textures/ui_cursor_locked.png" id="1_2y620"]
 
 [resource]
 transparency = 1

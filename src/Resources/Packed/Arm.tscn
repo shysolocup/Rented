@@ -198,7 +198,6 @@ bones/11/rotation = Quaternion(0.295513, -0.0744844, -0.0224839, 0.952165)
 bones/11/scale = Vector3(1, 1, 1)
 
 [node name="viewport_arms" type="MeshInstance3D" parent="Armature/Skeleton3D"]
-layers = 524288
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_6lpi7")
 skin = SubResource("Skin_0xas6")
@@ -210,6 +209,6 @@ bone_name = "Bone.003.R"
 bone_idx = 2
 
 [node name="Flashlight" parent="Armature/Skeleton3D/BoneAttachment3D" instance=ExtResource("3_nyyv5")]
+unique_name_in_owner = true
 transform = Transform3D(0.421927, 0.219248, -0.154623, 0.252772, -0.421441, 0.0921658, -0.0899145, -0.155942, -0.466473, -0.0828166, 1.5524, 0.334581)
-layers = 524288
 mesh = SubResource("ArrayMesh_ci33b")

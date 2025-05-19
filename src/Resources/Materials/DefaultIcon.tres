@@ -1,6 +1,6 @@
 [gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://ce0vtdxnqp031"]
 
-[ext_resource type="Texture2D" uid="uid://7vtgtk8kyk1g" path="res://src/Textures/noise.png" id="1_ybwp7"]
+[ext_resource type="Texture2D" uid="uid://7vtgtk8kyk1g" path="res://src/Textures/icon_noise.png" id="1_ybwp7"]
 
 [resource]
 transparency = 1

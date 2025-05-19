@@ -50,7 +50,7 @@ public partial class Player : CharacterBody3D
 
 	private Camera3D Camera;
 
-	[Export(PropertyHint.Range, "0.1,3.0,0.1,or_greater")] public float CameraSensitivity = 1;
+	[Export(PropertyHint.Range, "0.1,3.0,0.1,or_greater")] public float CameraSensitivity = 0.5f;
 
 	[Export] public float BobbleFrequency = 0.6f;
 	[Export] public float BobbleAmplifier = 0.08f;

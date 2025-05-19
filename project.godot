@@ -57,10 +57,10 @@ folder_colors={
 "res://src/Data/": "red",
 "res://src/Fonts/": "red",
 "res://src/Models/": "teal",
-"res://src/Music/": "orange",
 "res://src/Resources/": "purple",
 "res://src/Scenes/": "green",
 "res://src/Scripts/": "yellow",
+"res://src/Shaders/": "red",
 "res://src/Sounds/": "blue",
 "res://src/Textures/": "pink"
 }

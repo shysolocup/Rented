@@ -1,23 +1,21 @@
-[gd_scene load_steps=46 format=3 uid="uid://crynhy865gfw6"]
+[gd_scene load_steps=43 format=3 uid="uid://crynhy865gfw6"]
 
 [ext_resource type="PackedScene" uid="uid://ctqpfrq531m3y" path="res://src/Models/Packed/Buildings.tscn" id="1_i5rif"]
 [ext_resource type="PackedScene" uid="uid://c1eyea2y3khs1" path="res://src/Models/Packed/Outside.tscn" id="2_e2s5l"]
 [ext_resource type="PackedScene" uid="uid://jqojvdkor4nu" path="res://src/Models/Packed/MainBuilding.tscn" id="3_r246b"]
-[ext_resource type="Shader" uid="uid://17hm1p5b17nd" path="res://src/Shaders/WatercolorPlane.gdshader" id="4_hm7qk"]
-[ext_resource type="Texture2D" uid="uid://c2s51i7cpbmdw" path="res://src/Textures/watercolor1.png" id="5_y3lgk"]
-[ext_resource type="Texture2D" uid="uid://cks0soccg2jbn" path="res://src/Textures/watercolor2.png" id="6_k6xs8"]
-[ext_resource type="Texture2D" uid="uid://4votccrw7wyl" path="res://src/Textures/watercolor4.png" id="7_kjqer"]
-[ext_resource type="AudioStream" uid="uid://nvube6beo7t" path="res://src/Sounds/its happening david bazookie.mp3" id="8_8lsa2"]
-[ext_resource type="Texture2D" uid="uid://cpt0pvtp54ivv" path="res://src/Textures/watercolor3.png" id="8_r246b"]
+[ext_resource type="Shader" uid="uid://17hm1p5b17nd" path="res://src/Shaders/surf_watercolor_plane.gdshader" id="4_hm7qk"]
+[ext_resource type="Texture2D" uid="uid://c2s51i7cpbmdw" path="res://src/Textures/tex_watercolor_01.png" id="5_y3lgk"]
+[ext_resource type="Texture2D" uid="uid://cks0soccg2jbn" path="res://src/Textures/tex_watercolor_02.png" id="6_k6xs8"]
+[ext_resource type="Texture2D" uid="uid://4votccrw7wyl" path="res://src/Textures/tex_watercolor_04.png" id="7_kjqer"]
+[ext_resource type="AudioStream" uid="uid://nvube6beo7t" path="res://src/Sounds/g_sfx_its_happening_david_bazookie.mp3" id="8_8lsa2"]
+[ext_resource type="Texture2D" uid="uid://cpt0pvtp54ivv" path="res://src/Textures/tex_watercolor_03.png" id="8_r246b"]
 [ext_resource type="Script" uid="uid://bps104hjuxax7" path="res://src/Libs/shylib/Classes/TalkerObject3D.cs" id="9_yl88r"]
 [ext_resource type="Material" uid="uid://ca75ik5y2u4a2" path="res://src/Resources/Materials/david.tres" id="10_ivhxa"]
-[ext_resource type="Shader" uid="uid://csra1tvugixyj" path="res://src/Shaders/test.tres" id="11_mslbd"]
 [ext_resource type="Material" uid="uid://bljj4t730djb1" path="res://src/Resources/Materials/placeholder.tres" id="12_hrop5"]
-[ext_resource type="Shader" uid="uid://cs7xs27v3w4nc" path="res://src/Shaders/NoiseDistortion.gdshader" id="13_ajvnf"]
-[ext_resource type="Texture2D" uid="uid://bh6vfh18uu0bn" path="res://src/Textures/placeholder.png" id="14_p0j8l"]
-[ext_resource type="Shader" uid="uid://bnlhhxe200g63" path="res://src/Shaders/StaticStripes.gdshader" id="15_rjd0a"]
-[ext_resource type="Shader" uid="uid://mk71m2dpxk4y" path="res://src/Shaders/SquashAndStretch.gdshader" id="16_qphwy"]
-[ext_resource type="Material" uid="uid://h3xhycht6a3o" path="res://src/Shaders/watercolor test.tres" id="17_rucnt"]
+[ext_resource type="Shader" uid="uid://cs7xs27v3w4nc" path="res://src/Shaders/surf_noise.gdshader" id="13_ajvnf"]
+[ext_resource type="Texture2D" uid="uid://bh6vfh18uu0bn" path="res://src/Textures/mat_placeholder_0.png" id="14_p0j8l"]
+[ext_resource type="Shader" uid="uid://bnlhhxe200g63" path="res://src/Shaders/surf_static_stripes.gdshader" id="15_rjd0a"]
+[ext_resource type="Shader" uid="uid://mk71m2dpxk4y" path="res://src/Shaders/surf_squash_stretch.gdshader" id="16_qphwy"]
 [ext_resource type="NoiseTexture3D" uid="uid://ca863v1blexjd" path="res://src/Resources/Ui/TrippyColorCorrection.tres" id="20_e2s5l"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_5i3io"]
@@ -202,13 +200,6 @@ shader_parameter/uv2_offset = Vector3(0, 0, 0)
 
 [sub_resource type="BoxMesh" id="BoxMesh_xknod"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_10fqn"]
-render_priority = 0
-shader = ExtResource("11_mslbd")
-
-[sub_resource type="BoxMesh" id="BoxMesh_jipul"]
-material = SubResource("ShaderMaterial_10fqn")
-
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_y0axr"]
 
 [sub_resource type="CurveTexture" id="CurveTexture_4v06e"]
@@ -251,9 +242,11 @@ shader_parameter/offset = 0.5
 lightmap_size_hint = Vector2i(17, 14)
 material = SubResource("ShaderMaterial_m47wv")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mslbd"]
+
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_yc6y7"]
 lightmap_size_hint = Vector2i(17, 14)
-material = ExtResource("17_rucnt")
+material = SubResource("ShaderMaterial_mslbd")
 
 [sub_resource type="FogMaterial" id="FogMaterial_i5rif"]
 density = 5.0
@@ -548,11 +541,6 @@ shape = SubResource("BoxShape3D_j1e05")
 mesh = SubResource("BoxMesh_xknod")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("10_ivhxa")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="testcubes"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.95322, 1.80408, 0)
-mesh = SubResource("BoxMesh_jipul")
-skeleton = NodePath("")
 
 [node name="mockplayers" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.105161, 0.366011)

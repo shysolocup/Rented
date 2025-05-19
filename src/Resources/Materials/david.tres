@@ -1,7 +1,7 @@
 [gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://ca75ik5y2u4a2"]
 
-[ext_resource type="Texture2D" uid="uid://dcthcg547baj0" path="res://src/Images/david bazookie.png" id="1_r2bob"]
-[ext_resource type="Texture2D" uid="uid://dbg81qc4cw8ao" path="res://src/Images/david bazookie normal.png" id="2_ikytg"]
+[ext_resource type="Texture2D" uid="uid://dcthcg547baj0" path="res://src/Images/david_bazookie.png" id="1_r2bob"]
+[ext_resource type="Texture2D" uid="uid://dbg81qc4cw8ao" path="res://src/Images/david_bazookie_normal.png" id="2_ikytg"]
 
 [resource]
 albedo_texture = ExtResource("1_r2bob")

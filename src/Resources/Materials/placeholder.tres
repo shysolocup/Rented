@@ -1,7 +1,7 @@
 [gd_resource type="StandardMaterial3D" load_steps=4 format=3 uid="uid://bljj4t730djb1"]
 
-[ext_resource type="Texture2D" uid="uid://bh6vfh18uu0bn" path="res://src/Textures/placeholder.png" id="1_noc27"]
-[ext_resource type="Texture2D" uid="uid://d1ae8ksha5166" path="res://src/Textures/placeholder_normal.png" id="2_rprcv"]
+[ext_resource type="Texture2D" uid="uid://bh6vfh18uu0bn" path="res://src/Textures/mat_placeholder_0.png" id="1_noc27"]
+[ext_resource type="Texture2D" uid="uid://d1ae8ksha5166" path="res://src/Textures/mat_placeholder_1.png" id="2_rprcv"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mqvtx"]
 

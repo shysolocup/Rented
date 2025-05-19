@@ -1,11 +1,11 @@
 [gd_scene load_steps=19 format=3 uid="uid://be1q4s6uf65is"]
 
 [ext_resource type="PackedScene" uid="uid://bbbvccldeg3hr" path="res://src/Resources/Lighting/Packed/Title.tscn" id="3_tx72l"]
-[ext_resource type="Material" uid="uid://bjw4br41r8htu" path="res://src/Shaders/Logo.tres" id="4_h6v6y"]
-[ext_resource type="Shader" uid="uid://cfyfm8615nrya" path="res://src/Shaders/GodRays.gdshader" id="6_0dd57"]
+[ext_resource type="Material" uid="uid://bjw4br41r8htu" path="res://src/Shaders/surf_logo.tres" id="4_h6v6y"]
+[ext_resource type="Shader" uid="uid://cfyfm8615nrya" path="res://src/Shaders/screen_godrays.gdshader" id="6_0dd57"]
 [ext_resource type="PackedScene" uid="uid://bg2s3j3jpsaqq" path="res://src/Resources/Packed/Dump.tscn" id="7_1dkgf"]
 [ext_resource type="Script" uid="uid://daa51mjs6im1s" path="res://src/Scripts/ColorRectLightRays.gd" id="7_tx72l"]
-[ext_resource type="Shader" uid="uid://ds7mvhyyc87pr" path="res://src/Shaders/FakeGodRays.gdshader" id="8_1dkgf"]
+[ext_resource type="Shader" uid="uid://ds7mvhyyc87pr" path="res://src/Shaders/surf_godrays.gdshader" id="8_1dkgf"]
 [ext_resource type="Script" uid="uid://cei6x6adiqlte" path="res://src/Libs/shylib/Classes/Lighting3D.cs" id="40_2udwj"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4vboo"]

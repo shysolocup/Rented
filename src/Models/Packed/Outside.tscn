@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://c1eyea2y3khs1"]
 
-[ext_resource type="Texture2D" uid="uid://bh6vfh18uu0bn" path="res://src/Textures/placeholder.png" id="1_lenhf"]
-[ext_resource type="Texture2D" uid="uid://d1ae8ksha5166" path="res://src/Textures/placeholder_normal.png" id="2_ocib2"]
+[ext_resource type="Texture2D" uid="uid://bh6vfh18uu0bn" path="res://src/Textures/mat_placeholder_0.png" id="1_lenhf"]
+[ext_resource type="Texture2D" uid="uid://d1ae8ksha5166" path="res://src/Textures/mat_placeholder_1.png" id="2_ocib2"]
 [ext_resource type="Material" uid="uid://c308v38sitbye" path="res://src/Resources/Materials/placeholder_street.tres" id="3_65mo4"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gc7xl"]

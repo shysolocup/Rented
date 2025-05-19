@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://jqojvdkor4nu"]
+[gd_scene load_steps=9 format=3 uid="uid://jqojvdkor4nu"]
 
 [ext_resource type="Material" uid="uid://c308v38sitbye" path="res://src/Resources/Materials/placeholder_street.tres" id="1_ah4uc"]
 [ext_resource type="Texture2D" uid="uid://dbaibnpudn7ji" path="res://src/Images/References/20230708_182525_2.jpg" id="2_r5bse"]
 [ext_resource type="Script" uid="uid://byo3viy2e5d7t" path="res://src/Libs/shylib/Classes/Image3D.cs" id="3_2w1ch"]
+[ext_resource type="Texture2D" uid="uid://bptsvu72yepoj" path="res://src/Textures/tex_flashlight_projector.png" id="4_r5bse"]
 
 [sub_resource type="TextMesh" id="TextMesh_ng2wt"]
 text = "building"
@@ -13,12 +14,12 @@ no_depth_test = true
 shading_mode = 0
 billboard_mode = 1
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ah4uc"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r5bse"]
 transparency = 1
 albedo_texture = ExtResource("2_r5bse")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_e0jsf"]
-material = SubResource("StandardMaterial3D_ah4uc")
+material = SubResource("StandardMaterial3D_r5bse")
 
 [node name="Building" type="StaticBody3D"]
 
@@ -168,10 +169,28 @@ size = Vector3(13.035, 13.1926, 1.32964)
 material = ExtResource("1_ah4uc")
 
 [node name="Image3D" type="MeshInstance3D" parent="Office"]
-transform = Transform3D(-0.325184, -0.962583, 6.73213e-08, 0, -4.37114e-08, -1.6, 1.1551, -0.270987, 1.89523e-08, -1.29586, 2.34776, -62.2755)
+transform = Transform3D(-0.325184, -0.962583, 6.73214e-08, 0, -4.37114e-08, -1.6, 1.1551, -0.270987, 1.89523e-08, -1.29586, 2.34776, -62.2755)
 cast_shadow = 0
 mesh = SubResource("PlaneMesh_e0jsf")
 script = ExtResource("3_2w1ch")
 Source = ExtResource("2_r5bse")
 ImageScale = 0.2
 metadata/_custom_type_script = "uid://byo3viy2e5d7t"
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Office"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.62338, 4.52593, -64.5322)
+
+[node name="InnerLight" type="SpotLight3D" parent="Office/CSGCylinder3D"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.726528, 0)
+rotation_edit_mode = 1
+light_color = Color(0.98, 0.712133, 0.5782, 1)
+light_energy = 15.093
+light_volumetric_fog_energy = 16.0
+light_projector = ExtResource("4_r5bse")
+light_size = 3.415
+light_specular = 5.645
+shadow_enabled = true
+spot_range = 22.9894
+spot_attenuation = 2.25
+spot_angle = 53.3
+spot_angle_attenuation = 0.267943

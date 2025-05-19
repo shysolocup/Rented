@@ -4,14 +4,15 @@ using Godot;
 [GlobalClass]
 public partial class Flashlight : Item 
 {
-    private bool broken = false;
+    static private bool broken = false;
 
-    [Export] public bool On = false;
+    static public bool On = false;
 
     // will play an animation for the flashlight breaking and fixing
-    [Export] public bool Broken {
+    static public bool Broken {
         get => broken;
         set {
+            if (value) On = false;
             broken = value;
         }
     }

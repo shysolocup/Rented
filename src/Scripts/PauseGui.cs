@@ -27,30 +27,36 @@ public partial class PauseGui : Control
 		get => paused;
 
 		set {
-			if (paused != value) {
+			if (paused != value)
+			{
 				paused = value;
 
 				GetTree().Paused = value;
 
-				if (value) {
+				if (value)
+				{
 					/*defaultWorldEffects = World.Environment;
 					defaultCameraEffects = World.CameraAttributes;
 
 					World.Environment = weirdWorldEffects;
 					World.CameraAttributes = weirdCameraEffects;
 					World.CameraAttributes.AutoExposureScale = 1;*/
-					Player.ReleaseMouse(); 
+					Player.ReleaseMouse();
 					Show();
 				}
-				else if (!Player.InDialog) {
+				else if (!Player.InDialog)
+				{
 					/*World.Environment = defaultWorldEffects;
 					World.CameraAttributes = defaultCameraEffects;*/
 					Player.CaptureMouse();
 					Hide();
 				}
-				else {
+				else
+				{
 					Hide();
 				}
+
+				SkipButton.Visible = Player.InDialog;
 			}
 		}
 	}
@@ -63,6 +69,7 @@ public partial class PauseGui : Control
 	public void SkipCutscene()
 	{
 		Player.RunningDialogueToken.Cancel();
+		Resume();
 	}
 
 	public void OpenSettings()

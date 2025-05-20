@@ -1,15 +1,7 @@
-[gd_scene load_steps=19 format=3 uid="uid://be1q4s6uf65is"]
+[gd_scene load_steps=11 format=3 uid="uid://be1q4s6uf65is"]
 
-[ext_resource type="PackedScene" uid="uid://bbbvccldeg3hr" path="res://src/Resources/Lighting/Packed/Title.tscn" id="3_tx72l"]
 [ext_resource type="Material" uid="uid://bjw4br41r8htu" path="res://src/Shaders/surf_logo.tres" id="4_h6v6y"]
-[ext_resource type="Shader" uid="uid://cfyfm8615nrya" path="res://src/Shaders/screen_godrays.gdshader" id="6_0dd57"]
-[ext_resource type="PackedScene" uid="uid://bg2s3j3jpsaqq" path="res://src/Resources/Packed/Dump.tscn" id="7_1dkgf"]
-[ext_resource type="Script" uid="uid://daa51mjs6im1s" path="res://src/Scripts/ColorRectLightRays.gd" id="7_tx72l"]
 [ext_resource type="Shader" uid="uid://ds7mvhyyc87pr" path="res://src/Shaders/surf_godrays.gdshader" id="8_1dkgf"]
-[ext_resource type="Script" uid="uid://cei6x6adiqlte" path="res://src/Libs/shylib/Classes/Lighting3D.cs" id="40_2udwj"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_4vboo"]
-size = Vector3(12.0018, 1, 11.1188)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ygj5l"]
 material = ExtResource("4_h6v6y")
@@ -22,23 +14,8 @@ albedo_color = Color(0, 0, 0, 1)
 lightmap_size_hint = Vector2i(12, 12)
 material = SubResource("StandardMaterial3D_1dkgf")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_0dd57"]
-viewport_path = NodePath("SubViewportContainer/SubViewport")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_tx72l"]
-resource_local_to_scene = true
-shader = ExtResource("6_0dd57")
-shader_parameter/subviewport_tex = SubResource("ViewportTexture_0dd57")
-shader_parameter/ray_length = 0.5
-shader_parameter/ray_intensity = 0.62
-shader_parameter/light_source_scale = 1.0
-shader_parameter/light_source_feather = 2.0
-shader_parameter/noise_strength = 1.0
-shader_parameter/light_source_pos = Vector2(0, 0)
-shader_parameter/light_source_dir = Vector3(0.5, -1, 0.25)
-shader_parameter/camera_dir = Vector3(-0.5, 1, -0.25)
-
 [sub_resource type="Gradient" id="Gradient_1dkgf"]
+interpolation_mode = 2
 offsets = PackedFloat32Array(0, 0.103448, 0.248276, 0.493103, 1)
 colors = PackedColorArray(0, 0, 0, 1, 0.800491, 0.800491, 0.800491, 1, 0.995134, 0.995134, 0.995134, 1, 0, 0, 0, 1, 0, 0, 0, 1)
 
@@ -65,17 +42,6 @@ shader_parameter/uv1_offset = Vector3(0, 1, 0)
 
 [node name="Node" type="Node"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.50092, -0.861375, -18.9871)
-shape = SubResource("BoxShape3D_4vboo")
-
-[node name="Lighting3D" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.27353, -0.567752)
-visible = false
-script = ExtResource("40_2udwj")
-Lighting = ExtResource("3_tx72l")
-metadata/_custom_type_script = "uid://cei6x6adiqlte"
-
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(4.50281, 0, 0, 0, -4.37114e-08, -1.35664, 0, 1, -5.93008e-08, 0, 1.03356, 2.86165)
 mesh = SubResource("PlaneMesh_ygj5l")
@@ -88,62 +54,13 @@ mesh = SubResource("PlaneMesh_vdiyp")
 skeleton = NodePath("")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.114765, 0.95604, 17.9859)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.114765, 0.95604, 22.6249)
 fov = 37.8493
-
-[node name="RemoteTransform3D" type="RemoteTransform3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0542, 0.768818)
-remote_path = NodePath("../SubViewportContainer/Camera3D_Viewport")
-update_scale = false
-
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="ColorRect_LightRays" type="ColorRect" parent="Control"]
-material = SubResource("ShaderMaterial_tx72l")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("7_tx72l")
-light_path = NodePath("../../DirectionalLight3D")
-camera_path = NodePath("../../Camera3D")
-
-[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
-visibility_layer = 0
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
-transparent_bg = true
-handle_input_locally = false
-render_target_clear_mode = 2
-render_target_update_mode = 4
-
-[node name="Camera3D_Viewport" type="Camera3D" parent="SubViewportContainer"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0542, 0.768818)
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -0.963008, 0.269474, 0, -0.269474, -0.963008, 0.212203, 3.35568, -3.27754)
-light_energy = 0.367
-
-[node name="Dump" parent="." instance=ExtResource("7_1dkgf")]
-unique_name_in_owner = true
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="."]
 transform = Transform3D(2.04183, 2.17765, -0.40822, 0, 4.01441, 3.02942, 0.573395, -7.75451, 1.45365, -3.33188, 1.10578, 3.00017)
 cast_shadow = 0
-radius = 0.740723
+radius = 0.741
 height = 2.03052
 cone = true
 smooth_faces = false
@@ -152,7 +69,7 @@ material = SubResource("ShaderMaterial_vdiyp")
 [node name="CSGCylinder3D2" type="CSGCylinder3D" parent="."]
 transform = Transform3D(2.08599, 1.45357, -0.272485, 1.70885e-08, 4.01441, 3.02942, 0.382739, -7.92223, 1.48509, -1.8542, 1.10578, 3.00017)
 cast_shadow = 0
-radius = 0.740723
+radius = 0.741
 height = 2.03052
 cone = true
 smooth_faces = false
@@ -161,7 +78,7 @@ material = SubResource("ShaderMaterial_vdiyp")
 [node name="CSGCylinder3D3" type="CSGCylinder3D" parent="."]
 transform = Transform3D(2.1204, -0.160106, 0.0300132, 1.70885e-08, 4.01441, 3.02942, -0.0421575, -8.05289, 1.50959, -0.38997, 1.10578, 3.00017)
 cast_shadow = 0
-radius = 0.740723
+radius = 0.741
 height = 2.03052
 cone = true
 smooth_faces = false
@@ -170,7 +87,7 @@ material = SubResource("ShaderMaterial_vdiyp")
 [node name="CSGCylinder3D4" type="CSGCylinder3D" parent="."]
 transform = Transform3D(2.10754, -0.899779, 0.168672, 1.97817e-08, 4.01441, 3.02942, -0.23692, -8.00406, 1.50043, 1.09631, 1.10578, 3.00017)
 cast_shadow = 0
-radius = 0.740723
+radius = 0.741
 height = 2.03052
 cone = true
 smooth_faces = false
@@ -179,7 +96,7 @@ material = SubResource("ShaderMaterial_vdiyp")
 [node name="CSGCylinder3D5" type="CSGCylinder3D" parent="."]
 transform = Transform3D(2.09842, -1.1673, 0.218821, 2.68424e-08, 4.01441, 3.02942, -0.307361, -7.96944, 1.49394, 2.57613, 1.10578, 3.00017)
 cast_shadow = 0
-radius = 0.740723
+radius = 0.741
 height = 2.03052
 cone = true
 smooth_faces = false
@@ -188,7 +105,7 @@ material = SubResource("ShaderMaterial_vdiyp")
 [node name="CSGCylinder3D6" type="CSGCylinder3D" parent="."]
 transform = Transform3D(2.09842, -1.1673, 0.218821, 2.68424e-08, 4.01441, 3.02942, -0.307361, -7.96944, 1.49394, 4.03398, 1.10578, 3.00017)
 cast_shadow = 0
-radius = 0.740723
+radius = 0.741
 height = 2.03052
 cone = true
 smooth_faces = false

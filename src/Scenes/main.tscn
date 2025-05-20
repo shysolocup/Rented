@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://s0ftqrddh5up"]
+[gd_scene load_steps=28 format=3 uid="uid://s0ftqrddh5up"]
 
 [ext_resource type="Script" uid="uid://cfoo1gxat5mv8" path="res://src/Libs/shylib/Classes/Game/GameInstance.cs" id="1_k0mjx"]
 [ext_resource type="Script" uid="uid://cei6x6adiqlte" path="res://src/Libs/shylib/Classes/Lighting3D.cs" id="2_h8oac"]
@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://dlade7y0ilag6" path="res://src/Resources/Ui/Packed/PauseGui.tscn" id="14_7mk6u"]
 [ext_resource type="PackedScene" uid="uid://dvpi6uwtqfp8n" path="res://src/Resources/Ui/Packed/DialogueGui.tscn" id="14_8nlug"]
 [ext_resource type="Script" uid="uid://c8e2vfc8iq64g" path="res://src/Libs/shylib/Classes/Items/Inventory.cs" id="15_wf0w2"]
+[ext_resource type="PackedScene" uid="uid://dg73p7tipdvvs" path="res://src/Resources/Ui/Packed/MainMenuGui.tscn" id="17_k0mjx"]
 [ext_resource type="Script" uid="uid://dahmws7oap7ss" path="res://src/Libs/shylib/Classes/Items/Flashlight.cs" id="19_isqvi"]
 [ext_resource type="PackedScene" uid="uid://bg2s3j3jpsaqq" path="res://src/Resources/Packed/Dump.tscn" id="21_jnspx"]
 
@@ -225,6 +226,9 @@ position = Vector2(-42, -42)
 scale = Vector2(0.64, 0.64)
 texture = SubResource("CompressedTexture2D_w0vrg")
 script = ExtResource("9_ng2wt")
+
+[node name="MainMenuGui" parent="Guis" instance=ExtResource("17_k0mjx")]
+visible = false
 
 [node name="CrosshairGui" parent="Guis" instance=ExtResource("10_timk5")]
 unique_name_in_owner = true

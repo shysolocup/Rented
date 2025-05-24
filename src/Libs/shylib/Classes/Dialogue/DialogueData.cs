@@ -54,11 +54,14 @@ public partial class DialogueData : Node
 	{
 		string realText = DialogueCharacterEffect.Apply(line.Text);
 
-		for (int i = 0; i < line.Text.Length; i++) {
+		GD.Print(realText);
+
+		for (int i = 0; i < line.Text.Length; i++)
+		{
 			while (tree.Paused) await Task.Delay(5, token);
 			if (token.IsCancellationRequested) break;
-			
-			label.Text = string.Format(BaseText, i, i+1, realText); 
+
+			label.Text = string.Format(BaseText, i, i + 1, realText);
 
 			await Task.Delay(line.Speed, token);
 		}
@@ -319,16 +322,14 @@ public partial class DialogueData : Node
 			else if (format == DialogueFormat.CharacterEffect) {
 				var effectList = (Array<Dictionary<string, Variant>>)content["effects"];
 
-				foreach ( Dictionary<string, Variant> charef in effectList) {
+				foreach (Dictionary<string, Variant> charef in effectList)
+				{
 					DialogueCharacterEffect effect = new();
 
-					switch(charef["names"].VariantType) {
-						case Variant.Type.Dictionary: effect.Names = (Array<string>)charef["names"]; break;
-						default: effect.Names.Add((string)charef["names"]); break;
-					}
-
-					if (charef.ContainsKey("mentioned")) effect.Mentioned = (string)charef["mentioned"];
-					if (charef.ContainsKey("speaking")) effect.Speaking = (string)charef["speaking"];
+					effect.Names = (Array<string>)charef["names"];
+					effect.Mentioned = (string)charef["mentioned"];
+					
+					Effects.Add(effect);
 				}
 			}
 		}

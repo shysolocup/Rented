@@ -3,7 +3,7 @@
     "effects": [
         {
             "names": ["audrey", "girl"],
-            "mentioned": "{0}"
+            "mentioned": "[color=red]{0}[/color]"
         },
         {
             "names": ["hass", "snake", "demon"],

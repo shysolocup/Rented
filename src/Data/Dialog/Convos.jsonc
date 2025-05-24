@@ -3,6 +3,7 @@
     "format": 2,
     "scenes": {
 		
+		// test starts here
 		"test": [
 			["Audrey", [
 				"googoo",
@@ -33,17 +34,21 @@
 				"you you suck suck"
 			]]
 		],
+
+		// test response #1
 		"test_let_out": [
 			["Audrey", [
 				"fiiinnneeeee"
 			]]
 		],
+		// test response #2
 		"test_nuh_uh": [
 			["Audrey", [
 				"nuh uhhhhhh",
 				"stupid baby boy"
 			]]
 		],
+		// test response #3
 		"test_NO": [
 			["slinkly", [
 				"DAMN",

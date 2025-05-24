@@ -10,11 +10,13 @@ public partial class TriggerTest : Node
 
         Trigger = GetParent<Trigger3D>();
 
-        Trigger.Touched += (Node toucher) => {
+
+        Trigger.Touched += toucher => {
             GD.Print(toucher);
         };
 
-        Trigger.TouchEnded += (Node toucher) => {
+
+        Trigger.TouchEnded += toucher => {
             GD.Print(toucher);
         };
 	}

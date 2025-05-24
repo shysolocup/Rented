@@ -5,5 +5,6 @@ public partial class DialogueButton : Resource
 {
 	[Export] public string Text = "Press";
 	[Export] public string RedirectLine; 
+	public bool Effectable = true;
 	public Button Button;
 }

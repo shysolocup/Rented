@@ -529,15 +529,30 @@ skeleton = NodePath("")
 surface_material_override/0 = ExtResource("10_ivhxa")
 
 [node name="test6" type="RigidBody3D" parent="testcubes"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.2149, 0.977314, -62.8863)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.531609, 0.977314, -38.9773)
 freeze = true
 script = ExtResource("9_yl88r")
+Line = "convo_test"
 AutoCooldown = false
 
 [node name="Collision" type="CollisionShape3D" parent="testcubes/test6"]
 shape = SubResource("BoxShape3D_j1e05")
 
 [node name="Mesh" type="MeshInstance3D" parent="testcubes/test6"]
+mesh = SubResource("BoxMesh_xknod")
+skeleton = NodePath("")
+surface_material_override/0 = ExtResource("10_ivhxa")
+
+[node name="test7" type="RigidBody3D" parent="testcubes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.2149, 0.977314, -62.8863)
+freeze = true
+script = ExtResource("9_yl88r")
+AutoCooldown = false
+
+[node name="Collision" type="CollisionShape3D" parent="testcubes/test7"]
+shape = SubResource("BoxShape3D_j1e05")
+
+[node name="Mesh" type="MeshInstance3D" parent="testcubes/test7"]
 mesh = SubResource("BoxMesh_xknod")
 skeleton = NodePath("")
 surface_material_override/0 = ExtResource("10_ivhxa")

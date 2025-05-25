@@ -58,7 +58,7 @@ public partial class DialogueData : Node
 
 		for (int i = 0; i < line.Text.Length; i++)
 		{
-			while (tree.Paused) await Task.Delay(5, token);
+			while (tree.Paused) await Task.Delay(10, token);
 			if (token.IsCancellationRequested) break;
 
 			label.Text = string.Format(BaseText, i, i + 1, realText);
@@ -229,7 +229,7 @@ public partial class DialogueData : Node
 						}
 
 						while (!done) { 
-							await Task.Delay(5);
+							await Task.Delay(10);
 							if (token.IsCancellationRequested) break;
 						};
 					}
@@ -243,7 +243,7 @@ public partial class DialogueData : Node
 							- game is paused
 							- line animation isn't done
 						*/
-						while (!token.IsCancellationRequested && (!Input.IsActionJustPressed("InteractDialog") || tree.Paused || (!line.Skippable && !effect.IsCompleted))) await Task.Delay(5);
+						while (!token.IsCancellationRequested && (!Input.IsActionJustPressed("InteractDialog") || tree.Paused || (!line.Skippable && !effect.IsCompleted))) await Task.Delay(10);
 						
 						elipses.Show();
 						tokenSource.Cancel();

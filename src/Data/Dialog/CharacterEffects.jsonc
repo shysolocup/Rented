@@ -3,7 +3,11 @@
     "effects": [
         {
             "names": ["audrey", "girl"],
-            "mentioned": "[color=red]{0}[/color]"
+            "mentioned": "[tornado]{0}[/tornado]"
+        },
+        {
+            "names": ["043170"],
+            "mentioned": "[matrix]{0}[/matrix]"
         },
         {
             "names": ["hass", "snake", "demon"],

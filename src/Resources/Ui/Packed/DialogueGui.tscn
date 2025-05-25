@@ -68,7 +68,7 @@ material = SubResource("ShaderMaterial_0m3r5")
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("4_kr11k")
 bbcode_enabled = true
-text = "[wave amp=10 freq=5.0 connected=1][font size=20]{0}[/font][/wave]"
+text = "[wave amp=10 freq=5.0 connected=1][font size=20] {0} [/font][/wave]"
 fit_content = true
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -80,7 +80,7 @@ material = SubResource("ShaderMaterial_0m3r5")
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("4_kr11k")
 bbcode_enabled = true
-text = "[fade start={0} length={1}][wave amp=10 freq=5.0 connected=1]{2}[/wave][/fade]"
+text = "[fade start={0} length={1}][wave amp=10 freq=5.0 connected=1] {2} [/wave][/fade]"
 fit_content = true
 horizontal_alignment = 1
 vertical_alignment = 1

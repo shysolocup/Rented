@@ -189,6 +189,8 @@ public partial class GameInstance : Node
 		Map = GetNode<MapController>("%Map");
 		Player = GetNode<Player>("%Player");
 
+		if (Engine.IsEditorHint()) return;
+
 		Game.SaveTemplate = Game.ReadJson("res://src/Data/SaveTemplate.json");
 
 		/*GameEnvironment = (DefaultGameEnvironment != null) ? DefaultGameEnvironment : GameEnvironment;

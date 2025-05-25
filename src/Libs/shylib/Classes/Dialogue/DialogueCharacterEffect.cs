@@ -23,17 +23,22 @@ public partial class DialogueCharacterEffect : Resource
 
 	static public string Apply(string original)
 	{
-		Array<string> split = [.. original.Split(" ")];
-
-		foreach (DialogueCharacterEffect effect in DialogueData.Effects) {
+		foreach (DialogueCharacterEffect effect in DialogueData.Effects)
+		{
 			foreach (string name in effect.Names)
 			{
-				MatchCollection matches = Regex.Matches(original, string.Format(@"\[{0}\](.*?)\[/{0}\]", name));
+				string pattern = string.Format(@"\[{0}\](.*?)\[/{0}\]", name);
 
-				foreach (Match match in matches)
+
+				if (Regex.IsMatch(original, pattern))
 				{
-					GD.Print(match.Groups[1].Value);
+					original = Regex.Replace(original, pattern, match =>
+						string.Format(effect.Mentioned, match.Groups[1].Value)
+					);
 				}
+
+				Array<string> split = [.. original.Split(" ")];
+
 
 				foreach (var (word, i) in ShyUtil.Enumerate(split))
 				{
@@ -42,9 +47,12 @@ public partial class DialogueCharacterEffect : Resource
 						split[i] = string.Format(effect.Mentioned, word);
 					}
 				}
+
+
+				original = split.ToArray().Join(" ");
 			}
 		}
 
-		return split.ToArray().Join(" ");
+		return original;
 	}
 }

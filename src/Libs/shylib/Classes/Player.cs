@@ -69,7 +69,7 @@ public partial class Player : CharacterBody3D
 	#region Sprint Vars
 	[ExportGroup("Sprinting")]
 	
-	[Export(PropertyHint.Range, "1,35,1")] public float SprintSpeed = 5; // m/s
+	[Export] public float SprintSpeedMod = 2; // m/s
 	[Export] public float SprintFovMod = 5;
 	[Export] public bool Sprinting = false;
 	[Export] public bool CanSprint = true;
@@ -80,13 +80,23 @@ public partial class Player : CharacterBody3D
 	#region Crouch Vars
 	[ExportGroup("Crouching")]
 	
-	[Export(PropertyHint.Range, "1,35,1")] public float CrouchSpeed = 1; // m/s
+	[Export] public float CrouchSpeedMod = -2; // m/s
 	[Export] public float CrouchFovMod = -20;
 	[Export] public bool Crouching = false;
 	[Export] public bool CanCrouch = true;
 
 	#endregion
 
+
+	#region Zoom Vars
+	[ExportGroup("Zooming")]
+	[Export] public float ZoomedSpeedMod = -0.5f; // m/s
+	[Export] public float ZoomFovMod = -40;
+	[Export] public bool Zoomed = false;
+	[Export] public bool CanZoom = true;
+
+
+	#endregion
 
 	#region Switch Vars
 	[ExportGroup("Switches")]
@@ -235,6 +245,25 @@ public partial class Player : CharacterBody3D
 	public override void _Process(double delta)
 	{
 		if (Engine.IsEditorHint()) return;
+
+
+		// Controls
+
+		// sprint
+		if (CanSprint && Controllable && Walking && !Zoomed && !Sprinting && !Crouching && Input.IsActionPressed("Sprint") && Input.IsActionPressed("MoveForward")) Sprinting = true;
+		else if (Sprinting && (!Input.IsActionPressed("Sprint") || !Input.IsActionPressed("MoveForward") || !Walking)) Sprinting = false;
+
+		// crouch
+		if (CanCrouch && Controllable && !Sprinting && !Crouching && IsOnFloor() && Input.IsActionPressed("Crouch")) Crouching = true;
+		else if (Controllable && Crouching && !Input.IsActionPressed("Crouch")) Crouching = false;
+
+		// zoom
+		if (CanZoom && Controllable && !Zoomed && Input.IsActionPressed("Zoom")) Zoomed = true;
+		else if (!Input.IsActionPressed("Zoom")) Zoomed = false;
+
+		// jump
+		if (Controllable && Input.IsActionPressed("Jump") && !Crouching) Jumping = true;
+
 		
 		if (Freecam)
 		{
@@ -273,26 +302,51 @@ public partial class Player : CharacterBody3D
 			}
 			if (!Freecam) Rotation = new Vector3(Rotation.X, Camera.Rotation.Y, Rotation.Z);
 
-			// crouch effect
-			if (Crouching) {
-				SpeedEffect(CrouchFovMod, CrouchSpeed, -0.4f, true, 1/25f, delta);
-			}
-			if (Sprinting) {
-				SpeedEffect(SprintFovMod, SprintSpeed, DefaultCameraOffset, false, 1/45f, delta);
-			}
-			else if (!Crouching && !Sprinting) {
-				SpeedEffect( InDialog ? InteractFovMod : 0, BaseWalkSpeed, DefaultCameraOffset, false, 1/30f, delta);
+
+			var fov = InDialog ? InteractFovMod : 0;
+			float speed = BaseWalkSpeed;
+			var height = DefaultCameraOffset;
+			float factor = 1/30f;
+
+			if (Crouching)
+			{
+				fov += CrouchFovMod;
+				speed += CrouchSpeedMod;
+				height = -0.4f;
+				factor = 1 / 25f;
 			}
 
+			if (Sprinting)
+			{
+				fov += SprintFovMod;
+				speed += SprintSpeedMod;
+				factor = 1 / 45f;
+			}
+
+			if (Zoomed)
+			{
+				fov += ZoomFovMod;
+				speed += ZoomedSpeedMod;
+				factor = 1 / 25f;
+			}
+
+
+			InputEffect( fov, speed, height, Crouching, factor, delta);
+
+
+
 			// tilt effect
-			if (Controllable && Input.IsActionPressed("MoveLeft")) {
-				TiltEffect(TiltRotation, 1/12f, delta);
+			if (Controllable && Input.IsActionPressed("MoveLeft"))
+			{
+				TiltEffect(TiltRotation, 1 / 12f, delta);
 			}
-			else if (Controllable && Input.IsActionPressed("MoveRight")) {
-				TiltEffect(-TiltRotation, 1/12f, delta);
+			else if (Controllable && Input.IsActionPressed("MoveRight"))
+			{
+				TiltEffect(-TiltRotation, 1 / 12f, delta);
 			}
-			else if (Camera != null && Camera.RotationDegrees.Z != 0) {
-				TiltEffect(0, 1/12f, delta);
+			else if (Camera != null && Camera.RotationDegrees.Z != 0)
+			{
+				TiltEffect(0, 1 / 12f, delta);
 			}
 		}
 	}
@@ -362,50 +416,33 @@ public partial class Player : CharacterBody3D
 	#region UnhandledInput
 	public override void _UnhandledInput(InputEvent @event)
 	{
-		if (@event is InputEventMouseMotion mouse && Input.MouseMode == Input.MouseModeEnum.Captured) {
+		if (@event is InputEventMouseMotion mouse && Input.MouseMode == Input.MouseModeEnum.Captured)
+		{
 			if (Freecam) FreecamMousePosition = mouse.Relative;
 			LookDirection = mouse.Relative * 0.001f;
 
 			if (MouseCaptured) RotateCamera();
 		}
 
-		if (Freecam && @event is InputEventMouseButton button && Input.MouseMode == Input.MouseModeEnum.Captured) {
-			switch (button.ButtonIndex) {
-				case MouseButton.Right: {
+		if (Freecam && @event is InputEventMouseButton button && Input.MouseMode == Input.MouseModeEnum.Captured)
+		{
+			switch (button.ButtonIndex)
+			{
+				case MouseButton.Right:
 					Input.SetMouseMode( button.Pressed ? Input.MouseModeEnum.Captured : Input.MouseModeEnum.Visible);
 					break;
-				}
-				case MouseButton.WheelUp: {
+
+				case MouseButton.WheelUp:
 					FreecamVelMultiplier = Mathf.Clamp(FreecamVelMultiplier * 1.1f, 0.2f, 20);
 					break;
-				}
-				case MouseButton.WheelDown: {
+
+				case MouseButton.WheelDown:
 					FreecamVelMultiplier = Mathf.Clamp(FreecamVelMultiplier / 1.1f, 0.2f, 20);
 					break;
-				}
 			}
 		}
 
 		// if (!controllable) return;
-		
-		if (CanSprint && Controllable && Walking && !Sprinting && !Crouching && Input.IsActionPressed("Sprint") && Input.IsActionPressed("MoveForward")) {
-			Sprinting = true;
-		}
-		
-		else if (Sprinting && (!Input.IsActionPressed("Sprint") || !Input.IsActionPressed("MoveForward") || !Walking)) {
-			Sprinting = false;
-		}
-
-		if (CanCrouch && Controllable && !Sprinting && !Crouching && IsOnFloor() && Input.IsActionPressed("Crouch")) {
-			Crouching = true;
-		}
-		else if (Controllable && Crouching && !Input.IsActionPressed("Crouch")) {
-			Crouching = false;
-		}
-
-		if (Controllable && Input.IsActionPressed("Jump") && !Crouching) {
-			Jumping = true;
-		}
 		// if (Input.IsActionJustPressed("Exit")) GetTree().Quit();
 	}
 	#endregion
@@ -507,8 +544,8 @@ public partial class Player : CharacterBody3D
 	}
 	#endregion
 
-	#region SpeedEffect
-	private void SpeedEffect(float zoommod, float speed, float offset, bool collision2, float _t, double delta)
+	#region InputEffect
+	private void InputEffect(float zoommod, float speed, float offset, bool collision2, float _t, double delta)
 	{
 		WalkSpeed = this.Twlerp(WalkSpeed, speed, _t, delta);
 		Camera.Fov = this.Twlerp(Camera.Fov, BaseFov+zoommod, _t, delta);

@@ -51,7 +51,7 @@ theme_override_styles/hover_pressed = ExtResource("4_0aeuh")
 theme_override_styles/hover = ExtResource("5_cvfns")
 theme_override_styles/pressed = ExtResource("4_0aeuh")
 theme_override_styles/normal = ExtResource("6_dmmki")
-text = "Resume Game"
+text = "Resume"
 alignment = 0
 
 [node name="SkipButton" type="Button" parent="PauseGui/VBoxContainer/PauseContainer"]
@@ -75,7 +75,7 @@ theme_override_styles/hover_pressed = ExtResource("4_0aeuh")
 theme_override_styles/hover = ExtResource("5_cvfns")
 theme_override_styles/pressed = ExtResource("4_0aeuh")
 theme_override_styles/normal = ExtResource("6_dmmki")
-text = "Settings"
+text = "Options"
 alignment = 0
 
 [node name="QuitButton" type="Button" parent="PauseGui/VBoxContainer/PauseContainer"]

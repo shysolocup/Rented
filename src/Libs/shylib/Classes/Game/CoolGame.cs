@@ -39,7 +39,7 @@ namespace CoolGame
 
 		/// <summary>
 		/// 
-		public static Dictionary<string, Variant> Settings {get; set; } = [];
+		public static GameSettings Settings;
 
 		/// <summary>
 		/// Template for saves

@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://bg2s3j3jpsaqq"]
+[gd_scene load_steps=4 format=3 uid="uid://bg2s3j3jpsaqq"]
 
 [ext_resource type="Script" uid="uid://muq0ch483pvr" path="res://src/Libs/shylib/Classes/Discord/DiscordController.cs" id="1_tdwco"]
+[ext_resource type="Texture2D" uid="uid://df6h2r8gy2bxx" path="res://src/Images/prealpha.png" id="3_yas51"]
 [ext_resource type="PackedScene" uid="uid://8p7cp7bhft2a" path="res://src/Resources/Shaders/Packed/ScreenShaders.tscn" id="7_k7tso"]
 
 [node name="Dump" type="Node"]
@@ -11,3 +12,14 @@ script = ExtResource("1_tdwco")
 
 [node name="ScreenShaders" parent="." instance=ExtResource("7_k7tso")]
 unique_name_in_owner = true
+
+[node name="StatusIndicator" type="StatusIndicator" parent="."]
+icon = ExtResource("3_yas51")
+menu = NodePath("PopupMenu")
+
+[node name="PopupMenu" type="PopupMenu" parent="StatusIndicator"]
+size = Vector2i(225, 100)
+visible = true
+item_count = 1
+item_0/id = 0
+item_0/disabled = true

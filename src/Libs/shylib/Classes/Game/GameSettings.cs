@@ -1,3 +1,4 @@
+using CoolGame;
 using Godot;
 
 [GlobalClass, Icon("uid://dwbnqewotd3wq")]
@@ -17,6 +18,7 @@ public partial class GameSettings : Node
 	private int SkipAfterAdjustment = 5;
 	private Rid ViewportRid;
 	private Viewport Viewport;
+	private Player Player;
 
 	public override void _Ready()
 	{
@@ -25,6 +27,10 @@ public partial class GameSettings : Node
 		ViewportRid = Viewport.GetViewportRid();
 		RenderingServer.ViewportSetMeasureRenderTime(ViewportRid, true);
 		Viewport.Scaling3DScale = ResolutionScale;
+
+		Player = this.GetGameNode<Player>("%Player");
+
+		Game.Settings = this;
 	}
 
 	public override void _Process(double delta)

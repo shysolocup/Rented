@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://s0ftqrddh5up"]
+[gd_scene load_steps=30 format=3 uid="uid://s0ftqrddh5up"]
 
 [ext_resource type="Script" uid="uid://cfoo1gxat5mv8" path="res://src/Libs/shylib/Classes/Game/GameInstance.cs" id="1_k0mjx"]
 [ext_resource type="Script" uid="uid://cei6x6adiqlte" path="res://src/Libs/shylib/Classes/Lighting3D.cs" id="2_h8oac"]
@@ -18,9 +18,11 @@
 [ext_resource type="PackedScene" uid="uid://dlade7y0ilag6" path="res://src/Resources/Ui/Packed/PauseGui.tscn" id="14_7mk6u"]
 [ext_resource type="PackedScene" uid="uid://dvpi6uwtqfp8n" path="res://src/Resources/Ui/Packed/DialogueGui.tscn" id="14_8nlug"]
 [ext_resource type="Script" uid="uid://c8e2vfc8iq64g" path="res://src/Libs/shylib/Classes/Items/Inventory.cs" id="15_wf0w2"]
+[ext_resource type="PackedScene" uid="uid://duvy85smfjk22" path="res://src/Resources/Ui/Packed/SettingsGui.tscn" id="16_h8oac"]
 [ext_resource type="PackedScene" uid="uid://dg73p7tipdvvs" path="res://src/Resources/Ui/Packed/MainMenuGui.tscn" id="17_k0mjx"]
 [ext_resource type="Script" uid="uid://dahmws7oap7ss" path="res://src/Libs/shylib/Classes/Items/Flashlight.cs" id="19_isqvi"]
 [ext_resource type="PackedScene" uid="uid://bg2s3j3jpsaqq" path="res://src/Resources/Packed/Dump.tscn" id="21_jnspx"]
+[ext_resource type="Script" uid="uid://dkix1if1j51kh" path="res://src/Scripts/SplashText.cs" id="22_ss4f7"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2sh0m"]
 size = Vector3(0.716797, 1, 1)
@@ -100,7 +102,7 @@ target_position = Vector3(0, 0, -10)
 transform = Transform3D(1, 0, 0, 0, 0.984353, 0.176209, 0, -0.176209, 0.984353, 87.5752, 5.06033, -41.5724)
 
 [node name="Baseplate" type="CSGBox3D" parent="Root3D"]
-transform = Transform3D(527.247, 0, 0, 0, 1, 0, 0, 0, 694.333, 82.6671, -46.3386, -6.55556)
+transform = Transform3D(527.247, 0, 0, 0, 1, 0, 0, 0, 694.333, 82.6671, -49.6076, -6.55556)
 use_collision = true
 material = ExtResource("5_8i3or")
 
@@ -205,6 +207,9 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
+[node name="SettingsLayer" parent="Guis" instance=ExtResource("16_h8oac")]
+visible = false
+
 [node name="SaveGui" type="Control" parent="Guis"]
 layout_mode = 1
 anchors_preset = 3
@@ -236,6 +241,20 @@ unique_name_in_owner = true
 [node name="PauseLayer" parent="Guis" instance=ExtResource("14_7mk6u")]
 
 [node name="DialogueGui" parent="Guis" instance=ExtResource("14_8nlug")]
+
+[node name="SplashText" type="CanvasLayer" parent="Guis"]
+layer = 10
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Guis/SplashText"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+bbcode_enabled = true
+text = "[fade start={0} length={1}][wave amp=10 freq=5.0 connected=1] {2} [/wave][/fade]"
+script = ExtResource("22_ss4f7")
 
 [node name="Dump" parent="." instance=ExtResource("21_jnspx")]
 unique_name_in_owner = true

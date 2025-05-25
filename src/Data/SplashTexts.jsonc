@@ -1,0 +1,23 @@
+[
+    [[
+        "This game contains flashing lights and disturbing imagery.",
+        "If you are easily disturbed or epileptic I would advise not playing"
+    ], 75 ], // 75
+
+    [
+        "For Dad."
+    , 5 ], // 80
+
+    [
+        "For Mom."
+    , 5 ], // 85
+
+    [
+        "src/Data/Dialog/CharacterEffects.jsonc"
+    , 1 ], // 86
+
+    [[
+        "This game contains flashing lights and disturbing imagery.",
+        "If you are easily disturbed or epileptic I would advise not playing"
+    ], 4 ] // 75
+]

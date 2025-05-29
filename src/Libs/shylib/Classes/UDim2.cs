@@ -34,6 +34,7 @@ public partial class UDim2 : Resource
 
 
     public static UDim2 operator + (UDim2 a, dynamic b) => new(a.X + b.X, a.Y + b.Y);
+    public static UDim2 operator - (UDim2 a, dynamic b) => new(a.X - b.X, a.Y - b.Y);
     public static UDim2 operator * (UDim2 a, dynamic b) => new(a.X * b.X, a.Y * b.Y);
     public static UDim2 operator / (UDim2 a, dynamic b) => new(a.X / b.X, a.Y / b.Y);
     public static UDim2 operator ^ (UDim2 a, dynamic b) => new(a.X ^ b.X, a.Y ^ b.Y);

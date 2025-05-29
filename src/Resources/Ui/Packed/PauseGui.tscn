@@ -10,11 +10,11 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yc6y7"]
 
 [node name="PauseLayer" type="CanvasLayer"]
+process_mode = 3
 layer = 2
 
 [node name="PauseGui" type="Control" parent="."]
 unique_name_in_owner = true
-process_mode = 3
 layout_mode = 3
 anchors_preset = 2
 anchor_top = 1.0

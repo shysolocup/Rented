@@ -65,11 +65,13 @@ theme_override_constants/separation = 12
 [node name="Character" type="RichTextLabel" parent="Dialogue/VBoxContainer/Base"]
 z_index = 10
 material = SubResource("ShaderMaterial_0m3r5")
+clip_contents = false
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("4_kr11k")
 bbcode_enabled = true
 text = "[wave amp=10 freq=5.0 connected=1][font size=20] {0} [/font][/wave]"
 fit_content = true
+scroll_active = false
 horizontal_alignment = 1
 vertical_alignment = 1
 custom_effects = [SubResource("RichTextEffect_gc7xl"), SubResource("RichTextEffect_n8c8y")]
@@ -77,11 +79,13 @@ custom_effects = [SubResource("RichTextEffect_gc7xl"), SubResource("RichTextEffe
 [node name="Text" type="RichTextLabel" parent="Dialogue/VBoxContainer/Base"]
 z_index = 10
 material = SubResource("ShaderMaterial_0m3r5")
+clip_contents = false
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("4_kr11k")
 bbcode_enabled = true
 text = "[fade start={0} length={1}][wave amp=10 freq=5.0 connected=1] {2} [/wave][/fade]"
 fit_content = true
+scroll_active = false
 horizontal_alignment = 1
 vertical_alignment = 1
 custom_effects = [SubResource("RichTextEffect_gc7xl"), SubResource("RichTextEffect_n8c8y")]
@@ -107,11 +111,13 @@ text = "boo boo"
 [node name="Elipses" type="RichTextLabel" parent="Dialogue/VBoxContainer/Base"]
 z_index = 10
 material = SubResource("ShaderMaterial_0m3r5")
+clip_contents = false
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("4_kr11k")
 bbcode_enabled = true
 text = "[ghost freq=4][tornado radius=2 freq=2][wave amp=25 freq=5][b]. . .[/b][/wave][/tornado][/ghost]"
 fit_content = true
+scroll_active = false
 horizontal_alignment = 1
 vertical_alignment = 1
 custom_effects = [SubResource("RichTextEffect_gc7xl"), SubResource("RichTextEffect_n8c8y")]

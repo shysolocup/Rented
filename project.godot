@@ -20,6 +20,11 @@ config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 boot_splash/show_image=false
 config/icon="uid://bvo6qw6r6w6di"
 
+[audio]
+
+driver/output_latency=1
+driver/enable_input=true
+
 [autoload]
 
 debug_console="*res://addons/copper_dcsharp/debug_console.tscn"
@@ -168,8 +173,10 @@ Zoom={
 
 [rendering]
 
-lights_and_shadows/directional_shadow/soft_shadow_filter_quality=3
-lights_and_shadows/directional_shadow/soft_shadow_filter_quality.mobile=2
+lights_and_shadows/directional_shadow/soft_shadow_filter_quality=4
+lights_and_shadows/directional_shadow/soft_shadow_filter_quality.mobile=3
 lights_and_shadows/directional_shadow/16_bits=false
-lights_and_shadows/positional_shadow/soft_shadow_filter_quality.mobile=1
+lights_and_shadows/positional_shadow/soft_shadow_filter_quality=4
+lights_and_shadows/positional_shadow/soft_shadow_filter_quality.mobile=3
+lights_and_shadows/positional_shadow/atlas_16_bits=false
 occlusion_culling/use_occlusion_culling=true

@@ -25,7 +25,9 @@ public partial class GameInstance : Node
 
 	[Export] public Godot.Environment DefaultGameEnvironment { get; set; }*/
 
-	[ExportToolButton("Reset VFX")] public Callable ResetVFX => Callable.From( () => {
+	[ExportToolButton("Reset VFX")]
+	public Callable ResetVFX => Callable.From(() =>
+	{
 		Lighting ??= GetNode<Lighting3D>("%Lighting3D");
 		Map ??= GetNode<MapController>("%Map");
 		Lighting.ResetApply();
@@ -44,17 +46,37 @@ public partial class GameInstance : Node
 	/// current noise level
 	/// </summary>
 	[Export] public float Noise = 0;
+
 	/// <summary>
 	/// the highest level of noise the player has made
 	/// </summary>
-	[Export] public float HighestNoise = 100;
+	[Export] public float HighestNoise = 0;
+
+
+	public void NoiseCalc()
+	{
+ 		float n = 0;
+		n += Microphone.Volume;
+
+		Noise = n;
+
+		GD.Print(Noise);
+
+		if (Noise > HighestNoise)
+		{
+			HighestNoise = Noise;
+		}
+	}
+
 	/// <summary>
 	/// Game gravity what more do you want me to say
 	/// </summary>
-	[Export] public float Gravity { 
-			get => (float)ProjectSettings.GetSetting("physics/3d/default_gravity");
-			set => ProjectSettings.SetSetting("physics/3d/default_gravity", value);
-		}
+	[Export]
+	public float Gravity
+	{
+		get => (float)ProjectSettings.GetSetting("physics/3d/default_gravity");
+		set => ProjectSettings.SetSetting("physics/3d/default_gravity", value);
+	}
 
 	/// <summary>
 	/// Fires if the game is currently saving
@@ -70,17 +92,20 @@ public partial class GameInstance : Node
 
 	public override void _Notification(int what)
 	{
-		if (what == NotificationWMCloseRequest) {
+		if (what == NotificationWMCloseRequest)
+		{
 			Game.Save();
 			GetTree().Quit();
 		}
 	}
 
-	public Node LoadRoom(string room) {
+	public Node LoadRoom(string room)
+	{
 		return LoadRoom<Node>(room);
 	}
 
-	public T LoadRoom<T>(string room) where T : Node {
+	public T LoadRoom<T>(string room) where T : Node
+	{
 		T scn = GD.Load<PackedScene>($"res://src/Scenes/Rooms/{room}.tscn").Instantiate<T>();
 		GetNode<Node>("%Rooms").AddChild(scn);
 		return scn;
@@ -90,24 +115,29 @@ public partial class GameInstance : Node
 		
 	*/
 
-	public void IterOverwrite(Variant thing, Variant filedata, Variant basedata) 
+	public void IterOverwrite(Variant thing, Variant filedata, Variant basedata)
 	{
 	}
 
 	private void Iter(Variant thing, Variant filedata, Variant basedata)
 	{
-		if (thing.GetType() == typeof(Godot.Collections.Array)) {
+		if (thing.GetType() == typeof(Godot.Collections.Array))
+		{
 			Array<Variant> data = (Array<Variant>)thing;
-			for (int i = 0; i < data.Count; i++) {
+			for (int i = 0; i < data.Count; i++)
+			{
 				Iter(data[i], data, ((object)basedata is not null && basedata.GetType() == data.GetType()) ? ((Godot.Collections.Array)basedata)[i] : nullvar);
 			}
 		}
-		else if (thing.GetType() == typeof(Dictionary)) {
-			foreach ( (string key, Variant value) in (Dictionary<string, Variant>)thing) {
-				
+		else if (thing.GetType() == typeof(Dictionary))
+		{
+			foreach ((string key, Variant value) in (Dictionary<string, Variant>)thing)
+			{
+
 			}
 		}
-		else {
+		else
+		{
 
 		}
 	}
@@ -123,17 +153,22 @@ public partial class GameInstance : Node
 		var data = (Dictionary<string, Variant>)json.Data;
 		var basefile = (Dictionary<string, Variant>)data["file_base"];
 
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 3; i++)
+		{
 			string file = $"file_{i}";
-			if (exists && !(bool)basefile["overwrite"] && (object)data[file] is not null) {
+			if (exists && !(bool)basefile["overwrite"] && (object)data[file] is not null)
+			{
 				Dictionary<string, Variant> filedata = (Dictionary<string, Variant>)data[file];
-				
-				foreach ( (string key, Variant value) in basefile) {
+
+				foreach ((string key, Variant value) in basefile)
+				{
 					Iter(value, filedata, basefile);
 				}
 			}
-			else if (exists && (bool)basefile["overwrite"]) {
-				foreach ( (string key, Variant value) in basefile) {
+			else if (exists && (bool)basefile["overwrite"])
+			{
+				foreach ((string key, Variant value) in basefile)
+				{
 					#region do smth with this
 					// this part is here if the save should overwrite or not
 					#endregion
@@ -147,8 +182,9 @@ public partial class GameInstance : Node
 		data.Remove("overwrite");
 
 		writer.StoreString(Json.Stringify(data, "\t"));
-	
-		foreach (var (key, value) in data) {
+
+		foreach (var (key, value) in data)
+		{
 			Game.Saves[key] = value;
 		}
 
@@ -171,12 +207,12 @@ public partial class GameInstance : Node
 	/// Waits for a given time
 	/// </summary>
 	/// <param name="time">time in milliseconds to wait for</param>
-	public async void Delay(float time, Func<Task> callback  )
+	public async void Delay(float time, Func<Task> callback)
 	{
 		SceneTreeTimer t = GetTree().CreateTimer(time);
 		await ToSignal(t, SceneTreeTimer.SignalName.Timeout);
 		t.Dispose();
-		
+
 		await callback();
 	}
 
@@ -196,7 +232,8 @@ public partial class GameInstance : Node
 		/*GameEnvironment = (DefaultGameEnvironment != null) ? DefaultGameEnvironment : GameEnvironment;
 		DefaultGameEnvironment = GameEnvironment;*/
 
-		if (!FileAccess.FileExists(Game.SavePath)) {
+		if (!FileAccess.FileExists(Game.SavePath))
+		{
 			UseTemplate();
 			return;
 		}
@@ -207,30 +244,44 @@ public partial class GameInstance : Node
 			string textcheck = savedata.GetAsText();
 			string[] toBeRemoved = [" ", "{", "}", "\n", "\t"];
 
-			foreach (string remover in toBeRemoved) {
+			foreach (string remover in toBeRemoved)
+			{
 				textcheck = textcheck.Replace(remover, "");
 			}
-		
-			if (textcheck == "") {
+
+			if (textcheck == "")
+			{
 				UseTemplate();
 				return;
 			}
 		}
-		
+
 		var json = new Json();
 		var res = json.Parse(Json.Stringify(Json.ParseString(savedata.GetAsText()), "\t"));
 
 		var data = (Dictionary<string, Variant>)json.Data;
 
-		if ((string)data["version"] != (string)Game.SaveTemplate["version"]) {
+		if ((string)data["version"] != (string)Game.SaveTemplate["version"])
+		{
 			UseTemplate(true);
 			return;
 		}
 
 		data.Remove("file_base");
 
-		foreach (var (key, value) in data) {
+		foreach (var (key, value) in data)
+		{
 			Game.Saves[key] = value;
 		}
 	}
+
+	public override void _Process(double delta)
+	{
+		base._Process(delta);
+
+		if (Engine.IsEditorHint()) return;
+
+		NoiseCalc();
+	}
+
 }

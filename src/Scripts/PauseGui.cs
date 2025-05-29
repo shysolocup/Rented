@@ -89,7 +89,7 @@ public partial class PauseGui : Control
 		Player = this.GetGameNode<Player>("%Player");
 		// World = this.GetGameNode<WorldEnvironment>("%World");
 
-		VBoxContainer Container = GetChild<VBoxContainer>(0).GetChild<VBoxContainer>(1);
+		var Container = GetChild(0).GetChild(1);
 
 		ResumeButton = Container.GetChild<Button>(0);
 		SkipButton = Container.GetChild<Button>(1);

@@ -48,6 +48,7 @@ shape = SubResource("SphereShape3D_ng2wt")
 disabled = true
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
+layers = 0
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_y0axr")
 

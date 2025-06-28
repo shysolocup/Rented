@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://crynhy865gfw6"]
+[gd_scene load_steps=44 format=3 uid="uid://crynhy865gfw6"]
 
 [ext_resource type="PackedScene" uid="uid://ctqpfrq531m3y" path="res://src/Models/Packed/Buildings.tscn" id="1_i5rif"]
 [ext_resource type="PackedScene" uid="uid://c1eyea2y3khs1" path="res://src/Models/Packed/Outside.tscn" id="2_e2s5l"]
@@ -254,6 +254,11 @@ albedo = Color(1, 0.790893, 0.756161, 1)
 emission = Color(0.0768358, 0.0768358, 0.0768358, 1)
 edge_fade = 14.42
 density_texture = ExtResource("20_e2s5l")
+
+[sub_resource type="FogMaterial" id="FogMaterial_5i3io"]
+density = 0.5
+albedo = Color(0, 0, 0, 1)
+edge_fade = 0.527803
 
 [node name="MapBlock" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.81981, 0, 1.04959)
@@ -596,7 +601,12 @@ cast_shadow = 0
 mesh = SubResource("CapsuleMesh_yc6y7")
 skeleton = NodePath("../../root/@EditorNode@21301/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11482/@VSplitContainer@11134/@HSplitContainer@11136/@HSplitContainer@11138/@Control@11139/@SubViewportContainer@11140/@SubViewport@11141/Game/Root3D/Player")
 
-[node name="FogVolume" type="FogVolume" parent="."]
+[node name="SkyFog" type="FogVolume" parent="."]
 transform = Transform3D(14.8916, 0, 0, 0, 1, 0, 0, 0, 2.61453, -32.0219, 76.739, -26.551)
 size = Vector3(24.1376, 125.967, 138.844)
 material = SubResource("FogMaterial_i5rif")
+
+[node name="BuildingFog" type="FogVolume" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.8639, 5.64229, -69.343)
+size = Vector3(29.7277, 13.2846, 47.273)
+material = SubResource("FogMaterial_5i3io")

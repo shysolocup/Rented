@@ -54,7 +54,7 @@ public partial class Player : CharacterBody3D
 
 	[Export] public float BobbleFrequency = 0.6f;
 	[Export] public float BobbleAmplifier = 0.08f;
-	private float BobbleTime = 0;
+	static public float BobbleTime = 0;
 
 	[Export] public bool CameraRotationControllable = true;
 	[Export] public bool CameraPositionControllable = true;

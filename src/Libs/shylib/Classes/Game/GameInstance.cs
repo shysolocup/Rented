@@ -40,8 +40,8 @@ public partial class GameInstance : Node
 	public Player Player;
 
 
-	[Export] public string Version = "0.0.1";
-	[Export] public string VersionDenot = "ResBuilding";
+	public string Version = "0.0.1";
+	public string VersionDenot = "ResBuilding";
 	/// <summary>
 	/// current noise level
 	/// </summary>
@@ -53,12 +53,12 @@ public partial class GameInstance : Node
 	[Export] public float HighestNoise = 0;
 
 
-	public void NoiseCalc()
+	public void NoiseCalc(float delta)
 	{
- 		float n = 0;
-		n += Microphone.Volume;
+		float n = 0;
+		n += (Player.Velocity.Length() * 20 - n) * this.FactorDelta(1/5f, delta);
 
-		Noise = n;
+		Noise += (n - Noise) * this.FactorDelta(1/10f, delta);
 
 		GD.Print(Noise);
 
@@ -66,12 +66,13 @@ public partial class GameInstance : Node
 		{
 			HighestNoise = Noise;
 		}
+
+		Task.Delay(10);
 	}
 
 	/// <summary>
 	/// Game gravity what more do you want me to say
 	/// </summary>
-	[Export]
 	public float Gravity
 	{
 		get => (float)ProjectSettings.GetSetting("physics/3d/default_gravity");
@@ -281,7 +282,7 @@ public partial class GameInstance : Node
 
 		if (Engine.IsEditorHint()) return;
 
-		NoiseCalc();
+		NoiseCalc((float)delta);
 	}
 
 }

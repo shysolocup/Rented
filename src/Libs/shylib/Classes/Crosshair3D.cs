@@ -9,6 +9,7 @@ public partial class Crosshair3D : StaticBody3D
 	[Export] public StandardMaterial3D LockedIcon;
 	[Export] public float BaseDistance = 30;
 	[Export] public Camera3D Camera;
+	[Export] public Player Player;
 	[Export] public string Delay = "1/1.7";
 	
 	public float Distance = 0;
@@ -20,6 +21,9 @@ public partial class Crosshair3D : StaticBody3D
 
 	private float _delay = 0;
 
+	private float ShakeX;
+	private float ShakeY;
+
 	public override void _Ready()
 	{
 		Distance = BaseDistance;
@@ -29,10 +33,11 @@ public partial class Crosshair3D : StaticBody3D
 		_delay = float.Parse(spl[0]) / float.Parse(spl[1]);
 
 		Camera ??= this.GetGameNode<Camera3D>("%PlayerCamera");
+		Player = this.GetGameNode<Player>("%Player");
 		Icon = GetNode<MeshInstance3D>("./Icon");
 		ViewportCamera = GetNodeOrNull<Camera3D>("../ViewportCamera");
 		CrosshairContainer = GetParent().GetParent<SubViewportContainer>();
-		
+
 		Icon.SetSurfaceOverrideMaterial(0, DefaultIcon);
 	}
 
@@ -47,9 +52,9 @@ public partial class Crosshair3D : StaticBody3D
 			Vector3 UpVector = Global.Basis.Y;
 
 			double Noise = Mathf.Clamp(Game.Instance.Noise / 400, 0, 1);
-
-			float ShakeY = (float)GD.RandRange(-Noise, Noise) * 1.2f;
+			
 			float ShakeX = (float)GD.RandRange(-Noise, Noise) * 1.2f;
+			float ShakeY = (float)GD.RandRange(-Noise, Noise) * 1.2f;
 
 			float NoiseMod = 1 - (float)Mathf.Clamp(Game.Instance.Noise / 100, 0, 1);
 

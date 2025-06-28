@@ -53,7 +53,6 @@ public partial class DialogueData : Node
 	private async Task FadeEffect(RichTextLabel label, DialogueLine line, CancellationToken token)
 	{
 		string realText = DialogueCharacterEffect.Apply(line.Text);
-
 		GD.Print(realText);
 
 		for (int i = 0; i < line.Text.Length; i++)

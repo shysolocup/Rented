@@ -20,7 +20,6 @@ namespace Appox
 
 	#region Jsonc
 	public static partial class Jsonc {
-
 		public static string Minify(string jsonc)
 		{
 			return LineCommentGuh().Replace(BlockCommentGuh().Replace(jsonc, ""), "");

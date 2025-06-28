@@ -42,6 +42,7 @@ public partial class GameInstance : Node
 
 	public string Version = "0.0.1";
 	public string VersionDenot = "ResBuilding";
+	
 	/// <summary>
 	/// current noise level
 	/// </summary>

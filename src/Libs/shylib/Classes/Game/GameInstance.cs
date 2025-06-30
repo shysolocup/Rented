@@ -53,15 +53,23 @@ public partial class GameInstance : Node
 	/// </summary>
 	[Export] public float HighestNoise = 0;
 
+	public Dictionary<string, float> NoiseGlob = [];
 
 	public void NoiseCalc(float delta)
 	{
 		float n = 0;
-		n += (Player.Velocity.Length() * 20 - n) * this.FactorDelta(1/5f, delta);
 
-		Noise += (n - Noise) * this.FactorDelta(1/10f, delta);
+		NoiseGlob["pl_vel"] = NoiseGlob.TryGetValue("pl_vel", out float pl_vel)
+			? pl_vel + (Player.Velocity.Length() * 10 - pl_vel) * this.FactorDelta(1 / 100f, delta) // if it already exists it lerps
+			: Player.Velocity.Length() * 4;															// if it doesn't it doesn't lerp it just goes straight to the value
 
-		GD.Print(Noise);
+		NoiseGlob["pl_walk"] = Player.Walking ? 1 : 0;
+		NoiseGlob["pl_run"] = Player.Sprinting ? 2 : 0;
+		NoiseGlob["pl_jump"] = Player.Jumping ? 1 : 0;
+
+		foreach (var g in NoiseGlob.Values) n += g;
+		Noise += (n - Noise) * this.FactorDelta(1 / 10f, delta);
+		Noise = Mathf.Clamp(Noise, 0, 100);
 
 		if (Noise > HighestNoise)
 		{
@@ -147,7 +155,7 @@ public partial class GameInstance : Node
 	public Dictionary<string, Variant> UseTemplate(bool exists = false)
 	{
 		string source = Json.Stringify(Game.SaveTemplate, "\t");
-		using var writer = FileAccess.Open(Game.SavePath, FileAccess.ModeFlags.Write);
+		var writer = FileAccess.Open(Game.SavePath, FileAccess.ModeFlags.Write);
 
 		var json = new Json();
 		json.Parse(source);
@@ -240,7 +248,7 @@ public partial class GameInstance : Node
 			return;
 		}
 
-		using var savedata = FileAccess.Open(Game.SavePath, FileAccess.ModeFlags.Read);
+		var savedata = FileAccess.Open(Game.SavePath, FileAccess.ModeFlags.Read);
 
 		{
 			string textcheck = savedata.GetAsText();

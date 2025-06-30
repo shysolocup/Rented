@@ -77,7 +77,7 @@ namespace CoolGame
 		/// <returns>Godot.Collections.Dictionary</returns>
 		public static Dictionary<string, Variant> ReadJson(string fileDir, FileAccess.ModeFlags flag = FileAccess.ModeFlags.ReadWrite)
 		{	
-			using var data = FileAccess.Open(fileDir, flag);
+			var data = FileAccess.Open(fileDir, flag);
 
 			var json = new Json();
 			var res = json.Parse(data.GetAsText());
@@ -102,7 +102,7 @@ namespace CoolGame
 		/// <returns>Godot.Collections.Dictionary</returns>
 		public static Dictionary<string, Variant> Save()
 		{
-			using var writer = FileAccess.Open(SavePath, FileAccess.ModeFlags.Write);
+			var writer = FileAccess.Open(SavePath, FileAccess.ModeFlags.Write);
 			Saving = true;
 			Instance.EmitSignal(Events["Saving"]);
 

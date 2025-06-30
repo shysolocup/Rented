@@ -7,6 +7,7 @@ public partial class InteractObject3D : RigidBody3D
 	[Export] public bool Enabled = true;
 	[Export] public bool Locked = false;
 	[Export] public StandardMaterial3D HoverIcon;
+	[Export] public float HoverScale = 1;
 	[Export] public bool AutoCooldown = true;
 	[Export] public float CooldownDuration = 1;
 	public bool Cooldown = false;
@@ -56,7 +57,8 @@ public partial class InteractObject3D : RigidBody3D
 		get => _pressed;
 
 		set {
-			if (value != _pressed) {
+			if (value != _pressed)
+			{
 				_pressed = !Locked && Enabled && !Cooldown && value;
 				_PressChanged();
 				EmitSignalPressChanged();
@@ -71,13 +73,21 @@ public partial class InteractObject3D : RigidBody3D
 			if (value != _hovering) {
 				_hovering = !Cooldown && value;
 
-				if (_hovering && Enabled) {
+				if (Enabled)
+				{
+					Crosshair.Size = HoverScale;
+				}
+
+				if (_hovering && Enabled)
+				{
 					Crosshair.Icon.SetSurfaceOverrideMaterial(0, HoverIcon ?? Crosshair.DefaultHoverIcon);
 				}
-				else if (_hovering && Enabled && Locked) {
+				else if (_hovering && Enabled && Locked)
+				{
 					Crosshair.Icon.SetSurfaceOverrideMaterial(0, Crosshair.LockedIcon);
 				}
-				else if (!_hovering) {
+				else if (!_hovering)
+				{
 					Crosshair.Icon.SetSurfaceOverrideMaterial(0, Crosshair.DefaultIcon);
 				}
 

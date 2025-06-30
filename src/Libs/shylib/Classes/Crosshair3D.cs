@@ -8,6 +8,8 @@ public partial class Crosshair3D : StaticBody3D
 	[Export] public StandardMaterial3D DefaultHoverIcon;
 	[Export] public StandardMaterial3D LockedIcon;
 	[Export] public float BaseDistance = 30;
+	[Export] public float Size = 1;
+	private Vector3 BaseScale;
 	[Export] public Camera3D Camera;
 	[Export] public Player Player;
 	[Export] public string Delay = "1/1.7";
@@ -38,12 +40,19 @@ public partial class Crosshair3D : StaticBody3D
 		ViewportCamera = GetNodeOrNull<Camera3D>("../ViewportCamera");
 		CrosshairContainer = GetParent().GetParent<SubViewportContainer>();
 
+		BaseScale = Icon.Scale;
 		Icon.SetSurfaceOverrideMaterial(0, DefaultIcon);
 	}
 
 	public override void _Process(double delta)
 	{
-		if (Camera is not null) {
+		if (Icon is not null)
+		{
+			Icon.Scale.Lerp(new Vector3(BaseScale.X, BaseScale.Y * Size, BaseScale.Z * Size), this.FactorDelta(1/10f, delta));
+		}
+
+		if (Camera is not null)
+		{
 			Transform3D Global = Camera.GlobalTransform;
 			Vector3 Origin = Global.Origin;
 
@@ -52,7 +61,7 @@ public partial class Crosshair3D : StaticBody3D
 			Vector3 UpVector = Global.Basis.Y;
 
 			double Noise = Mathf.Clamp(Game.Instance.Noise / 400, 0, 1);
-			
+
 			float ShakeX = (float)GD.RandRange(-Noise, Noise) * 1.2f;
 			float ShakeY = (float)GD.RandRange(-Noise, Noise) * 1.2f;
 
@@ -62,13 +71,13 @@ public partial class Crosshair3D : StaticBody3D
 
 			// A = A + (B - A) * t
 
-			float NoiseDelay = this.FactorDelta(1/5f, delta);
+			float NoiseDelay = this.FactorDelta(1 / 5f, delta);
 
 			float Alpha = 1.25f - (float)Mathf.Clamp(A + (NoiseMod - A) * NoiseDelay, 0, 1); // 10 noise is 0.1 alpha
 
 			float GB = A + (NoiseMod - A) * 1 / 3f; // 10 noise is 0.9 green and blue
 
-			Distance += (BaseDistance - Mathf.Clamp(Game.Instance.Noise * 0.3f + 5, 1, 25) - Distance) * NoiseDelay; // 10 noise is 6 meters distance
+			Distance += (BaseDistance - Mathf.Clamp(Game.Instance.Noise * 0.1f + 5, 1, 20) - Distance) * NoiseDelay; // 10 noise is 6 meters distance
 
 			/*
 				should always be 255 for red

@@ -125,7 +125,7 @@ public partial class DebugCommandFunctions : GodotObject
 
 		else if (type == "light")
 		{
-			using var dir = DirAccess.Open(Lighting3D.SceneDir);
+			var dir = DirAccess.Open(Lighting3D.SceneDir);
 			return [.. dir.GetFiles().Select(file => file.Replace(".tscn", ""))];
 		}
 
@@ -136,7 +136,7 @@ public partial class DebugCommandFunctions : GodotObject
 
 		else if (type == "map")
 		{
-			using var dir = DirAccess.Open(MapController.SceneDir);
+			var dir = DirAccess.Open(MapController.SceneDir);
 			return [.. dir.GetFiles().Select(file => file.Replace(".tscn", ""))];
 		}
 

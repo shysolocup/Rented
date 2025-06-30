@@ -22,7 +22,7 @@ public partial class Player : CharacterBody3D
 	[Export(PropertyHint.Range, "1,35,1")] public float BaseWalkSpeed = 3; // m/s
 	[Export(PropertyHint.Range, "1,35,1")] public float WalkSpeed = 3; // m/s
 	[Export(PropertyHint.Range, "10,400,1")] public float Acceleration = 100; // m/s^2
-	[Export(PropertyHint.Range, "0.1,3.0,0.1")] public float JumpHeight = 0.5f; // m
+	[Export(PropertyHint.Range, "0.1,3.0,0.1")] public float JumpHeight = 0.3f; // m
 
 	private Vector2 MoveDirection; // Input direction for movement
 	private Vector2 LookDirection; // Input direction for look/aim
@@ -53,7 +53,7 @@ public partial class Player : CharacterBody3D
 	[Export(PropertyHint.Range, "0.1,3.0,0.1,or_greater")] public float CameraSensitivity = 0.5f;
 
 	[Export] public float BobbleFrequency = 0.6f;
-	[Export] public float BobbleAmplifier = 0.08f;
+	[Export] public float BobbleAmplifier = 0.1f;
 	static public float BobbleTime = 0;
 
 	[Export] public bool CameraRotationControllable = true;
@@ -70,7 +70,7 @@ public partial class Player : CharacterBody3D
 	[ExportGroup("Sprinting")]
 	
 	[Export] public float SprintSpeedMod = 2; // m/s
-	[Export] public float SprintFovMod = 5;
+	[Export] public float SprintFovMod = 4;
 	[Export] public bool Sprinting = false;
 	[Export] public bool CanSprint = true;
 

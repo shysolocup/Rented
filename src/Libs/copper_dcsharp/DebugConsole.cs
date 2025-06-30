@@ -7,17 +7,17 @@ using Godot.Collections;
 [GlobalClass]
 public partial class DebugConsole : CanvasLayer
 {
-
+	#region props
 	public Array<string> ConsoleLog = [];
 	public Dictionary<string, DebugCommand> Commands = [];
 	public Dictionary<string, DebugMonitor> Monitors = [];
 	public Array<string> History = [];
 	public int CurrentHistory =  - 1;
 
-	public bool PauseOnOpen = false;
-	public bool ShowStats = false;
-	public bool ShowMiniLog = false;
-	public bool ShowNoise = false;
+	public bool PauseOnOpen = OS.HasFeature("debug");
+	public bool ShowStats = OS.HasFeature("debug");
+	public bool ShowMiniLog = OS.HasFeature("debug");
+	public bool ShowNoise = OS.HasFeature("debug");
 
 	static public LineEdit CommandField;
 	public Control ConsolePanel;
@@ -33,9 +33,10 @@ public partial class DebugConsole : CanvasLayer
 	public ScrollContainer LogField;
 	public VScrollBar LogScrollBar;
 	public VScrollBar MiniLogScrollBar;
+	#endregion
 
 
-	# region Overrides and signals
+	#region _Ready
 	public override async void _Ready()
 	{
 		CommandField = GetNode<LineEdit>("%Command Field");
@@ -72,23 +73,32 @@ public partial class DebugConsole : CanvasLayer
 
 		DebugCommandList.Init(this);
 	}
+	#endregion
 
+
+	#region _OnScrollbarChanged
 	private void _OnScrollbarChanged()
 	{
 		LogField.ScrollVertical = (int)LogScrollBar.MaxValue;
 	}
+	#endregion
 
+
+	#region _Process
 	public override void _Process(double delta)
 	{
-		if (Stats.Visible) {
+		if (Stats.Visible)
+		{
 
 			Stats.Text = "";
 
-			foreach (DebugMonitor monitor in Monitors.Values) {
-				if (monitor.Visible) {
+			foreach (DebugMonitor monitor in Monitors.Values)
+			{
+				if (monitor.Visible)
+				{
 					monitor.Update();
 
-					if(monitor.Value.Obj is null) monitor.Value = "unset";
+					if (monitor.Value.Obj is null) monitor.Value = "unset";
 					else monitor.Value = (string)monitor.Value;
 
 					Stats.Text += monitor.DisplayName + ": " + monitor.Value + "\n";
@@ -96,7 +106,10 @@ public partial class DebugConsole : CanvasLayer
 			}
 		}
 	}
+	#endregion
 
+
+	#region _Input
 	public override async void _Input(InputEvent @event)
 	{
 
@@ -108,14 +121,14 @@ public partial class DebugConsole : CanvasLayer
 
 			// This is stupid but it works
 			await ToSignal(GetTree().CreateTimer(0.02), Timer.SignalName.Timeout);
-			
+
 			CommandField.GrabFocus();
 		}
 
 		// Close debug
 		else if (ConsolePanel.Visible && @event.IsActionPressed("ui_cancel"))
 		{
-			await HideConsole(ShowStats, ShowMiniLog);
+			await HideConsole();
 		}
 
 		// Enter command
@@ -178,7 +191,8 @@ public partial class DebugConsole : CanvasLayer
 			_AttemptAutocompletion();
 		}
 
-		if (ConsolePanel.Visible && @event is InputEventKey eventKey && eventKey.Pressed) {
+		if (ConsolePanel.Visible && @event is InputEventKey eventKey && eventKey.Pressed)
+		{
 			await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 			_OnCommandFieldTextChanged(CommandField.Text);
 		}
@@ -646,12 +660,10 @@ public partial class DebugConsole : CanvasLayer
 		return (Engine.GetMainLoop() as SceneTree).Root.GetNode("/root/debug_console") as DebugConsole;
 	}
 
-	public static async Task<bool> HideConsole(bool showStats = false, bool showMiniLog = false)
+	public static async Task<bool> HideConsole()
 	{
 		var console = GetConsole();
 		console.ConsolePanel.Visible = false;
-		console.Stats.Visible = showStats;
-		console.MiniLog.Visible = showMiniLog;
 
 		await console.ToSignal(console.GetTree().CreateTimer(0.01), Timer.SignalName.Timeout);
 

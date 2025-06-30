@@ -1,10 +1,13 @@
 using Godot;
 using CoolGame;
+using System.Linq;
+using Appox;
+using System;
 
 public static class DebugMonitorList
 {
 
-	private static float fps() => (float)Mathf.Snapped(Performance.GetMonitor(Performance.Monitor.TimeProcess), 0.001);
+	private static float fps() => (float)Mathf.Snapped(Performance.GetMonitor(Performance.Monitor.TimeFps), 0.001);
 
     private static float process() => (float)Mathf.Snapped(Performance.GetMonitor(Performance.Monitor.TimeProcess), 0.001);
 
@@ -20,14 +23,22 @@ public static class DebugMonitorList
 
 	private static float nodes() => (float)Performance.GetMonitor(Performance.Monitor.ObjectNodeCount);
 
-	private static float noise() => Game.Instance.Noise;
+	private static string noise()
+	{
+		string guh = $"\n    [val: {Game.Instance.Noise}]";
+		foreach (var (k, v) in Game.Instance.NoiseGlob)
+		{
+			guh += $"\n    [{k}: {v}]";
+		}
+		return guh;
+	}
 
 
 	public static async void Init(DebugConsole console)
 	{
 
 
-        #region fps
+		#region fps
 
 		new DebugMonitor {
 			Id = "fps",
@@ -96,7 +107,7 @@ public static class DebugMonitorList
 			ValueCall = Callable.From(max_static_memory)
 		}.AddTo(console);
 
-		
+
 		#endregion
 		#region objects
 
@@ -121,14 +132,14 @@ public static class DebugMonitorList
 		}.AddTo(console);
 
 
-        #endregion
-        #region noise
+		#endregion
+		#region noise
 
 
-        await Game.Init();
+		await Game.Init();
 
 
-        new DebugMonitor {
+		new DebugMonitor {
 			Id = "noise",
 			DisplayName = "Noise",
 
@@ -136,6 +147,6 @@ public static class DebugMonitorList
 		}.AddTo(console);
 
 
-        #endregion
+		#endregion
 	}
 }

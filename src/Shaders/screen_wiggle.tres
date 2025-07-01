@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://bnru6blspk18c"]
+
+[ext_resource type="Shader" uid="uid://bwh5tosjn3k2t" path="res://src/Shaders/screen_wiggle.gdshader" id="1_lcyoj"]
+
+[resource]
+shader = ExtResource("1_lcyoj")
+shader_parameter/center = Vector2(50, 50)
+shader_parameter/amplitude = 0.01
+shader_parameter/frequency = 1.0

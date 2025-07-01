@@ -1,19 +1,24 @@
-[gd_scene load_steps=12 format=3 uid="uid://dlade7y0ilag6"]
+[gd_scene load_steps=15 format=3 uid="uid://dlade7y0ilag6"]
 
 [ext_resource type="Script" uid="uid://bq8h5fsdfxg7c" path="res://src/Scripts/PauseGui.cs" id="1_vv17i"]
 [ext_resource type="Texture2D" uid="uid://cyvx5r30ccg8d" path="res://src/Images/Icon150.png" id="2_4u38r"]
 [ext_resource type="Texture2D" uid="uid://bmtapdmr10o7e" path="res://src/Images/Dialog/dialog_border.png" id="2_d8h3k"]
+[ext_resource type="Texture2D" uid="uid://0rpj4yfm6qh" path="res://src/Textures/PauseImages/pause_05.png" id="2_f084r"]
 [ext_resource type="FontFile" uid="uid://fj2b1x4fiorb" path="res://src/Fonts/timesbi.ttf" id="3_4u38r"]
 [ext_resource type="StyleBox" uid="uid://exqyscgxswgh" path="res://src/Resources/Ui/SettingButtonPress.tres" id="4_0aeuh"]
 [ext_resource type="StyleBox" uid="uid://dljp1kxxxhaej" path="res://src/Resources/Ui/SettingButtonHover.tres" id="5_cvfns"]
 [ext_resource type="StyleBox" uid="uid://c3kf7qgi5iwyi" path="res://src/Resources/Ui/SettingButton.tres" id="6_dmmki"]
 [ext_resource type="Texture2D" uid="uid://qjqvfiijw52p" path="res://src/Textures/tex_watercolor_04_solid.png" id="8_0aeuh"]
 [ext_resource type="Texture2D" uid="uid://bacwe5ivf10eo" path="res://src/Textures/tex_watercolor_03_solid.png" id="9_cvfns"]
+[ext_resource type="Material" uid="uid://bnru6blspk18c" path="res://src/Shaders/screen_wiggle.tres" id="9_dmmki"]
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_4u38r"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_cvfns"]
 blend_mode = 2
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yc6y7"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_dmmki"]
+blend_mode = 2
 
 [node name="PauseLayer" type="CanvasLayer"]
 process_mode = 3
@@ -31,6 +36,7 @@ mouse_filter = 2
 script = ExtResource("1_vv17i")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PauseGui"]
+z_index = 1
 layout_mode = 0
 offset_left = -8.46154
 offset_top = -467.692
@@ -39,7 +45,7 @@ offset_bottom = -41.6923
 theme_override_constants/separation = 20
 
 [node name="Icon" type="TextureRect" parent="PauseGui/VBoxContainer"]
-material = SubResource("CanvasItemMaterial_4u38r")
+material = SubResource("CanvasItemMaterial_cvfns")
 layout_mode = 2
 texture = ExtResource("2_4u38r")
 stretch_mode = 3
@@ -110,9 +116,24 @@ stretch_mode = 3
 flip_h = true
 flip_v = true
 
-[node name="TextureRect" type="TextureRect" parent="PauseGui"]
+[node name="Background" type="TextureRect" parent="PauseGui"]
+top_level = true
+material = SubResource("CanvasItemMaterial_dmmki")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -194.5
+offset_bottom = 194.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_f084r")
+
+[node name="stuff" type="TextureRect" parent="PauseGui"]
 modulate = Color(0.709804, 0, 0, 0.635294)
 show_behind_parent = true
+material = ExtResource("9_dmmki")
 layout_mode = 0
 offset_left = 595.385
 offset_top = -899.231
@@ -123,9 +144,10 @@ scale = Vector2(1.55086, 2.80796)
 mouse_filter = 2
 texture = ExtResource("8_0aeuh")
 
-[node name="TextureRect2" type="TextureRect" parent="PauseGui"]
+[node name="more stuff" type="TextureRect" parent="PauseGui"]
 modulate = Color(0.709804, 0, 0, 0.635294)
 show_behind_parent = true
+material = ExtResource("9_dmmki")
 layout_mode = 0
 offset_left = 39.2308
 offset_top = -757.692

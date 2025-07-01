@@ -7,7 +7,6 @@ public partial class InteractObject3D : RigidBody3D
 	[Export] public bool Enabled = true;
 	[Export] public bool Locked = false;
 	[Export] public StandardMaterial3D HoverIcon;
-	[Export] public float HoverScale = 2;
 	[Export] public bool AutoCooldown = true;
 	[Export] public float CooldownDuration = 1;
 	public bool Cooldown = false;
@@ -72,11 +71,6 @@ public partial class InteractObject3D : RigidBody3D
 		set {
 			if (value != _hovering) {
 				_hovering = !Cooldown && value;
-
-				if (Enabled)
-				{
-					Crosshair.Size = HoverScale;
-				}
 
 				if (_hovering && Enabled)
 				{

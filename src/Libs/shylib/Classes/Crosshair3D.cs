@@ -8,7 +8,6 @@ public partial class Crosshair3D : StaticBody3D
 	[Export] public StandardMaterial3D DefaultHoverIcon;
 	[Export] public StandardMaterial3D LockedIcon;
 	[Export] public float BaseDistance = 30;
-	[Export] public float Size = 1;
 	private Vector3 BaseScale;
 	[Export] public Camera3D Camera;
 	[Export] public Player Player;
@@ -46,11 +45,6 @@ public partial class Crosshair3D : StaticBody3D
 
 	public override void _Process(double delta)
 	{
-		if (Icon is not null)
-		{
-			Icon.Scale = Icon.Scale.Lerp(new Vector3(BaseScale.X, BaseScale.Y * Size, BaseScale.Z * Size), this.FactorDelta(1 / 3f, delta));
-		}
-
 		if (Camera is not null)
 		{
 			Transform3D Global = Camera.GlobalTransform;

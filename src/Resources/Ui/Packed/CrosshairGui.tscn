@@ -1,13 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://vi335e6p4bg0"]
+[gd_scene load_steps=9 format=3 uid="uid://vi335e6p4bg0"]
 
 [ext_resource type="Script" uid="uid://5750qaowrba3" path="res://src/Libs/shylib/Classes/Crosshair3D.cs" id="1_5kwyv"]
-[ext_resource type="Shader" uid="uid://drved18io6k7k" path="res://src/Shaders/screen_crosshair.gdshader" id="1_rr03y"]
 [ext_resource type="Material" uid="uid://ce0vtdxnqp031" path="res://src/Resources/Materials/DefaultIcon.tres" id="2_rr03y"]
 [ext_resource type="Material" uid="uid://djkfa7xtdg63i" path="res://src/Resources/Materials/DefaultHoverIcon.tres" id="3_vv1w7"]
 [ext_resource type="Material" uid="uid://bq8wyiwgdl28m" path="res://src/Resources/Materials/LockedIcon.tres" id="4_m8jmx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vv1w7"]
-shader = ExtResource("1_rr03y")
 
 [sub_resource type="Environment" id="Environment_1fj5k"]
 

@@ -4,12 +4,44 @@ using Godot;
 [GlobalClass, Icon("uid://dwbnqewotd3wq")]
 public partial class GameSettings : Node
 {
+	public enum ColorblindModes
+	{
+		None = 0,
+		Protanopia = 1,
+		Deutranopia = 2,
+		Tritanopia = 3
+	}
+
 	[Export] public int TargetFPS = 60;
 	[Export] public float ResolutionScale = 1;
 	[Export] public float MinScale = .4f;
 	[Export] public float MaxScale = 1;
 	[Export] public float StepSize = .1f;
 	[Export] public Label TextLabel;
+
+
+	private float cbi = 0;
+	private ColorblindModes cbm = ColorblindModes.None;
+
+	[Export]
+	public float ColorblindIntensity
+	{
+		get => cbi;
+		set
+		{
+			cbi = value;
+			UpdateColorblind();
+		}
+	}
+	[Export] public ColorblindModes ColorblindMode
+	{
+		get => cbm;
+		set
+		{
+			cbm = value;
+			UpdateColorblind();
+		}
+	}
 	
 	private int MeasureFrames = 20;
 	private int Measured = 0;
@@ -19,6 +51,17 @@ public partial class GameSettings : Node
 	private Rid ViewportRid;
 	private Viewport Viewport;
 	private Player Player;
+	private ShaderMaterial Colorblind;
+
+
+	public void UpdateColorblind()
+	{
+		GD.Print((int)ColorblindMode-1);
+		GD.Print(ColorblindIntensity);
+		Colorblind.SetShaderParameter("mode", (int)ColorblindMode-1);
+		Colorblind.SetShaderParameter("intensity", ColorblindMode == ColorblindModes.None ? 0 : ColorblindIntensity);
+	}
+
 
 	public override void _Ready()
 	{
@@ -29,6 +72,7 @@ public partial class GameSettings : Node
 		Viewport.Scaling3DScale = ResolutionScale;
 
 		Player = this.GetGameNode<Player>("%Player");
+		Colorblind = GetChild(0).GetChild<ColorRect>(0).Material as ShaderMaterial;
 
 		Game.Settings = this;
 	}
@@ -37,7 +81,8 @@ public partial class GameSettings : Node
 	{
 		base._Process(delta);
 
-		if (SkipFrames > 0) {
+		if (SkipFrames > 0)
+		{
 			SkipFrames -= 1;
 			return;
 		}

@@ -68,9 +68,9 @@ public static class Extensions
 
 	public static T Duplicate<T>(this Node self) where T : Node => self.Duplicate() as T;
 
-	public static string ToHex(this Color self) {
+	public static string ToHex(this Color self, string end = "0x") {
 		(double r, double g, double b) = ( Mathf.Floor(self.R*255), Mathf.Floor(self.G*255), Mathf.Floor(self.B*255) );
-		return string.Format("0x{0:x}{1:x}{2:x}", (int)r, (int)g, (int)b);
+		return string.Format( end+"{0:x}{1:x}{2:x}", (int)r, (int)g, (int)b);
 	}
 
 	public static System.Collections.Generic.Dictionary<string, object> Blanks = [];

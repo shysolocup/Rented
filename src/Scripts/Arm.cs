@@ -4,9 +4,9 @@ public partial class Arm : Node3D
 {
 	[Export] public Camera3D Camera;
 
-	[Export] public float PosSpeed = 5;
-	[Export] public float RotSpeed = 15;
-	[Export] public Vector3 Offset = new(0.3f, -1.3f, 0);
+	public float PosSpeed = 5;
+	public float RotSpeed = 15;
+	public Vector3 Offset = new(0.3f, -1.3f, 0);
 
 	public override void _Ready()
 	{

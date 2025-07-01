@@ -5,14 +5,14 @@ using Godot.Collections;
 
 namespace Appox
 {
-
 	#region ShyUtil
-	public static class ShyUtil {
+	public static class ShyUtil
+	{
 		public static Variant BlankVariant = new Variant();
 
 		public static (TValue, int)[] Enumerate<[MustBeVariant] TValue>(Array<TValue> arr)
 		{
-			return [.. arr.ToArray().Select((value, i) => ( value, i ))];
+			return [.. arr.ToArray().Select((value, i) => (value, i))];
 		}
 	}
 	#endregion

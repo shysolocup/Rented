@@ -28,7 +28,7 @@ public partial class DebugConsole : CanvasLayer
 	public Control CommandHintHeader;
 	public RichTextLabel CommandHintHeaderLabel;
 
-	public Label Stats;
+	public RichTextLabel Stats;
 	public ScrollContainer MiniLog;
 	public ScrollContainer LogField;
 	public VScrollBar LogScrollBar;
@@ -46,7 +46,7 @@ public partial class DebugConsole : CanvasLayer
 		CommandHintsLabel = GetNode<RichTextLabel>("%Command Hints/RichTextLabel");
 		CommandHintHeader = GetNode<Control>("%Command Hint Header");
 		CommandHintHeaderLabel = GetNode<RichTextLabel>("%Command Hint Header/RichTextLabel");
-		Stats = GetNode<Label>("%Stats");
+		Stats = GetNode<RichTextLabel>("%Stats");
 		MiniLog = GetNode<ScrollContainer>("%Mini Log");
 		LogField = GetNode<ScrollContainer>("%Log");
 		LogScrollBar = LogField.GetVScrollBar();

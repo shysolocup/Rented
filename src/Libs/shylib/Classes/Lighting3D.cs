@@ -17,10 +17,15 @@ public partial class Lighting3D : Node3D
 
 	private PackedScene lighting = SceneCache["Default"];
 
+	/// <summary>
+	/// default lighting it should go back to after doing temp lighting
+	/// </summary> 
+	public PackedScene TempLighting;
+
 	[Export] public PackedScene Lighting {
 		get => lighting;
 		set {
-			if (value != lighting) {
+			if (value != lighting && TempLighting is null) {
 				lighting = value;
 				ResetApply();
 			}
@@ -39,7 +44,10 @@ public partial class Lighting3D : Node3D
 	[ExportToolButton("Reset / Apply")] 
 	public Callable ResetCall => Callable.From(() => ResetApply());
 
-	public Lighting3D DisposeLightings() 
+	public bool LightingIs(string name) => Lighting is PackedScene light && light.ResourcePath.Contains(name);
+	public bool TempLightingIs(string name) => TempLighting is PackedScene temp && temp.ResourcePath.Contains(name);
+
+	public Lighting3D DisposeLightings()
 	{
 		World?.QueueFree();
 		Sun?.QueueFree();
@@ -50,7 +58,7 @@ public partial class Lighting3D : Node3D
 
 	public Lighting3D ResetApply(PackedScene lighting = null) 
 	{
-		if (Visible) {
+		if (Visible && TempLighting is null) {
 			lighting ??= Lighting;
 
 			if (IsInstanceValid(lighting)) {
@@ -114,6 +122,60 @@ public partial class Lighting3D : Node3D
 		if (LoadFromScene(scene, useCache) is PackedScene packed) {
 			Lighting = packed;
 		}
+		return this;
+	}
+
+	public Lighting3D SetTempLighting(string scene, bool useCache = true)
+	{
+		if (Visible)
+		{
+			TempLighting = LoadFromScene(scene, useCache);
+
+			if (IsInstanceValid(TempLighting))
+			{
+
+				this.ClearChildren();
+
+				using Node CurrentLighting = TempLighting.Instantiate();
+
+				if (CurrentLighting is null || !IsInstanceValid(CurrentLighting))
+				{
+					DebugConsole.LogError($"LightingError: failed to instantiate lighting scene \"{TempLighting.ResourcePath}\"");
+					return this;
+				}
+
+				SceneWorld?.QueueFree();
+				SceneSun?.QueueFree();
+
+				SceneWorld = null;
+				SceneSun = null;
+
+				SceneWorld = CurrentLighting.FindChild<WorldEnvironment>("T");
+				SceneSun = CurrentLighting.FindChild<DirectionalLight3D>("T");
+
+				World = SceneWorld?.Duplicate<WorldEnvironment>();
+				Sun = SceneSun?.Duplicate<DirectionalLight3D>();
+
+				if (World is not null && IsInstanceValid(World))
+				{
+					GD.Print($"Set World to {World}");
+					AddChild(World);
+				}
+
+				if (Sun is not null && IsInstanceValid(Sun))
+				{
+					GD.Print($"Set Sun to {Sun}");
+					AddChild(Sun);
+				}
+
+				EmitSignalLightingChanged();
+			}
+			else
+			{
+				DebugConsole.LogError($"LightingError: invalid lighting scene \"{TempLighting.ResourcePath}\"");
+			}
+		}
+
 		return this;
 	}
 

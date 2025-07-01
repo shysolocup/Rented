@@ -24,6 +24,8 @@ public partial class Player : CharacterBody3D
 	[Export(PropertyHint.Range, "10,400,1")] public float Acceleration = 100; // m/s^2
 	[Export(PropertyHint.Range, "0.1,3.0,0.1")] public float JumpHeight = 0.3f; // m
 
+	[Export] public bool InDanger = false;
+
 	private Vector2 MoveDirection; // Input direction for movement
 	private Vector2 LookDirection; // Input direction for look/aim
 	private Vector3 WalkVelocity; // Walking velocity 

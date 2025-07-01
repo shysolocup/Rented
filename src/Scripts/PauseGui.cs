@@ -1,3 +1,6 @@
+using System;
+using System.Threading.Tasks;
+using Appox;
 using Godot;
 
 public partial class PauseGui : Control
@@ -10,6 +13,7 @@ public partial class PauseGui : Control
 	public Button QuitButton;
 
 	private Player Player;
+	private Lighting3D Lighting;
 	/*private WorldEnvironment World;
 	private CameraAttributesPhysical weirdCameraEffects = GD.Load("res://src/Resources/Ui/PauseCameraAttributes.tres") as CameraAttributesPhysical;
 	private Godot.Environment weirdWorldEffects = GD.Load("res://src/Resources/Ui/PauseEffects.tres") as Godot.Environment;
@@ -42,18 +46,21 @@ public partial class PauseGui : Control
 					World.CameraAttributes = weirdCameraEffects;
 					World.CameraAttributes.AutoExposureScale = 1;*/
 					Player.ReleaseMouse();
-					Show();
+					Lighting.SetTempLighting("Pause");
+					// Show();
 				}
-				else if (!Player.InDialog)
+				else
+				{
+					Lighting.TempLighting = null;
+					Lighting.ResetApply();
+				}
+
+				if (!value && !Player.InDialog)
 				{
 					/*World.Environment = defaultWorldEffects;
 					World.CameraAttributes = defaultCameraEffects;*/
 					Player.CaptureMouse();
-					Hide();
-				}
-				else
-				{
-					Hide();
+					// Hide();
 				}
 
 				SkipButton.Visible = Player.InDialog;
@@ -85,11 +92,12 @@ public partial class PauseGui : Control
 
 	public override void _Ready()
 	{
-		Hide();
+		// Hide();
 		Player = this.GetGameNode<Player>("%Player");
+		Lighting = this.GetGameNode<Lighting3D>("%Lighting3D");
 		// World = this.GetGameNode<WorldEnvironment>("%World");
 
-		var Container = GetChild(0).GetChild(1);
+		var Container = GetChild(0).GetChild(2);
 
 		ResumeButton = Container.GetChild<Button>(0);
 		SkipButton = Container.GetChild<Button>(1);
@@ -109,25 +117,34 @@ public partial class PauseGui : Control
 	private bool rebound = false;
 	private bool waiting = false;
 
-	public async override void _Process(double delta)
+	public override async void _Process(double delta)
 	{
 		base._Process(delta);
 
-		if (paused && !waiting) {
-			/*float scale = World.CameraAttributes.AutoExposureScale;
-			GD.Print(Math.Round(scale, 1));
+		Modulate = Modulate.Lerp(paused && !waiting ? Colors.White : Colors.Transparent, this.FactorDelta(1 / 15f, delta));
+
+		if (paused && !waiting && Lighting.TempLightingIs("Night"))
+		{
+			var World = Lighting.World;
+			float scale = World.CameraAttributes.AutoExposureScale;
+
 			if (Math.Round(scale, 2) <= 0.3f && !rebound) rebound = true;
 			if (Math.Round(scale) >= 1 && rebound) rebound = false;
-			World.CameraAttributes.AutoExposureScale = this.Twlerp(scale, rebound ? 1 : 0.02f, 1/500f, delta);
+
+			World.CameraAttributes.AutoExposureScale = this.Twlerp(scale, rebound ? 1 : 0.02f, 1 / 500f, delta);
+
 			waiting = true;
+
 			await Task.Delay(100);
-			waiting = false;*/
+
+			waiting = false;
 		}
 	}
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
-		if (Player != null && !DebugConsole.IsConsoleVisible() && @event is InputEventKey eventKey && eventKey.Pressed && eventKey.Keycode == Key.Escape) {
+		if (Player != null && !DebugConsole.IsConsoleVisible() && @event is InputEventKey eventKey && eventKey.Pressed && eventKey.Keycode == Key.Escape)
+		{
 			Paused ^= true;
 		}
 	}

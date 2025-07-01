@@ -128,13 +128,17 @@ layout_mode = 2
 placeholder_text = "Enter command here..."
 context_menu_enabled = false
 
-[node name="Stats" type="Label" parent="."]
+[node name="Stats" type="RichTextLabel" parent="."]
 unique_name_in_owner = true
 offset_left = 9.0
 offset_top = 8.0
 offset_right = 163.0
 offset_bottom = 101.0
-size_flags_horizontal = 3
+mouse_filter = 2
+bbcode_enabled = true
+text = "guh"
+fit_content = true
+scroll_active = false
 
 [node name="Mini Log" type="ScrollContainer" parent="."]
 unique_name_in_owner = true

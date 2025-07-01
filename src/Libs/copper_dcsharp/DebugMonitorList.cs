@@ -6,10 +6,19 @@ using System;
 
 public static class DebugMonitorList
 {
+	private static string fps()
+	{
+		var fps = (float)Mathf.Snapped(Performance.GetMonitor(Performance.Monitor.TimeFps), 0.001);
 
-	private static float fps() => (float)Mathf.Snapped(Performance.GetMonitor(Performance.Monitor.TimeFps), 0.001);
+		float green = fps != Game.Settings.TargetFPS ? fps / Game.Settings.TargetFPS : 0;
+		float red = fps != Game.Settings.TargetFPS ? 1 - (fps / Game.Settings.TargetFPS) : 0;
 
-    private static float process() => (float)Mathf.Snapped(Performance.GetMonitor(Performance.Monitor.TimeProcess), 0.001);
+		Color col = new(red, green, fps == Game.Settings.TargetFPS ? 1 : 0);
+
+		string value = $"[color={col.ToHtml()}]{fps}[/color]";
+		return value;
+	}
+	private static float process() => (float)Mathf.Snapped(Performance.GetMonitor(Performance.Monitor.TimeProcess), 0.001);
 
 	private static float physics_process() => (float)Mathf.Snapped(Performance.GetMonitor(Performance.Monitor.TimePhysicsProcess), 0.001);
 	
@@ -36,8 +45,6 @@ public static class DebugMonitorList
 
 	public static async void Init(DebugConsole console)
 	{
-
-
 		#region fps
 
 		new DebugMonitor {

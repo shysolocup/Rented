@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://8p7cp7bhft2a"]
+[gd_scene load_steps=18 format=3 uid="uid://8p7cp7bhft2a"]
 
 [ext_resource type="Shader" uid="uid://b5fdym4u87ljo" path="res://src/Shaders/screen_abberation.gdshader" id="2_foswk"]
 [ext_resource type="Material" uid="uid://cxa7fufggslr6" path="res://src/Resources/Lighting/ScreenShaders.tres" id="2_je2sr"]
@@ -7,6 +7,24 @@
 [ext_resource type="Shader" uid="uid://bn0mey8pleolw" path="res://src/Shaders/screen_crt.gdshader" id="5_7bmj5"]
 [ext_resource type="Shader" uid="uid://ck3glividics0" path="res://src/Shaders/screen_sslf.gdshader" id="6_cc7oj"]
 [ext_resource type="Shader" uid="uid://5lv30asv8c10" path="res://src/Shaders/screen_letterbox.gdshader" id="7_foswk"]
+[ext_resource type="Shader" uid="uid://1ois4bnyf6g1" path="res://src/Shaders/screen_pulse.gdshader" id="8_5niij"]
+[ext_resource type="Shader" uid="uid://yhe04ww4qqvs" path="res://src/Shaders/screen_fisheye.gdshader" id="9_fhr5i"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_win7u"]
+shader = ExtResource("6_cc7oj")
+shader_parameter/Blur = 2.5
+shader_parameter/FlareThreshold = 0.0
+shader_parameter/Thresholdsmoothness = 0.2
+shader_parameter/Flares = 3
+shader_parameter/FlareSpacing = 0.0
+shader_parameter/FlareDistance = 0.5
+shader_parameter/LensThickness = 1.0
+shader_parameter/Intensity = 0.1
+shader_parameter/Saturation_ = 5.0
+shader_parameter/visibility = 0.2
+shader_parameter/MinFlareIntensity = 0.0
+shader_parameter/MaxFlareIntensity = 1.0
+shader_parameter/RainbowIntensity = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_je2sr"]
 shader = ExtResource("7_foswk")
@@ -18,22 +36,6 @@ shader_parameter/alpha = 0.3
 shader_parameter/scale = 0.0
 shader_parameter/border_mask = 2.0
 shader_parameter/strength = 1.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_lauhc"]
-shader = ExtResource("3_je2sr")
-shader_parameter/polar_coordinates = false
-shader_parameter/polar_center = Vector2(0.5, 0.5)
-shader_parameter/polar_zoom = 1.0
-shader_parameter/polar_repeat = 1.0
-shader_parameter/spin_rotation = 0.0
-shader_parameter/spin_speed = 5.0
-shader_parameter/offset = Vector2(0, 0)
-shader_parameter/colour_1 = Color(0.344562, 0.0846059, 0.0996523, 1)
-shader_parameter/colour_2 = Color(0.627451, 0, 0, 1)
-shader_parameter/colour_3 = Color(0, 0, 0, 1)
-shader_parameter/contrast = 2.0
-shader_parameter/spin_amount = 0.36
-shader_parameter/pixel_filter = 700.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3oy4u"]
 shader = ExtResource("4_5sfyb")
@@ -73,26 +75,59 @@ shader_parameter/clip_warp = false
 shader_parameter/vignette_intensity = 0.4
 shader_parameter/vignette_opacity = 0.5
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_win7u"]
-shader = ExtResource("6_cc7oj")
-shader_parameter/Blur = 2.5
-shader_parameter/FlareThreshold = 0.0
-shader_parameter/Thresholdsmoothness = 0.2
-shader_parameter/Flares = 3
-shader_parameter/FlareSpacing = 0.0
-shader_parameter/FlareDistance = 0.5
-shader_parameter/LensThickness = 1.0
-shader_parameter/Intensity = 0.1
-shader_parameter/Saturation_ = 5.0
-shader_parameter/visibility = 0.2
-shader_parameter/MinFlareIntensity = 0.0
-shader_parameter/MaxFlareIntensity = 1.0
-shader_parameter/RainbowIntensity = 1.0
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4nqi7"]
+shader = ExtResource("9_fhr5i")
+shader_parameter/fish_intensity = 0.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lauhc"]
+shader = ExtResource("3_je2sr")
+shader_parameter/polar_coordinates = false
+shader_parameter/polar_center = Vector2(0.5, 0.5)
+shader_parameter/polar_zoom = 1.0
+shader_parameter/polar_repeat = 1.0
+shader_parameter/spin_rotation = 0.0
+shader_parameter/spin_speed = 5.0
+shader_parameter/offset = Vector2(0, 0)
+shader_parameter/colour_1 = Color(0.344562, 0.0846059, 0.0996523, 1)
+shader_parameter/colour_2 = Color(0.627451, 0, 0, 1)
+shader_parameter/colour_3 = Color(0, 0, 0, 1)
+shader_parameter/contrast = 2.0
+shader_parameter/spin_amount = 0.36
+shader_parameter/pixel_filter = 700.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0t8lh"]
+shader = ExtResource("8_5niij")
+shader_parameter/time_scale = 1.0
+shader_parameter/primary_color = Color(1, 1, 1, 1)
+shader_parameter/secondary_color = Color(1, 1, 1, 1)
+shader_parameter/turbulence = 3.0
+shader_parameter/distortion = 1.0
+shader_parameter/ring_count_influence = 10.0
+shader_parameter/go_backwards = true
+shader_parameter/alpha_blend = 0.1
+shader_parameter/color_mix = Color(1, 1, 1, 1)
+shader_parameter/distortion_speed = 1.0
+shader_parameter/ring_speed = 1.0
+shader_parameter/final_alpha_multi = 1.0
+shader_parameter/opacity_smoothstep_1 = -0.25
+shader_parameter/opacity_smoothstep_2 = 1.5
 
 [node name="ScreenShaders" type="CanvasLayer"]
 layer = 3
 
-[node name="Letterbox" type="ColorRect" parent="."]
+[node name="2" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="SSLF" type="ColorRect" parent="2"]
+material = SubResource("ShaderMaterial_win7u")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Letterbox" type="ColorRect" parent="2"]
 material = SubResource("ShaderMaterial_je2sr")
 anchors_preset = 15
 anchor_right = 1.0
@@ -101,16 +136,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Rtx" type="ColorRect" parent="."]
-material = ExtResource("2_je2sr")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="Abberation2" type="Control" parent="."]
+[node name="Abberation2" type="Control" parent="2"]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -120,7 +146,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="Abberation2"]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="2/Abberation2"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -130,14 +156,14 @@ grow_vertical = 2
 mouse_filter = 2
 stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="Abberation2/SubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="2/Abberation2/SubViewportContainer"]
 own_world_3d = true
 transparent_bg = true
 handle_input_locally = false
 size = Vector2i(1152, 648)
 render_target_update_mode = 0
 
-[node name="Abberation" type="ColorRect" parent="Abberation2"]
+[node name="Abberation" type="ColorRect" parent="2/Abberation2"]
 material = SubResource("ShaderMaterial_8sgug")
 layout_mode = 1
 anchors_preset = 15
@@ -147,9 +173,8 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="PaintMix" type="ColorRect" parent="."]
-visible = false
-material = SubResource("ShaderMaterial_lauhc")
+[node name="Rtx" type="ColorRect" parent="2"]
+material = ExtResource("2_je2sr")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -157,7 +182,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="RetroPixel" type="ColorRect" parent="."]
+[node name="RetroPixel" type="ColorRect" parent="2"]
 visible = false
 material = SubResource("ShaderMaterial_3oy4u")
 anchors_preset = 15
@@ -167,7 +192,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Crt" type="ColorRect" parent="."]
+[node name="Crt" type="ColorRect" parent="2"]
 visible = false
 material = SubResource("ShaderMaterial_0ehnj")
 anchors_preset = 15
@@ -177,8 +202,30 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="SSLF" type="ColorRect" parent="."]
-material = SubResource("ShaderMaterial_win7u")
+[node name="1" type="CanvasLayer" parent="."]
+
+[node name="Fisheye" type="ColorRect" parent="1"]
+material = SubResource("ShaderMaterial_4nqi7")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PaintMix" type="ColorRect" parent="1"]
+visible = false
+material = SubResource("ShaderMaterial_lauhc")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Pulse" type="ColorRect" parent="1"]
+visible = false
+material = SubResource("ShaderMaterial_0t8lh")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

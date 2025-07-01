@@ -48,7 +48,7 @@ public partial class Crosshair3D : StaticBody3D
 	{
 		if (Icon is not null)
 		{
-			Icon.Scale.Lerp(new Vector3(BaseScale.X, BaseScale.Y * Size, BaseScale.Z * Size), this.FactorDelta(1/10f, delta));
+			Icon.Scale = Icon.Scale.Lerp(new Vector3(BaseScale.X, BaseScale.Y * Size, BaseScale.Z * Size), this.FactorDelta(1 / 3f, delta));
 		}
 
 		if (Camera is not null)

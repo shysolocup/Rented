@@ -1,28 +1,33 @@
-[gd_scene load_steps=15 format=3 uid="uid://dlade7y0ilag6"]
+[gd_scene load_steps=17 format=3 uid="uid://dlade7y0ilag6"]
 
 [ext_resource type="Script" uid="uid://bq8h5fsdfxg7c" path="res://src/Scripts/PauseGui.cs" id="1_vv17i"]
 [ext_resource type="Texture2D" uid="uid://cyvx5r30ccg8d" path="res://src/Images/Icon150.png" id="2_4u38r"]
 [ext_resource type="Texture2D" uid="uid://bmtapdmr10o7e" path="res://src/Images/Dialog/dialog_border.png" id="2_d8h3k"]
 [ext_resource type="Texture2D" uid="uid://0rpj4yfm6qh" path="res://src/Textures/PauseImages/pause_05.png" id="2_f084r"]
+[ext_resource type="Shader" uid="uid://ckj1n6jjbk0y" path="res://src/Shaders/screen_pause_icon.gdshader" id="2_nxrud"]
 [ext_resource type="FontFile" uid="uid://fj2b1x4fiorb" path="res://src/Fonts/timesbi.ttf" id="3_4u38r"]
 [ext_resource type="StyleBox" uid="uid://exqyscgxswgh" path="res://src/Resources/Ui/SettingButtonPress.tres" id="4_0aeuh"]
 [ext_resource type="StyleBox" uid="uid://dljp1kxxxhaej" path="res://src/Resources/Ui/SettingButtonHover.tres" id="5_cvfns"]
 [ext_resource type="StyleBox" uid="uid://c3kf7qgi5iwyi" path="res://src/Resources/Ui/SettingButton.tres" id="6_dmmki"]
 [ext_resource type="Texture2D" uid="uid://qjqvfiijw52p" path="res://src/Textures/tex_watercolor_04_solid.png" id="8_0aeuh"]
+[ext_resource type="Shader" uid="uid://dwmfmsn7kmyjc" path="res://src/Shaders/screen_pause_background.gdshader" id="8_f084r"]
 [ext_resource type="Texture2D" uid="uid://bacwe5ivf10eo" path="res://src/Textures/tex_watercolor_03_solid.png" id="9_cvfns"]
 [ext_resource type="Material" uid="uid://bnru6blspk18c" path="res://src/Shaders/screen_wiggle.tres" id="9_dmmki"]
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_cvfns"]
-blend_mode = 2
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_31v5e"]
+shader = ExtResource("2_nxrud")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yc6y7"]
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_dmmki"]
-blend_mode = 2
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nxrud"]
+shader = ExtResource("8_f084r")
+shader_parameter/center = Vector2(50, 50)
+shader_parameter/amplitude = 0.01
+shader_parameter/frequency = 1.0
 
 [node name="PauseLayer" type="CanvasLayer"]
 process_mode = 3
-layer = 2
+layer = 4
 
 [node name="PauseGui" type="Control" parent="."]
 unique_name_in_owner = true
@@ -39,13 +44,13 @@ script = ExtResource("1_vv17i")
 z_index = 1
 layout_mode = 0
 offset_left = -8.46154
-offset_top = -467.692
+offset_top = -489.231
 offset_right = 392.538
-offset_bottom = -41.6923
+offset_bottom = -63.2308
 theme_override_constants/separation = 20
 
 [node name="Icon" type="TextureRect" parent="PauseGui/VBoxContainer"]
-material = SubResource("CanvasItemMaterial_cvfns")
+material = SubResource("ShaderMaterial_31v5e")
 layout_mode = 2
 texture = ExtResource("2_4u38r")
 stretch_mode = 3
@@ -118,29 +123,30 @@ flip_v = true
 
 [node name="Background" type="TextureRect" parent="PauseGui"]
 top_level = true
-material = SubResource("CanvasItemMaterial_dmmki")
+texture_filter = 1
+material = SubResource("ShaderMaterial_nxrud")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -194.5
-offset_bottom = 194.5
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1, 1)
 mouse_filter = 2
 texture = ExtResource("2_f084r")
+expand_mode = 1
 
 [node name="stuff" type="TextureRect" parent="PauseGui"]
 modulate = Color(0.709804, 0, 0, 0.635294)
 show_behind_parent = true
 material = ExtResource("9_dmmki")
 layout_mode = 0
-offset_left = 595.385
-offset_top = -899.231
-offset_right = 1455.38
-offset_bottom = -444.231
-rotation = 1.30775
-scale = Vector2(1.55086, 2.80796)
+offset_left = 1120.0
+offset_top = -803.077
+offset_right = 2170.0
+offset_bottom = -247.077
+rotation = 2.01259
+scale = Vector2(1.45714, 2.22404)
 mouse_filter = 2
 texture = ExtResource("8_0aeuh")
 
@@ -149,11 +155,25 @@ modulate = Color(0.709804, 0, 0, 0.635294)
 show_behind_parent = true
 material = ExtResource("9_dmmki")
 layout_mode = 0
-offset_left = 39.2308
-offset_top = -757.692
-offset_right = 899.231
-offset_bottom = -302.692
+offset_left = 164.615
+offset_top = -419.231
+offset_right = 1214.62
+offset_bottom = 105.769
 rotation = 0.363781
-scale = Vector2(1.55086, 2.80796)
+scale = Vector2(0.885393, 1.22259)
 mouse_filter = 2
 texture = ExtResource("9_cvfns")
+
+[node name="even more stuff" type="TextureRect" parent="PauseGui"]
+modulate = Color(0.709804, 0, 0, 0.635294)
+show_behind_parent = true
+material = ExtResource("9_dmmki")
+layout_mode = 0
+offset_left = -520.0
+offset_top = 391.538
+offset_right = 530.0
+offset_bottom = 947.538
+rotation = -1.46485
+scale = Vector2(1.34448, 1.81897)
+mouse_filter = 2
+texture = ExtResource("8_0aeuh")

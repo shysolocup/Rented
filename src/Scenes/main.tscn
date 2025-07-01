@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://s0ftqrddh5up"]
+[gd_scene load_steps=31 format=3 uid="uid://s0ftqrddh5up"]
 
 [ext_resource type="Script" uid="uid://cfoo1gxat5mv8" path="res://src/Libs/shylib/Classes/Game/GameInstance.cs" id="1_k0mjx"]
 [ext_resource type="Script" uid="uid://cei6x6adiqlte" path="res://src/Libs/shylib/Classes/Lighting3D.cs" id="2_h8oac"]
@@ -48,8 +48,6 @@ radius = 0.7
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_743ng"]
 radius = 0.19
 height = 1.74
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_w0vrg"]
 
 [node name="Game" type="Node"]
 script = ExtResource("1_k0mjx")
@@ -230,15 +228,10 @@ visible = false
 
 [node name="SaveGui" type="Control" parent="Guis"]
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 1112.0
-offset_top = 608.0
-offset_right = 1112.0
-offset_bottom = 608.0
+anchor_left = 28.8
+anchor_top = 16.2
+anchor_right = 28.8
+anchor_bottom = 16.2
 grow_horizontal = 0
 grow_vertical = 0
 mouse_filter = 2
@@ -247,7 +240,7 @@ metadata/_edit_use_anchors_ = true
 [node name="SaveIcon" type="Sprite2D" parent="Guis/SaveGui"]
 position = Vector2(-42, -42)
 scale = Vector2(0.64, 0.64)
-texture = SubResource("CompressedTexture2D_w0vrg")
+texture = ExtResource("10_e2xy3")
 script = ExtResource("9_ng2wt")
 
 [node name="MainMenuGui" parent="Guis" instance=ExtResource("17_k0mjx")]

@@ -72,8 +72,11 @@ public partial class UDim2Anchor : Node
 	{
 		Vector2 basis;
 
-		if (GetParent() is Control c) {
+		if (GetParent() is Control c)
+		{
 			basis = Canvas ? DisplayServer.WindowGetSize() : c.GetParentAreaSize(); // probably works
+
+			GD.Print(basis);
 		}
 	}
 }

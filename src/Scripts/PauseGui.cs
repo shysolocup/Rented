@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Appox;
 using Godot;
@@ -12,8 +13,13 @@ public partial class PauseGui : Control
 	public Button SettingsButton;
 	public Button QuitButton;
 
+	private TextureRect Background;
+
 	private Player Player;
 	private Lighting3D Lighting;
+
+	private string ImageDir = "res://src/Textures/PauseImages";
+
 	/*private WorldEnvironment World;
 	private CameraAttributesPhysical weirdCameraEffects = GD.Load("res://src/Resources/Ui/PauseCameraAttributes.tres") as CameraAttributesPhysical;
 	private Godot.Environment weirdWorldEffects = GD.Load("res://src/Resources/Ui/PauseEffects.tres") as Godot.Environment;
@@ -22,7 +28,8 @@ public partial class PauseGui : Control
 
 	public override void _Notification(int what)
 	{
-		if (what == NotificationWMWindowFocusOut) {
+		if (what == NotificationWMWindowFocusOut)
+		{
 			Paused = true;
 		}
 	}
@@ -47,12 +54,18 @@ public partial class PauseGui : Control
 					World.CameraAttributes.AutoExposureScale = 1;*/
 					Player.ReleaseMouse();
 					Lighting.SetTempLighting("Pause");
+
+					var dir = DirAccess.Open(ImageDir).GetFiles().Where( v => !v.EndsWith(".import") ).ToArray();
+
+					Background.Texture = GD.Load<Texture2D>($"{ImageDir}/{dir[GD.Randi() % dir.Length]}");
+					Background.Show();
 					// Show();
 				}
 				else
 				{
 					Lighting.TempLighting = null;
 					Lighting.ResetApply();
+					Background.Hide();
 				}
 
 				if (!value && !Player.InDialog)
@@ -92,10 +105,11 @@ public partial class PauseGui : Control
 
 	public override void _Ready()
 	{
-		// Hide();
 		Player = this.GetGameNode<Player>("%Player");
 		Lighting = this.GetGameNode<Lighting3D>("%Lighting3D");
-		// World = this.GetGameNode<WorldEnvironment>("%World");
+		
+		Background = GetNode<TextureRect>("Background");
+		Background.Hide();
 
 		var Container = GetChild(0).GetChild(2);
 

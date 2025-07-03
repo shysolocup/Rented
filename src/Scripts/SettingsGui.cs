@@ -25,6 +25,8 @@ public partial class SettingsGui : Control
 		Settings = GetNode("%SettingsContainer");
 		Tabs = GetNode("%TabButtons");
 
+		CurrentTab = Settings.GetChild<GameSetting>(0);
+
 		foreach (var tab in Tabs.GetChildren().Cast<Button>())
 		{
 			tab.Pressed += () =>
@@ -47,10 +49,9 @@ public partial class SettingsGui : Control
 			};
 		}
 
-		foreach (var page in Settings.GetChildren().Cast<Control>())
-		{
-			page.Hide();
-		}
+		foreach (var page in Settings.GetChildren().Cast<Control>()) page.Hide();
+
+		CurrentTab.Show();
 	}
 
 	public bool InSettings {

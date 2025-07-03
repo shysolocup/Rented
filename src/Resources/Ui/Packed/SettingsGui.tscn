@@ -37,16 +37,6 @@ modulate_color = Color(0.18359, 0.18359, 0.18359, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1vmpo"]
 
-[sub_resource type="StyleBoxLine" id="StyleBoxLine_adq7j"]
-color = Color(0.529067, 0.529067, 0.529067, 1)
-grow_begin = 0.0
-grow_end = 0.0
-thickness = 5
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_64p0j"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ntdvb"]
-
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8eabv"]
 texture = ExtResource("3_4d1kh")
 texture_margin_left = 89.0
@@ -70,6 +60,12 @@ expand_margin_top = 5.0
 expand_margin_right = 7.0
 expand_margin_bottom = 7.0
 modulate_color = Color(0.18359, 0.18359, 0.18359, 1)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_adq7j"]
+color = Color(0.529067, 0.529067, 0.529067, 1)
+grow_begin = 0.0
+grow_end = 0.0
+thickness = 5
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nhfcw"]
 
@@ -97,6 +93,10 @@ font_size = 17
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_pwpv7"]
 blend_mode = 1
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_64p0j"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ntdvb"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2sfqt"]
 
@@ -251,84 +251,6 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="Camera" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer"]
-visible = false
-layout_mode = 2
-theme_override_styles/panel = ExtResource("4_ivbaw")
-script = ExtResource("10_pofjr")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer"]
-layout_mode = 2
-text = "Camera"
-label_settings = ExtResource("2_adq7j")
-
-[node name="Sensitivity" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer"]
-layout_mode = 2
-theme_override_styles/panel = ExtResource("6_8eabv")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer/Sensitivity"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer/Sensitivity/HBoxContainer"]
-layout_mode = 2
-text = "Sensitivity:"
-label_settings = ExtResource("3_4vm78")
-
-[node name="SpinBox" type="SpinBox" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer/Sensitivity/HBoxContainer"]
-layout_mode = 2
-theme = ExtResource("6_e4clx")
-max_value = 2.0
-step = 0.1
-value = 1.0
-rounded = true
-alignment = 1
-
-[node name="HSlider" type="HSlider" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer/Sensitivity/HBoxContainer"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 1
-theme_override_styles/slider = SubResource("StyleBoxLine_adq7j")
-theme_override_styles/grabber_area_highlight = SubResource("StyleBoxEmpty_64p0j")
-max_value = 2.0
-step = 0.1
-value = 0.5
-
-[node name="FOV" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer"]
-layout_mode = 2
-theme_override_styles/panel = ExtResource("6_8eabv")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer/FOV"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer/FOV/HBoxContainer"]
-layout_mode = 2
-text = "Field Of View:"
-label_settings = ExtResource("3_4vm78")
-
-[node name="SpinBox" type="SpinBox" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer/FOV/HBoxContainer"]
-layout_mode = 2
-theme = ExtResource("6_e4clx")
-min_value = 30.0
-max_value = 200.0
-value = 60.0
-rounded = true
-alignment = 1
-
-[node name="HSlider" type="HSlider" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer/FOV/HBoxContainer"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 1
-theme_override_styles/slider = SubResource("StyleBoxLine_adq7j")
-theme_override_styles/grabber_area_highlight = SubResource("StyleBoxEmpty_ntdvb")
-min_value = 30.0
-max_value = 200.0
-value = 60.0
-
 [node name="Graphics" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer"]
 visible = false
 layout_mode = 2
@@ -467,6 +389,84 @@ modulate = Color(0.560955, 0.560955, 0.560955, 1)
 material = SubResource("CanvasItemMaterial_pwpv7")
 layout_mode = 2
 texture = ExtResource("10_tsn0p")
+
+[node name="Camera" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = ExtResource("4_ivbaw")
+script = ExtResource("10_pofjr")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer"]
+layout_mode = 2
+text = "Camera"
+label_settings = ExtResource("2_adq7j")
+
+[node name="Sensitivity" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("6_8eabv")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer/Sensitivity"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer/Sensitivity/HBoxContainer"]
+layout_mode = 2
+text = "Sensitivity:"
+label_settings = ExtResource("3_4vm78")
+
+[node name="SpinBox" type="SpinBox" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer/Sensitivity/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("6_e4clx")
+max_value = 2.0
+step = 0.1
+value = 1.0
+rounded = true
+alignment = 1
+
+[node name="HSlider" type="HSlider" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer/Sensitivity/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_styles/slider = SubResource("StyleBoxLine_adq7j")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxEmpty_64p0j")
+max_value = 2.0
+step = 0.1
+value = 0.5
+
+[node name="FOV" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("6_8eabv")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer/FOV"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer/FOV/HBoxContainer"]
+layout_mode = 2
+text = "Field Of View:"
+label_settings = ExtResource("3_4vm78")
+
+[node name="SpinBox" type="SpinBox" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer/FOV/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("6_e4clx")
+min_value = 30.0
+max_value = 200.0
+value = 60.0
+rounded = true
+alignment = 1
+
+[node name="HSlider" type="HSlider" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer/FOV/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_styles/slider = SubResource("StyleBoxLine_adq7j")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxEmpty_ntdvb")
+min_value = 30.0
+max_value = 200.0
+value = 60.0
 
 [node name="Audio" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer"]
 visible = false

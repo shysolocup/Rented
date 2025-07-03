@@ -180,8 +180,13 @@ public partial class PauseGui : Control
 			cooldown = true;
 			Game.Delay(0.1f, () => cooldown = false);
 
+			if (Settings.InSettings)
+			{
+				Settings.InSettings = false;
+				return;
+			}
+
 			Paused ^= true;
-			Settings.InSettings = false;
 		}
 	}
 }

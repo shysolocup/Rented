@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Godot;
 
 public partial class Item : Node
@@ -11,5 +10,6 @@ public partial class Item : Node
 
     public virtual void _Equipped() { }
     public virtual void _Unequipped() { }
-    public virtual void _Used() {}
+    public virtual void _Used() { }
 }
+

@@ -1,0 +1,24 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$id": "input_schema",
+    "title": "Input Map Schema",
+    "description": "Json schema for input mapping",
+    "type": "object",
+    "required": [ "map", "unicoded" ],
+    "properties": {
+        "map": {
+            "type": "array",
+            "items": {
+                "type": "array"
+            }
+        },
+        "unicoded": {
+            "$ref": "#/$defs/unicoded"
+        }
+    },
+    "$defs": {
+        "unicoded": {
+            "type": "object"
+        }
+    }
+}

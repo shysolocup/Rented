@@ -39,34 +39,34 @@ public partial class Flashlight : Item
 		}
 	}
 
-    public override void _Equipped()
-    {
-        base._Equipped();
-    }
+	public override void _Equipped()
+	{
+		base._Equipped();
+	}
 
-    public override void _Unequipped()
-    {
-        base._Unequipped();
-        On = false;
-    }
+	public override void _Unequipped()
+	{
+		base._Unequipped();
+		On = false;
+	}
 
 	public override void _Used()
-    {
-        base._Used();
-        On ^= true;
-    }
+	{
+		base._Used();
+		On ^= true;
+	}
 
 	public override void _Ready()
 	{
-        if (!Engine.IsEditorHint())
-        { 
-            Model = this.GetGameNode<MeshInstance3D>("%Player/Arm/%Flashlight");
+		if (!Engine.IsEditorHint())
+		{ 
+			Model = this.GetGameNode<MeshInstance3D>("%Player/Arm/%Flashlight");
 
-            Lights = Model.GetChild<Node3D>(0);
-            Lights.Visible = On;
+			Lights = Model.GetChild<Node3D>(0);
+			Lights.Visible = On;
 
-            Energy = Lights.GetChild<Light3D>(0).LightEnergy;
-        }
+			Energy = Lights.GetChild<Light3D>(0).LightEnergy;
+		}
 	}
 
 	public override void _Process(double delta)

@@ -1,0 +1,53 @@
+{
+    "$schema": "./Schemas/InputMap.json",
+
+    /* INPUT MAP */
+    "map": [
+        ["xbox_a", "ps_x"],
+        ["xbox_b", "px_o"],
+        ["xbox_x", "ps_square"],
+        ["xbox_y", "ps_triangle"],
+        ["xbox_start", "ps_options"],
+        ["xbox_back", "ps_select"],
+        ["xbox_rt", "ps_r2"],
+        ["xbox_rb", "ps_r1"],
+        ["xbox_lt", "ps_l2"],
+        ["xbox_lb", "ps_l1"]
+    ],
+
+    "unicoded": {
+        
+        /* PC BUTTONS */
+        "space": "␣",
+        "escape": "𝗘𝗦𝗖",
+        "enter": "↵",
+        "lmb": "𝗟𝗠𝗕",
+        "rmb": "𝗥𝗠𝗕",
+        "backspace": "⌫",
+
+        /* XBOX BUTTONS */
+        "xbox_a": "🅐",
+        "xbox_b": "🅑",
+        "xbox_x": "🅧",
+        "xbox_y": "🅨",
+        "xbox_rt": "𝗥𝗧",
+        "xbox_rb": "𝗥𝗕",
+        "xbox_lt": "𝗟𝗧",
+        "xbox_lb": "𝗟𝗕",
+        "xbox_start": "𝗦𝗧𝗔𝗥𝗧",
+        "xbox_back": "𝗕𝗔𝗖𝗞",
+
+        /* PLAYSTATION BUTTONS */
+        "ps_o": "O",
+        "ps_x": "✖",
+        "ps_triangle": "▲",
+        "ps_square": "◼",
+        "ps_r2": "𝗥𝟮",
+        "ps_r1": "𝗥𝟭",
+        "ps_l2": "𝗟𝟮",
+        "ps_l1": "𝗟𝟭",
+        "ps_options": "𝗢𝗣𝗧𝗜𝗢𝗡𝗦",
+        "ps_select": "𝗦𝗘𝗟𝗘𝗖𝗧"
+
+    }
+}

@@ -9,6 +9,14 @@ using Godot.Collections;
 public partial class GameInstance : Node
 {
 
+	public bool UsingController = false;
+
+	[Signal] public delegate void ControllerIndexChangedEventHandler(int index);
+
+	public override void _UnhandledInput(InputEvent @input) {
+		
+	}
+
 	/// <summary>
 	/// current lighting environment
 	/// </summary>

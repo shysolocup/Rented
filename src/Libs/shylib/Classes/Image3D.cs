@@ -7,7 +7,7 @@ public partial class Image3D : MeshInstance3D
     private StandardMaterial3D mat = new();
     private Texture2D source;
     private float imageScale = 1;
-
+    private float transparency = 0;
 
     [Export] public Texture2D Source {
         get => source;
@@ -18,6 +18,9 @@ public partial class Image3D : MeshInstance3D
         }
     }
 
+    /// <summary>
+    /// if true then the image will disappear at runtime
+    /// </summary>
     [Export] public bool Reference = false;
 
     [Export(PropertyHint.Range, "0,2,or_greater,or_less")] public float ImageScale {
@@ -28,8 +31,21 @@ public partial class Image3D : MeshInstance3D
             Scale = Rescale();
         }
     }
+    
+    [Export(PropertyHint.Range, "0,1,")]
+    public float Opacity
+    {
+        get => transparency;
+        set
+        {
+            if (transparency == value) return;
+            transparency = value;
+            Changed();
+        }
+    }
 
-    public Vector3 Rescale() {
+    public Vector3 Rescale()
+    {
         Vector2 scale = source.GetSize() / 500 * imageScale;
         return new Vector3(scale.X, 1, scale.Y);
     }
@@ -41,6 +57,7 @@ public partial class Image3D : MeshInstance3D
         }
 
         mat.Transparency = BaseMaterial3D.TransparencyEnum.Alpha;
+        Transparency = Opacity;
 
         CastShadow = ShadowCastingSetting.Off;
 

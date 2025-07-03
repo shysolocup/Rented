@@ -1,7 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://dvpi6uwtqfp8n"]
+[gd_scene load_steps=102 format=3 uid="uid://dvpi6uwtqfp8n"]
 
 [ext_resource type="Script" uid="uid://csefxrb6ehpnb" path="res://src/Libs/shylib/Classes/Dialogue/DialogueData.cs" id="1_j8xi1"]
 [ext_resource type="Texture2D" uid="uid://bmtapdmr10o7e" path="res://src/Textures/ui_dialog_border.png" id="2_7badv"]
+[ext_resource type="Script" uid="uid://bdb1tda0dorox" path="res://src/Libs/shylib/Classes/Dialogue/DialogueSequence.cs" id="2_gwkln"]
+[ext_resource type="Script" uid="uid://csanood01b8b6" path="res://src/Libs/shylib/Classes/Dialogue/DialogueLine.cs" id="3_kqy5e"]
 [ext_resource type="FontFile" uid="uid://djugwc4dfi8yc" path="res://src/Fonts/timesi.ttf" id="4_kr11k"]
 [ext_resource type="Script" uid="uid://c7txcaajl83ve" path="res://src/Scripts/RichTextEffects/Ghost.gd" id="5_kl0wn"]
 [ext_resource type="Script" uid="uid://3mxc7rj1i0c8" path="res://src/Scripts/RichTextEffects/Matrix.gd" id="6_y8kcc"]
@@ -9,6 +11,440 @@
 [ext_resource type="StyleBox" uid="uid://0oi8rktonqwv" path="res://src/Resources/Ui/DialogButtonHover.tres" id="8_i232y"]
 [ext_resource type="StyleBox" uid="uid://bclw3clviyndh" path="res://src/Resources/Ui/DialogButtonPress.tres" id="9_ho71m"]
 [ext_resource type="Texture2D" uid="uid://d01hk0epfwk0e" path="res://src/Textures/ui_dialog_background.png" id="10_tuxft"]
+
+[sub_resource type="Resource" id="Resource_gwkln"]
+script = ExtResource("2_gwkln")
+Character = ""
+Lines = Array[ExtResource("3_kqy5e")]([])
+
+[sub_resource type="Resource" id="Resource_kqy5e"]
+script = ExtResource("2_gwkln")
+Character = ""
+Lines = Array[ExtResource("3_kqy5e")]([])
+
+[sub_resource type="Resource" id="Resource_isqae"]
+script = ExtResource("2_gwkln")
+Character = ""
+Lines = Array[ExtResource("3_kqy5e")]([])
+
+[sub_resource type="Resource" id="Resource_13c2n"]
+script = ExtResource("2_gwkln")
+Character = ""
+Lines = Array[ExtResource("3_kqy5e")]([])
+
+[sub_resource type="Resource" id="Resource_rt870"]
+script = ExtResource("2_gwkln")
+Character = ""
+Lines = Array[ExtResource("3_kqy5e")]([])
+
+[sub_resource type="Resource" id="Resource_5yil8"]
+script = ExtResource("2_gwkln")
+Character = ""
+Lines = Array[ExtResource("3_kqy5e")]([])
+
+[sub_resource type="Resource" id="Resource_hwn87"]
+script = ExtResource("2_gwkln")
+Character = ""
+Lines = Array[ExtResource("3_kqy5e")]([])
+
+[sub_resource type="Resource" id="Resource_j4y3p"]
+script = ExtResource("2_gwkln")
+Character = ""
+Lines = Array[ExtResource("3_kqy5e")]([])
+
+[sub_resource type="Resource" id="Resource_chdo4"]
+script = ExtResource("2_gwkln")
+Character = ""
+Lines = Array[ExtResource("3_kqy5e")]([])
+
+[sub_resource type="Resource" id="Resource_y6lxh"]
+script = ExtResource("2_gwkln")
+Character = ""
+Lines = Array[ExtResource("3_kqy5e")]([])
+
+[sub_resource type="Resource" id="Resource_wo44u"]
+script = ExtResource("2_gwkln")
+Character = ""
+Lines = Array[ExtResource("3_kqy5e")]([])
+
+[sub_resource type="Resource" id="Resource_l1ykt"]
+script = ExtResource("2_gwkln")
+Character = ""
+Lines = Array[ExtResource("3_kqy5e")]([])
+
+[sub_resource type="Resource" id="Resource_gqytr"]
+script = ExtResource("2_gwkln")
+Character = ""
+Lines = Array[ExtResource("3_kqy5e")]([])
+
+[sub_resource type="Resource" id="Resource_sieci"]
+script = ExtResource("2_gwkln")
+Character = ""
+Lines = Array[ExtResource("3_kqy5e")]([])
+
+[sub_resource type="Resource" id="Resource_dvxei"]
+script = ExtResource("2_gwkln")
+Character = ""
+Lines = Array[ExtResource("3_kqy5e")]([])
+
+[sub_resource type="Resource" id="Resource_0mf16"]
+script = ExtResource("2_gwkln")
+Character = ""
+Lines = Array[ExtResource("3_kqy5e")]([])
+
+[sub_resource type="Resource" id="Resource_qp4cp"]
+script = ExtResource("2_gwkln")
+Character = ""
+Lines = Array[ExtResource("3_kqy5e")]([])
+
+[sub_resource type="Resource" id="Resource_c0ava"]
+script = ExtResource("2_gwkln")
+Character = ""
+Lines = Array[ExtResource("3_kqy5e")]([])
+
+[sub_resource type="Resource" id="Resource_b51ec"]
+script = ExtResource("2_gwkln")
+Character = ""
+Lines = Array[ExtResource("3_kqy5e")]([])
+
+[sub_resource type="Resource" id="Resource_i8tvb"]
+script = ExtResource("2_gwkln")
+Character = ""
+Lines = Array[ExtResource("3_kqy5e")]([])
+
+[sub_resource type="Resource" id="Resource_k0uo4"]
+script = ExtResource("2_gwkln")
+Character = ""
+Lines = Array[ExtResource("3_kqy5e")]([])
+
+[sub_resource type="Resource" id="Resource_vllvc"]
+script = ExtResource("3_kqy5e")
+Text = ""
+Randoms = Array[Array]([Array[ExtResource("2_gwkln")]([SubResource("Resource_gwkln")]), Array[ExtResource("2_gwkln")]([SubResource("Resource_kqy5e")]), Array[ExtResource("2_gwkln")]([SubResource("Resource_isqae")]), Array[ExtResource("2_gwkln")]([SubResource("Resource_13c2n")]), Array[ExtResource("2_gwkln")]([SubResource("Resource_rt870")]), Array[ExtResource("2_gwkln")]([SubResource("Resource_5yil8")]), Array[ExtResource("2_gwkln")]([SubResource("Resource_hwn87")]), Array[ExtResource("2_gwkln")]([SubResource("Resource_j4y3p")]), Array[ExtResource("2_gwkln")]([SubResource("Resource_chdo4")]), Array[ExtResource("2_gwkln")]([SubResource("Resource_y6lxh")]), Array[ExtResource("2_gwkln")]([SubResource("Resource_wo44u")]), Array[ExtResource("2_gwkln")]([SubResource("Resource_l1ykt")]), Array[ExtResource("2_gwkln")]([SubResource("Resource_gqytr")]), Array[ExtResource("2_gwkln")]([SubResource("Resource_sieci")]), Array[ExtResource("2_gwkln")]([SubResource("Resource_dvxei")]), Array[ExtResource("2_gwkln")]([SubResource("Resource_0mf16")]), Array[ExtResource("2_gwkln")]([SubResource("Resource_qp4cp")]), Array[ExtResource("2_gwkln")]([SubResource("Resource_c0ava")]), Array[ExtResource("2_gwkln")]([SubResource("Resource_b51ec")]), Array[ExtResource("2_gwkln")]([SubResource("Resource_i8tvb")]), Array[ExtResource("2_gwkln")]([SubResource("Resource_k0uo4")])])
+
+[sub_resource type="Resource" id="Resource_21h5e"]
+script = ExtResource("2_gwkln")
+Character = "Hass"
+Lines = Array[ExtResource("3_kqy5e")]([SubResource("Resource_vllvc")])
+
+[sub_resource type="Resource" id="Resource_tn6d5"]
+script = ExtResource("3_kqy5e")
+Text = "googoo"
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_ry4bf"]
+script = ExtResource("3_kqy5e")
+Text = "buh buh"
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_12lhf"]
+script = ExtResource("2_gwkln")
+Character = "Audrey"
+Lines = Array[ExtResource("3_kqy5e")]([SubResource("Resource_tn6d5"), SubResource("Resource_ry4bf")])
+
+[sub_resource type="Resource" id="Resource_tbr22"]
+script = ExtResource("3_kqy5e")
+Text = "you're stupid"
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_4jeut"]
+script = ExtResource("3_kqy5e")
+Text = "I don't really like you
+ you're pretty mean"
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_vpub3"]
+script = ExtResource("3_kqy5e")
+Text = "you're a little googoo baby
+and I don't think you're
+very nice at all like
+you're like a a meanie poop"
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_75cmd"]
+script = ExtResource("3_kqy5e")
+Text = "I'm gonna kill you"
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_cuhut"]
+script = ExtResource("3_kqy5e")
+Text = "LET ME OUT"
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_cw1nl"]
+script = ExtResource("3_kqy5e")
+Text = "whatever whatever"
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_v54cf"]
+script = ExtResource("3_kqy5e")
+Text = "you're you're mad mad for for what what what though thoguh"
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_e6uga"]
+script = ExtResource("3_kqy5e")
+Text = "pleaaasseeee?"
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_74071"]
+script = ExtResource("3_kqy5e")
+Text = "you you suck suck"
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_ksvsn"]
+script = ExtResource("2_gwkln")
+Character = "slingly"
+Lines = Array[ExtResource("3_kqy5e")]([SubResource("Resource_tbr22"), SubResource("Resource_4jeut"), SubResource("Resource_vpub3"), SubResource("Resource_75cmd"), SubResource("Resource_cuhut"), SubResource("Resource_cw1nl"), SubResource("Resource_v54cf"), SubResource("Resource_e6uga"), SubResource("Resource_74071")])
+
+[sub_resource type="Resource" id="Resource_mjnmd"]
+script = ExtResource("3_kqy5e")
+Text = "DAMN"
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_ats3c"]
+script = ExtResource("3_kqy5e")
+Text = "FINE BITCH"
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_7rumw"]
+script = ExtResource("2_gwkln")
+Character = "slinkly"
+Lines = Array[ExtResource("3_kqy5e")]([SubResource("Resource_mjnmd"), SubResource("Resource_ats3c")])
+
+[sub_resource type="Resource" id="Resource_i3r5y"]
+script = ExtResource("3_kqy5e")
+Text = "fiiinnneeeee"
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_2uqdj"]
+script = ExtResource("2_gwkln")
+Character = "Audrey"
+Lines = Array[ExtResource("3_kqy5e")]([SubResource("Resource_i3r5y")])
+
+[sub_resource type="Resource" id="Resource_ephl8"]
+script = ExtResource("3_kqy5e")
+Text = "nuh uhhhhhh"
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_jvxv3"]
+script = ExtResource("3_kqy5e")
+Text = "stupid baby boy"
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_q5tg5"]
+script = ExtResource("2_gwkln")
+Character = "Audrey"
+Lines = Array[ExtResource("3_kqy5e")]([SubResource("Resource_ephl8"), SubResource("Resource_jvxv3")])
+
+[sub_resource type="Resource" id="Resource_38028"]
+script = ExtResource("3_kqy5e")
+Text = "Wake up."
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_3bjqy"]
+script = ExtResource("2_gwkln")
+Character = ""
+Lines = Array[ExtResource("3_kqy5e")]([SubResource("Resource_38028")])
+
+[sub_resource type="Resource" id="Resource_pkjyw"]
+script = ExtResource("3_kqy5e")
+Text = ""
+Randoms = Array[Array]([Array[ExtResource("2_gwkln")]([]), Array[ExtResource("2_gwkln")]([]), Array[ExtResource("2_gwkln")]([]), Array[ExtResource("2_gwkln")]([]), Array[ExtResource("2_gwkln")]([]), Array[ExtResource("2_gwkln")]([]), Array[ExtResource("2_gwkln")]([]), Array[ExtResource("2_gwkln")]([])])
+
+[sub_resource type="Resource" id="Resource_b14l5"]
+script = ExtResource("3_kqy5e")
+Text = ""
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_uwcar"]
+script = ExtResource("2_gwkln")
+Character = ""
+Lines = Array[ExtResource("3_kqy5e")]([SubResource("Resource_pkjyw"), SubResource("Resource_b14l5")])
+
+[sub_resource type="Resource" id="Resource_2e6c4"]
+script = ExtResource("3_kqy5e")
+Text = ""
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_bte85"]
+script = ExtResource("3_kqy5e")
+Text = "Ah."
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_bpkv8"]
+script = ExtResource("3_kqy5e")
+Text = "I see."
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_dmva3"]
+script = ExtResource("3_kqy5e")
+Text = ""
+Randoms = Array[Array]([Array[ExtResource("2_gwkln")]([])])
+
+[sub_resource type="Resource" id="Resource_63ipg"]
+script = ExtResource("3_kqy5e")
+Text = ""
+Randoms = Array[Array]([Array[ExtResource("2_gwkln")]([])])
+
+[sub_resource type="Resource" id="Resource_d8ex5"]
+script = ExtResource("2_gwkln")
+Character = ""
+Lines = Array[ExtResource("3_kqy5e")]([SubResource("Resource_2e6c4"), SubResource("Resource_bte85"), SubResource("Resource_bpkv8"), SubResource("Resource_dmva3"), SubResource("Resource_63ipg")])
+
+[sub_resource type="Resource" id="Resource_ky3s8"]
+script = ExtResource("3_kqy5e")
+Text = ""
+Randoms = Array[Array]([Array[ExtResource("2_gwkln")]([]), Array[ExtResource("2_gwkln")]([]), Array[ExtResource("2_gwkln")]([]), Array[ExtResource("2_gwkln")]([]), Array[ExtResource("2_gwkln")]([]), Array[ExtResource("2_gwkln")]([]), Array[ExtResource("2_gwkln")]([]), Array[ExtResource("2_gwkln")]([])])
+
+[sub_resource type="Resource" id="Resource_1oh5x"]
+script = ExtResource("3_kqy5e")
+Text = ""
+Randoms = Array[Array]([Array[ExtResource("2_gwkln")]([]), Array[ExtResource("2_gwkln")]([]), Array[ExtResource("2_gwkln")]([]), Array[ExtResource("2_gwkln")]([]), Array[ExtResource("2_gwkln")]([])])
+
+[sub_resource type="Resource" id="Resource_tdtau"]
+script = ExtResource("2_gwkln")
+Character = ""
+Lines = Array[ExtResource("3_kqy5e")]([SubResource("Resource_ky3s8"), SubResource("Resource_1oh5x")])
+
+[sub_resource type="Resource" id="Resource_5lsma"]
+script = ExtResource("3_kqy5e")
+Text = "I'm not sure how this happened."
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_d82ue"]
+script = ExtResource("3_kqy5e")
+Text = "You weren't meant to die yet."
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_u8368"]
+script = ExtResource("3_kqy5e")
+Text = ""
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_a5282"]
+script = ExtResource("2_gwkln")
+Character = ""
+Lines = Array[ExtResource("3_kqy5e")]([SubResource("Resource_5lsma"), SubResource("Resource_d82ue"), SubResource("Resource_u8368")])
+
+[sub_resource type="Resource" id="Resource_1wk1v"]
+script = ExtResource("3_kqy5e")
+Text = "It's blocked by rubble."
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_u4n3l"]
+script = ExtResource("2_gwkln")
+Character = ""
+Lines = Array[ExtResource("3_kqy5e")]([SubResource("Resource_1wk1v")])
+
+[sub_resource type="Resource" id="Resource_rilk1"]
+script = ExtResource("3_kqy5e")
+Text = "that's his name"
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_qs0ob"]
+script = ExtResource("3_kqy5e")
+Text = "he's david."
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_f83te"]
+script = ExtResource("2_gwkln")
+Character = ""
+Lines = Array[ExtResource("3_kqy5e")]([SubResource("Resource_rilk1"), SubResource("Resource_qs0ob")])
+
+[sub_resource type="Resource" id="Resource_54kxy"]
+script = ExtResource("3_kqy5e")
+Text = "Not even screams bleed through this edge."
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_g7240"]
+script = ExtResource("3_kqy5e")
+Text = "Turn back while you still can, Audrey."
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_d1k6j"]
+script = ExtResource("2_gwkln")
+Character = ""
+Lines = Array[ExtResource("3_kqy5e")]([SubResource("Resource_54kxy"), SubResource("Resource_g7240")])
+
+[sub_resource type="Resource" id="Resource_iu3bv"]
+script = ExtResource("3_kqy5e")
+Text = "Some old machine used for washing dishes."
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_s0nkv"]
+script = ExtResource("3_kqy5e")
+Text = "It's no longer functional."
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_l6pv0"]
+script = ExtResource("2_gwkln")
+Character = ""
+Lines = Array[ExtResource("3_kqy5e")]([SubResource("Resource_iu3bv"), SubResource("Resource_s0nkv")])
+
+[sub_resource type="Resource" id="Resource_5emvv"]
+script = ExtResource("3_kqy5e")
+Text = "some fat rabbit, you."
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_apqn1"]
+script = ExtResource("2_gwkln")
+Character = ""
+Lines = Array[ExtResource("3_kqy5e")]([SubResource("Resource_5emvv")])
+
+[sub_resource type="Resource" id="Resource_1wfbc"]
+script = ExtResource("3_kqy5e")
+Text = "It's locked."
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_5k3pe"]
+script = ExtResource("2_gwkln")
+Character = ""
+Lines = Array[ExtResource("3_kqy5e")]([SubResource("Resource_1wfbc")])
+
+[sub_resource type="Resource" id="Resource_wlfrc"]
+script = ExtResource("3_kqy5e")
+Text = "the line you tried to play dialogue doesn't exist"
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_2b7vl"]
+script = ExtResource("3_kqy5e")
+Text = "sorry :("
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_70p1k"]
+script = ExtResource("2_gwkln")
+Character = ""
+Lines = Array[ExtResource("3_kqy5e")]([SubResource("Resource_wlfrc"), SubResource("Resource_2b7vl")])
+
+[sub_resource type="Resource" id="Resource_g4e6f"]
+script = ExtResource("3_kqy5e")
+Text = "It hasn't been washed in ages."
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_123xo"]
+script = ExtResource("3_kqy5e")
+Text = "Reeks of rotten food."
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_carab"]
+script = ExtResource("3_kqy5e")
+Text = "Probably should stop smelling it before you get sick."
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_nfe2b"]
+script = ExtResource("2_gwkln")
+Character = ""
+Lines = Array[ExtResource("3_kqy5e")]([SubResource("Resource_g4e6f"), SubResource("Resource_123xo"), SubResource("Resource_carab")])
+
+[sub_resource type="Resource" id="Resource_02xwe"]
+script = ExtResource("3_kqy5e")
+Text = "It's lodged stuck."
+Randoms = Array[Array]([])
+
+[sub_resource type="Resource" id="Resource_dwev0"]
+script = ExtResource("2_gwkln")
+Character = ""
+Lines = Array[ExtResource("3_kqy5e")]([SubResource("Resource_02xwe")])
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0m3r5"]
 
@@ -43,6 +479,27 @@ process_thread_group = 1
 process_thread_group_order = 0
 process_thread_messages = 1
 script = ExtResource("1_j8xi1")
+Scenez = Dictionary[String, Array]({
+"convo_default": Array[ExtResource("2_gwkln")]([SubResource("Resource_21h5e")]),
+"convo_test": Array[ExtResource("2_gwkln")]([SubResource("Resource_12lhf"), SubResource("Resource_ksvsn")]),
+"convo_test_NO": Array[ExtResource("2_gwkln")]([SubResource("Resource_7rumw")]),
+"convo_test_let_out": Array[ExtResource("2_gwkln")]([SubResource("Resource_2uqdj")]),
+"convo_test_nuh_uh": Array[ExtResource("2_gwkln")]([SubResource("Resource_q5tg5")]),
+"death_death_wake_up": Array[ExtResource("2_gwkln")]([SubResource("Resource_3bjqy")]),
+"death_ender_1": Array[ExtResource("2_gwkln")]([SubResource("Resource_uwcar")]),
+"death_hass_1": Array[ExtResource("2_gwkln")]([SubResource("Resource_d8ex5")]),
+"death_starter_1": Array[ExtResource("2_gwkln")]([SubResource("Resource_tdtau")]),
+"death_unknown": Array[ExtResource("2_gwkln")]([SubResource("Resource_a5282")]),
+"interact_blocked": Array[ExtResource("2_gwkln")]([SubResource("Resource_u4n3l")]),
+"interact_david_bazookie": Array[ExtResource("2_gwkln")]([SubResource("Resource_f83te")]),
+"interact_default": Array[ExtResource("2_gwkln")]([SubResource("Resource_d1k6j")]),
+"interact_dish_machine": Array[ExtResource("2_gwkln")]([SubResource("Resource_l6pv0")]),
+"interact_gubby": Array[ExtResource("2_gwkln")]([SubResource("Resource_apqn1")]),
+"interact_locked": Array[ExtResource("2_gwkln")]([SubResource("Resource_5k3pe")]),
+"interact_nonexistent": Array[ExtResource("2_gwkln")]([SubResource("Resource_70p1k")]),
+"interact_sink": Array[ExtResource("2_gwkln")]([SubResource("Resource_nfe2b")]),
+"interact_stuck": Array[ExtResource("2_gwkln")]([SubResource("Resource_dwev0")])
+})
 metadata/_custom_type_script = "uid://csefxrb6ehpnb"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Dialogue"]

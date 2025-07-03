@@ -21,12 +21,12 @@ uniform float intensity : hint_range(0.0, 1.0) = 1.0;
 void fragment()
 {
 	vec4 tex = texture(SCREEN_TEXTURE, SCREEN_UV);
-	
+
 	float L = (17.8824 * tex.r) + (43.5161 * tex.g) + (4.11935 * tex.b);
 	float M = (3.45565 * tex.r) + (27.1554 * tex.g) + (3.86714 * tex.b);
 	float S = (0.0299566 * tex.r) + (0.184309 * tex.g) + (1.46709 * tex.b);
 	float l, m, s;
-	
+
 	if (mode == 0) //Protanopia
 	{
 		l = 0.0 * L + 2.02344 * M + -2.52581 * S;
@@ -45,7 +45,7 @@ void fragment()
 		m = 0.0 * L + 1.0 * M + 0.0 * S;
 		s = -0.395913 * L + 0.801109 * M + 0.0 * S;
 	}
-	
+
 	vec4 error;
 	error.r = (0.0809444479 * l) + (-0.130504409 * m) + (0.116721066 * s);
 	error.g = (-0.0102485335 * l) + (0.0540193266 * m) + (-0.113614708 * s);
@@ -58,6 +58,6 @@ void fragment()
 	correction.b = (diff.r * 0.7) + (diff.b * 1.0);
 	correction = tex + correction;
 	correction.a = tex.a * intensity;
-	
+
 	COLOR = correction;
 }

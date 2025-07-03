@@ -13,10 +13,13 @@ public partial class PauseGui : Control
 	public Button SettingsButton;
 	public Button QuitButton;
 
+	public VBoxContainer Container;
+
 	static private Vector2 GradientStartFrom = new(0, 0);
 	static private Vector2 GradientEndFrom = new(10, 0);
 
 	private TextureRect Background;
+	private SettingsGui Settings;
 
 	private TextureRect GradientTexture;
 	private GradientTexture2D Gradient;
@@ -31,6 +34,7 @@ public partial class PauseGui : Control
 	{
 		Player = this.GetGameNode<Player>("%Player");
 		Lighting = this.GetGameNode<Lighting3D>("%Lighting3D");
+		Settings = this.GetGameNode<SettingsGui>("%SettingsLayer/SettingsGui");
 
 		GradientTexture = GetNode<TextureRect>("Gradient");
 		Gradient = GradientTexture.Texture as GradientTexture2D;
@@ -39,12 +43,14 @@ public partial class PauseGui : Control
 		Background = GetNode<TextureRect>("Background");
 		Background.Hide();
 
-		var Container = GetChild(0).GetChild(2);
+		Container = GetChild<VBoxContainer>(0);
 
-		ResumeButton = Container.GetChild<Button>(0);
-		SkipButton = Container.GetChild<Button>(1);
-		SettingsButton = Container.GetChild<Button>(2);
-		QuitButton = Container.GetChild<Button>(3);
+		var ButtonContainer = Container.GetChild(2);
+
+		ResumeButton = ButtonContainer.GetChild<Button>(0);
+		SkipButton = ButtonContainer.GetChild<Button>(1);
+		SettingsButton = ButtonContainer.GetChild<Button>(2);
+		QuitButton = ButtonContainer.GetChild<Button>(3);
 
 		ResumeButton.Pressed += Resume;
 		SkipButton.Pressed += SkipCutscene;
@@ -124,7 +130,7 @@ public partial class PauseGui : Control
 
 	public void OpenSettings()
 	{
-
+		Settings.InSettings = true;
 	}
 
 	public void Quit()
@@ -143,10 +149,11 @@ public partial class PauseGui : Control
 
 		if (paused)
 		{
-			Gradient.FillFrom = Gradient.FillFrom.Lerp(GradientEndFrom, 1/1*(float)delta);
+			Container.Modulate = Container.Modulate.Lerp(!Settings.InSettings ? Colors.White : Colors.Transparent, 1/0.3f*(float)delta);
+			Gradient.FillFrom = Gradient.FillFrom.Lerp(GradientEndFrom, 1 / 1 * (float)delta);
 		}
 
-		if (paused && !waiting && Lighting.TempLightingIs("Night"))
+		if (paused && !waiting && Lighting.TempLightingIs("Pause"))
 		{
 			var World = Lighting.World;
 			float scale = World.CameraAttributes.AutoExposureScale;
@@ -174,6 +181,7 @@ public partial class PauseGui : Control
 			Game.Delay(0.1f, () => cooldown = false);
 
 			Paused ^= true;
+			Settings.InSettings = false;
 		}
 	}
 }

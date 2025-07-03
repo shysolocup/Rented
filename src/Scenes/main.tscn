@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://s0ftqrddh5up"]
+[gd_scene load_steps=35 format=3 uid="uid://s0ftqrddh5up"]
 
 [ext_resource type="Script" uid="uid://cfoo1gxat5mv8" path="res://src/Libs/shylib/Classes/Game/GameInstance.cs" id="1_k0mjx"]
 [ext_resource type="Script" uid="uid://cei6x6adiqlte" path="res://src/Libs/shylib/Classes/Lighting3D.cs" id="2_h8oac"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://cge1tw0n2wjvm" path="res://src/Libs/shylib/Classes/RbxScript.cs" id="7_0m3r5"]
 [ext_resource type="Script" uid="uid://f680ovgo7k8o" path="res://src/Scripts/SaveIconSpinner.cs" id="9_ng2wt"]
 [ext_resource type="Script" uid="uid://bps104hjuxax7" path="res://src/Libs/shylib/Classes/TalkerObject3D.cs" id="9_w0vrg"]
+[ext_resource type="PackedScene" uid="uid://c3xsky1fajb6g" path="res://src/Resources/Maps/HouseBlockOut.tscn" id="10_8i3or"]
 [ext_resource type="Texture2D" uid="uid://leopdc2ne6l3" path="res://src/Textures/ref_gubby.png" id="10_e2xy3"]
 [ext_resource type="PackedScene" uid="uid://vi335e6p4bg0" path="res://src/Resources/Ui/Packed/CrosshairGui.tscn" id="10_timk5"]
 [ext_resource type="Script" uid="uid://d1dwvl843g32v" path="res://src/Libs/shylib/Classes/Trigger3D.cs" id="11_743ng"]
@@ -139,6 +140,7 @@ metadata/_custom_type_script = "uid://cei6x6adiqlte"
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 82.6777, 3.23216, -6.55279)
 script = ExtResource("4_timk5")
+MapScene = ExtResource("10_8i3or")
 metadata/_custom_type_script = "uid://besxu1rffsk8o"
 
 [node name="Cameras" type="Node3D" parent="Root3D"]
@@ -171,6 +173,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 85.2569, 3.22074, -5.94942)
 
 [node name="Dish" type="Marker3D" parent="Root3D/Markers"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.4775, 1.82917, -51.6094)
+gizmo_extents = 1.0
+
+[node name="Baseplate" type="Marker3D" parent="Root3D/Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.3167, -49.8047, 0)
 gizmo_extents = 1.0
 
 [node name="Default" type="Marker3D" parent="Root3D/Markers"]
@@ -299,8 +305,10 @@ visible = false
 unique_name_in_owner = true
 
 [node name="PauseLayer" parent="Guis" instance=ExtResource("14_7mk6u")]
+unique_name_in_owner = true
 
 [node name="SettingsLayer" parent="Guis" instance=ExtResource("16_h8oac")]
+unique_name_in_owner = true
 layer = 5
 
 [node name="DialogueGui" parent="Guis" instance=ExtResource("14_8nlug")]

@@ -23,6 +23,12 @@ public partial class DialogueData : Node
 
 	private SceneTree tree;
 
+	[Export]
+	private Dictionary<string, Array<DialogueSequence>> Scenez
+	{
+		get => Scenes;
+		set => Scenes = value;
+	}
 
 	static public Dictionary<string, Array<DialogueSequence>> Scenes = [];
 	static public Array<DialogueCharacterEffect> Effects = [];

@@ -1,17 +1,41 @@
-[gd_scene load_steps=20 format=3 uid="uid://duvy85smfjk22"]
+[gd_scene load_steps=47 format=3 uid="uid://duvy85smfjk22"]
 
+[ext_resource type="Script" uid="uid://dblrcoi3hd520" path="res://src/Scripts/SettingsGui.cs" id="1_8eabv"]
 [ext_resource type="LabelSettings" uid="uid://dh26hvxsl44sy" path="res://src/Resources/Ui/PauseGuiTitleLabelSettings.tres" id="2_adq7j"]
 [ext_resource type="Texture2D" uid="uid://bmtapdmr10o7e" path="res://src/Textures/ui_dialog_border.png" id="2_ivbaw"]
 [ext_resource type="FontFile" uid="uid://fj2b1x4fiorb" path="res://src/Fonts/timesbi.ttf" id="3_2lf3l"]
 [ext_resource type="Texture2D" uid="uid://d01hk0epfwk0e" path="res://src/Textures/ui_dialog_background.png" id="3_4d1kh"]
 [ext_resource type="LabelSettings" uid="uid://dmys4p8trstsi" path="res://src/Resources/Ui/PauseGuiLabelSettings.tres" id="3_4vm78"]
 [ext_resource type="StyleBox" uid="uid://dti4bux1hdrhd" path="res://src/Resources/Ui/SettingsSection.tres" id="4_ivbaw"]
+[ext_resource type="StyleBox" uid="uid://doq610dbi3bsw" path="res://src/Resources/Ui/DialogButton.tres" id="5_nhfcw"]
 [ext_resource type="StyleBox" uid="uid://c3kf7qgi5iwyi" path="res://src/Resources/Ui/SettingButton.tres" id="6_8eabv"]
 [ext_resource type="Theme" uid="uid://r3vgxokmxdyj" path="res://src/Resources/Ui/SettingsTheme.tres" id="6_e4clx"]
+[ext_resource type="StyleBox" uid="uid://0oi8rktonqwv" path="res://src/Resources/Ui/DialogButtonHover.tres" id="6_pofjr"]
+[ext_resource type="StyleBox" uid="uid://bclw3clviyndh" path="res://src/Resources/Ui/DialogButtonPress.tres" id="7_64p0j"]
 [ext_resource type="FontFile" uid="uid://djugwc4dfi8yc" path="res://src/Fonts/timesi.ttf" id="8_tsn0p"]
+[ext_resource type="Script" uid="uid://ctvm6sqxle0am" path="res://src/Libs/shylib/Classes/Game/Settings/CameraSettings.cs" id="10_pofjr"]
 [ext_resource type="Texture2D" uid="uid://c5ujsytfglxjj" path="res://src/Textures/icon100.png" id="10_tsn0p"]
-[ext_resource type="StyleBox" uid="uid://f05ftxqjoqla" path="res://src/Resources/Ui/Keystroke.tres" id="11_8eabv"]
-[ext_resource type="FontFile" uid="uid://bpdt8oiacjxlk" path="res://src/Fonts/times.ttf" id="12_wrb1e"]
+[ext_resource type="StyleBox" uid="uid://exqyscgxswgh" path="res://src/Resources/Ui/SettingButtonPress.tres" id="12_fdjsa"]
+[ext_resource type="StyleBox" uid="uid://dljp1kxxxhaej" path="res://src/Resources/Ui/SettingButtonHover.tres" id="13_mvkk6"]
+[ext_resource type="Script" uid="uid://l4ea726bl5fa" path="res://src/Libs/shylib/Classes/Game/Settings/GraphicsSettings.cs" id="14_2sfqt"]
+[ext_resource type="Script" uid="uid://cib2ygrirvxeg" path="res://src/Libs/shylib/Classes/Game/Settings/AudioSettings.cs" id="17_771ry"]
+[ext_resource type="Script" uid="uid://du56ma7v2q73g" path="res://src/Libs/shylib/Classes/Game/Settings/ControlsSettings.cs" id="18_qiiy0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5hxj2"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nhfcw"]
+texture = ExtResource("3_4d1kh")
+texture_margin_left = 63.0
+texture_margin_top = 5.0
+texture_margin_right = 63.0
+texture_margin_bottom = 5.0
+expand_margin_left = 7.0
+expand_margin_top = 5.0
+expand_margin_right = 7.0
+expand_margin_bottom = 7.0
+modulate_color = Color(0.18359, 0.18359, 0.18359, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1vmpo"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_adq7j"]
 color = Color(0.529067, 0.529067, 0.529067, 1)
@@ -19,12 +43,16 @@ grow_begin = 0.0
 grow_end = 0.0
 thickness = 5
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_64p0j"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ntdvb"]
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8eabv"]
 texture = ExtResource("3_4d1kh")
 texture_margin_left = 89.0
 texture_margin_top = 53.0
 texture_margin_right = 99.0
-texture_margin_bottom = 71.0
+texture_margin_bottom = 30.0
 expand_margin_left = 7.0
 expand_margin_top = 5.0
 expand_margin_right = 7.0
@@ -43,6 +71,12 @@ expand_margin_right = 7.0
 expand_margin_bottom = 7.0
 modulate_color = Color(0.18359, 0.18359, 0.18359, 1)
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nhfcw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fdjsa"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mvkk6"]
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tsn0p"]
 texture = ExtResource("3_4d1kh")
 texture_margin_left = 89.0
@@ -55,6 +89,8 @@ expand_margin_right = 7.0
 expand_margin_bottom = 7.0
 modulate_color = Color(0.18359, 0.18359, 0.18359, 1)
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pofjr"]
+
 [sub_resource type="LabelSettings" id="LabelSettings_ivbaw"]
 font = ExtResource("3_2lf3l")
 font_size = 17
@@ -62,14 +98,46 @@ font_size = 17
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_pwpv7"]
 blend_mode = 1
 
-[sub_resource type="LabelSettings" id="LabelSettings_fdjsa"]
-font = ExtResource("12_wrb1e")
-font_size = 20
-font_color = Color(1, 1, 1, 0.447059)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2sfqt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_771ry"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fuasu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qiiy0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iam2a"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pw7ij"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kbi0k"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e7726"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wrb1e"]
+texture = ExtResource("3_4d1kh")
+texture_margin_left = 89.0
+texture_margin_right = 114.0
+expand_margin_left = 7.0
+expand_margin_top = 5.0
+expand_margin_right = 7.0
+expand_margin_bottom = 7.0
+modulate_color = Color(0.18359, 0.18359, 0.18359, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fdjsa"]
+texture = ExtResource("3_4d1kh")
+texture_margin_left = 73.0
+texture_margin_right = 73.0
+expand_margin_left = 7.0
+expand_margin_top = 5.0
+expand_margin_right = 7.0
+expand_margin_bottom = 7.0
+modulate_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xvw7r"]
 
 [node name="SettingsLayer" type="CanvasLayer"]
 layer = 3
-visible = false
 
 [node name="SettingsGui" type="Control" parent="."]
 unique_name_in_owner = true
@@ -81,6 +149,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+script = ExtResource("1_8eabv")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="SettingsGui"]
 layout_mode = 1
@@ -92,6 +161,7 @@ grow_vertical = 2
 
 [node name="Top" type="TextureRect" parent="SettingsGui/VBoxContainer"]
 layout_mode = 2
+mouse_filter = 2
 texture = ExtResource("2_ivbaw")
 stretch_mode = 3
 flip_h = true
@@ -104,62 +174,110 @@ horizontal_alignment = 1
 
 [node name="Bottom" type="TextureRect" parent="SettingsGui/VBoxContainer"]
 layout_mode = 2
+mouse_filter = 2
 texture = ExtResource("2_ivbaw")
 stretch_mode = 3
 flip_h = true
 flip_v = true
 
+[node name="HSeparator" type="HSeparator" parent="SettingsGui/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+theme_override_styles/separator = SubResource("StyleBoxEmpty_5hxj2")
+
+[node name="PanelContainer" type="PanelContainer" parent="SettingsGui/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxTexture_nhfcw")
+
+[node name="TabButtons" type="HBoxContainer" parent="SettingsGui/VBoxContainer/PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = -30
+
+[node name="Graphics" type="Button" parent="SettingsGui/VBoxContainer/PanelContainer/TabButtons"]
+z_index = 9
+layout_mode = 2
+theme_override_fonts/font = ExtResource("8_tsn0p")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1vmpo")
+theme_override_styles/disabled = ExtResource("5_nhfcw")
+theme_override_styles/hover = ExtResource("6_pofjr")
+theme_override_styles/pressed = ExtResource("7_64p0j")
+theme_override_styles/normal = ExtResource("5_nhfcw")
+action_mode = 0
+text = "Graphics"
+
+[node name="Controls" type="Button" parent="SettingsGui/VBoxContainer/PanelContainer/TabButtons"]
+z_index = 9
+layout_mode = 2
+theme_override_fonts/font = ExtResource("8_tsn0p")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1vmpo")
+theme_override_styles/disabled = ExtResource("5_nhfcw")
+theme_override_styles/hover = ExtResource("6_pofjr")
+theme_override_styles/pressed = ExtResource("7_64p0j")
+theme_override_styles/normal = ExtResource("5_nhfcw")
+action_mode = 0
+text = "Controls"
+
+[node name="Audio" type="Button" parent="SettingsGui/VBoxContainer/PanelContainer/TabButtons"]
+z_index = 9
+layout_mode = 2
+theme_override_fonts/font = ExtResource("8_tsn0p")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1vmpo")
+theme_override_styles/disabled = ExtResource("5_nhfcw")
+theme_override_styles/hover = ExtResource("6_pofjr")
+theme_override_styles/pressed = ExtResource("7_64p0j")
+theme_override_styles/normal = ExtResource("5_nhfcw")
+action_mode = 0
+text = "Audio"
+
+[node name="Camera" type="Button" parent="SettingsGui/VBoxContainer/PanelContainer/TabButtons"]
+z_index = 9
+layout_mode = 2
+theme_override_fonts/font = ExtResource("8_tsn0p")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1vmpo")
+theme_override_styles/disabled = ExtResource("5_nhfcw")
+theme_override_styles/hover = ExtResource("6_pofjr")
+theme_override_styles/pressed = ExtResource("7_64p0j")
+theme_override_styles/normal = ExtResource("5_nhfcw")
+action_mode = 0
+text = "Camera"
+
 [node name="CenterContainer" type="CenterContainer" parent="SettingsGui/VBoxContainer"]
 layout_mode = 2
 
-[node name="Control" type="Control" parent="SettingsGui/VBoxContainer/CenterContainer"]
-layout_mode = 2
-
-[node name="ScrollContainer" type="ScrollContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control"]
-layout_mode = 2
-offset_left = -473.0
-offset_top = -5.0
-offset_right = 472.0
-offset_bottom = 547.0
-size_flags_vertical = 3
-horizontal_scroll_mode = 0
-
-[node name="CenterContainer" type="CenterContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="SettingsContainer" type="VBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer"]
+[node name="SettingsContainer" type="VBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="Camera" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer"]
+[node name="Camera" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer"]
 visible = false
 layout_mode = 2
 theme_override_styles/panel = ExtResource("4_ivbaw")
+script = ExtResource("10_pofjr")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Camera"]
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer"]
+[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer"]
 layout_mode = 2
 text = "Camera"
 label_settings = ExtResource("2_adq7j")
 
-[node name="Sensitivity" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer"]
+[node name="Sensitivity" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer"]
 layout_mode = 2
 theme_override_styles/panel = ExtResource("6_8eabv")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer/Sensitivity"]
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer/Sensitivity"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer/Sensitivity/HBoxContainer"]
+[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer/Sensitivity/HBoxContainer"]
 layout_mode = 2
 text = "Sensitivity:"
 label_settings = ExtResource("3_4vm78")
 
-[node name="SpinBox" type="SpinBox" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer/Sensitivity/HBoxContainer"]
+[node name="SpinBox" type="SpinBox" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer/Sensitivity/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("6_e4clx")
 max_value = 2.0
@@ -168,29 +286,30 @@ value = 1.0
 rounded = true
 alignment = 1
 
-[node name="HSlider" type="HSlider" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer/Sensitivity/HBoxContainer"]
+[node name="HSlider" type="HSlider" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer/Sensitivity/HBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 theme_override_styles/slider = SubResource("StyleBoxLine_adq7j")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxEmpty_64p0j")
 max_value = 2.0
 step = 0.1
 value = 0.5
 
-[node name="FOV" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer"]
+[node name="FOV" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer"]
 layout_mode = 2
 theme_override_styles/panel = ExtResource("6_8eabv")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer/FOV"]
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer/FOV"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer/FOV/HBoxContainer"]
+[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer/FOV/HBoxContainer"]
 layout_mode = 2
 text = "Field Of View:"
 label_settings = ExtResource("3_4vm78")
 
-[node name="SpinBox" type="SpinBox" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer/FOV/HBoxContainer"]
+[node name="SpinBox" type="SpinBox" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer/FOV/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("6_e4clx")
 min_value = 30.0
@@ -199,42 +318,44 @@ value = 60.0
 rounded = true
 alignment = 1
 
-[node name="HSlider" type="HSlider" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer/FOV/HBoxContainer"]
+[node name="HSlider" type="HSlider" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Camera/VBoxContainer/FOV/HBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 theme_override_styles/slider = SubResource("StyleBoxLine_adq7j")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxEmpty_ntdvb")
 min_value = 30.0
 max_value = 200.0
 value = 60.0
 
-[node name="Graphics" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer"]
+[node name="Graphics" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer"]
 visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_8eabv")
+script = ExtResource("14_2sfqt")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Graphics"]
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Graphics"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer"]
+[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer"]
 layout_mode = 2
 text = "Graphics"
 label_settings = ExtResource("2_adq7j")
 
-[node name="FPS" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer"]
+[node name="FPS" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_pwpv7")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/FPS"]
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/FPS"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/FPS/HBoxContainer"]
+[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/FPS/HBoxContainer"]
 layout_mode = 2
 text = "Max FPS:"
 label_settings = ExtResource("3_4vm78")
 
-[node name="SpinBox" type="SpinBox" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/FPS/HBoxContainer"]
+[node name="SpinBox" type="SpinBox" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/FPS/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("6_e4clx")
 min_value = 30.0
@@ -243,33 +364,35 @@ value = 60.0
 rounded = true
 alignment = 1
 
-[node name="HSlider" type="HSlider" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/FPS/HBoxContainer"]
+[node name="HSlider" type="HSlider" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/FPS/HBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 theme_override_styles/slider = SubResource("StyleBoxLine_adq7j")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxEmpty_nhfcw")
 min_value = 30.0
 max_value = 200.0
 value = 60.0
 
-[node name="Colorblind" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer"]
+[node name="Colorblind" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_pwpv7")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/Colorblind"]
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/Colorblind"]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/Colorblind/HBoxContainer"]
+[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/Colorblind/HBoxContainer"]
 layout_mode = 2
 text = "Colorblind:"
 label_settings = ExtResource("3_4vm78")
 
-[node name="OptionButton" type="OptionButton" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/Colorblind/HBoxContainer"]
+[node name="OptionButton" type="OptionButton" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/Colorblind/HBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("8_tsn0p")
 theme_override_font_sizes/font_size = 20
+theme_override_styles/focus = SubResource("StyleBoxEmpty_fdjsa")
 selected = 0
 item_count = 4
 popup/item_0/text = "None"
@@ -281,244 +404,272 @@ popup/item_2/id = 2
 popup/item_3/text = "Tritanopia"
 popup/item_3/id = 3
 
-[node name="HSlider" type="HSlider" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/Colorblind/HBoxContainer"]
+[node name="HSlider" type="HSlider" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/Colorblind/HBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 theme_override_styles/slider = SubResource("StyleBoxLine_adq7j")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxEmpty_mvkk6")
 min_value = 30.0
 max_value = 200.0
 value = 60.0
 
-[node name="Brightness" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer"]
+[node name="Brightness" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_tsn0p")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/Brightness"]
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/Brightness"]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="HBoxContainer" type="HBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/Brightness/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/Brightness/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/Brightness/VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/Brightness/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Brightness"
 label_settings = ExtResource("3_4vm78")
 
-[node name="HSlider" type="HSlider" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/Brightness/VBoxContainer/HBoxContainer"]
+[node name="HSlider" type="HSlider" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/Brightness/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 theme_override_styles/slider = SubResource("StyleBoxLine_adq7j")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxEmpty_pofjr")
 value = 50.0
 
-[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/Brightness/VBoxContainer"]
+[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/Brightness/VBoxContainer"]
 layout_mode = 2
 text = "Adjust until you can barely see the left most image"
 label_settings = SubResource("LabelSettings_ivbaw")
 horizontal_alignment = 1
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/Brightness/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/Brightness/VBoxContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/Brightness/VBoxContainer/HBoxContainer2"]
+[node name="TextureRect" type="TextureRect" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/Brightness/VBoxContainer/HBoxContainer2"]
 modulate = Color(0.00566115, 0.00566115, 0.00566115, 1)
 material = SubResource("CanvasItemMaterial_pwpv7")
 layout_mode = 2
 texture = ExtResource("10_tsn0p")
 
-[node name="TextureRect2" type="TextureRect" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/Brightness/VBoxContainer/HBoxContainer2"]
+[node name="TextureRect2" type="TextureRect" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/Brightness/VBoxContainer/HBoxContainer2"]
 modulate = Color(0.0768358, 0.0768358, 0.0768358, 1)
 material = SubResource("CanvasItemMaterial_pwpv7")
 layout_mode = 2
 texture = ExtResource("10_tsn0p")
 
-[node name="TextureRect3" type="TextureRect" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/Brightness/VBoxContainer/HBoxContainer2"]
+[node name="TextureRect3" type="TextureRect" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/Brightness/VBoxContainer/HBoxContainer2"]
 modulate = Color(0.560955, 0.560955, 0.560955, 1)
 material = SubResource("CanvasItemMaterial_pwpv7")
 layout_mode = 2
 texture = ExtResource("10_tsn0p")
 
-[node name="Audio" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer"]
+[node name="Audio" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer"]
 visible = false
 layout_mode = 2
 theme_override_styles/panel = ExtResource("4_ivbaw")
+script = ExtResource("17_771ry")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Audio"]
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Audio"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer"]
+[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer"]
 layout_mode = 2
 text = "Audio"
 label_settings = ExtResource("2_adq7j")
 
-[node name="Master" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer"]
+[node name="Master" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer"]
 layout_mode = 2
 theme_override_styles/panel = ExtResource("6_8eabv")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Master"]
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Master"]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Master/HBoxContainer"]
+[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Master/HBoxContainer"]
 layout_mode = 2
 text = "Master Volume"
 label_settings = ExtResource("3_4vm78")
 
-[node name="HSlider" type="HSlider" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Master/HBoxContainer"]
+[node name="HSlider" type="HSlider" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Master/HBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 theme_override_styles/slider = SubResource("StyleBoxLine_adq7j")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxEmpty_2sfqt")
 value = 100.0
 
-[node name="Ambient" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer"]
+[node name="Ambient" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer"]
 layout_mode = 2
 theme_override_styles/panel = ExtResource("6_8eabv")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Ambient"]
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Ambient"]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Ambient/HBoxContainer"]
+[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Ambient/HBoxContainer"]
 layout_mode = 2
 text = "Ambient Volume"
 label_settings = ExtResource("3_4vm78")
 
-[node name="HSlider" type="HSlider" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Ambient/HBoxContainer"]
+[node name="HSlider" type="HSlider" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Ambient/HBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 theme_override_styles/slider = SubResource("StyleBoxLine_adq7j")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxEmpty_771ry")
 value = 100.0
 
-[node name="PlayButton" type="Button" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Ambient/HBoxContainer"]
+[node name="PlayButton" type="Button" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Ambient/HBoxContainer"]
 show_behind_parent = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxEmpty_fuasu")
 text = "▶"
 
-[node name="StopButton" type="Button" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Ambient/HBoxContainer"]
+[node name="StopButton" type="Button" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Ambient/HBoxContainer"]
 show_behind_parent = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxEmpty_fuasu")
 text = "■"
 
-[node name="Dialog" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer"]
+[node name="Dialog" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer"]
 layout_mode = 2
 theme_override_styles/panel = ExtResource("6_8eabv")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Dialog"]
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Dialog"]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Dialog/HBoxContainer"]
+[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Dialog/HBoxContainer"]
 layout_mode = 2
 text = "Dialog Volume"
 label_settings = ExtResource("3_4vm78")
 
-[node name="HSlider" type="HSlider" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Dialog/HBoxContainer"]
+[node name="HSlider" type="HSlider" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Dialog/HBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 theme_override_styles/slider = SubResource("StyleBoxLine_adq7j")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxEmpty_qiiy0")
 value = 100.0
 
-[node name="PlayButton" type="Button" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Dialog/HBoxContainer"]
+[node name="PlayButton" type="Button" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Dialog/HBoxContainer"]
 show_behind_parent = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxEmpty_iam2a")
 text = "▶"
 
-[node name="StopButton" type="Button" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Dialog/HBoxContainer"]
+[node name="StopButton" type="Button" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Dialog/HBoxContainer"]
 show_behind_parent = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxEmpty_iam2a")
 text = "■"
 
-[node name="Music" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer"]
+[node name="Music" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer"]
 layout_mode = 2
 theme_override_styles/panel = ExtResource("6_8eabv")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Music"]
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Music"]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Music/HBoxContainer"]
+[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Music/HBoxContainer"]
 layout_mode = 2
 text = "Volume Music"
 label_settings = ExtResource("3_4vm78")
 
-[node name="HSlider" type="HSlider" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Music/HBoxContainer"]
+[node name="HSlider" type="HSlider" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Music/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 theme_override_styles/slider = SubResource("StyleBoxLine_adq7j")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxEmpty_pw7ij")
 value = 100.0
 
-[node name="PlayButton" type="Button" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Music/HBoxContainer"]
+[node name="PlayButton" type="Button" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Music/HBoxContainer"]
 show_behind_parent = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxEmpty_kbi0k")
 text = "▶"
 
-[node name="StopButton" type="Button" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Music/HBoxContainer"]
+[node name="StopButton" type="Button" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Audio/VBoxContainer/Music/HBoxContainer"]
 show_behind_parent = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxEmpty_e7726")
 text = "■"
 
-[node name="Controls" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer"]
+[node name="Controls" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer"]
+visible = false
 layout_mode = 2
 theme_override_styles/panel = ExtResource("4_ivbaw")
+script = ExtResource("18_qiiy0")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Controls"]
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Controls"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Controls/VBoxContainer"]
+[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Controls/VBoxContainer"]
 layout_mode = 2
 text = "Controls"
 label_settings = ExtResource("2_adq7j")
 
-[node name="Master" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Controls/VBoxContainer"]
+[node name="Jump" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Controls/VBoxContainer"]
 layout_mode = 2
-theme_override_styles/panel = ExtResource("6_8eabv")
+theme_override_styles/panel = SubResource("StyleBoxTexture_wrb1e")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Controls/VBoxContainer/Master"]
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Controls/VBoxContainer/Jump"]
 layout_mode = 2
-theme_override_constants/separation = 25
+theme_override_constants/separation = 15
 
-[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Controls/VBoxContainer/Master/HBoxContainer"]
+[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Controls/VBoxContainer/Jump/HBoxContainer"]
 layout_mode = 2
 text = "Jump:"
 label_settings = ExtResource("3_4vm78")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Controls/VBoxContainer/Master/HBoxContainer"]
+[node name="Button" type="Button" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Controls/VBoxContainer/Jump/HBoxContainer"]
 layout_mode = 2
 
-[node name="Key" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Controls/VBoxContainer/Master/HBoxContainer/HBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Controls/VBoxContainer/Jump/HBoxContainer"]
 layout_mode = 2
-theme_override_styles/panel = ExtResource("11_8eabv")
+theme_override_styles/panel = SubResource("StyleBoxTexture_fdjsa")
 
-[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Controls/VBoxContainer/Master/HBoxContainer/HBoxContainer/Key"]
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Controls/VBoxContainer/Jump/HBoxContainer/PanelContainer"]
 layout_mode = 2
-text = "␣"
-label_settings = SubResource("LabelSettings_fdjsa")
+theme_override_constants/separation = 10
 
-[node name="Key2" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Controls/VBoxContainer/Master/HBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Controls/VBoxContainer/Jump/HBoxContainer/PanelContainer/HBoxContainer"]
 layout_mode = 2
-theme_override_styles/panel = ExtResource("11_8eabv")
+text = "[␣]"
 
-[node name="Label" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/Control/ScrollContainer/CenterContainer/SettingsContainer/Controls/VBoxContainer/Master/HBoxContainer/HBoxContainer/Key2"]
+[node name="Label2" type="Label" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Controls/VBoxContainer/Jump/HBoxContainer/PanelContainer/HBoxContainer"]
 layout_mode = 2
-text = "␣"
-label_settings = SubResource("LabelSettings_fdjsa")
+text = "[𝗟𝗠𝗕]"
+
+[node name="Back" type="Button" parent="SettingsGui"]
+offset_left = 14.0
+offset_top = 20.0
+offset_right = 319.0
+offset_bottom = 59.0
+theme_override_fonts/font = ExtResource("3_2lf3l")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxEmpty_xvw7r")
+theme_override_styles/hover_pressed = ExtResource("12_fdjsa")
+theme_override_styles/hover = ExtResource("13_mvkk6")
+theme_override_styles/pressed = ExtResource("12_fdjsa")
+theme_override_styles/normal = ExtResource("6_8eabv")
+text = "Back"
+alignment = 0

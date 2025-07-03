@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class CameraSettings : PanelContainer
+public partial class CameraSettings : GameSetting
 {
     private float SensitivityValue;
     private PanelContainer SensitivityContainer;

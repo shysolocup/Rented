@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://ne5pw4aniwnb"]
 
 [ext_resource type="Script" uid="uid://c1i8r8l2u4t3q" path="res://src/Libs/shylib/Classes/Player.cs" id="1_wueuk"]
-[ext_resource type="Texture2D" uid="uid://dcthcg547baj0" path="res://src/Images/david_bazookie.png" id="2_fovfp"]
+[ext_resource type="Texture2D" uid="uid://dcthcg547baj0" path="res://src/Textures/ref_david_bazookie.png" id="2_fovfp"]
 [ext_resource type="PackedScene" uid="uid://dgt7kay55jnvl" path="res://src/Resources/Packed/Arm.tscn" id="3_48v6w"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_h8oac"]
@@ -21,13 +21,13 @@ radial_accel_max = -2.23517e-06
 damping_min = 8.831
 damping_max = 11.934
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vro1a"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_48v6w"]
 albedo_texture = ExtResource("2_fovfp")
 billboard_mode = 1
 distance_fade_mode = 1
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_kp7xu"]
-material = SubResource("StandardMaterial3D_vro1a")
+material = SubResource("StandardMaterial3D_48v6w")
 size = Vector2(0.1, 0.1)
 orientation = 2
 

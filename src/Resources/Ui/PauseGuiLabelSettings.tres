@@ -1,0 +1,7 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://dmys4p8trstsi"]
+
+[ext_resource type="FontFile" uid="uid://fj2b1x4fiorb" path="res://src/Fonts/timesbi.ttf" id="1_y5h3b"]
+
+[resource]
+font = ExtResource("1_y5h3b")
+font_size = 20

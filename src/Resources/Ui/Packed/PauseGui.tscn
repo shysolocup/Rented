@@ -1,11 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://dlade7y0ilag6"]
+[gd_scene load_steps=19 format=3 uid="uid://dlade7y0ilag6"]
 
 [ext_resource type="Script" uid="uid://bq8h5fsdfxg7c" path="res://src/Scripts/PauseGui.cs" id="1_vv17i"]
-[ext_resource type="Texture2D" uid="uid://cyvx5r30ccg8d" path="res://src/Images/Icon150.png" id="2_4u38r"]
-[ext_resource type="Texture2D" uid="uid://bmtapdmr10o7e" path="res://src/Images/Dialog/dialog_border.png" id="2_d8h3k"]
-[ext_resource type="Texture2D" uid="uid://0rpj4yfm6qh" path="res://src/Textures/PauseImages/pause_05.png" id="2_f084r"]
+[ext_resource type="Texture2D" uid="uid://bmtapdmr10o7e" path="res://src/Textures/ui_dialog_border.png" id="2_d8h3k"]
 [ext_resource type="Shader" uid="uid://ckj1n6jjbk0y" path="res://src/Shaders/screen_pause_icon.gdshader" id="2_nxrud"]
 [ext_resource type="FontFile" uid="uid://fj2b1x4fiorb" path="res://src/Fonts/timesbi.ttf" id="3_4u38r"]
+[ext_resource type="Texture2D" uid="uid://0rc13d2buia" path="res://src/Textures/icon150_empty.png" id="3_nxrud"]
 [ext_resource type="StyleBox" uid="uid://exqyscgxswgh" path="res://src/Resources/Ui/SettingButtonPress.tres" id="4_0aeuh"]
 [ext_resource type="StyleBox" uid="uid://dljp1kxxxhaej" path="res://src/Resources/Ui/SettingButtonHover.tres" id="5_cvfns"]
 [ext_resource type="StyleBox" uid="uid://c3kf7qgi5iwyi" path="res://src/Resources/Ui/SettingButton.tres" id="6_dmmki"]
@@ -13,11 +12,19 @@
 [ext_resource type="Shader" uid="uid://dwmfmsn7kmyjc" path="res://src/Shaders/screen_pause_background.gdshader" id="8_f084r"]
 [ext_resource type="Texture2D" uid="uid://bacwe5ivf10eo" path="res://src/Textures/tex_watercolor_03_solid.png" id="9_cvfns"]
 [ext_resource type="Material" uid="uid://bnru6blspk18c" path="res://src/Shaders/screen_wiggle.tres" id="9_dmmki"]
+[ext_resource type="Texture2D" uid="uid://bdjo508uo5e8w" path="res://src/Textures/PauseImages/pause_hospital.png" id="10_nxrud"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_31v5e"]
 shader = ExtResource("2_nxrud")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yc6y7"]
+
+[sub_resource type="Gradient" id="Gradient_nxrud"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_31v5e"]
+gradient = SubResource("Gradient_nxrud")
+fill_to = Vector2(0, 0)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nxrud"]
 shader = ExtResource("8_f084r")
@@ -52,7 +59,8 @@ theme_override_constants/separation = 20
 [node name="Icon" type="TextureRect" parent="PauseGui/VBoxContainer"]
 material = SubResource("ShaderMaterial_31v5e")
 layout_mode = 2
-texture = ExtResource("2_4u38r")
+size_flags_vertical = 3
+texture = ExtResource("3_nxrud")
 stretch_mode = 3
 
 [node name="Top" type="TextureRect" parent="PauseGui/VBoxContainer"]
@@ -121,6 +129,21 @@ stretch_mode = 3
 flip_h = true
 flip_v = true
 
+[node name="Gradient" type="TextureRect" parent="PauseGui"]
+visible = false
+top_level = true
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_31v5e")
+expand_mode = 1
+
 [node name="Background" type="TextureRect" parent="PauseGui"]
 top_level = true
 texture_filter = 1
@@ -129,11 +152,15 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -56.0
+offset_top = -35.0
+offset_right = -56.0
+offset_bottom = -35.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(1, 1)
+scale = Vector2(1.1, 1.1)
 mouse_filter = 2
-texture = ExtResource("2_f084r")
+texture = ExtResource("10_nxrud")
 expand_mode = 1
 
 [node name="stuff" type="TextureRect" parent="PauseGui"]

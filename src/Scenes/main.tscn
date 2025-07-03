@@ -1,8 +1,8 @@
-[gd_scene load_steps=31 format=3 uid="uid://s0ftqrddh5up"]
+[gd_scene load_steps=34 format=3 uid="uid://s0ftqrddh5up"]
 
 [ext_resource type="Script" uid="uid://cfoo1gxat5mv8" path="res://src/Libs/shylib/Classes/Game/GameInstance.cs" id="1_k0mjx"]
 [ext_resource type="Script" uid="uid://cei6x6adiqlte" path="res://src/Libs/shylib/Classes/Lighting3D.cs" id="2_h8oac"]
-[ext_resource type="Script" uid="uid://b4ohdvm04o5s5" path="res://src/Libs/shylib/Classes/Game/GameSettings.cs" id="2_vh02n"]
+[ext_resource type="Script" uid="uid://b4ohdvm04o5s5" path="res://src/Libs/shylib/Classes/Game/Settings/GameSettings.cs" id="2_vh02n"]
 [ext_resource type="PackedScene" uid="uid://cc1nfhciujam1" path="res://src/Resources/Lighting/Packed/Day.tscn" id="3_5na2v"]
 [ext_resource type="Shader" uid="uid://k74mqqphgdg1" path="res://src/Shaders/screen_colorblind.gdshader" id="3_743ng"]
 [ext_resource type="PackedScene" uid="uid://ne5pw4aniwnb" path="res://src/Resources/Packed/Player.tscn" id="3_ss4f7"]
@@ -49,6 +49,44 @@ radius = 0.7
 radius = 0.19
 height = 1.74
 
+[sub_resource type="Animation" id="Animation_8i3or"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_743ng"]
+resource_name = "Spinner"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 1.2),
+"transitions": PackedFloat32Array(0.450625, 1, 1),
+"update": 0,
+"values": [6.28319, 0.0, -0.174533]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8i3or"]
+_data = {
+&"RESET": SubResource("Animation_8i3or"),
+&"Spinner": SubResource("Animation_743ng")
+}
+
 [node name="Game" type="Node"]
 script = ExtResource("1_k0mjx")
 
@@ -70,9 +108,10 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Inventory" type="Node" parent="."]
+[node name="Inventory" type="Node" parent="." node_paths=PackedStringArray("Equiped")]
 unique_name_in_owner = true
 script = ExtResource("15_wf0w2")
+Equiped = NodePath("Flashlight")
 
 [node name="Flashlight" type="Node" parent="Inventory"]
 script = ExtResource("19_isqvi")
@@ -109,6 +148,7 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 process_mode = 3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.32012, -43.5223, -40.1963)
+cull_mask = 1048573
 doppler_tracking = 2
 current = true
 
@@ -118,6 +158,7 @@ target_position = Vector3(0, 0, -10)
 
 [node name="Camera3D" type="Camera3D" parent="Root3D/Cameras"]
 transform = Transform3D(1, 0, 0, 0, 0.984353, 0.176209, 0, -0.176209, 0.984353, 87.5752, 5.06033, -41.5724)
+cull_mask = 1048573
 
 [node name="Baseplate" type="CSGBox3D" parent="Root3D"]
 transform = Transform3D(527.247, 0, 0, 0, 1, 0, 0, 0, 694.333, 82.6671, -49.6076, -6.55556)
@@ -223,25 +264,33 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="SettingsLayer" parent="Guis" instance=ExtResource("16_h8oac")]
-visible = false
+[node name="SaveLayer" type="CanvasLayer" parent="Guis"]
+layer = 10
 
-[node name="SaveGui" type="Control" parent="Guis"]
-layout_mode = 1
+[node name="SaveGui" type="Control" parent="Guis/SaveLayer"]
+layout_mode = 3
 anchor_left = 28.8
 anchor_top = 16.2
 anchor_right = 28.8
 anchor_bottom = 16.2
+offset_left = -32025.6
+offset_top = -9849.6
+offset_right = -32025.6
+offset_bottom = -9849.6
 grow_horizontal = 0
 grow_vertical = 0
 mouse_filter = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="SaveIcon" type="Sprite2D" parent="Guis/SaveGui"]
+[node name="SaveIcon" type="Sprite2D" parent="Guis/SaveLayer/SaveGui"]
 position = Vector2(-42, -42)
-scale = Vector2(0.64, 0.64)
 texture = ExtResource("10_e2xy3")
 script = ExtResource("9_ng2wt")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Guis/SaveLayer/SaveGui/SaveIcon"]
+libraries = {
+&"": SubResource("AnimationLibrary_8i3or")
+}
 
 [node name="MainMenuGui" parent="Guis" instance=ExtResource("17_k0mjx")]
 visible = false
@@ -250,6 +299,9 @@ visible = false
 unique_name_in_owner = true
 
 [node name="PauseLayer" parent="Guis" instance=ExtResource("14_7mk6u")]
+
+[node name="SettingsLayer" parent="Guis" instance=ExtResource("16_h8oac")]
+layer = 5
 
 [node name="DialogueGui" parent="Guis" instance=ExtResource("14_8nlug")]
 

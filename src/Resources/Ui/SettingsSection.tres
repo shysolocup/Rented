@@ -1,0 +1,15 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://dti4bux1hdrhd"]
+
+[ext_resource type="Texture2D" uid="uid://d01hk0epfwk0e" path="res://src/Textures/ui_dialog_background.png" id="1_edauf"]
+
+[resource]
+texture = ExtResource("1_edauf")
+texture_margin_left = 76.0
+texture_margin_top = 40.0
+texture_margin_right = 189.0
+texture_margin_bottom = 45.0
+expand_margin_left = 7.0
+expand_margin_top = 5.0
+expand_margin_right = 7.0
+expand_margin_bottom = 7.0
+modulate_color = Color(0.18359, 0.18359, 0.18359, 1)

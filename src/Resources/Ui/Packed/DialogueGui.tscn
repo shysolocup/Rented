@@ -1,14 +1,14 @@
 [gd_scene load_steps=14 format=3 uid="uid://dvpi6uwtqfp8n"]
 
 [ext_resource type="Script" uid="uid://csefxrb6ehpnb" path="res://src/Libs/shylib/Classes/Dialogue/DialogueData.cs" id="1_j8xi1"]
-[ext_resource type="Texture2D" uid="uid://bmtapdmr10o7e" path="res://src/Images/Dialog/dialog_border.png" id="2_7badv"]
+[ext_resource type="Texture2D" uid="uid://bmtapdmr10o7e" path="res://src/Textures/ui_dialog_border.png" id="2_7badv"]
 [ext_resource type="FontFile" uid="uid://djugwc4dfi8yc" path="res://src/Fonts/timesi.ttf" id="4_kr11k"]
 [ext_resource type="Script" uid="uid://c7txcaajl83ve" path="res://src/Scripts/RichTextEffects/Ghost.gd" id="5_kl0wn"]
 [ext_resource type="Script" uid="uid://3mxc7rj1i0c8" path="res://src/Scripts/RichTextEffects/Matrix.gd" id="6_y8kcc"]
 [ext_resource type="StyleBox" uid="uid://doq610dbi3bsw" path="res://src/Resources/Ui/DialogButton.tres" id="7_ladyc"]
 [ext_resource type="StyleBox" uid="uid://0oi8rktonqwv" path="res://src/Resources/Ui/DialogButtonHover.tres" id="8_i232y"]
 [ext_resource type="StyleBox" uid="uid://bclw3clviyndh" path="res://src/Resources/Ui/DialogButtonPress.tres" id="9_ho71m"]
-[ext_resource type="Texture2D" uid="uid://d01hk0epfwk0e" path="res://src/Images/Dialog/dialog_background.png" id="10_tuxft"]
+[ext_resource type="Texture2D" uid="uid://d01hk0epfwk0e" path="res://src/Textures/ui_dialog_background.png" id="10_tuxft"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0m3r5"]
 

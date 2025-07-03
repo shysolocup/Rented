@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Appox;
+using CoolGame;
 using Godot;
 
 public partial class PauseGui : Control
@@ -13,18 +13,44 @@ public partial class PauseGui : Control
 	public Button SettingsButton;
 	public Button QuitButton;
 
+	static private Vector2 GradientStartFrom = new(0, 0);
+	static private Vector2 GradientEndFrom = new(10, 0);
+
 	private TextureRect Background;
+
+	private TextureRect GradientTexture;
+	private GradientTexture2D Gradient;
+	private bool cooldown = false;
 
 	private Player Player;
 	private Lighting3D Lighting;
 
 	private string ImageDir = "res://src/Textures/PauseImages";
 
-	/*private WorldEnvironment World;
-	private CameraAttributesPhysical weirdCameraEffects = GD.Load("res://src/Resources/Ui/PauseCameraAttributes.tres") as CameraAttributesPhysical;
-	private Godot.Environment weirdWorldEffects = GD.Load("res://src/Resources/Ui/PauseEffects.tres") as Godot.Environment;
-	private CameraAttributes defaultCameraEffects = GD.Load("res://src/Resources/Skies/CameraAttributesPractical.tres") as CameraAttributesPractical;
-	private Godot.Environment defaultWorldEffects = GD.Load("res://src/Resources/Skies/Default.tres") as Godot.Environment;*/
+	public override void _Ready()
+	{
+		Player = this.GetGameNode<Player>("%Player");
+		Lighting = this.GetGameNode<Lighting3D>("%Lighting3D");
+
+		GradientTexture = GetNode<TextureRect>("Gradient");
+		Gradient = GradientTexture.Texture as GradientTexture2D;
+		GradientTexture.Hide();
+		
+		Background = GetNode<TextureRect>("Background");
+		Background.Hide();
+
+		var Container = GetChild(0).GetChild(2);
+
+		ResumeButton = Container.GetChild<Button>(0);
+		SkipButton = Container.GetChild<Button>(1);
+		SettingsButton = Container.GetChild<Button>(2);
+		QuitButton = Container.GetChild<Button>(3);
+
+		ResumeButton.Pressed += Resume;
+		SkipButton.Pressed += SkipCutscene;
+		SettingsButton.Pressed += OpenSettings;
+		QuitButton.Pressed += Quit;
+	}
 
 	public override void _Notification(int what)
 	{
@@ -55,7 +81,10 @@ public partial class PauseGui : Control
 					Player.ReleaseMouse();
 					Lighting.SetTempLighting("Pause");
 
-					var dir = DirAccess.Open(ImageDir).GetFiles().Where( v => !v.EndsWith(".import") ).ToArray();
+					var dir = DirAccess.Open(ImageDir).GetFiles().Where(v => !v.EndsWith(".import")).ToArray();
+
+					Gradient.FillFrom = GradientStartFrom;
+					GradientTexture.Show();
 
 					Background.Texture = GD.Load<Texture2D>($"{ImageDir}/{dir[GD.Randi() % dir.Length]}");
 					Background.Show();
@@ -64,6 +93,7 @@ public partial class PauseGui : Control
 				else
 				{
 					Lighting.TempLighting = null;
+					GradientTexture.Hide();
 					Lighting.ResetApply();
 					Background.Hide();
 				}
@@ -102,32 +132,6 @@ public partial class PauseGui : Control
 		GetTree().Quit();
 	}
 
-
-	public override void _Ready()
-	{
-		Player = this.GetGameNode<Player>("%Player");
-		Lighting = this.GetGameNode<Lighting3D>("%Lighting3D");
-		
-		Background = GetNode<TextureRect>("Background");
-		Background.Hide();
-
-		var Container = GetChild(0).GetChild(2);
-
-		ResumeButton = Container.GetChild<Button>(0);
-		SkipButton = Container.GetChild<Button>(1);
-		SettingsButton = Container.GetChild<Button>(2);
-		QuitButton = Container.GetChild<Button>(3);
-
-		ResumeButton.Pressed += Resume;
-
-		SkipButton.Pressed += SkipCutscene;
-		
-		SettingsButton.Pressed += OpenSettings;
-
-		QuitButton.Pressed += Quit;
-
-	}
-
 	private bool rebound = false;
 	private bool waiting = false;
 
@@ -135,7 +139,12 @@ public partial class PauseGui : Control
 	{
 		base._Process(delta);
 
-		Modulate = Modulate.Lerp(paused && !waiting ? Colors.White : Colors.Transparent, this.FactorDelta(1 / 15f, delta));
+		Modulate = Modulate.Lerp(paused ? Colors.White : Colors.Transparent, 1/0.5f*(float)delta);
+
+		if (paused)
+		{
+			Gradient.FillFrom = Gradient.FillFrom.Lerp(GradientEndFrom, 1/1*(float)delta);
+		}
 
 		if (paused && !waiting && Lighting.TempLightingIs("Night"))
 		{
@@ -157,8 +166,13 @@ public partial class PauseGui : Control
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
-		if (Player != null && !DebugConsole.IsConsoleVisible() && @event is InputEventKey eventKey && eventKey.Pressed && eventKey.Keycode == Key.Escape)
+		if (Player != null && !DebugConsole.IsConsoleVisible() && Input.IsActionJustPressed("Pause"))
 		{
+			if (cooldown) return;
+
+			cooldown = true;
+			Game.Delay(0.1f, () => cooldown = false);
+
 			Paused ^= true;
 		}
 	}

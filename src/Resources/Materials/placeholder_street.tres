@@ -5,6 +5,7 @@
 
 [resource]
 cull_mode = 2
+albedo_color = Color(0.617455, 0.617455, 0.617455, 1)
 albedo_texture = ExtResource("1_5gjsc")
 metallic_specular = 1.0
 normal_enabled = true

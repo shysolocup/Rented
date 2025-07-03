@@ -37,6 +37,7 @@ public static class DebugMonitorList
 		string guh = $"\n    [val: {Game.Instance.Noise}]";
 		foreach (var (k, v) in Game.Instance.NoiseGlob)
 		{
+			if (v == 0) continue;
 			guh += $"\n    [{k}: {v}]";
 		}
 		return guh;

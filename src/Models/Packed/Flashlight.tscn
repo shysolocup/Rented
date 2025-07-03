@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=4 uid="uid://vvrb04p3te8v"]
+[gd_scene load_steps=10 format=4 uid="uid://vvrb04p3te8v"]
 
 [ext_resource type="Texture2D" uid="uid://bptsvu72yepoj" path="res://src/Textures/tex_flashlight_projector.png" id="1_nomil"]
 [ext_resource type="Texture2D" uid="uid://dtxkhh3wl6co8" path="res://src/Textures/mat_old_flashlight_0.png" id="1_qts3c"]
 [ext_resource type="Texture2D" uid="uid://cwyklydhneghq" path="res://src/Textures/mat_old_flashlight_1.png" id="2_6lwtw"]
 [ext_resource type="Texture2D" uid="uid://c8ce4n6vwl3xm" path="res://src/Textures/mat_old_flashlight_2.png" id="3_44nl4"]
+[ext_resource type="Material" uid="uid://c308v38sitbye" path="res://src/Resources/Materials/placeholder_street.tres" id="5_6lwtw"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mdlum"]
 resource_name = "None"
@@ -55,6 +56,8 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_074dq")
 
+[sub_resource type="PlaneMesh" id="PlaneMesh_6lwtw"]
+
 [node name="Flashlight" type="MeshInstance3D"]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 mesh = SubResource("ArrayMesh_k8hno")
@@ -62,12 +65,11 @@ skeleton = NodePath("")
 
 [node name="Light" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -2.82262, 2.46761e-07)
-visible = false
 
 [node name="OuterLight" type="SpotLight3D" parent="Light"]
 transform = Transform3D(0.999999, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 light_color = Color(0.969063, 0.800466, 0.693889, 1)
-light_energy = 4.265
+light_energy = 0.974
 light_volumetric_fog_energy = 16.0
 light_projector = ExtResource("1_nomil")
 light_size = 3.415
@@ -81,7 +83,7 @@ spot_angle_attenuation = 0.0490365
 [node name="InnerLight" type="SpotLight3D" parent="Light"]
 transform = Transform3D(0.999999, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 light_color = Color(0.969063, 0.800466, 0.693889, 1)
-light_energy = 4.265
+light_energy = 0.974
 light_volumetric_fog_energy = 16.0
 light_projector = ExtResource("1_nomil")
 light_size = 3.415
@@ -91,3 +93,9 @@ spot_range = 22.9894
 spot_attenuation = 2.25
 spot_angle = 32.2024
 spot_angle_attenuation = 0.210224
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(12.5973, 0, 0, 0, 1, 0, 0, 0, 13.7902, 0, -9.25731, 0)
+layers = 2
+mesh = SubResource("PlaneMesh_6lwtw")
+surface_material_override/0 = ExtResource("5_6lwtw")

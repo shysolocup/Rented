@@ -23,14 +23,14 @@ namespace CoolGame
 		/// <summary>
 		/// If the game is currently saving
 		/// </summary>
-		public static bool Saving {get; set; } = false;
+		public static bool Saving { get; set; } = false;
 
 
 		/// <summary>
 		/// Path to save player data to
 		/// </summary>
-		public static string SavePath { get; set; }  = "user://savedata.json";
-		
+		public static string SavePath { get; set; } = "user://savedata.json";
+
 
 		/// <summary>
 		/// Contains player save data
@@ -59,11 +59,13 @@ namespace CoolGame
 		/// <returns>Node</returns>
 		public static async Task<Node> Init()
 		{
-			var waitTask = Task.Run(async () => {
+			var waitTask = Task.Run(async () =>
+			{
 				while (Instance == null || Saves == null) await Task.Delay(25);
 			});
 
-			if (waitTask != await Task.WhenAny(waitTask, Task.Delay(120000))) {
+			if (waitTask != await Task.WhenAny(waitTask, Task.Delay(120000)))
+			{
 				throw new TimeoutException();
 			}
 
@@ -76,7 +78,7 @@ namespace CoolGame
 		/// </summary>
 		/// <returns>Godot.Collections.Dictionary</returns>
 		public static Dictionary<string, Variant> ReadJson(string fileDir, FileAccess.ModeFlags flag = FileAccess.ModeFlags.ReadWrite)
-		{	
+		{
 			var data = FileAccess.Open(fileDir, flag);
 
 			var json = new Json();
@@ -90,7 +92,8 @@ namespace CoolGame
 		/// <summary>
 		/// Dictionary of events with string keys and StringName values
 		/// </summary>
-		private static readonly Dictionary<string, StringName> Events = new() {
+		private static readonly Dictionary<string, StringName> Events = new()
+		{
 			["Saving"] = new StringName("Saving"),
 			["Saved"] = new StringName("Saved"),
 		};
@@ -107,8 +110,9 @@ namespace CoolGame
 			Instance.EmitSignal(Events["Saving"]);
 
 			var data = ReadJson(SavePath);
-			
-			foreach (var (key, value) in Saves) {
+
+			foreach (var (key, value) in Saves)
+			{
 				data[key] = value;
 			}
 
@@ -117,6 +121,11 @@ namespace CoolGame
 			Instance.EmitSignal(Events["Saved"]);
 
 			return data;
+		}
+
+		public static void Delay(float time, Action callback)
+		{
+			Instance.GetTree().CreateTimer(time).Connect(SceneTreeTimer.SignalName.Timeout, Callable.From(callback));
 		}
 	}
 }

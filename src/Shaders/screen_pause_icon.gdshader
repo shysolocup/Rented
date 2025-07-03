@@ -1,8 +1,7 @@
-// NOTE: Shader automatically converted from Godot Engine 4.4.1.stable.mono's CanvasItemMaterial.
-
 shader_type canvas_item;
-render_mode blend_sub;
+render_mode blend_add;
 
+// Declare the screen texture manually
 uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
 
 void fragment() {
@@ -11,7 +10,7 @@ void fragment() {
 	if (tex_color.a > 0.0) {
 		// Read the screen color underneath using screen UVs
 		vec4 screen_color = textureLod(SCREEN_TEXTURE, SCREEN_UV, 0.0);
-		COLOR *= vec4(1.5 - tex_color.rgb, screen_color.a);
+		COLOR *= vec4(1.0 - screen_color.rgb, tex_color.a);
 	} else {
 		COLOR *= vec4(0.0, 0.0, 0.0, 0.0);
 	}

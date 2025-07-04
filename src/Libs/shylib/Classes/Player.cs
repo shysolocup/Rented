@@ -388,7 +388,13 @@ public partial class Player : CharacterBody3D
 	{
 		Vector3 Direction = (origin.Origin - Camera.GlobalTransform.Origin).Normalized();
 		Basis TargetBasis = Basis.LookingAt(Direction, Vector3.Up);
-		Camera.GlobalRotation = Camera.GlobalRotation.Lerp(TargetBasis.GetEuler(), this.FactorDelta(1/10f, delta));
+
+		Quaternion CurrentQuat = Camera.GlobalTransform.Basis.GetRotationQuaternion();
+		Quaternion TargetQuat = TargetBasis.GetRotationQuaternion();
+
+		Quaternion Result = CurrentQuat.Slerp(TargetQuat, this.FactorDelta(1 / 10f, delta));
+
+		Camera.GlobalTransform = new Transform3D(new Basis(Result), Camera.GlobalTransform.Origin);
 	}
 	#endregion
 

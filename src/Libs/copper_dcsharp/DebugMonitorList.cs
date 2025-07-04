@@ -43,12 +43,20 @@ public static class DebugMonitorList
 		return guh;
 	}
 
+	private static string pause()
+	{
+		return $"\n[IsPaused: {Game.Instance.GetGameNode<PauseGui>("%PauseLayer/PauseGui")?.Paused}]\n[InSettings: {Game.Instance.GetGameNode<SettingsGui>("%SettingsLayer/SettingsGui")?.InSettings}]";
+	}
+
 
 	public static async void Init(DebugConsole console)
 	{
+		await Game.Init();
+
 		#region fps
 
-		new DebugMonitor {
+		new DebugMonitor
+		{
 			Id = "fps",
 			DisplayName = "FPS",
 
@@ -60,7 +68,8 @@ public static class DebugMonitorList
 		#region process
 
 
-		new DebugMonitor {
+		new DebugMonitor
+		{
 			Id = "process",
 			DisplayName = "Process",
 
@@ -72,7 +81,8 @@ public static class DebugMonitorList
 		#region physics_process
 
 
-		new DebugMonitor {
+		new DebugMonitor
+		{
 			Id = "physics_process",
 			DisplayName = "Physics Process",
 
@@ -84,7 +94,8 @@ public static class DebugMonitorList
 		#region navigation_process
 
 
-		new DebugMonitor {
+		new DebugMonitor
+		{
 			Id = "navigation_process",
 			DisplayName = "Navigation Process",
 
@@ -96,7 +107,8 @@ public static class DebugMonitorList
 		#region static_memory
 
 
-		new DebugMonitor {
+		new DebugMonitor
+		{
 			Id = "static_memory",
 			DisplayName = "Static Memory",
 
@@ -108,7 +120,8 @@ public static class DebugMonitorList
 		#region static_memory_max
 
 
-		new DebugMonitor {
+		new DebugMonitor
+		{
 			Id = "static_memory_max",
 			DisplayName = "Max Static Memory",
 
@@ -120,7 +133,8 @@ public static class DebugMonitorList
 		#region objects
 
 
-		new DebugMonitor {
+		new DebugMonitor
+		{
 			Id = "objects",
 			DisplayName = "Objects",
 
@@ -132,7 +146,8 @@ public static class DebugMonitorList
 		#region nodes
 
 
-		new DebugMonitor {
+		new DebugMonitor
+		{
 			Id = "nodes",
 			DisplayName = "Nodes",
 
@@ -144,14 +159,23 @@ public static class DebugMonitorList
 		#region noise
 
 
-		await Game.Init();
-
-
-		new DebugMonitor {
+		new DebugMonitor
+		{
 			Id = "noise",
 			DisplayName = "Noise",
 
 			ValueCall = Callable.From(noise)
+		}.AddTo(console);
+
+		#endregion
+		#region pause
+
+		new DebugMonitor
+		{
+			Id = "pause",
+			DisplayName = "PauseData",
+
+			ValueCall = Callable.From(pause)
 		}.AddTo(console);
 
 

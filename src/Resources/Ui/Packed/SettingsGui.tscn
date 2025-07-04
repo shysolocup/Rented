@@ -252,7 +252,6 @@ layout_mode = 2
 theme_override_constants/separation = 25
 
 [node name="Graphics" type="PanelContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer"]
-visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_8eabv")
 script = ExtResource("14_2sfqt")
@@ -343,7 +342,7 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_tsn0p")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/Brightness"]
 layout_mode = 2
-theme_override_constants/separation = 25
+theme_override_constants/separation = 5
 
 [node name="HBoxContainer" type="HBoxContainer" parent="SettingsGui/VBoxContainer/CenterContainer/SettingsContainer/Graphics/VBoxContainer/Brightness/VBoxContainer"]
 layout_mode = 2
@@ -660,6 +659,7 @@ layout_mode = 2
 text = "[𝗟𝗠𝗕]"
 
 [node name="Back" type="Button" parent="SettingsGui"]
+layout_mode = 0
 offset_left = 14.0
 offset_top = 20.0
 offset_right = 319.0

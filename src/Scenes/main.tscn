@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://s0ftqrddh5up"]
+[gd_scene load_steps=38 format=3 uid="uid://s0ftqrddh5up"]
 
 [ext_resource type="Script" uid="uid://cfoo1gxat5mv8" path="res://src/Libs/shylib/Classes/Game/GameInstance.cs" id="1_k0mjx"]
 [ext_resource type="Script" uid="uid://cei6x6adiqlte" path="res://src/Libs/shylib/Classes/Lighting3D.cs" id="2_h8oac"]
@@ -10,16 +10,17 @@
 [ext_resource type="Material" uid="uid://bljj4t730djb1" path="res://src/Resources/Materials/placeholder.tres" id="5_8i3or"]
 [ext_resource type="Script" uid="uid://cge1tw0n2wjvm" path="res://src/Libs/shylib/Classes/RbxScript.cs" id="7_0m3r5"]
 [ext_resource type="Script" uid="uid://f680ovgo7k8o" path="res://src/Scripts/SaveIconSpinner.cs" id="9_ng2wt"]
-[ext_resource type="Script" uid="uid://bps104hjuxax7" path="res://src/Libs/shylib/Classes/TalkerObject3D.cs" id="9_w0vrg"]
+[ext_resource type="Script" uid="uid://bps104hjuxax7" path="res://src/Libs/shylib/Classes/Objects/TalkerObject3D.cs" id="9_w0vrg"]
 [ext_resource type="Texture2D" uid="uid://leopdc2ne6l3" path="res://src/Textures/ref_gubby.png" id="10_e2xy3"]
 [ext_resource type="PackedScene" uid="uid://vi335e6p4bg0" path="res://src/Resources/Ui/Packed/CrosshairGui.tscn" id="10_timk5"]
 [ext_resource type="Script" uid="uid://d1dwvl843g32v" path="res://src/Libs/shylib/Classes/Trigger3D.cs" id="11_743ng"]
-[ext_resource type="Script" uid="uid://bqc3s878xgn1t" path="res://src/Libs/shylib/Classes/ItemObject3D.cs" id="11_isqvi"]
+[ext_resource type="Script" uid="uid://bqc3s878xgn1t" path="res://src/Libs/shylib/Classes/Objects/ItemObject3D.cs" id="11_isqvi"]
 [ext_resource type="PackedScene" uid="uid://vvrb04p3te8v" path="res://src/Models/Packed/Flashlight.tscn" id="12_vh02n"]
 [ext_resource type="PackedScene" uid="uid://dlade7y0ilag6" path="res://src/Resources/Ui/Packed/PauseGui.tscn" id="14_7mk6u"]
 [ext_resource type="PackedScene" uid="uid://dvpi6uwtqfp8n" path="res://src/Resources/Ui/Packed/DialogueGui.tscn" id="14_8nlug"]
 [ext_resource type="Script" uid="uid://c8e2vfc8iq64g" path="res://src/Libs/shylib/Classes/Items/Inventory.cs" id="15_wf0w2"]
 [ext_resource type="PackedScene" uid="uid://duvy85smfjk22" path="res://src/Resources/Ui/Packed/SettingsGui.tscn" id="16_h8oac"]
+[ext_resource type="Script" uid="uid://o2elrymlnrrr" path="res://src/Libs/shylib/Classes/SurfaceGui.cs" id="17_8i3or"]
 [ext_resource type="PackedScene" uid="uid://dg73p7tipdvvs" path="res://src/Resources/Ui/Packed/MainMenuGui.tscn" id="17_k0mjx"]
 [ext_resource type="Script" uid="uid://dahmws7oap7ss" path="res://src/Libs/shylib/Classes/Items/Flashlight.cs" id="19_isqvi"]
 [ext_resource type="PackedScene" uid="uid://bg2s3j3jpsaqq" path="res://src/Resources/Packed/Dump.tscn" id="21_jnspx"]
@@ -48,6 +49,14 @@ radius = 0.7
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_743ng"]
 radius = 0.19
 height = 1.74
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_743ng"]
+viewport_path = NodePath("Root3D/BillboardGui/SubViewport")
+
+[sub_resource type="BoxMesh" id="BoxMesh_743ng"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_p8ix8"]
+viewport_path = NodePath("/root/@EditorNode@21301/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11482/@VSplitContainer@11134/@HSplitContainer@11136/@HSplitContainer@11138/@Control@11139/@SubViewportContainer@11140/@SubViewport@11141/Game/Root3D/MeshInstance3D/SurfaceGui/SubViewport")
 
 [sub_resource type="Animation" id="Animation_8i3or"]
 length = 0.001
@@ -258,6 +267,49 @@ transform = Transform3D(0.25, 2.18557e-08, -2.18557e-08, 2.18557e-08, -0.25, 3.7
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Root3D/Flashlight"]
 transform = Transform3D(1, 1.52737e-07, -1.50996e-07, 1.52737e-07, -1, 1.50996e-07, -1.50996e-07, -1.50996e-07, -1, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_743ng")
+
+[node name="BillboardGui" type="Sprite3D" parent="Root3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.08955, 0)
+cast_shadow = 0
+billboard = 1
+texture = SubResource("ViewportTexture_743ng")
+
+[node name="SubViewport" type="SubViewport" parent="Root3D/BillboardGui"]
+
+[node name="Label" type="Label" parent="Root3D/BillboardGui/SubViewport"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "guhh"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Root3D"]
+transform = Transform3D(-0.959539, -0.000804956, -0.281576, -0.00053016, 1, -0.0010521, 0.281577, -0.000860252, -0.959538, 94.6987, 4.90445, -42.5873)
+mesh = SubResource("BoxMesh_743ng")
+
+[node name="SurfaceGui" type="Sprite3D" parent="Root3D/MeshInstance3D" node_paths=PackedStringArray("Adornee")]
+transform = Transform3D(-8.53738e-09, -2.84217e-12, 1, 1.13687e-11, 0.195313, 1.45519e-11, -0.195313, 1.13687e-11, -4.37114e-08, 0.5005, 0, -3.8147e-06)
+shaded = true
+texture = SubResource("ViewportTexture_p8ix8")
+script = ExtResource("17_8i3or")
+Adornee = NodePath("..")
+Face = 3
+metadata/_custom_type_script = "uid://o2elrymlnrrr"
+
+[node name="SubViewport" type="SubViewport" parent="Root3D/MeshInstance3D/SurfaceGui"]
+transparent_bg = true
+
+[node name="Label" type="Label" parent="Root3D/MeshInstance3D/SurfaceGui/SubViewport"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 150
+text = "guh"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Root2D" type="Node2D" parent="."]
 

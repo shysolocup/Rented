@@ -2,7 +2,6 @@ using Godot;
 using System.Linq;
 
 
-[Tool]
 [GlobalClass, Icon("uid://b4blw6r8ym2hk")]
 public partial class Flashlight : Item
 {

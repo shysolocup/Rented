@@ -1,11 +1,11 @@
 {
-    "version": "1.0.3",
-    "overwrite": false,
-    "file_base": {
-        "items": [],
-        "achievments": [],
-        "endings": [],
-        "state": 0,
-        "position": [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
-    }
+	"version": "1.0.3",
+	"overwrite": false,
+	"file_base": {
+		"items": [],
+		"achievments": [],
+		"endings": [],
+		"state": 0,
+		"position": [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+	}
 }

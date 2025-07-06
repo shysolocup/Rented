@@ -17,17 +17,34 @@ public static class Extensions
 	public static Node GetGameNode(this Node self, NodePath nodePath) => self.GetGameNode<Node>(nodePath);
 
 
+	#nullable enable
+	public static T? GetAncestorOfType<T>(this Node self, int layers = 100) where T : Node?
+	{
+		Node current = self;
+		for (int i = 0; i < layers; i++)
+		{
+			current = current.GetParentOrNull<Node>();
+			if (current is T ret) return ret;
+		}
+
+		return null;
+	}
+	#nullable restore
+
+
 	public static Array<T> GetDescendants<[MustBeVariant] T>(this Node self) where T : Node
 	{
 		Array<T> descendants = [];
 
-		foreach (Node child in self.GetChildren()) {
-			if (child is T node) {
+		foreach (Node child in self.GetChildren())
+		{
+			if (child is T node)
+			{
 				descendants.Add(node);
 				descendants += node.GetDescendants<T>();
 			}
 		}
-		
+
 		return descendants;
 	}
 	public static Array<Node> GetDescendants(this Node self) => self.GetDescendants<Node>();

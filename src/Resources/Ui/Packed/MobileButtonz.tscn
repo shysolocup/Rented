@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3 uid="uid://2kgc1lk43dlq"]
+
+[ext_resource type="Texture2D" uid="uid://c5ujsytfglxjj" path="res://src/Textures/icon100.png" id="1_udtuk"]
+
+[node name="MobileButtonz" type="CanvasLayer"]
+layer = 6
+
+[node name="Control" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="Control"]
+position = Vector2(-251, -190)
+scale = Vector2(3.2, 2.15)
+texture_normal = ExtResource("1_udtuk")
+action = "Jump"

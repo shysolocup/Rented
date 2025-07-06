@@ -2,7 +2,8 @@ using Godot;
 
 public partial class Item : Node
 {
-    [Export] public bool Active = false;
+    [Export] public bool InInventory = false;
+    [Export] public bool Stackable = false;
 
     [Signal] public delegate void EquippedEventHandler();
     [Signal] public delegate void UnequippedEventHandler();

@@ -151,7 +151,9 @@ eg:
 						"room",
 						"light",
 						"marker",
-						"map"
+						"map",
+						"equip",
+						"collect"
 					],
 					Required = true
 				},

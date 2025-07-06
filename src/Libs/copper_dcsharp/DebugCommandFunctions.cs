@@ -103,6 +103,16 @@ public partial class DebugCommandFunctions : GodotObject
 	{
 		string type = opts[1];
 
+		if (type == "collect")
+		{
+			return [.. Game.Instance.GetGameNode<Inventory>("%Inventory").GetOtherItems().Select(item => item.Name)];
+		}
+
+		if (type == "throw" || type == "equip")
+		{
+			return [.. Game.Instance.GetGameNode<Inventory>("%Inventory").GetInventoryItems().Select(item => item.Name)];
+		}
+
 		if (type == "camera")
 		{
 			return [.. Game.Instance.GetGameNode("%Cameras").GetChildren().Select(child => child.Name), "Default"];
@@ -149,11 +159,31 @@ public partial class DebugCommandFunctions : GodotObject
 
 	public async void act(string type, string name)
 	{
+		/* adds given item from inventory */
+		if (type == "collect")
+		{
+			Game.Instance.GetGameNode<Inventory>("%Inventory").Collect(name);
+		}
+
+		/* removes given item from inventory */
+		if (type == "throw")
+		{
+			Game.Instance.GetGameNode<Inventory>("%Inventory").Throw(name);
+		}
+
+		/* equips given item */
+		if (type == "equip")
+		{
+			Game.Instance.GetGameNode<Inventory>("%Inventory").Equip(name);
+		}
+
+		/* goes to a camera */
 		if (type == "camera")
 		{
 			Game.Instance.GetGameNode("%Cameras").GetNode<Camera3D>((name == "Default") ? "PlayerCamera" : name).MakeCurrent();
 		}
 
+		/* plays a dialog line */
 		else if (type == "dialogue")
 		{
 			Player player = Game.Instance.GetGameNode<Player>("%Player");
@@ -161,21 +191,19 @@ public partial class DebugCommandFunctions : GodotObject
 			await player.PlayDialogue(name);
 		}
 
+		/* sets the discord status */
 		/*else if (type == "place") {
 			PlaceController pc = Game.Instance.GetGameNode<PlaceController>("%PlaceController");
 			pc.Place = PlaceController.Places[name];
 		}*/
 
-		else if (type == "room")
-		{
-			Game.Instance?.LoadRoom(name);
-		}
-
+		/* loads a given lighting preset */
 		else if (type == "light")
 		{
 			Game.Instance?.Lighting.LoadAndSetFromScene(name).ResetApply();
 		}
 
+		/* tps the player to a marker */
 		else if (type == "marker")
 		{
 			Player player = Game.Instance?.GetGameNode<Player>("%Player");
@@ -185,6 +213,7 @@ public partial class DebugCommandFunctions : GodotObject
 			player.GlobalPosition = Game.Instance.GetGameNode<Marker3D>($"%Markers/{name}").GlobalPosition;
 		}
 
+		/* loads a given map */
 		else if (type == "map")
 		{
 			Game.Instance?.Map.LoadAndSetFromScene(name).ResetApply();

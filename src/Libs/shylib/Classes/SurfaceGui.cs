@@ -78,48 +78,46 @@ public partial class SurfaceGui : Sprite3D
             Vector3 nforward;
 
             var offset = FloatingOffset + 1;
+            Vector3 direction = forward;
 
             switch (Face)
             {
                 case Surfaces.Front:
-                    origin -= forward / 2 * offset;
+                    direction = -forward;
                     forward = -forward;
                     left = -left;
                     break;
 
-                case Surfaces.Back:
-                    origin += forward / 2 * offset;
-                    break;
-
                 case Surfaces.Left:
-                    origin -= left / 2 * offset;
+                    direction = -left;
                     nforward = -left;
                     left = forward;
                     forward = nforward;
                     break;
 
                 case Surfaces.Right:
-                    origin += left / 2 * offset;
+                    direction = left;
                     nforward = left;
                     left = -forward;
                     forward = nforward;
                     break;
 
                 case Surfaces.Top:
-                    origin += up / 2 * offset;
+                    direction = up;
                     nforward = up;
                     up = -forward;
                     forward = nforward;
                     break;
 
                 case Surfaces.Bottom:
-                    origin -= up / 2 * offset;
+                    direction = -up;
                     nforward = -up;
                     up = forward;
                     forward = nforward;
                     break;
             }
 
+            origin += direction / 2 * offset;
             origin += PositionOffset;
 
             GlobalTransform = new(left, up, forward, origin);

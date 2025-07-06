@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://s0ftqrddh5up"]
+[gd_scene load_steps=39 format=3 uid="uid://s0ftqrddh5up"]
 
 [ext_resource type="Script" uid="uid://cfoo1gxat5mv8" path="res://src/Libs/shylib/Classes/Game/GameInstance.cs" id="1_k0mjx"]
 [ext_resource type="Script" uid="uid://cei6x6adiqlte" path="res://src/Libs/shylib/Classes/Lighting3D.cs" id="2_h8oac"]
@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://duvy85smfjk22" path="res://src/Resources/Ui/Packed/SettingsGui.tscn" id="16_h8oac"]
 [ext_resource type="Script" uid="uid://o2elrymlnrrr" path="res://src/Libs/shylib/Classes/SurfaceGui.cs" id="17_8i3or"]
 [ext_resource type="PackedScene" uid="uid://dg73p7tipdvvs" path="res://src/Resources/Ui/Packed/MainMenuGui.tscn" id="17_k0mjx"]
+[ext_resource type="PackedScene" uid="uid://2kgc1lk43dlq" path="res://src/Resources/Ui/Packed/MobileButtonz.tscn" id="18_p8ix8"]
 [ext_resource type="Script" uid="uid://dahmws7oap7ss" path="res://src/Libs/shylib/Classes/Items/Flashlight.cs" id="19_isqvi"]
 [ext_resource type="PackedScene" uid="uid://bg2s3j3jpsaqq" path="res://src/Resources/Packed/Dump.tscn" id="21_jnspx"]
 [ext_resource type="Script" uid="uid://dkix1if1j51kh" path="res://src/Scripts/SplashText.cs" id="22_ss4f7"]
@@ -117,10 +118,9 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Inventory" type="Node" parent="." node_paths=PackedStringArray("Equiped")]
+[node name="Inventory" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("15_wf0w2")
-Equiped = NodePath("Flashlight")
 
 [node name="Flashlight" type="Node" parent="Inventory"]
 script = ExtResource("19_isqvi")
@@ -289,7 +289,7 @@ transform = Transform3D(-0.959539, -0.000804956, -0.281576, -0.00053016, 1, -0.0
 mesh = SubResource("BoxMesh_743ng")
 
 [node name="SurfaceGui" type="Sprite3D" parent="Root3D/MeshInstance3D" node_paths=PackedStringArray("Adornee")]
-transform = Transform3D(-8.53738e-09, -2.84217e-12, 1, 1.13687e-11, 0.195313, 1.45519e-11, -0.195313, 1.13687e-11, -4.37114e-08, 0.5005, 0, -3.8147e-06)
+transform = Transform3D(-8.53738e-09, 5.68434e-12, 1, 0, 0.195313, -2.91038e-11, -0.195313, -2.4847e-19, -4.37114e-08, 0.5005, 0, -3.8147e-06)
 shaded = true
 texture = SubResource("ViewportTexture_p8ix8")
 script = ExtResource("17_8i3or")
@@ -319,6 +319,8 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="MobileButtonz" parent="Guis" instance=ExtResource("18_p8ix8")]
 
 [node name="SaveLayer" type="CanvasLayer" parent="Guis"]
 layer = 10

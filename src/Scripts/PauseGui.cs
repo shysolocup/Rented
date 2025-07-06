@@ -87,7 +87,7 @@ public partial class PauseGui : Control
 					Player.ReleaseMouse();
 					Lighting.SetTempLighting("Pause");
 
-					var dir = DirAccess.Open(ImageDir).GetFiles().Where(v => !v.EndsWith(".import")).ToArray();
+					var dir = DirAccess.Open(ImageDir).GetFiles().Where(v => !v.Contains(".import")).ToArray();
 
 					Gradient.FillFrom = GradientStartFrom;
 					GradientTexture.Show();

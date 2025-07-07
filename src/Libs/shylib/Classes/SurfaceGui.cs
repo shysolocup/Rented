@@ -6,7 +6,7 @@ using Godot;
 public partial class SurfaceGui : Sprite3D
 {
     [Export]
-    private VisualInstance3D Adornee;
+    public VisualInstance3D Adornee;
 
     public enum Surfaces
     {

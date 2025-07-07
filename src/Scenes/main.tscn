@@ -57,7 +57,7 @@ viewport_path = NodePath("Root3D/BillboardGui/SubViewport")
 [sub_resource type="BoxMesh" id="BoxMesh_743ng"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_p8ix8"]
-viewport_path = NodePath("/root/@EditorNode@21301/@Panel@14/@VBoxContainer@15/DockHSplitLeftL/DockHSplitLeftR/DockHSplitMain/@VBoxContainer@26/DockVSplitCenter/@VSplitContainer@54/@VBoxContainer@55/@EditorMainScreen@102/MainScreen/@CanvasItemEditor@11482/@VSplitContainer@11134/@HSplitContainer@11136/@HSplitContainer@11138/@Control@11139/@SubViewportContainer@11140/@SubViewport@11141/Game/Root3D/MeshInstance3D/SurfaceGui/SubViewport")
+viewport_path = NodePath("Root3D/MeshInstance3D/SurfaceGui/SubViewport")
 
 [sub_resource type="Animation" id="Animation_8i3or"]
 length = 0.001
